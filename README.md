@@ -1,1 +1,32 @@
-# SVCS
+/*  
+ * This file is subject to the terms and conditions defined in
+ * file 'LICENSE.txt', which is part of this source code package.
+ */
+System Verilog client server handshake 
+(SVCS)
+
+******************************************************
+Types:  
+element of:   integer, double, char
+vector  of:   integers, doubles , string
+array   of:   integer vectors , double vectors, messages
+composite:    structure
+-------------------------------------------------------
+trnx -> header  -> leader        - hash double  
+                   trnx_id       - random double 
+                   trnx_atribute - hash/random double    
+        payload -> size - int , >0   
+                   data
+-------------------------------------------------------
+vector,element ->      header  ->  leader        - hash ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING")  
+                                   trnx_id       - random double 
+                                   trnx_atribute - hash/random double    
+                       payload ->  size - if vector >1, if element = 1;    
+                                   data vector;
+---------------------------------------------------------------
+array ->  header  ->   leader        - hash ("SVCS_A_INT","SVCS_A_DOUBLE","SVCS_A_STRING")  
+                       trnx_id       - random double 
+                       trnx_atribute - hash/random double    
+          payload ->   size - int , > 1   
+                       data - vector  
+---------------------------------------------------------------
