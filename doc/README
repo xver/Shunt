@@ -29,7 +29,7 @@ element -> header ->   leader        - hash ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_
                        data vector;
 ---------------------------------------------------------------
 array
-composite -> header ->     leader        - hash ("SVCS_A_INT","SVCS_A_DOUBLE","SVCS_A_STRING")  
+composite -> header ->     leader        - hash ("SVCS_A_INT","SVCS_A_DOUBLE","SVCS_A_STRING","SVCS_A_STRUCTURE") 
                            trnx_id       - random double 
                            trnx_atribute - hash/random double    
                            
