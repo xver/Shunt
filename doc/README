@@ -7,10 +7,10 @@ Copyright (c) 2016 IC Verimeter
 System Verilog client server handshake 
 (SVCS)
 ******************************************************
-Types:  
-element of:   integer, double, char
-vector  of:   integers, doubles , string
-array/composite   of:  integer vectors , double vectors, messages , structure
+Data Types:  
+elements:         integer,  double, char
+vectors:          integers, doubles , string
+array/composite:  integer vectors , double vectors, messages , structure
 -------------------------------------------------------
 trnx -> header  ->  trnx_atribute  - hash/random double    
                     trnx_type      - hash double 
