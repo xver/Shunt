@@ -2,10 +2,11 @@
  ============================================================================
  Name        : svcs_client_server.h
  Author      : Victor Besyakov
- Version     : 0.1
+ Version     : 0.0
  Copyright (c) 2016 IC Verimeter
- Copyright This file is subject to the terms and conditions defined in  file 'LICENSE',
+ This file is subject to the terms and conditions defined in  file 'LICENSE',
  which is part of this source code package.
+ MIT License
  Description : System Verilog client server handshake (SVCS)
 ******************************************************
 Data Types:
@@ -19,7 +20,7 @@ trnx -> header  ->  trnx_atribute  - hash/random double
 
         payload -> size - int , >0
                    data
- ============================================================================
+ ============================================================================ 
  */
 #ifndef SVCS_CLIENT_SERVER_H_
 #define SVCS_CLIENT_SERVER_H_
