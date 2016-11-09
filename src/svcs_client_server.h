@@ -5,7 +5,7 @@
  Version     : 0.1
  Copyright (c) 2016 IC Verimeter
  Copyright This file is subject to the terms and conditions defined in  file 'LICENSE',
- Copyright which is part of this source code package.
+ which is part of this source code package.
  Description : System Verilog client server handshake (SVCS)
 ******************************************************
 Data Types:
@@ -43,12 +43,10 @@ trnx -> header  ->  trnx_atribute  - hash/random double
 typedef enum {SVCS_V_INT,SVCS_V_DOUBLE,SVCS_V_STRING,SVCS_A_STRUCTURE} DPI_Exchange;
 const char* DPI_Exchange_Instr_Names[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING","SVCS_A_STRUCTUR"};
 
-unsigned long hash(const char *str);
-
 //-------------
 //prototypes
 //-------------
-
+unsigned long hash(const char *str);
 void *get_in_addr(struct sockaddr *sa);
 void error(char *msg);
 //
@@ -88,17 +86,17 @@ composite -> header ->     trnx_atribute - hash/random double
                            data - vector
 ---------------------------------------------------------------
  */
-//
+//Array
 void put_intA(const int sockfd,const int size,const int ArrayI[size]);
 int* get_intA(const int sockfd,int ArrayI[MAXBUFLEN]);
-//
+
 void put_longA(const int sockfd,const int size,const double ArrayD[size]);
 int* get_longA(const int sockfd,double ArrayD[MAXBUFLEN]);
-//
+
 int*  get_stringA(const int sockfd,char ArrayS[MAXBUFLEN][MAXBUFLEN]);
 void  put_stringA(const int sockfd,const char ArrayS[MAXBUFLEN][MAXBUFLEN],const int size);
-//
+
 unsigned int  init_tcpserver(const unsigned int portno);
 unsigned int  init_tcpclient(const unsigned int portno,char *hostname);
-//
+
 #endif
