@@ -41,7 +41,7 @@ trnx -> header  ->  trnx_atribute  - hash/random double
 #define MAXBUFLEN 1024
 
 typedef enum {SVCS_V_INT,SVCS_V_DOUBLE,SVCS_V_STRING,SVCS_A_STRUCTURE} DPI_Exchange;
-const char* DPI_Exchange_Instr_Names[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING","SVCS_A_STRUCTUR"};
+const char* DPI_Exchange_Instr_Names[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING","SVCS_A_STRUCTURE"};
 
 //-------------
 //prototypes
@@ -49,7 +49,8 @@ const char* DPI_Exchange_Instr_Names[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_S
 unsigned long hash(const char *str);
 void *get_in_addr(struct sockaddr *sa);
 void error(char *msg);
-//
+
+
 /*
 -------------------------------------------------------
 vector
