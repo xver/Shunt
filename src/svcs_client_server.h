@@ -96,6 +96,7 @@ int* get_longA(const int sockfd,double ArrayD[MAXBUFLEN]);
 int*  get_stringA(const int sockfd,char ArrayS[MAXBUFLEN][MAXBUFLEN]);
 void  put_stringA(const int sockfd,const char ArrayS[MAXBUFLEN][MAXBUFLEN],const int size);
 
+//TCP
 unsigned int  init_tcpserver(const unsigned int portno);
 unsigned int  init_tcpclient(const unsigned int portno,char *hostname);
 
