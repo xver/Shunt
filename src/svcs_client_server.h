@@ -3,7 +3,7 @@
  Name        : svcs_client_server.h
  Author      : Victor Besyakov
  Version     : 0.0
- Copyright (c) 2016 IC Verimeter
+ Copyright (c) 2016 IC Verimeter 
  This file is subject to the terms and conditions defined in  file 'LICENSE',
  which is part of this source code package.
  MIT License
@@ -47,9 +47,9 @@ const char* DPI_Exchange_Instr_Names[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_S
 //-------------
 //prototypes
 //-------------
-unsigned long hash(const char *str);
-void *get_in_addr(struct sockaddr *sa);
-void error(char *msg);
+unsigned long svcs_hash(const char *str);
+void *svcs_get_in_addr(struct sockaddr *sa);
+void svcs_error(char *msg);
 
 
 /*
@@ -63,20 +63,20 @@ element -> header ->   trnx_atribute - hash/random double
                        data element;
 ---------------------------------------------------------------
 */
-void  put_int        (const int sockfd,const int* Int);
-int*  get_int        (const int sockfd);
+void  svcs_put_int        (const int sockfd,const int* Int);
+int*  svcs_get_int        (const int sockfd);
 //vector
-void  put_intV      (const int sockfd,const int* Int,const int size);
-int*  get_intV      (const int sockfd);
+void  svcs_put_intV      (const int sockfd,const int* Int,const int size);
+int*  svcs_get_intV      (const int sockfd);
 
-void  put_long       (const int sockfd,const long Long);
-long* get_Long       (const int sockfd);
+void  svcs_put_long       (const int sockfd,const long Long);
+long* svcs_get_Long       (const int sockfd);
 //vector
-void  put_longV      (const int sockfd,const long Long,const int size);
-long* get_longV      (const int sockfd);
+void  svcs_put_longV      (const int sockfd,const long Long,const int size);
+long* svcs_get_longV      (const int sockfd);
 
-void  put_string     (const int sockfd,const char *string);
-char* get_string     (const int sockfd);
+void  svcs_put_string     (const int sockfd,const char *string);
+char* svcs_get_string     (const int sockfd);
 /*
  ---------------------------------------------------------------
 array
@@ -89,17 +89,17 @@ composite -> header ->     trnx_atribute - hash/random double
 ---------------------------------------------------------------
  */
 //Array
-void put_intA(const int sockfd,const int size,const int ArrayI[size]);
-int* get_intA(const int sockfd,int ArrayI[MAXBUFLEN]);
+void svcs_put_intA(const int sockfd,const int size,const int ArrayI[size]);
+int* svcs_get_intA(const int sockfd,int ArrayI[MAXBUFLEN]);
 
-void put_longA(const int sockfd,const int size,const double ArrayD[size]);
+void svcs_put_longA(const int sockfd,const int size,const double ArrayD[size]);
 int* get_longA(const int sockfd,double ArrayD[MAXBUFLEN]);
 
-int*  get_stringA(const int sockfd,char ArrayS[MAXBUFLEN][MAXBUFLEN]);
-void  put_stringA(const int sockfd,const char ArrayS[MAXBUFLEN][MAXBUFLEN],const int size);
+int*  svcs_get_stringA(const int sockfd,char ArrayS[MAXBUFLEN][MAXBUFLEN]);
+void  svcs_put_stringA(const int sockfd,const char ArrayS[MAXBUFLEN][MAXBUFLEN],const int size);
 
 //TCP
-unsigned int  init_tcpserver(const unsigned int portno);
-unsigned int  init_tcpclient(const unsigned int portno,char *hostname);
+unsigned int  svcs_init_tcpserver(const unsigned int portno);
+unsigned int  svcs_init_tcpclient(const unsigned int portno,char *hostname);
 
 #endif
