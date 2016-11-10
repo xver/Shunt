@@ -63,6 +63,18 @@ element -> header ->   trnx_atribute - hash/random double
                        data element;
 ---------------------------------------------------------------
 */
+
+/*
+  Function: svcs_put_int
+   send verilog int  over TCP/IP 
+   
+   Parameters:
+      const int sockfd - socket id
+      const int* Int  - The second integer.
+   
+    Returns:
+       void
+*/
 void  svcs_put_int        (const int sockfd,const int* Int);
 int*  svcs_get_int        (const int sockfd);
 //vector

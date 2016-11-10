@@ -1,10 +1,15 @@
+
+ TITLE: Main
+
+ System Verilog client server handshake
+
  ============================================================================
  Copyright (c) 2016 IC Verimeter. All rights reserved.  
                Licensed under the MIT License. 
                See LICENSE file in the project root for full license information.  
  Description : System Verilog client server handshake (SVCS)
 ============================================================================= 
-System Verilog client server handshake 
+TITLE: System Verilog client server handshake 
 (SVCS)
 ******************************************************
 Data Types:  
@@ -35,3 +40,4 @@ composite -> header ->     trnx_atribute - hash/random double
              payload->     size - int , > 1   
                            data - vector  
 ---------------------------------------------------------------
+nd command :  naturaldocs -p ./doc -i . -o FramedHTML ./doc
