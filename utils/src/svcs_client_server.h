@@ -1,12 +1,11 @@
-/*
+/* 
  ============================================================================
  Name        : svcs_client_server.h
  Author      : Victor Besyakov
  Version     : 0.0
- Copyright (c) 2016 IC Verimeter
- This file is subject to the terms and conditions defined in  file 'LICENSE',
- which is part of this source code package.
- MIT License
+ Copyright (c) 2016 IC Verimeter. All rights reserved.  
+               Licensed under the MIT License. 
+               See LICENSE file in the project root for full license information.  
  Description : System Verilog client server handshake (SVCS)
 ******************************************************
 Data Types:
