@@ -2,7 +2,7 @@
 TITLE: Introduction SVCS
 
 (SVCS) System Verilog client server handshake
-
+(start code)
 ******************************************************
 Data Types: 
  
@@ -41,7 +41,7 @@ composite -> header ->     trnx_atribute - hash/random double
              payload->     size - int , > 1   
                            data - vector  
 ---------------------------------------------------------------
-
+(end)
  ============================================================================
  Copyright (c) 2016 IC Verimeter. All rights reserved.  
                Licensed under the MIT License. 

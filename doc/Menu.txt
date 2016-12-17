@@ -48,7 +48,7 @@ Format: 1.51
 
 File: Introduction SVCS  (README.txt)
 File: License  (LICENSE.txt)
-File: svcs_put_int  (utils/src/svcs_client_server.h)
+File: Utilities  (utils/src/svcs_client_server.h)
 
 Group: Index  {
 

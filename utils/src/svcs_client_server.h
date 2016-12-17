@@ -1,11 +1,14 @@
 /* 
  ============================================================================
- Name        : svcs_client_server.h
+ File        : svcs_client_server.h
  Author      : Victor Besyakov
  Version     : 0.0
  Copyright (c) 2016 IC Verimeter. All rights reserved.  
                Licensed under the MIT License. 
                See LICENSE file in the project root for full license information.  
+
+ TITLE: Utilities
+
  Description : System Verilog client server handshake (SVCS)
 ******************************************************
 Data Types:
@@ -39,75 +42,343 @@ trnx -> header  ->  trnx_atribute  - hash/random double
 #define BUFSIZE   1024
 #define MAXBUFLEN 1024
 
-typedef enum {SVCS_V_INT,SVCS_V_DOUBLE,SVCS_V_STRING,SVCS_A_STRUCTURE} DPI_Exchange;
-const char* DPI_Exchange_Instr_Names[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING","SVCS_A_STRUCTURE"};
+typedef enum {SVCS_V_INT,SVCS_V_DOUBLE,SVCS_V_STRING,SVCS_A_STRUCTURE} SVCV_DPI_Instr_enum;
+const char* SVCV_DPI_Instr_enum_names[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING","SVCS_A_STRUCTURE"};
 
 //-------------
 //prototypes
 //-------------
-//Common
+
+//Title: Utilities
+
+///////////////////////////////
+//Section:  Common Functions 
+
+/*
+  Function: svcs_hash 
+  simple hash function 
+  
+  Parameters: 
+  *str - hash key
+  
+  Returns: 
+  hash value
+*/
 unsigned long svcs_hash(const char *str);
-void *svcs_get_in_addr(struct sockaddr *sa);
-void svcs_error(char *msg);
-unsigned int  svcs_init_tcpserver(const unsigned int portno);
-unsigned int  svcs_init_tcpclient(const unsigned int portno,char *hostname);
-
-//Data exchange utilities
-/*
--------------------------------------------------------
-vector
-element -> header ->   trnx_atribute - hash/random double
-                       trnx_type     - hash ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING")
-                       trnx_id       - random double
-           payload ->  size - if vector >1, if element = 1;
-                       data element;
----------------------------------------------------------------
-*/
 
 /*
-  Function: svcs_put_int
-   send verilog int  over TCP/IP 
-   
-   Parameters:
-      const int sockfd - socket id
-      const int* Int  - The second integer.
-   
-    Returns:
-       void
-*/
-void  svcs_put_int        (const int sockfd,const int* Int);
-int*  svcs_get_int        (const int sockfd);
-//vector
-void  svcs_put_intV      (const int sockfd,const int* Int,const int size);
-int*  svcs_get_intV      (const int sockfd);
-
-void  svcs_put_long       (const int sockfd,const long Long);
-long* svcs_get_Long       (const int sockfd);
-//vector
-void  svcs_put_longV      (const int sockfd,const long Long,const int size);
-long* svcs_get_longV      (const int sockfd);
-
-void  svcs_put_string     (const int sockfd,const char *string);
-char* svcs_get_string     (const int sockfd);
-/*
- ---------------------------------------------------------------
-array
-composite -> header ->     trnx_atribute - hash/random double
-                           trnx_type     - hash ("SVCS_A_STRUCTURE")
-                           trnx_id       - random double
-             payload->     size - int , > 1
-                           data - vector
----------------------------------------------------------------
+  Function: svcs_error 
+  perror wrapper
+ 
+  Parameters:
+  *str - error message
+  
+  Returns: 
+  void
  */
-//Array
-void svcs_put_intA(const int sockfd,const int size,const int ArrayI[size]);
-int* svcs_get_intA(const int sockfd,int ArrayI[MAXBUFLEN]);
+void svcs_error(char *msg);
+/////////////////////////////
+//Section: TCP/IP Functions
+/*
+ Function: svcs_init_tcpserver 
+ TCP/IP server initialisation 
+ 
+ Parameters: 
+ portno - socket port
+  
+ Returns:  
+ socket id
+   
+*/
+unsigned int svcs_init_tcpserver(const unsigned int portno);
 
-void svcs_put_longA(const int sockfd,const int size,const double ArrayD[size]);
-int* get_longA(const int sockfd,double ArrayD[MAXBUFLEN]);
+/*
+ Function: svcs_init_tcpclient 
+ TCP/IP client initialisation 
+ 
+ Parameters:
+ 
+ portno - socket port
+ *hostname - server name
+ 
+ Returns: 
+ socket id 
+   
+*/
+unsigned int svcs_init_tcpclient(const unsigned int portno,const char *hostname);
 
-int*  svcs_get_stringA(const int sockfd,char ArrayS[MAXBUFLEN][MAXBUFLEN]);
-void  svcs_put_stringA(const int sockfd,const char ArrayS[MAXBUFLEN][MAXBUFLEN],const int size);
+/*
+Function: Example:  svcs_init_tcpclient ,svcs_init_tcpserver 
+
+(start code)    
+ #define MY_HOST "localhost"
+ #define MY_PORT  3450
+ char *hostname; 
+ int port;
+ port = MY_PORT;
+ hostname =   MY_HOST;
+  
+ svcs_init_tcpserver(hostname);
+ svcs_init_tcpclient(port,hostname);
+(end)
+ */
+
+/*
+
+Section: Data exchange utilities (element)
+
+(start code)
+-------------------------------------------------------
+element -> header ->  trnx_atribute     - hash/random double
+                      trnx_type         - hash ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING")
+                      trnx_id           - random double
+
+	   payload ->  size  - number of data elements, size= 1
+           data element 
+---------------------------------------------------------------
+(end)
+*/
+
+/*
+ Function: svcs_send_int
+  send verilog/C "int" data over TCP/IP 
+  
+  Parameters:
+   sockfd - socket id
+   Int  -   data
+  
+  Returns:
+    void
+*/
+void svcs_send_int    (const int sockfd,const int* Int);
+
+/*
+ Function: svcs_recv_int
+  fetch verilog/C "int" data from TCP/IP socket
+  
+  Parameters:
+   sockfd - socket id
+
+  Returns: 
+    data 
+    
+*/
+int* svcs_recv_int    (const int sockfd);
+
+/*
+ Function: svcs_send_double
+  send verilog "real"/C "double" over TCP/IP 
+  
+  Parameters:
+   sockfd - socket id
+   Double  - data to send
+  
+  Returns:
+    void
+*/
+
+void svcs_send_double    (const int sockfd,const double Double);
+
+/*
+  Function: svcs_recv_double
+  fetch verilog "real"/C "double" over TCP/IP 
+  
+  Parameters:
+  sockfd - socket id
+
+  Returns: 
+  Double - data from socket 
+    
+*/
+double* svcs_recv_Double    (const int sockfd);
+
+
+
+
+/*
+ Section: Data exchange utilities (vector)
+
+(start code)
+-------------------------------------------------------
+vector -> header ->  trnx_atribute - hash/random double
+                     trnx_type     - hash ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING")
+                     trnx_id       - random double
+
+          payload -> size          - number of data elements,size >1
+          data elements 
+---------------------------------------------------------------
+(end)
+*/
+
+/*
+ Function: svcs_send_intV
+  send "int" elements vector over TCP/IP 
+  
+  Parameters:
+   sockfd - socket id
+   Int   - data
+   size  - number of vector elements
+ 
+   Returns:
+   void
+*/
+void svcs_send_intV   (const int sockfd,const int* Int,const int size);
+
+/*
+ Function: svcs_recv_intV
+  fetch "int" elements vector  elements from TCP/IP 
+  
+  Parameters:
+   sockfd - socket id
+
+  Returns: 
+   data received from socket
+    
+*/
+int* svcs_recv_intV   (const int sockfd);
+
+
+/*
+ Function: svcs_send_doubleV
+  send "double" elements vector over TCP/IP 
+  
+  Parameters:
+   sockfd - socket id
+   Double   - data to send
+   size   - number of vector elements 
+  Returns:
+    void
+*/
+void svcs_send_doubleV   (const int sockfd,const double* Double,const int size);
+
+/*
+ Function: svcs_recv_doubleV
+  fetch  "double" elements vector from TCP/IP 
+  
+  Parameters:
+   sockfd - socket id
+
+  Returns: 
+  double - data from socket 
+    
+*/
+double* svcs_recv_doubleV   (const int sockfd);
+
+/*
+ Function: svcs_send_string
+  send verilog string/C char* elements over TCP/IP 
+  
+  Parameters:
+   sockfd  - socket id
+   string  - data to send
+   size    - string size (number of string elements), if size =0 function assumes that end of the strig is "0" 
+  Returns:
+    void
+*/
+void svcs_send_string   (const int sockfd,const char* string);
+
+/*
+ Function: svcs_recv_string
+  fetch string from TCP/IP 
+  
+  Parameters:
+   sockfd - socket id
+
+  Returns: 
+   data from socket 
+    
+*/
+char* svcs_recv_string   (const int sockfd);
+
+
+/*
+ Section: Data exchange utilities (array)
+
+(start code)
+ ---------------------------------------------------------------
+array -> header ->   trnx_atribute - hash/random double
+                         trnx_type   - hash ("SVCS_A_STRUCTURE")
+                         trnx_id    - random double
+             payload->   size  > 1
+             data - vector
+---------------------------------------------------------------
+ (end)
+
+ */
+
+/*
+  Function: svcs_send_intA
+  send "int" vectors array over TCP/IP 
+  
+  Parameters:
+  sockfd  - socket id
+  size    - The number of array entries is equal to the number of "int" vectors   
+  ArrayI  - data 
+ */
+
+ void svcs_send_intA(const int sockfd,const int size,const int* ArrayI);
+
+/*
+  Function: svcs_recv_intA
+  fetch "int" array of "int" vectors from TCP/IP  
+  
+  Parameters:
+  sockfd - socket id   
+  
+  Returns: 
+  Array of int
+  
+*/
+int* svcs_recv_intA(const int sockfd);
+
+/*
+  Function: svcs_send_doubleA
+   send "double" vector array over TCP/IP 
+  
+  Parameters:
+  sockfd  - socket id
+  size    - The number of array entries is equal to the number of "double" vectors     
+  ArrayL  - data 
+*/
+void svcs_send_doubleA(const int sockfd,const int size,const double* ArrayL);
+
+/*
+  Function: svcs_recv_doubleA
+  fetch "double" array of "double" vectors from TCP/IP  
+  
+  Parameters:
+  sockfd - socket id   
+  
+  Returns: 
+  Array of double 
+*/
+double* rec_doubleA(const int sockfd);
+
+/*
+  Function: svcs_send_stringA
+   send "string" vectors array  over TCP/IP 
+  
+  Parameters:
+  sockfd  - socket id
+  size    - The number of array entries is equal to the number of strings 
+  ArrayL  - data 
+*/
+void svcs_send_stringA(const int sockfd,const int size,const char* ArrayS);
+
+/*
+  Function: svcs_recv_stringA
+  fetch string" vectors array from TCP/IP  
+  
+  Parameters:
+  sockfd - socket id   
+  
+  Returns: 
+  Array of strinds
+  
+*/
+char* svcs_recv_stringA(const int sockfd);
+
+
 
 
 

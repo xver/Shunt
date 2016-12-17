@@ -9,7 +9,44 @@ if (browserType) {document.write("<div class=" + browserType + ">");if (browserV
 
 
 
-<div id=Content><div class="CSection"><div class=CTopic id=MainTopic><h1 class=CTitle><a name="Introduction_SVCS"></a>Introduction SVCS</h1><div class=CBody><p>(SVCS) System Verilog client server handshake</p><h4 class=CHeading>Data Types</h4><h4 class=CHeading>Elements</h4><p>integer,  double, char</p><h4 class=CHeading>Vectors</h4><p>integers, doubles , string</p><h4 class=CHeading>Array/composite</h4><p>integer vectors , double vectors, messages , structure</p><h4 class=CHeading>Common Data Structure</h4><table border=0 cellspacing=0 cellpadding=0 class=CDescriptionList><tr><td class=CDLEntry>trnx -&gt; header  -&gt;  trnx_atribute</td><td class=CDLDescription>hash/random double</td></tr><tr><td class=CDLEntry>trnx_type</td><td class=CDLDescription>hash double</td></tr><tr><td class=CDLEntry>trnx_id</td><td class=CDLDescription>random double</td></tr><tr><td class=CDLEntry>payload -&gt; size</td><td class=CDLDescription>int , &gt;0 data</td></tr></table><h4 class=CHeading>vector</h4><table border=0 cellspacing=0 cellpadding=0 class=CDescriptionList><tr><td class=CDLEntry>element -&gt; header -&gt;   trnx_atribute</td><td class=CDLDescription>hash/random double</td></tr><tr><td class=CDLEntry>trnx_type</td><td class=CDLDescription>hash (&ldquo;SVCS_V_INT&rdquo;,&rdquo;SVCS_V_DOUBLE&rdquo;,&rdquo;SVCS_V_STRING&rdquo;)</td></tr><tr><td class=CDLEntry>trnx_id</td><td class=CDLDescription>random double</td></tr><tr><td class=CDLEntry>payload -&gt;  size</td><td class=CDLDescription>if vector &gt;1, if element = 1; data element;</td></tr></table><h4 class=CHeading>array</h4><table border=0 cellspacing=0 cellpadding=0 class=CDescriptionList><tr><td class=CDLEntry>composite -&gt; header -&gt;     trnx_atribute</td><td class=CDLDescription>hash/random double</td></tr><tr><td class=CDLEntry>trnx_type</td><td class=CDLDescription>hash (&ldquo;SVCS_A_STRUCTURE&rdquo;)</td></tr><tr><td class=CDLEntry>trnx_id</td><td class=CDLDescription>random double</td></tr><tr><td class=CDLEntry>payload-&gt;     size</td><td class=CDLDescription>int , &gt; 1</td></tr><tr><td class=CDLEntry>data</td><td class=CDLDescription>vector</td></tr></table><p>Copyright &copy; 2016 IC Verimeter.&nbsp; All rights reserved.&nbsp; Licensed under the MIT License.</p></div></div></div>
+<div id=Content><div class="CSection"><div class=CTopic id=MainTopic><h1 class=CTitle><a name="Introduction_SVCS"></a>Introduction SVCS</h1><div class=CBody><p>(SVCS) System Verilog client server handshake</p><blockquote><pre class="prettyprint">******************************************************
+Data Types:
+
+Elements:
+         integer,  double, char
+
+Vectors:
+         integers, doubles , string
+
+Array/composite:
+      integer vectors , double vectors, messages , structure
+
+-------------------------------------------------------
+Common Data Structure:
+            trnx -&gt; header  -&gt;  trnx_atribute  - hash/random double
+                        trnx_type      - hash double
+                        trnx_id        - random double
+
+                payload -&gt; size - int , &gt;0
+                data
+-------------------------------------------------------
+vector:
+
+element -&gt; header -&gt;   trnx_atribute - hash/random double
+                       trnx_type     - hash (&quot;SVCS_V_INT&quot;,&quot;SVCS_V_DOUBLE&quot;,&quot;SVCS_V_STRING&quot;)
+                       trnx_id       - random double
+
+           payload -&gt;  size - if vector &gt;1, if element = 1;
+                       data element;
+---------------------------------------------------------------
+array:
+composite -&gt; header -&gt;     trnx_atribute - hash/random double
+                           trnx_type     - hash (&quot;SVCS_A_STRUCTURE&quot;)
+                           trnx_id       - random double
+
+             payload-&gt;     size - int , &gt; 1
+                           data - vector
+---------------------------------------------------------------</pre></blockquote><p>Copyright &copy; 2016 IC Verimeter.&nbsp; All rights reserved.&nbsp; Licensed under the MIT License.</p></div></div></div>
 
 </div><!--Content-->
 
