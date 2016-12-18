@@ -41,6 +41,7 @@ composite -> header ->     trnx_atribute - hash/random double
                            data - vector  
 ---------------------------------------------------------------
 nd command :  naturaldocs -p ./doc -i . -o FramedHTML ./doc
+see SVCS doc: http://htmlpreview.github.io/?https://github.com/xver/SVCS/blob/master/doc/menu.html
 
 Chris Spear SystemVerilog for Verification
 
