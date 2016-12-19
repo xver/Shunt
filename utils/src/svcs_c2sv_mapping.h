@@ -1,14 +1,14 @@
 /* 
- ============================================================================
- File        : svcs_c2sv_mapping.h
- Author      : Victor Besyakov
- Version     : 0.0
- Copyright (c) 2016 IC Verimeter. All rights reserved.  
-               Licensed under the MIT License. 
-               See LICENSE file in the project root for full license information.  
- Description : "C" to "SV" mapping util
-               System Verilog client server handshake (SVCS)
-==============================================================================
+   ============================================================================
+   File        : svcs_c2sv_mapping.h
+   Author      : Victor Besyakov
+   Version     : 0.0
+   Copyright (c) 2016 IC Verimeter. All rights reserved.  
+   Licensed under the MIT License. 
+   See LICENSE file in the project root for full license information.  
+   Description : "C" to "SV" mapping util
+   System Verilog client server handshake (SVCS)
+   ==============================================================================
 */
 
 #ifndef SVCS_C2SV_MAPPING_H_
@@ -23,74 +23,91 @@
 //Title: Utilites: "C" to System Verilog mapping
 
 
-//Section: Integer atom type
-
 /*
+  
+Section: Integer atom type
+
+(start code)
+shortint
+int
+longint
+byte
+integer 
+time 
+bit
+reg,logic
+   
+   (end)
+
+*/
+   
+/*	 
+  Section: Integer vector type
+  
   (start code)
-  shortint
-  int
-  longint
-  byte
-  integer 
-  time 
-  bit
-  reg/logic
+  bit[N:0]
+  reg[N:0] or logic[N:0]
+  logic[N:0]
   (end)
-
 */
-
-//Section: Integer vector type
+   
+   
+/*
+  Section: Non integer type IEEE 754
+  
+  (start code)
+  shortreal
+  real
+  realtime
+  (end)
+  
+*/
 
 /*
-bit[N:0]
-reg[N:0] or logic[N:0]
-logic[N:0]
+  Section: Special types
+  
+  (start code)
+  string
+  string[N]
+  chandle
+  Enumeration
+  (end)
+  
 */
-
-//Section: Non integer type IEEE 754
-
+   
 /*
-shortreal
-real
-realtime
+  Section: Aggregate data types
+  
+  (start code)
+  Unpacked structures
+  Packed structures
+  Unpacked union
+  Packet  union
+  Tagged unions
+  (end)
 */
-
-//Section: Special types
-
+   
 /*
-string
-string[N]
-chandle
-Enumeration
+  Section: Arrays
+  
+  (start code)
+  Unpacked arrays
+  Packed arrays
+  fixed-size arrays
+  dynamic arrays
+  associative arrays
+  queues
+  Multidimensional arrays
+  (end)
 */
-
-//Section: Aggregate data types
-
+   
 /*
-Unpacked structures
-Packed structures
-Unpacked union
-Packet  union
-Tagged unions
+  Section: Type casting
+  
+     (start code)
+     bit-stream
+     (end)
 */
-
-//Section: Arrays
-
-/*
-Unpacked arrays
-Packed arrays
-fixed-size arrays
-dynamic arrays
-associative arrays
-queues
-Multidimensional arrays
-*/
-
-//Section: Type casting
-
-/*
-bit-stream
-*/
-
+   
 #endif
 
