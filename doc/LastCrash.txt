@@ -1,0 +1,22 @@
+Crash Message:
+
+   Couldn't open input file /home/v/workspace/OpenSrc/SVCS/utils/src/.#svcs_c2sv_mapping.h
+
+Current Action:
+
+   Parsing /home/v/workspace/OpenSrc/SVCS/utils/src/.#svcs_c2sv_mapping.h
+
+Natural Docs version 1.51
+Perl version 5.20.2 on linux
+
+Command Line:
+
+   -p ./doc -i . -o FramedHTML ./doc
+
+Stack Trace:
+
+   NaturalDocs::Error::CatchDeath, called from
+   NaturalDocs::Languages::Simple::ParseFile, line 168, called from
+   NaturalDocs::Parser::Parse, line 335, called from
+   NaturalDocs::Parser::ParseForInformation, line 95, called from
+   (eval), line 320 of /usr/share/perl5/naturaldocs/NaturalDocs

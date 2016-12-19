@@ -1,0 +1,15 @@
+SystemVerilog,C (input),C (output)
+byte,char,char*
+shortint,short int,short int*
+int,int,int*
+longint,long long int,long int*
+shortreal,float,float*
+real,double,double*
+string,const char*,char**
+string[N],const char**,char**
+bit,svBit or unsigned char,svBit* orunsigned char
+logic, reg svLogic or unsigned char,svLogic* or unsigned char*
+bit[N:0],const svBitVecVal*,svBitVecVal*
+reg[N:0] or logic[N:0],const svLogicVecVal*, svLogicVecVal*
+open array[] ,const svOpenArrayHandle, svOpenArrayHandle
+chandle , const void*, void*
