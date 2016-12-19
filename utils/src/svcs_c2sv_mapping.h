@@ -6,7 +6,7 @@
  Copyright (c) 2016 IC Verimeter. All rights reserved.  
                Licensed under the MIT License. 
                See LICENSE file in the project root for full license information.  
- Description : "C" to system verilog mapping util
+ Description : "C" to "SV" mapping util
                System Verilog client server handshake (SVCS)
 ==============================================================================
 */
@@ -22,84 +22,75 @@
 
 //Title: Utilites: "C" to System Verilog mapping
 
+
 //Section: Integer atom type
 
+/*
+  (start code)
+  shortint
+  int
+  longint
+  byte
+  integer 
+  time 
+  bit
+  reg/logic
+  (end)
+
+*/
+
+//Section: Integer vector type
 
 /*
-
-(start code)
-
-shortint 
-int 
-longint 
-byte 
-integer  
-  time  
-  
-  (end)
+bit[N:0]
+reg[N:0] or logic[N:0]
+logic[N:0]
 */
 
-//Section:  Integer vector type
+//Section: Non integer type IEEE 754
 
- /*
-   (start code)
-   
-   bit[N:0] 
-   reg[N:0]
-   logic[N:0] 
-   
-   (end)
-   
+/*
+shortreal
+real
+realtime
 */
 
- //Section: Non integer type IEEE 754
+//Section: Special types
 
- /*
-   
- (start code) 
- 
- shortreal 
- real 
- realtime 
- 
- string 
- string[N] 
- chandle 
- 
-(end)
+/*
+string
+string[N]
+chandle
+Enumeration
+*/
 
- */
+//Section: Aggregate data types
 
- //Section: Aggregate data types
+/*
+Unpacked structures
+Packed structures
+Unpacked union
+Packet  union
+Tagged unions
+*/
 
- /*
+//Section: Arrays
 
- (start code) 
- 
-  Unpacked structures 
-  
-  Packed structures 
-  
-  Unpacked union 
-  Packed  union 
-  
-  Unpacked arrays 
-  
-  Packed arrays 
+/*
+Unpacked arrays
+Packed arrays
+fixed-size arrays
+dynamic arrays
+associative arrays
+queues
+Multidimensional arrays
+*/
 
-  enum 
-  
-  fixed-size arrays 
-  dynamic arrays 
-  associative arrays 
-  queues 
-  
-  multi-dimensioned packed/unpacked arrays 
-  bit-stream 
-  
-  (end)
+//Section: Type casting
 
- */
+/*
+bit-stream
+*/
 
 #endif
 
