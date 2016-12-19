@@ -48,7 +48,8 @@ Format: 1.51
 
 File: Introduction SVCS  (README.txt)
 File: License  (LICENSE.txt)
-File: Utilities  (utils/src/svcs_client_server.h)
+File: Utilites: "C" to System Verilog mapping  (utils/src/svcs_c2sv_mapping.h)
+File: Utilites: Client-Server  (utils/src/svcs_client_server.h)
 
 Group: Index  {
 

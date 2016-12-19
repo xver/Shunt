@@ -6,10 +6,8 @@
  Copyright (c) 2016 IC Verimeter. All rights reserved.  
                Licensed under the MIT License. 
                See LICENSE file in the project root for full license information.  
-
- TITLE: Utilities
-
- Description : System Verilog client server handshake (SVCS)
+ Description : Client-Server utils   
+               System Verilog client server handshake (SVCS)
 ******************************************************
 Data Types:
 elements:         integer,  double, char
@@ -49,7 +47,7 @@ const char* SVCV_DPI_Instr_enum_names[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_
 //prototypes
 //-------------
 
-//Title: Utilities
+//Title: Utilites: Client-Server
 
 ///////////////////////////////
 //Section:  Common Functions 
