@@ -2,7 +2,7 @@
  ============================================================================
  File        : svcs_client_server.h
  Author      : Victor Besyakov
- Version     : 0.0
+ Version     : 0.0.0
  Copyright (c) 2016 IC Verimeter. All rights reserved.  
                Licensed under the MIT License. 
                See LICENSE file in the project root for full license information.  
@@ -36,12 +36,9 @@ trnx -> header  ->  trnx_atribute  - hash/random double
 #include <netdb.h>
 #include <time.h>
 
-#define MY_HOST "localhost"
-#define BUFSIZE   1024
-#define MAXBUFLEN 1024
 
-typedef enum {SVCS_V_INT,SVCS_V_DOUBLE,SVCS_V_STRING,SVCS_A_STRUCTURE} SVCV_DPI_Instr_enum;
-const char* SVCV_DPI_Instr_enum_names[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING","SVCS_A_STRUCTURE"};
+typedef enum {SVCS_V_INT,SVCS_V_DOUBLE,SVCS_V_STRING,SVCS_A_STRUCTURE} SVCV_INSTR_ENUM;
+const char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING","SVCS_A_STRUCTURE"};
 
 //-------------
 //prototypes
@@ -53,7 +50,7 @@ const char* SVCV_DPI_Instr_enum_names[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_
 //Section:  Common Functions 
 
 /*
-  Function: svcs_hash 
+  Function: svcs_cs_hash 
   simple hash function 
   
   Parameters: 
@@ -62,10 +59,10 @@ const char* SVCV_DPI_Instr_enum_names[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_
   Returns: 
   hash value
 */
-unsigned long svcs_hash(const char *str);
+unsigned long svcs_cs_hash(const char *str);
 
 /*
-  Function: svcs_error 
+  Function: svcs_cs_error 
   perror wrapper
  
   Parameters:
@@ -74,11 +71,11 @@ unsigned long svcs_hash(const char *str);
   Returns: 
   void
  */
-void svcs_error(char *msg);
+void svcs_cs_error(char *msg);
 /////////////////////////////
 //Section: TCP/IP Functions
 /*
- Function: svcs_init_tcpserver 
+ Function: svcs_cs_init_tcpserver 
  TCP/IP server initialisation 
  
  Parameters: 
@@ -88,10 +85,10 @@ void svcs_error(char *msg);
  socket id
    
 */
-unsigned int svcs_init_tcpserver(const unsigned int portno);
+unsigned int svcs_cs_init_tcpserver(const unsigned int portno);
 
 /*
- Function: svcs_init_tcpclient 
+ Function: svcs_cs_init_tcpclient 
  TCP/IP client initialisation 
  
  Parameters:
@@ -103,10 +100,10 @@ unsigned int svcs_init_tcpserver(const unsigned int portno);
  socket id 
    
 */
-unsigned int svcs_init_tcpclient(const unsigned int portno,const char *hostname);
+unsigned int svcs_cs_init_tcpclient(const unsigned int portno,const char *hostname);
 
 /*
-Function: Example:  svcs_init_tcpclient ,svcs_init_tcpserver 
+Function: Example:  svcs_cs_init_tcpclient ,svcs_cs_init_tcpserver 
 
 (start code)    
  #define MY_HOST "localhost"
@@ -116,8 +113,8 @@ Function: Example:  svcs_init_tcpclient ,svcs_init_tcpserver
  port = MY_PORT;
  hostname =   MY_HOST;
   
- svcs_init_tcpserver(hostname);
- svcs_init_tcpclient(port,hostname);
+ svcs_cs_init_tcpserver(hostname);
+ svcs_cs_init_tcpclient(port,hostname);
 (end)
  */
 
@@ -138,7 +135,7 @@ element -> header ->  trnx_atribute     - hash/random double
 */
 
 /*
- Function: svcs_send_int
+ Function: svcs_cs_send_int
   send verilog/C "int" data over TCP/IP 
   
   Parameters:
@@ -148,10 +145,10 @@ element -> header ->  trnx_atribute     - hash/random double
   Returns:
     void
 */
-void svcs_send_int    (const int sockfd,const int* Int);
+void svcs_cs_send_int    (const int sockfd,const int* Int);
 
 /*
- Function: svcs_recv_int
+ Function: svcs_cs_recv_int
   fetch verilog/C "int" data from TCP/IP socket
   
   Parameters:
@@ -161,10 +158,10 @@ void svcs_send_int    (const int sockfd,const int* Int);
     data 
     
 */
-int* svcs_recv_int    (const int sockfd);
+int* svcs_cs_recv_int    (const int sockfd);
 
 /*
- Function: svcs_send_double
+ Function: svcs_cs_send_double
   send verilog "real"/C "double" over TCP/IP 
   
   Parameters:
@@ -175,10 +172,10 @@ int* svcs_recv_int    (const int sockfd);
     void
 */
 
-void svcs_send_double    (const int sockfd,const double Double);
+void svcs_cs_send_double    (const int sockfd,const double Double);
 
 /*
-  Function: svcs_recv_double
+  Function: svcs_cs_recv_double
   fetch verilog "real"/C "double" over TCP/IP 
   
   Parameters:
@@ -188,7 +185,7 @@ void svcs_send_double    (const int sockfd,const double Double);
   Double - data from socket 
     
 */
-double* svcs_recv_Double    (const int sockfd);
+double* svcs_cs_recv_double    (const int sockfd);
 
 
 
@@ -209,7 +206,7 @@ vector -> header ->  trnx_atribute - hash/random double
 */
 
 /*
- Function: svcs_send_intV
+ Function: svcs_cs_send_intV
   send "int" elements vector over TCP/IP 
   
   Parameters:
@@ -220,10 +217,10 @@ vector -> header ->  trnx_atribute - hash/random double
    Returns:
    void
 */
-void svcs_send_intV   (const int sockfd,const int* Int,const int size);
+void svcs_cs_send_intV   (const int sockfd,const int* Int,const int size);
 
 /*
- Function: svcs_recv_intV
+ Function: svcs_cs_recv_intV
   fetch "int" elements vector  elements from TCP/IP 
   
   Parameters:
@@ -233,11 +230,11 @@ void svcs_send_intV   (const int sockfd,const int* Int,const int size);
    data received from socket
     
 */
-int* svcs_recv_intV   (const int sockfd);
+int* svcs_cs_recv_intV   (const int sockfd);
 
 
 /*
- Function: svcs_send_doubleV
+ Function: svcs_cs_send_doubleV
   send "double" elements vector over TCP/IP 
   
   Parameters:
@@ -247,10 +244,10 @@ int* svcs_recv_intV   (const int sockfd);
   Returns:
     void
 */
-void svcs_send_doubleV   (const int sockfd,const double* Double,const int size);
+void svcs_cs_send_doubleV   (const int sockfd,const double* Double,const int size);
 
 /*
- Function: svcs_recv_doubleV
+ Function: svcs_cs_recv_doubleV
   fetch  "double" elements vector from TCP/IP 
   
   Parameters:
@@ -260,10 +257,10 @@ void svcs_send_doubleV   (const int sockfd,const double* Double,const int size);
   double - data from socket 
     
 */
-double* svcs_recv_doubleV   (const int sockfd);
+double* svcs_cs_recv_doubleV   (const int sockfd);
 
 /*
- Function: svcs_send_string
+ Function: svcs_cs_send_string
   send verilog string/C char* elements over TCP/IP 
   
   Parameters:
@@ -273,10 +270,10 @@ double* svcs_recv_doubleV   (const int sockfd);
   Returns:
     void
 */
-void svcs_send_string   (const int sockfd,const char* string);
+void svcs_cs_send_string   (const int sockfd,const char* string);
 
 /*
- Function: svcs_recv_string
+ Function: svcs_cs_recv_string
   fetch string from TCP/IP 
   
   Parameters:
@@ -286,7 +283,7 @@ void svcs_send_string   (const int sockfd,const char* string);
    data from socket 
     
 */
-char* svcs_recv_string   (const int sockfd);
+char* svcs_cs_recv_string   (const int sockfd);
 
 
 /*
@@ -305,7 +302,7 @@ array -> header ->   trnx_atribute - hash/random double
  */
 
 /*
-  Function: svcs_send_intA
+  Function: svcs_cs_send_intA
   send "int" vectors array over TCP/IP 
   
   Parameters:
@@ -314,10 +311,10 @@ array -> header ->   trnx_atribute - hash/random double
   ArrayI  - data 
  */
 
- void svcs_send_intA(const int sockfd,const int size,const int* ArrayI);
+ void svcs_cs_send_intA(const int sockfd,const int size,const int* ArrayI);
 
 /*
-  Function: svcs_recv_intA
+  Function: svcs_cs_recv_intA
   fetch "int" array of "int" vectors from TCP/IP  
   
   Parameters:
@@ -327,10 +324,10 @@ array -> header ->   trnx_atribute - hash/random double
   Array of int
   
 */
-int* svcs_recv_intA(const int sockfd);
+int* svcs_cs_recv_intA(const int sockfd);
 
 /*
-  Function: svcs_send_doubleA
+  Function: svcs_cs_send_doubleA
    send "double" vector array over TCP/IP 
   
   Parameters:
@@ -338,10 +335,10 @@ int* svcs_recv_intA(const int sockfd);
   size    - The number of array entries is equal to the number of "double" vectors     
   ArrayL  - data 
 */
-void svcs_send_doubleA(const int sockfd,const int size,const double* ArrayL);
+void svcs_cs_send_doubleA(const int sockfd,const int size,const double* ArrayL);
 
 /*
-  Function: svcs_recv_doubleA
+  Function: svcs_cs_recv_doubleA
   fetch "double" array of "double" vectors from TCP/IP  
   
   Parameters:
@@ -350,10 +347,10 @@ void svcs_send_doubleA(const int sockfd,const int size,const double* ArrayL);
   Returns: 
   Array of double 
 */
-double* rec_doubleA(const int sockfd);
+double* svcs_cs_recv_doubleA(const int sockfd);
 
 /*
-  Function: svcs_send_stringA
+  Function: svcs_cs_send_stringA
    send "string" vectors array  over TCP/IP 
   
   Parameters:
@@ -361,10 +358,10 @@ double* rec_doubleA(const int sockfd);
   size    - The number of array entries is equal to the number of strings 
   ArrayL  - data 
 */
-void svcs_send_stringA(const int sockfd,const int size,const char* ArrayS);
+void svcs_cs_send_stringA(const int sockfd,const int size,const char* ArrayS);
 
 /*
-  Function: svcs_recv_stringA
+  Function: svcs_cs_recv_stringA
   fetch string" vectors array from TCP/IP  
   
   Parameters:
@@ -374,7 +371,7 @@ void svcs_send_stringA(const int sockfd,const int size,const char* ArrayS);
   Array of strinds
   
 */
-char* svcs_recv_stringA(const int sockfd);
+char* svcs_cs_recv_stringA(const int sockfd);
 
 
 

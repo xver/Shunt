@@ -6,7 +6,7 @@
    Copyright (c) 2016 IC Verimeter. All rights reserved.  
    Licensed under the MIT License. 
    See LICENSE file in the project root for full license information.  
-   Description : "C" to "SV" mapping util
+   Description : "C" to "SV" mapping utils
    System Verilog client server handshake (SVCS)
    ==============================================================================
 */
@@ -36,8 +36,7 @@ integer
 time 
 bit
 reg,logic
-   
-   (end)
+(end)
 
 */
    
@@ -49,6 +48,7 @@ reg,logic
   reg[N:0] or logic[N:0]
   logic[N:0]
   (end)
+
 */
    
    
