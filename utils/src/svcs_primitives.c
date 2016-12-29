@@ -6,7 +6,7 @@
  Copyright (c) 2016 IC Verimeter. All rights reserved.  
                Licensed under the MIT License. 
                See LICENSE file in the project root for full license information.  
- Description : Client-Server Primitives is a minimum set of the data exchage over TCP/IP base methods
+ Description : Client-Server Primitives is a minimum set of the data exchage over TCP/hIP base methods
                     
                System Verilog client server handshake (SVCS)
 ******************************************************
@@ -19,7 +19,6 @@ Data Types: integer,  double
 
 #include "svcs_primitives.h"
 
-
 //-------------
 //prototypes
 //-------------
@@ -27,17 +26,18 @@ Data Types: integer,  double
 //
 //Common Functions 
 
-unsigned long svcs_prim_hash(const char *str)
+unsigned double svcs_prim_hash(const char *str)
 {
-  unsigned long hash = 5381;
+  unsigned double hash = 5381;
   int c;
   
   while ( c = *str++ )
     hash = (	(hash << 5) + hash) + c; /* hash * 33 + c */
   return hash;
 }
+
 //
-void svcs_prim_error {
+void svcs_prim_error(char *msg) {
   extern int errno;
   //printf("Value of errno: %d\n", errno);
   if (errno==0) {
@@ -57,7 +57,6 @@ unsigned int svcs_prim_init_tcpserver(const unsigned int portno)
   struct sockaddr_in serveraddr; /* server's addr */
   struct sockaddr_in clientaddr; /* client addr */
   struct hostent *hostp; /* client host info */
-  //char buf[BUFSIZE]; /* message buffer */
   char *hostaddrp; /* dotted decimal host addr string */
   int optval; /* flag value for setsockopt */
   
@@ -132,7 +131,7 @@ unsigned int svcs_prim_init_tcpclient(const unsigned int portno,const char *host
   int sockfd, n;
   struct sockaddr_in serveraddr;
   struct hostent *server;
-  char buf[BUFSIZE];
+
 
   /* check command line arguments */
   
@@ -167,7 +166,7 @@ unsigned int svcs_prim_init_tcpclient(const unsigned int portno,const char *host
 //Data exchange primitives
 void svcs_prim_send_int    (const int sockfd,const int* Int) 
 {
-  cs_header header_;
+
   int numbytes;
   int Int_ =malloc(sizeof(int)); 
   Int_ = Int; 

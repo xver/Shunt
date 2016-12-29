@@ -50,7 +50,7 @@ Data Types: integer,  double
   Returns: 
   hash value
 */
-unsigned long svcs_prim_hash(const char *str);
+double svcs_prim_hash(const char *str);
 
 /*
   Function: svcs_prim_error 
