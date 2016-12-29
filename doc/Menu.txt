@@ -46,6 +46,7 @@ Format: 1.51
 # --------------------------------------------------------------------------
 
 
+File: Client-Server Primitives  (utils/src/svcs_primitives.h)
 File: Introduction SVCS  (README.txt)
 File: License  (LICENSE.txt)
 File: Utilites: "C" to System Verilog mapping  (utils/src/svcs_c2sv_mapping.h)

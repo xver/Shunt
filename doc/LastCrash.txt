@@ -1,10 +1,10 @@
 Crash Message:
 
-   Couldn't open input file /home/v/workspace/OpenSrc/SVCS/utils/src/.#svcs_c2sv_mapping.h
+   Couldn't open input file /home/v/workspace/OpenSrc/SVCS/utils/src/.#svcs_client_server.c
 
 Current Action:
 
-   Parsing /home/v/workspace/OpenSrc/SVCS/utils/src/.#svcs_c2sv_mapping.h
+   Parsing /home/v/workspace/OpenSrc/SVCS/utils/src/.#svcs_client_server.c
 
 Natural Docs version 1.51
 Perl version 5.20.2 on linux

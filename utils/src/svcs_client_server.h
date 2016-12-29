@@ -1,5 +1,5 @@
 /* 
- ============================================================================
+ =======svcs_cs=====================================================================
  File        : svcs_client_server.h
  Author      : Victor Besyakov
  Version     : 0.0.0
@@ -40,83 +40,17 @@ trnx -> header  ->  trnx_atribute  - hash/random double
 typedef enum {SVCS_V_INT,SVCS_V_DOUBLE,SVCS_V_STRING,SVCS_A_STRUCTURE} SVCV_INSTR_ENUM;
 const char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING","SVCS_A_STRUCTURE"};
 
+
 //-------------
 //prototypes
 //-------------
 
 //Title: Utilites: Client-Server
 
+
+  
 ///////////////////////////////
-//Section:  Common Functions 
 
-/*
-  Function: svcs_cs_hash 
-  simple hash function 
-  
-  Parameters: 
-  *str - hash key
-  
-  Returns: 
-  hash value
-*/
-unsigned long svcs_cs_hash(const char *str);
-
-/*
-  Function: svcs_cs_error 
-  perror wrapper
- 
-  Parameters:
-  *str - error message
-  
-  Returns: 
-  void
- */
-void svcs_cs_error(char *msg);
-/////////////////////////////
-//Section: TCP/IP Functions
-/*
- Function: svcs_cs_init_tcpserver 
- TCP/IP server initialisation 
- 
- Parameters: 
- portno - socket port
-  
- Returns:  
- socket id
-   
-*/
-unsigned int svcs_cs_init_tcpserver(const unsigned int portno);
-
-/*
- Function: svcs_cs_init_tcpclient 
- TCP/IP client initialisation 
- 
- Parameters:
- 
- portno - socket port
- *hostname - server name
- 
- Returns: 
- socket id 
-   
-*/
-unsigned int svcs_cs_init_tcpclient(const unsigned int portno,const char *hostname);
-
-/*
-Function: Example:  svcs_cs_init_tcpclient ,svcs_cs_init_tcpserver 
-
-(start code)    
- #define MY_HOST "localhost"
- #define MY_PORT  3450
- char *hostname; 
- int port;
- port = MY_PORT;
- hostname =   MY_HOST;
-  
- svcs_cs_init_tcpserver(hostname);
- svcs_cs_init_tcpclient(port,hostname);
-(end)
- */
 
 /*
 
@@ -131,8 +65,19 @@ element -> header ->  trnx_atribute     - hash/random double
 	   payload ->  size  - number of data elements, size= 1
            data element 
 ---------------------------------------------------------------
-(end)
+ (end)
 */
+  typedef struct cs_header_t {
+    double   trnx_atribute;
+    double   trnx_type;
+    double   trnx_id;
+    //
+    int      trnx_payload_size 
+  } cs_header;
+
+
+
+//(end)
 
 /*
  Function: svcs_cs_send_int
