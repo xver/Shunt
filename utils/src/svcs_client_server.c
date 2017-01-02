@@ -21,8 +21,14 @@ array/composite:  integer vectors , double vectors, messages , structure
 
 #include "svcs_client_server.h"
 
-
-
+/*
+void svcs_cs_send_int    (const int sockfd,const int* Int) {
+  SVCV_INSTR_HASH_INDEX_DEFINE;
+  cs_header header_;
+  header_.trnx_type = svcs_prim_hash(SVCV_INSTR_ENUM_NAMES[SVCS_V_INT]);
+  header_.trnx_payload_size = 1;
+}
+*/
 #endif
 
 

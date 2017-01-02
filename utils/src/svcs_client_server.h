@@ -24,28 +24,17 @@ trnx -> header  ->  trnx_atribute  - hash/random double
 #ifndef SVCS_CLIENT_SERVER_H_
 #define SVCS_CLIENT_SERVER_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <time.h>
-
+#include "svcs_primitives.h"
 
 typedef enum {SVCS_V_INT,SVCS_V_DOUBLE,SVCS_V_STRING,SVCS_A_STRUCTURE} SVCV_INSTR_ENUM;
-const char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING","SVCS_A_STRUCTURE"};
+#define SVCV_INSTR_HASH_INDEX_DEFINE char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING","SVCS_A_STRUCTURE"}
 
 
 //-------------
 //prototypes
 //-------------
 
-//Title: Utilites: Client-Server
+//Title: 3. Utilites: Client-Server
 
 
   
@@ -56,18 +45,18 @@ const char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRI
 
 Section: Data exchange utilities (element)
 
+
 (start code)
 -------------------------------------------------------
-element -> header ->  trnx_atribute     - hash/random double
-                      trnx_type         - hash ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING")
+SVCS element transaction structure :
+
+element -> sockid - int socket id 
+           header ->  trnx_atribute     - hash index /random double
+                      trnx_type         - hash index ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING")
                       trnx_id           - random double
 
-	   payload ->  size  - number of data elements, size= 1
-           data element 
----------------------------------------------------------------
- (end)
-*/
   typedef struct cs_header_t {
+    int      sockid; 
     double   trnx_atribute;
     double   trnx_type;
     double   trnx_id;
@@ -75,62 +64,79 @@ element -> header ->  trnx_atribute     - hash/random double
     int      trnx_payload_size 
   } cs_header;
 
+	      payload ->  size  - number of data elements, size= 1
+                          data element
+---------------------------------------------------------------
+ (end)
+*/
+  typedef struct cs_header_t {
+    int      sockid; 
+    double   trnx_atribute;
+    double   trnx_type;
+    double   trnx_id;
+    //
+    int      trnx_payload_size;
+  } cs_header;
 
+ 
 
 //(end)
 
 /*
  Function: svcs_cs_send_int
-  send verilog/C "int" data over TCP/IP 
+  send SVCS transaction "int" over TCP/IP 
   
   Parameters:
-   sockfd - socket id
-   Int  -   data
-  
+   header - cs_header structure
+   Int    -  trnx payload (size+data)
+   
   Returns:
     void
 */
-void svcs_cs_send_int    (const int sockfd,const int* Int);
+
+void svcs_cs_send_int    (const cs_header* header,const int* Int);
 
 /*
  Function: svcs_cs_recv_int
-  fetch verilog/C "int" data from TCP/IP socket
+  fetch SVCS transaction "int" from TCP/IP socket
   
+
   Parameters:
-   sockfd - socket id
+    header - cs_header structure
 
   Returns: 
     data 
     
 */
-int* svcs_cs_recv_int    (const int sockfd);
+int* svcs_cs_recv_int    (cs_header* header);
 
 /*
  Function: svcs_cs_send_double
-  send verilog "real"/C "double" over TCP/IP 
+  send  SVCS transaction with verilog "real"/C "double" data over TCP/IP 
   
   Parameters:
-   sockfd - socket id
+   header - cs_header structure
    Double  - data to send
   
   Returns:
     void
 */
 
-void svcs_cs_send_double    (const int sockfd,const double Double);
+void svcs_cs_send_double    (const cs_header* header,const double Double);
 
 /*
   Function: svcs_cs_recv_double
-  fetch verilog "real"/C "double" over TCP/IP 
+  fetch SVCS transaction with verilog "real"/C "double" data over TCP/IP 
   
   Parameters:
-  sockfd - socket id
+   header - cs_header structure
 
   Returns: 
   Double - data from socket 
+  and header atributes (cs_header)
     
 */
-double* svcs_cs_recv_double    (const int sockfd);
+double* svcs_cs_recv_double    (cs_header* header);
 
 
 
@@ -140,95 +146,98 @@ double* svcs_cs_recv_double    (const int sockfd);
 
 (start code)
 -------------------------------------------------------
-vector -> header ->  trnx_atribute - hash/random double
-                     trnx_type     - hash ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING")
-                     trnx_id       - random double
+vector ->  sockid - socket id
+           header ->  trnx_atribute - hash/random double
+                      trnx_type     - hash ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING")
+                      trnx_id       - random double
 
           payload -> size          - number of data elements,size >1
-          data elements 
+                     data elements 
 ---------------------------------------------------------------
 (end)
 */
 
 /*
  Function: svcs_cs_send_intV
-  send "int" elements vector over TCP/IP 
+  send SVCS transaction with "int" elements vector over TCP/IP 
   
   Parameters:
-   sockfd - socket id
+   
+   header - cs_header structure
    Int   - data
-   size  - number of vector elements
- 
+    
    Returns:
    void
 */
-void svcs_cs_send_intV   (const int sockfd,const int* Int,const int size);
+void svcs_cs_send_intV   (const cs_header* header,const int* Int);
 
 /*
  Function: svcs_cs_recv_intV
-  fetch "int" elements vector  elements from TCP/IP 
+  fetch SVCS transaction with "int" elements vector  elements from TCP/IP 
   
   Parameters:
-   sockfd - socket id
+     header - cs_header structure
 
   Returns: 
    data received from socket
+  and header atributes (cs_header)
     
 */
-int* svcs_cs_recv_intV   (const int sockfd);
+int* svcs_cs_recv_intV   (cs_header* header);
 
 
 /*
  Function: svcs_cs_send_doubleV
-  send "double" elements vector over TCP/IP 
+  send SVCS transaction with "double" elements vector over TCP/IP 
   
   Parameters:
-   sockfd - socket id
-   Double   - data to send
-   size   - number of vector elements 
+     header - cs_header structure
+     Double - data 
   Returns:
     void
 */
-void svcs_cs_send_doubleV   (const int sockfd,const double* Double,const int size);
+void svcs_cs_send_doubleV   (const cs_header* header,const double* Double);
 
 /*
  Function: svcs_cs_recv_doubleV
-  fetch  "double" elements vector from TCP/IP 
+  fetch SVCS transaction with "double" elements vector from TCP/IP 
   
   Parameters:
-   sockfd - socket id
+    header - cs_header structure
 
   Returns: 
-  double - data from socket 
+  double - data from socket
+  and header atributes (cs_header)
     
 */
-double* svcs_cs_recv_doubleV   (const int sockfd);
+double* svcs_cs_recv_doubleV   (cs_header* header);
 
 /*
  Function: svcs_cs_send_string
-  send verilog string/C char* elements over TCP/IP 
+  send SVCS transaction with verilog string/C char* elements over TCP/IP 
   
   Parameters:
-   sockfd  - socket id
-   string  - data to send
-   size    - string size (number of string elements), if size =0 function assumes that end of the strig is "0" 
+    header - cs_header structure
+    string  - data to send
+
   Returns:
     void
 */
-void svcs_cs_send_string   (const int sockfd,const char* string);
+void svcs_cs_send_string   (const cs_header* header,const char* string);
 
 /*
  Function: svcs_cs_recv_string
-  fetch string from TCP/IP 
+  fetch SVCS transaction with verilog string/C char* elements from TCP/IP 
   
   Parameters:
-   sockfd - socket id
+    header - cs_header structure
 
   Returns: 
    data from socket 
+  and header atributes (cs_header)
     
 */
-char* svcs_cs_recv_string   (const int sockfd);
+char* svcs_cs_recv_string   (cs_header* header);
 
 
 /*
@@ -236,11 +245,12 @@ char* svcs_cs_recv_string   (const int sockfd);
 
 (start code)
  ---------------------------------------------------------------
-array -> header ->   trnx_atribute - hash/random double
+array ->  sockid - socket id
+          header ->   trnx_atribute - hash/random double
                          trnx_type   - hash ("SVCS_A_STRUCTURE")
                          trnx_id    - random double
-             payload->   size  > 1
-             data - vector
+          payload->   size  > 1
+          data - vector
 ---------------------------------------------------------------
  (end)
 
@@ -248,75 +258,76 @@ array -> header ->   trnx_atribute - hash/random double
 
 /*
   Function: svcs_cs_send_intA
-  send "int" vectors array over TCP/IP 
+  send SVCS transaction with "int" vectors array over TCP/IP 
   
   Parameters:
-  sockfd  - socket id
-  size    - The number of array entries is equal to the number of "int" vectors   
+  header - cs_header structure,
+  note: header.trnx_payload_size - The number of array entries is equal to the number of "int" vectors   
   ArrayI  - data 
  */
 
- void svcs_cs_send_intA(const int sockfd,const int size,const int* ArrayI);
+ void svcs_cs_send_intA(const cs_header* header,const int* ArrayI);
 
 /*
   Function: svcs_cs_recv_intA
-  fetch "int" array of "int" vectors from TCP/IP  
+  fetch SVCS transaction with "int" array of "int" vectors from TCP/IP  
   
   Parameters:
-  sockfd - socket id   
+   header - cs_header structure
+   string  - data to send
   
   Returns: 
   Array of int
   
 */
-int* svcs_cs_recv_intA(const int sockfd);
+int* svcs_cs_recv_intA(cs_header* header);
 
 /*
   Function: svcs_cs_send_doubleA
-   send "double" vector array over TCP/IP 
+   send SVCS transaction with "double" vector array over TCP/IP 
   
   Parameters:
-  sockfd  - socket id
-  size    - The number of array entries is equal to the number of "double" vectors     
-  ArrayL  - data 
+  header - cs_header structure,
+  note: header.trnx_payload_size  - The number of array entries is equal to the number of "double" vectors     
+  ArrayD  - data 
 */
-void svcs_cs_send_doubleA(const int sockfd,const int size,const double* ArrayL);
+void svcs_cs_send_doubleA(const int sockfd,const int size,const double* ArrayD);
 
 /*
   Function: svcs_cs_recv_doubleA
-  fetch "double" array of "double" vectors from TCP/IP  
+  fetch SVCS transaction with "double" array of "double" vectors from TCP/IP  
   
   Parameters:
-  sockfd - socket id   
-  
+  header - cs_header structure
+
   Returns: 
   Array of double 
 */
-double* svcs_cs_recv_doubleA(const int sockfd);
+double* svcs_cs_recv_doubleA(cs_header* header);
 
 /*
   Function: svcs_cs_send_stringA
-   send "string" vectors array  over TCP/IP 
+   send SVCS transaction with "string" vectors array  over TCP/IP 
   
   Parameters:
-  sockfd  - socket id
-  size    - The number of array entries is equal to the number of strings 
-  ArrayL  - data 
+  header - cs_header structure,
+  note: header.trnx_payload_size - The number of array entries is equal to the number of strings 
+  ArrayS  - data 
 */
-void svcs_cs_send_stringA(const int sockfd,const int size,const char* ArrayS);
+void svcs_cs_send_stringA(const cs_header* header,const char* ArrayS);
 
 /*
   Function: svcs_cs_recv_stringA
-  fetch string" vectors array from TCP/IP  
+  fetch SVCS transaction with string" vectors array from TCP/IP  
   
   Parameters:
-  sockfd - socket id   
+  header - cs_header structure,
   
   Returns: 
   Array of strinds
   
 */
-char* svcs_cs_recv_stringA(const int sockfd);
+char* svcs_cs_recv_stringA(cs_header structure);
 
 
 

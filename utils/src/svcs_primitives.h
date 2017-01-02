@@ -27,14 +27,14 @@ Data Types: integer,  double
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <time.h>
+#include <stdarg.h>
 
 
 //-------------
 //prototypes
 //-------------
 
-//Title: Client-Server Primitives
-
+//Title: 2. Client-Server Primitives
 
   
 ///////////////////////////////

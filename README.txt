@@ -1,5 +1,5 @@
 
-TITLE: Introduction SVCS
+TITLE: 1. Introduction SVCS
 
 (SVCS) System Verilog client server handshake
 (start code)
