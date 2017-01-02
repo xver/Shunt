@@ -37,23 +37,14 @@ typedef enum {SVCS_V_INT,SVCS_V_DOUBLE,SVCS_V_STRING,SVCS_A_STRUCTURE} SVCV_INST
 //Title: 3. Utilites: Client-Server
 
 
-  
 ///////////////////////////////
 
 
 /*
 
-Section: Data exchange utilities (element)
-
+Section: Data exchange utilities (header)
 
 (start code)
--------------------------------------------------------
-SVCS element transaction structure :
-
-element -> sockid - int socket id 
-           header ->  trnx_atribute     - hash index /random double
-                      trnx_type         - hash index ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING")
-                      trnx_id           - random double
 
   typedef struct cs_header_t {
     int      sockid; 
@@ -64,9 +55,6 @@ element -> sockid - int socket id
     int      trnx_payload_size 
   } cs_header;
 
-	      payload ->  size  - number of data elements, size= 1
-                          data element
----------------------------------------------------------------
  (end)
 */
   typedef struct cs_header_t {
@@ -77,10 +65,61 @@ element -> sockid - int socket id
     //
     int      trnx_payload_size;
   } cs_header;
-
  
+/*
+   Function: svcs_cs_print_header
+    print out SVCS header 
 
-//(end)
+    Parameters:
+     header - cs_header structure
+
+    Returns:
+      void
+  */
+
+  void svcs_cs_print_header    (cs_header* header);
+
+  /*
+   Function: svcs_cs_send_header
+    send SVCS header over TCP/IP
+
+    Parameters:
+     header - cs_header structure
+
+    Returns:
+      void
+  */
+
+  void svcs_cs_send_header    (cs_header* header);
+  /*
+   Function: svcs_cs_recv_header
+    fetch SVCS transaction header from TCP/IP socket
+
+    Parameters:
+      header - cs_header structure
+
+    Returns:
+      header - cs_header structure
+
+  */
+  void svcs_cs_recv_header   (cs_header* header);
+/*
+
+Section: Data exchange utilities (element)
+
+(start code)
+-------------------------------------------------------
+SVCS element transaction structure :
+
+element -> sockid - int socket id 
+           header ->  trnx_atribute     - hash index /random double
+                      trnx_type         - hash index ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING")
+                      trnx_id           - random double
+	  payload ->  size  - number of data elements, size= 1
+                      data element
+---------------------------------------------------------------
+ (end)
+*/
 
 /*
  Function: svcs_cs_send_int
