@@ -99,7 +99,7 @@ struct hostent {
 #endif
 /*
  Function: svcs_prim_init_tcpserver 
- TCP/IP server initialisation 
+ TCP/IP server initialization
  
  Parameters: 
  portno - socket port
@@ -112,7 +112,7 @@ unsigned int svcs_prim_init_tcpserver(const unsigned int portno);
 
 /*
  Function: svcs_prim_init_tcpclient 
- TCP/IP client initialisation 
+ TCP/IP client initialization
  
  Parameters:
  
@@ -164,12 +164,13 @@ void svcs_prim_send_int    (const int sockfd,const int* Int);
   
   Parameters:
    sockfd - socket id
-
+   Int - data from socket 
+     
   Returns: 
-    data 
+    void
     
 */
-int* svcs_prim_recv_int    (const int sockfd);
+void svcs_prim_recv_int    (const int sockfd,int* Int);
 
 /*
  Function: svcs_prim_send_double
@@ -183,7 +184,7 @@ int* svcs_prim_recv_int    (const int sockfd);
     void
 */
 
-void svcs_prim_send_double    (const int sockfd,const double Double);
+void svcs_prim_send_double    (const int sockfd,const double* Double);
 
 /*
   Function: svcs_prim_recv_double
@@ -191,12 +192,13 @@ void svcs_prim_send_double    (const int sockfd,const double Double);
   
   Parameters:
   sockfd - socket id
-
-  Returns: 
   Double - data from socket 
+  
+  Returns: 
+  void
     
 */
-double* svcs_prim_recv_double    (const int sockfd);
+void svcs_prim_recv_double    (const int sockfd,double* Doubl);
 
 
 #endif

@@ -36,38 +36,67 @@ typedef enum {SVCS_V_INT,SVCS_V_DOUBLE,SVCS_V_STRING,SVCS_A_STRUCTURE} SVCV_INST
 
 //Title: 3. Utilites: Client-Server
 
-
-///////////////////////////////
-
+								       
+//Section: Data exchange utilities (API)
 
 /*
+  Function: svcs_cs_send_trnx
+  send data over TCP/IP
+  
+  Parameters:
+  TODO
+  
+  Returns:
+  void
+*/
 
+//void svcs_cs_send_trnx    (TODO);
+
+/*
+  Function: svcs_cs_recv_trnx
+  fetch data from TCP/IP socket
+  
+  Parameters:
+  TODO
+  
+  Returns:
+  TODO
+
+*/
+
+//void svcs_cs_recv_trnx   (TODO);
+
+////////////////////////////
+/*
+  
 Section: Data exchange utilities (header)
 
 (start code)
 
   typedef struct cs_header_t {
-    int      sockid; 
-    double   trnx_atribute;
-    double   trnx_type;
-    double   trnx_id;
-    //
-    int      trnx_payload_size 
+  int               sockid;       
+  double            trnx_atribute;
+  SVCV_INSTR_ENUM   trnx_type;
+  double            trnx_id;
+  //
+  int      trnx_payload_size 
   } cs_header;
 
  (end)
 */
-  typedef struct cs_header_t {
-    int      sockid; 
-    double   trnx_atribute;
-    double   trnx_type;
-    double   trnx_id;
-    //
-    int      trnx_payload_size;
-  } cs_header;
+
+ typedef struct cs_header_t {
+   int      sockid; 
+   double   trnx_atribute;
+   SVCV_INSTR_ENUM   trnx_type;
+   double   trnx_id;
+   //
+   int      trnx_payload_size;
+ } cs_header;
+
  
 /*
-   Function: svcs_cs_print_header
+  Function: svcs_cs_print_header
     print out SVCS header 
 
     Parameters:
@@ -76,33 +105,35 @@ Section: Data exchange utilities (header)
     Returns:
       void
   */
-
-  void svcs_cs_print_header    (cs_header* header);
+void svcs_cs_print_header    (cs_header* header);
 
   /*
-   Function: svcs_cs_send_header
+    Function: svcs_cs_send_header
     send SVCS header over TCP/IP
-
+    
     Parameters:
-     header - cs_header structure
-
+    header - cs_header structure
+    
     Returns:
-      void
+    void
   */
+void svcs_cs_send_header    (cs_header* header);
 
-  void svcs_cs_send_header    (cs_header* header);
-  /*
-   Function: svcs_cs_recv_header
-    fetch SVCS transaction header from TCP/IP socket
+/*
+  Function: svcs_cs_recv_header
+  fetch SVCS transaction header from TCP/IP socket
+  
+  Parameters:
+  header - cs_header structure
+  
+  Returns:
+  void
+  
+*/
+void svcs_cs_recv_header   (cs_header* header);
 
-    Parameters:
-      header - cs_header structure
 
-    Returns:
-      header - cs_header structure
-
-  */
-  void svcs_cs_recv_header   (cs_header* header);
+//////////////////////////////////////
 /*
 
 Section: Data exchange utilities (element)
@@ -142,12 +173,12 @@ void svcs_cs_send_int    (const cs_header* header,const int* Int);
 
   Parameters:
     header - cs_header structure
-
+     Int    -  trnx payload (size+data)
   Returns: 
-    data 
+    void
     
 */
-int* svcs_cs_recv_int    (cs_header* header);
+void svcs_cs_recv_int    (cs_header* header,const int* Int);
 
 /*
  Function: svcs_cs_send_double
@@ -155,7 +186,7 @@ int* svcs_cs_recv_int    (cs_header* header);
   
   Parameters:
    header - cs_header structure
-   Double  - data to send
+   Double  - trnx payload (size+data)
   
   Returns:
     void
@@ -169,13 +200,14 @@ void svcs_cs_send_double    (const cs_header* header,const double Double);
   
   Parameters:
    header - cs_header structure
+   Double  - trnx payload (size+data)
 
   Returns: 
   Double - data from socket 
   and header atributes (cs_header)
     
 */
-double* svcs_cs_recv_double    (cs_header* header);
+void svcs_cs_recv_double    (cs_header* header,double Double);
 
 
 
@@ -201,7 +233,6 @@ vector ->  sockid - socket id
   send SVCS transaction with "int" elements vector over TCP/IP 
   
   Parameters:
-   
    header - cs_header structure
    Int   - data
     
@@ -222,7 +253,7 @@ void svcs_cs_send_intV   (const cs_header* header,const int* Int);
   and header atributes (cs_header)
     
 */
-int* svcs_cs_recv_intV   (cs_header* header);
+void svcs_cs_recv_intV   (cs_header* header,int* Int);
 
 
 /*

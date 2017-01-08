@@ -23,7 +23,7 @@ Data Types: integer,  double
 //prototypes
 //-------------
 
-//
+////////////////////////////////////
 //Common Functions 
 
 unsigned double svcs_prim_hash(const char *str)
@@ -46,7 +46,7 @@ void svcs_prim_error(char *msg) {
   else perror(msg);
   exit(1);
 }
-
+//////////////////////////////////
 //TCP/IP Functions
 unsigned int svcs_prim_init_tcpserver(const unsigned int portno)
 {
@@ -163,6 +163,7 @@ unsigned int svcs_prim_init_tcpclient(const unsigned int portno,const char *host
   return sockfd;
 }
 
+//////////////////////////////////
 //Data exchange primitives
 void svcs_prim_send_int    (const int sockfd,const int* Int) 
 {
@@ -177,18 +178,17 @@ void svcs_prim_send_int    (const int sockfd,const int* Int)
   
 }
 
-int* svcs_prim_recv_int    (const int sockfd)
+void svcs_prim_recv_int    (const int sockfd, int* Int)
 {
   unsigned int numbytes;
-  int* Int = (int*)malloc(sizeof(int));
+  //Int = (int*)malloc(sizeof(int));
   
   numbytes = recv(sockfd, &Int,sizeof(int) , 0);
   //printf("get int  (%0d) \n",Int);
   if (numbytes < 0) error("ERROR in get_int");
-  return Int;
-}
+  }
 
-void svcs_prim_send_double    (const int sockfd,const double Double)
+void svcs_prim_send_double    (const int sockfd,const double* Double)
 {
   int numbytes;
   numbytes = send(sockfd, &Double, sizeof(Double), 0);
@@ -196,15 +196,14 @@ void svcs_prim_send_double    (const int sockfd,const double Double)
 }
 
 
-double* svcs_prim_recv_double    (const int sockfd)
+void svcs_prim_recv_double    (const int sockfd,double* Double)
 {
   
   unsigned int numbytes;
-  long* Double = (long*)malloc(sizeof(long));
+  //Double = (long*)malloc(sizeof(long));
   
   numbytes = recv(sockfd, &Double,sizeof(Double) , 0);
   if (numbytes < 0) error("ERROR in get_long");
-  return Double;
 }
 
 
