@@ -45,7 +45,7 @@ Data Types: integer,  double
   simple hash function 
   
   Parameters: 
-  *str - hash key
+  str - hash key
   
   Returns: 
   hash value
@@ -57,7 +57,7 @@ double svcs_prim_hash(const char *str);
   perror wrapper
  
   Parameters:
-  *str - error message
+  str - error message
   
   Returns: 
   void
@@ -117,7 +117,7 @@ unsigned int svcs_prim_init_tcpserver(const unsigned int portno);
  Parameters:
  
  portno - socket port
- *hostname - server name
+ hostname - server name
  
  Returns: 
  socket id 

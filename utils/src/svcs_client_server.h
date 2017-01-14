@@ -37,35 +37,6 @@ typedef enum {SVCS_V_INT,SVCS_V_DOUBLE,SVCS_V_STRING,SVCS_A_STRUCTURE} SVCV_INST
 //Title: 3. Utilites: Client-Server
 
 								       
-//Section: Data exchange utilities (API)
-
-/*
-  Function: svcs_cs_send_trnx
-  send data over TCP/IP
-  
-  Parameters:
-  TODO
-  
-  Returns:
-  void
-*/
-
-//void svcs_cs_send_trnx    (TODO);
-
-/*
-  Function: svcs_cs_recv_trnx
-  fetch data from TCP/IP socket
-  
-  Parameters:
-  TODO
-  
-  Returns:
-  TODO
-
-*/
-
-//void svcs_cs_recv_trnx   (TODO);
-
 ////////////////////////////
 /*
   

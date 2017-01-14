@@ -26,9 +26,9 @@ Data Types: integer,  double
 ////////////////////////////////////
 //Common Functions 
 
-unsigned double svcs_prim_hash(const char *str)
+double svcs_prim_hash(const char *str)
 {
-  unsigned double hash = 5381;
+  long hash = 5381;
   int c;
   
   while ( c = *str++ )
@@ -68,7 +68,7 @@ unsigned int svcs_prim_init_tcpserver(const unsigned int portno)
    */
   parentfd = socket(AF_INET, SOCK_STREAM, 0);
   if (parentfd < 0)
-    error("ERROR opening socket");
+    svcs_prim_error("ERROR opening socket");
   
   /* setsockopt: Handy debugging trick that lets
    * us rerun the server immediately after we kill it;
@@ -95,13 +95,13 @@ unsigned int svcs_prim_init_tcpserver(const unsigned int portno)
   /*
    * bind: associate the parent socket with a port
    */
-  if (bind(parentfd, (struct sockaddr *) &serveraddr, sizeof(serveraddr)) < 0) error("ERROR on binding");
+  if (bind(parentfd, (struct sockaddr *) &serveraddr, sizeof(serveraddr)) < 0) svcs_prim_error("ERROR on binding");
   
   /*
    * listen: make this socket ready to accept connection requests
    */
   if (listen(parentfd, 5) < 0) /* allow 5 requests to queue up */
-    error("ERROR on listen");
+    svcs_prim_error("ERROR on listen");
   
   /*
    * main loop: wait for a connection request
@@ -110,7 +110,7 @@ unsigned int svcs_prim_init_tcpserver(const unsigned int portno)
   childfd = accept(parentfd, (struct sockaddr *) &clientaddr, (socklen_t *)&clientlen);
   
   if (childfd < 0)
-    error("ERROR on accept");
+    svcs_prim_error("ERROR on accept");
   
   /*
    * gethostbyaddr: determine who sent the message
@@ -118,10 +118,10 @@ unsigned int svcs_prim_init_tcpserver(const unsigned int portno)
   hostp = gethostbyaddr((const char *)&clientaddr.sin_addr.s_addr,
                         sizeof(clientaddr.sin_addr.s_addr), AF_INET);
   if (hostp == NULL)
-    error("ERROR on gethostbyaddr");
+    svcs_prim_error("ERROR on gethostbyaddr");
   hostaddrp = inet_ntoa(clientaddr.sin_addr);
   if (hostaddrp == NULL)
-    error("ERROR on inet_ntoa\n");
+    svcs_prim_error("ERROR on inet_ntoa\n");
   printf("server established connection with %s (%s)\n",
          hostp->h_name, hostaddrp);
   return childfd;
@@ -142,7 +142,7 @@ unsigned int svcs_prim_init_tcpclient(const unsigned int portno,const char *host
   /* socket: create the socket */
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if (sockfd < 0)
-    error("ERROR opening socket");
+    svcs_prim_error("ERROR opening socket");
   
   /* gethostbyname: get the server's DNS entry */
   server = gethostbyname(hostname);
@@ -159,7 +159,7 @@ unsigned int svcs_prim_init_tcpclient(const unsigned int portno,const char *host
   
   /* connect: create a connection with the server */
   if (connect(sockfd, &serveraddr, sizeof(serveraddr)) < 0)
-    error("ERROR connecting");
+    svcs_prim_error("ERROR connecting");
   return sockfd;
 }
 
@@ -173,7 +173,7 @@ void svcs_prim_send_int    (const int sockfd,const int* Int)
   Int_ = Int; 
   //printf("will send int(%d) of %d bytes\n",Int_,sizeof(int));
   numbytes = send(sockfd,&Int_, sizeof(int), 0);
-  if (numbytes < 0)  error("put_int");
+  if (numbytes < 0)  svcs_prim_error("put_int");
   free(Int_);
   
 }
@@ -185,14 +185,14 @@ void svcs_prim_recv_int    (const int sockfd, int* Int)
   
   numbytes = recv(sockfd, &Int,sizeof(int) , 0);
   //printf("get int  (%0d) \n",Int);
-  if (numbytes < 0) error("ERROR in get_int");
+  if (numbytes < 0) svcs_prim_error("ERROR in get_int");
   }
 
 void svcs_prim_send_double    (const int sockfd,const double* Double)
 {
   int numbytes;
   numbytes = send(sockfd, &Double, sizeof(Double), 0);
-  if (numbytes < 0) error("ERROR svcs_cs_send_double: numbytes < 0 ");
+  if (numbytes < 0) svcs_prim_error("ERROR svcs_cs_send_double: numbytes < 0 ");
 }
 
 
@@ -203,7 +203,7 @@ void svcs_prim_recv_double    (const int sockfd,double* Double)
   //Double = (long*)malloc(sizeof(long));
   
   numbytes = recv(sockfd, &Double,sizeof(Double) , 0);
-  if (numbytes < 0) error("ERROR in get_long");
+  if (numbytes < 0) svcs_prim_error("ERROR in get_long");
 }
 
 

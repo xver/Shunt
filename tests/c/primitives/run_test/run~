@@ -1,0 +1,4 @@
+../server/Debug/ctest_prim_server&
+touch #temp#
+../client/Debug/ctest_prim_client
+rm #temp#

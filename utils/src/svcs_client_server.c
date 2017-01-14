@@ -46,7 +46,7 @@ void svcs_cs_print_header    (cs_header* header) {
   printf("header->trnx_type\t(%0d)\n",header->trnx_payload_size);
 }
 
-
+/* TODO compile error
 void svcs_cs_send_header    (cs_header* header) {
   double trnx_type_ =0;
   SVCV_INSTR_HASH_INDEX_DEFINE;
@@ -81,9 +81,9 @@ void svcs_cs_recv_header   (cs_header* header) {
   header->trnx_payload_size = svcs_prim_recv_int(header->sockid);
 }
 
-
+*/
 // Data exchange utilities (element)
-
+/* TODO comp error
 void svcs_cs_send_int (const cs_header* header,const int* Int) {
   int Result_=0;
   double trnx_type_ =0;
@@ -98,7 +98,8 @@ void svcs_cs_send_int (const cs_header* header,const int* Int) {
   else svcs_cs_send_header(header);
   svcs_prim_send_int       (header->sockid,Int);
 }
-
+*/
+/*TODO ERROR
 int* svcs_cs_recv_int    (cs_header* header) {
   int Result_=0;
   double trnx_type_ =0;
@@ -114,7 +115,7 @@ int* svcs_cs_recv_int    (cs_header* header) {
   }
    return svcs_prim_recv_int(header->sockid);
 }
-
+*/
 
 //void svcs_cs_send_double    (const cs_header* header,const double Double); TODO
 
