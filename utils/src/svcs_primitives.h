@@ -108,7 +108,7 @@ struct hostent {
  socket id
    
 */
-unsigned int svcs_prim_init_tcpserver(const unsigned int portno);
+int svcs_prim_init_tcpserver(const unsigned int portno);
 
 /*
  Function: svcs_prim_init_tcpclient 
@@ -154,9 +154,9 @@ Function: Example:  tcpclient,tcpserver init
    Int  -   data
   
   Returns:
-    void
+   number of bytes have been sent : success > 0
 */
-void svcs_prim_send_int    (const int sockfd,const int* Int);
+int svcs_prim_send_int    (const int sockfd,const int* Int);
 
 /*
  Function: svcs_prim_recv_int
@@ -167,10 +167,10 @@ void svcs_prim_send_int    (const int sockfd,const int* Int);
    Int - data from socket 
      
   Returns: 
-    void
+    number of bytes have been received  : success > 0
     
 */
-void svcs_prim_recv_int    (const int sockfd,int* Int);
+int svcs_prim_recv_int    (const int sockfd,int* Int);
 
 /*
  Function: svcs_prim_send_double
@@ -181,7 +181,7 @@ void svcs_prim_recv_int    (const int sockfd,int* Int);
    Double  - data to send
   
   Returns:
-    void
+    number of bytes have been sent : success > 0
 */
 
 void svcs_prim_send_double    (const int sockfd,const double* Double);
