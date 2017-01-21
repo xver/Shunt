@@ -172,38 +172,44 @@ unsigned int svcs_prim_init_tcpclient(const unsigned int portno,const char *host
 int svcs_prim_send_int(const int sockfd,const int* Int)
 {
   int numbytes;
+
   //printf("svcs_prim_send_int:: will send int from addr %x=%x of %d bytes\n",Int,*Int,sizeof(int));
   numbytes = send(sockfd,Int, sizeof(int), 0);
-  if (numbytes < 0)  svcs_prim_error("put_int");
+  if (numbytes < 0)  svcs_prim_error("ERROR in svcs_prim_send_int : numbytes < 0 ");
   return numbytes;
 }
 
 int svcs_prim_recv_int    (const int sockfd, int* Int)
 {
 
-  unsigned int numbytes;
+  int numbytes;
+
   numbytes = recv(sockfd, Int,sizeof(int) , 0);
   //printf("svcs_prim_recv_int::get int  (%x) of %0d bytes\n",*Int,numbytes);
-  if (numbytes < 0) svcs_prim_error("ERROR in get_int");
+  if (numbytes < 0) svcs_prim_error("ERROR in svcs_prim_recv_int : numbytes < 0 ");
   return numbytes;
   }
 
-void svcs_prim_send_double    (const int sockfd,const double* Double)
+int svcs_prim_send_double    (const int sockfd,const double* Double)
 {
+
   int numbytes;
-  numbytes = send(sockfd, &Double, sizeof(Double), 0);
+  //printf("\nsvcs_prim_send_double:Size of double pointer = %d addr = %d value=%f\n", sizeof(double),Double,*Double);
+  numbytes = send(sockfd, Double, sizeof(double), 0);
+
   if (numbytes < 0) svcs_prim_error("ERROR svcs_cs_send_double: numbytes < 0 ");
+  return numbytes;
 }
 
 
-void svcs_prim_recv_double    (const int sockfd,double* Double)
+int svcs_prim_recv_double    (const int sockfd,double* Double)
 {
+ int numbytes;
   
-  unsigned int numbytes;
-  //Double = (long*)malloc(sizeof(long));
-  
-  numbytes = recv(sockfd, &Double,sizeof(Double) , 0);
-  if (numbytes < 0) svcs_prim_error("ERROR in get_long");
+  numbytes = recv(sockfd, Double,sizeof(double) , 0);
+  //printf("svcs_prim_recv_double::get Double  (%f) of %0d bytes\n",*Double,numbytes);
+  if (numbytes < 0) svcs_prim_error("ERROR in svcs_prim_recv_double : numbytes < 0 ");
+  return numbytes;
 }
 
 

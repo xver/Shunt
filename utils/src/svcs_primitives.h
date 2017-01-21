@@ -184,7 +184,7 @@ int svcs_prim_recv_int    (const int sockfd,int* Int);
     number of bytes have been sent : success > 0
 */
 
-void svcs_prim_send_double    (const int sockfd,const double* Double);
+int svcs_prim_send_double    (const int sockfd,const double* Double);
 
 /*
   Function: svcs_prim_recv_double
@@ -195,10 +195,10 @@ void svcs_prim_send_double    (const int sockfd,const double* Double);
   Double - data from socket 
   
   Returns: 
-  void
+ number of bytes have been sent : success > 0
     
 */
-void svcs_prim_recv_double    (const int sockfd,double* Doubl);
+int svcs_prim_recv_double    (const int sockfd,double* Doubl);
 
 
 #endif
