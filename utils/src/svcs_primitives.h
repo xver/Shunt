@@ -66,6 +66,7 @@ void svcs_prim_error(char *msg);
 
 /////////////////////////////
 //Section: TCP/IP Functions
+
 #if 0
 /*
  * Structs exported from in.h

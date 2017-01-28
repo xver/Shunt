@@ -31,8 +31,8 @@ double svcs_prim_hash(const char *str)
   long hash = 5381;
   int c;
   
-  while ( c = *str++ )
-    hash = (	(hash << 5) + hash) + c; /* hash * 33 + c */
+  while (( c = *str++) )
+	  hash = (	(hash << 5) + hash) + c; /* hash * 33 + c */
   return hash;
 }
 
@@ -160,7 +160,7 @@ unsigned int svcs_prim_init_tcpclient(const unsigned int portno,const char *host
   serveraddr.sin_port = htons(portno);
   
   /* connect: create a connection with the server */
-  if (connect(sockfd, &serveraddr, sizeof(serveraddr)) < 0) {
+  if (connect(sockfd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0) {
     svcs_prim_error("svcs_prim_init_tcpclient connecting");
     return -1;
   }

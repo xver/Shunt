@@ -1,0 +1,4 @@
+../server/Debug/ctest_cs_server&
+touch temp
+../client/Debug/ctest_cs_client
+rm temp

@@ -28,7 +28,7 @@ array/composite:  integer vectors , double vectors, messages , structure
   typedef struct cs_header_t {
     int      sockid; 
     double   trnx_atribute;
-    double   trnx_type;
+    int   trnx_type;
     double   trnx_id;
     //
     int      trnx_payload_size;
@@ -36,86 +36,93 @@ array/composite:  integer vectors , double vectors, messages , structure
 */
 
 void svcs_cs_print_header    (cs_header* header) {
+
   SVCV_INSTR_HASH_INDEX_DEFINE;
-  int trn_type_result_ = 0;
-  double trnx_type_ =0;
-  int i =0;
-  printf("header->sockid\t(%0d)\n",header->sockid);
-  printf("header->trnx_atribute\t(%d)\n",header->trnx_atribute);
-  printf("header->trnx_type\t(%s)\t%d\n ",svcs_prim_hash(SVCV_INSTR_ENUM_NAMES[header->trnx_type]),SVCV_INSTR_ENUM_NAMES[header->trnx_type]);
-  printf("header->trnx_type\t(%0d)\n",header->trnx_payload_size);
+
+  printf("\nheader->sockid\t(%0d)",header->sockid);
+  printf("\nheader->trnx_atribute\t(%f)",header->trnx_atribute);
+  printf("\nheader->trnx_type\t(%s)(%d)\thash=%f",SVCV_INSTR_ENUM_NAMES[header->trnx_type],header->trnx_type,svcs_prim_hash(SVCV_INSTR_ENUM_NAMES[header->trnx_type]));
+  printf("\nheader->trnx_payload_size\t(%0d)",header->trnx_payload_size);
 }
 
-/* TODO compile error
-void svcs_cs_send_header    (cs_header* header) {
+
+int svcs_cs_send_header    (cs_header* header) {
   double trnx_type_ =0;
+  int success_ = 1;
+
   SVCV_INSTR_HASH_INDEX_DEFINE;
-  svcs_prim_send_double    (header->sockid,header->trnx_atribute);
-  svcs_prim_send_double    (header->sockid,header->trnx_type);
+  if (svcs_prim_send_double(header->sockid,&header->trnx_atribute)==0) success_=0;
   trnx_type_ = svcs_prim_hash(SVCV_INSTR_ENUM_NAMES[header->trnx_type]);
-  svcs_prim_send_double    (header->sockid,header->trnx_id);
-  svcs_prim_send_int       (header->sockid,header->trnx_payload_size);
+  if (svcs_prim_send_double(header->sockid,&trnx_type_)==0) success_=0;
+  if (svcs_prim_send_double(header->sockid,&header->trnx_id)==0) success_=0;
+  if (svcs_prim_send_int(header->sockid,&header->trnx_payload_size)==0) success_=0;
+  return success_;
 }
 
-void svcs_cs_recv_header   (cs_header* header) {
-  double trnx_type_    = 0;
-  SVCV_INSTR_HASH_INDEX_DEFINE;
-  header->trnx_type = -1; 
-  
-  header->trnx_atribute     = svcs_prim_recv_double(header->sockid);
-  //
-  trnx_type_                = svcs_prim_recv_double(header->sockid);
-  int i =0;
-  while (i < SVCS_A_STRUCTURE && header->trnx_type < 0) {
-    if (trnx_type_ == svcs_prim_hash(SVCV_INSTR_ENUM_NAMES[i]))
-      header->trnx_type = i;   
-    i++;	  
-  }
-  
-  if ( header->trnx_type < 0) { 	
-    svcs_prim_error("\tcs_header ERROR Undefined trnx_type"); 
-    printf("header->trnx_type \t(%0d) ",header->trnx_payload_size);
-  }
-  //
-  header->trnx_id  = svcs_prim_recv_double(header->sockid);
-  header->trnx_payload_size = svcs_prim_recv_int(header->sockid);
+int svcs_cs_recv_header   (cs_header* header) {
+	  double trnx_type_ =-1;
+	  int success_ = 1;
+	  if (svcs_prim_recv_double (header->sockid,&header->trnx_atribute)==0) success_=0;
+	  if (svcs_prim_recv_double    (header->sockid,&trnx_type_)==0) success_=0;
+	  header->trnx_type = svcs_cs_trnx_type(trnx_type_);
+	  if (svcs_prim_recv_double    (header->sockid,&header->trnx_id)==0) success_=0;
+	  if (svcs_prim_recv_int       (header->sockid,&header->trnx_payload_size)==0) success_=0;
+	  return success_;
 }
 
-*/
+double svcs_cs_trnx_type_hash(int trnx_type) {
+
+	SVCV_INSTR_HASH_INDEX_DEFINE;
+	double result_ = -1;
+
+	if ( trnx_type < SVCS_A_STRUCTURE && trnx_type > 0 ) {
+		result_ = svcs_prim_hash(SVCV_INSTR_ENUM_NAMES[trnx_type]);
+	  }
+	return result_;
+}
+
+
+int svcs_cs_trnx_type(double hash) {
+	SVCV_INSTR_HASH_INDEX_DEFINE;
+	int result_ = -1;
+	int i =0;
+	  while (i < SVCS_A_STRUCTURE && result_ < 0) {
+	    if (hash == svcs_prim_hash(SVCV_INSTR_ENUM_NAMES[i]))
+	      result_ = i;
+	    i++;
+	  }
+	return result_;
+
+}
+
+
 // Data exchange utilities (element)
-/* TODO comp error
-void svcs_cs_send_int (const cs_header* header,const int* Int) {
-  int Result_=0;
-  double trnx_type_ =0;
-  SVCV_INSTR_HASH_INDEX_DEFINE;
-  if (header->trnx_payload_size !=1)   Result_=-1;
-  trnx_type_ = svcs_prim_hash(SVCV_INSTR_ENUM_NAMES[SVCS_V_INT]);
-  if (header-> trnx_type != trnx_type_ )   Result_=-1;
-  if(Result_<0)  {
-    svcs_prim_error("svcs_cs_send_int header Error");
-    svcs_cs_print_header(header);
-  }
-  else svcs_cs_send_header(header);
-  svcs_prim_send_int       (header->sockid,Int);
+
+int svcs_cs_send_intV (const cs_header* header,const int* Int) {
+  int Result_=-1;
+
+  if (header->trnx_type ==  SVCS_V_INT) {
+  for (int i=0;i< header->trnx_payload_size;i++) {
+  Result_ = svcs_prim_send_int(header->sockid,&Int[i]);
+  	  }
+  	}
+  return Result_;
 }
-*/
-/*TODO ERROR
-int* svcs_cs_recv_int    (cs_header* header) {
-  int Result_=0;
-  double trnx_type_ =0;
-  
-  SVCV_INSTR_HASH_INDEX_DEFINE;
-  svcs_cs_recv_header(header);
-  if (header->trnx_payload_size !=1)   Result_=-1;
-  trnx_type_ = svcs_prim_hash(SVCV_INSTR_ENUM_NAMES[SVCS_V_INT]);
-  if (header-> trnx_type != trnx_type_ )   Result_=-1;
-  if(Result_<0)  {
-    svcs_prim_error("svcs_cs_recv_int header Error");
-    svcs_cs_print_header(header);
-  }
-   return svcs_prim_recv_int(header->sockid);
+
+
+int  svcs_cs_recv_intV    (cs_header* header,int* Int) {
+	int Result_=-1;
+
+	  if (header->trnx_type ==  SVCS_V_INT) {
+	  for (int i=0;i< header->trnx_payload_size;i++) {
+	  Result_ = svcs_prim_recv_int(header->sockid,&Int[i]);
+	  	  }
+	  	}
+	  return Result_;
+
 }
-*/
+
+
 
 //void svcs_cs_send_double    (const cs_header* header,const double Double); TODO
 
