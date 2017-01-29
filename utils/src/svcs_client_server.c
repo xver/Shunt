@@ -122,7 +122,30 @@ int  svcs_cs_recv_intV    (cs_header* header,int* Int) {
 
 }
 
+////////////
+int svcs_cs_send_doubleV (const cs_header* header,const double* Double) {
+  int Result_=-1;
 
+  if (header->trnx_type ==  SVCS_V_DOUBLE) {
+  for (int i=0;i< header->trnx_payload_size;i++) {
+  Result_ = svcs_prim_send_double(header->sockid,&Double[i]);
+  	  }
+  	}
+  return Result_;
+}
+
+
+int  svcs_cs_recv_doubleV    (cs_header* header,double* Double) {
+	int Result_=-1;
+
+	  if (header->trnx_type ==  SVCS_V_DOUBLE) {
+	  for (int i=0;i< header->trnx_payload_size;i++) {
+	  Result_ = svcs_prim_recv_double(header->sockid,&Double[i]);
+	  	  }
+	  	}
+	  return Result_;
+
+}
 
 //void svcs_cs_send_double    (const cs_header* header,const double Double); TODO
 
@@ -133,11 +156,6 @@ int  svcs_cs_recv_intV    (cs_header* header,int* Int) {
 // Data exchange utilities (vector)
 
 
-//void svcs_cs_send_intV   (const cs_header* header,const int* Int) TODO
-//int* svcs_cs_recv_intV   (cs_header* header); TODO
-
-//void svcs_cs_send_doubleV   (const cs_header* header,const double* Double); TODO
-//double* svcs_cs_recv_doubleV   (cs_header* header);
 
 //void svcs_cs_send_string   (const cs_header* header,const char* string); TODO
 //char* svcs_cs_recv_string   (cs_header* header); TODO
