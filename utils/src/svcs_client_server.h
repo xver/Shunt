@@ -149,61 +149,6 @@ element -> sockid - int socket id
  (end)
 */
 
-/*
- Function: svcs_cs_send_int
-  send SVCS transaction "int" over TCP/IP 
-  
-  Parameters:
-   header - cs_header structure
-   Int    -  trnx payload (size+data)
-   
-  Returns:
-    number of elements have been sent  : success > 0
-*/
-
-int svcs_cs_send_int    (const cs_header* header,const int* Int);
-
-/*
- Function: svcs_cs_recv_int
-  fetch SVCS transaction "int" from TCP/IP socket
-  
-
-  Parameters:
-    header - cs_header structure
-    Int    - Data received
-
-  Returns:
-  number of elements have been received  : success > 0
-*/
-int svcs_cs_recv_int    (cs_header* header,const int* Int);
-
-/*
- Function: svcs_cs_send_double
-  send  SVCS transaction with verilog "real"/C "double" data over TCP/IP 
-  
-  Parameters:
-   header - cs_header structure
-   Double  - trnx payload (size+data)
-  
-  Returns:
-   number of elements have been sent  : success > 0
-*/
-
-int svcs_cs_send_double    (const cs_header* header,const double Double);
-
-/*
-  Function: svcs_cs_recv_double
-  fetch SVCS transaction with verilog "real"/C "double" data over TCP/IP 
-  
-  Parameters:
-    header - cs_header structure
-    Double  - Data received
-
-  Returns: 
-  number of elements have been received  : success > 0
-*/
-int svcs_cs_recv_double    (cs_header* header,double Double);
-
 
 /*
  Section: Data exchange utilities (vector)

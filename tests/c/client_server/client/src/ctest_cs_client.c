@@ -63,6 +63,21 @@ int main(void) {
     if (svcs_cs_send_doubleV (&header,DoubleV)<= 0) success = 0;
     if (success == 0 )  printf("\nDoubleV client fail send");
     ////////////////////////////////////
+    /*    String Test */
+    success =1;
+    //String
+
+    svcs_cs_recv_header (&header);
+    svcs_cs_print_header(&header);
+    char* String;
+    String = malloc(sizeof(char)*header.trnx_payload_size);
+    if (svcs_cs_recv_string  (&header,String)<= 0) success = 0;
+    printf("client string length(%0d) (%s) \n",header.trnx_payload_size,String);
+     if (success == 0 )  printf("\nString client fail recv"); 
+     svcs_cs_send_header(&header);
+     if (svcs_cs_send_string (&header,String)<= 0) success = 0;
+    if (success == 0 )  printf("\nString client fail send");
+    ////////////////////////////////////
     puts("\nctest_cs_client end");
   }
   if ( success >0)

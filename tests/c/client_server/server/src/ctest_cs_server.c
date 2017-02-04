@@ -101,13 +101,45 @@ int main(void) {
 	for (int i = 0; i < n; i++) {
 	  if(DoubleVexp[i] != DoubleVact[i]) {
 	    success = 0;
-	    printf("\nDoubleV loopback fail DoubleVact[%0d]=%f doubleVexp=%f",i,DoubleVact[i],DoubleVact[i]);
+	    printf("\nDoubleV loopback fail DoubleVact[%0d]=%f doubleVexp=%f",i,DoubleVact[i],DoubleVexp[i]);
 	  }
 	}
       }
       if (success > 0 )  printf("\ndoubleV loopback pass");
       else  printf("\nDoubleV loopback fail");
-     
+      
+      //////////////////////////////////////////
+      /*    String Test */
+      success =1;
+      //String
+      const char *StringExp = "String Test send from  Server\0";
+      n = strlen(StringExp);
+      header.sockid = socket;
+      header.trnx_id = rand();
+      header.trnx_payload_size = n;
+      header.trnx_type = SVCS_V_STRING;
+      //send
+      if (svcs_cs_send_header(&header)<= 0) success = 0;
+      if (svcs_cs_send_string  (&header,StringExp)<= 0) success = 0;
+      header.trnx_type = SVCS_V_DOUBLE;
+
+      //recv 
+      if (svcs_cs_recv_header (&header)<= 0) success = 0;
+     char* StringAct;
+     StringAct = malloc(sizeof(char)*header.trnx_payload_size);
+     if (svcs_cs_recv_string (&header,StringAct)<= 0) success = 0;
+       if (success == 0 )  printf("\nString loopback fail recv");
+      //compare */
+       if (sizeof(StringExp) == sizeof(StringAct)) {
+       	for (int i = 0; i < n; i++) {
+       	  if(StringExp[i] != StringAct[i]) {
+       	    success = 0;
+       	    printf("\nString loopback fail StringAct[%0d]=%c StringExp[%0d]=%c",i,StringAct[i],i,StringExp[i]);
+       	  }
+       	}
+       }
+      if (success > 0 )  printf("\n String loopback pass");
+      else  printf("\nString loopback fail");
       ///////////////////////////////////////////
       puts("\nctest_cs_server end\n");
     }

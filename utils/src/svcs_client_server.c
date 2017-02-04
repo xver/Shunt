@@ -147,6 +147,25 @@ int  svcs_cs_recv_doubleV    (cs_header* header,double* Double) {
 
 }
 
+int svcs_cs_send_string   (const cs_header* header,const char* string) {
+	int Result_=-1;
+	 //printf("will send string  (%s) of %d bytes\n",str,length);
+	if (header->trnx_type ==  SVCS_V_STRING) {
+	 Result_ = send(header->sockid, string,header->trnx_payload_size, 0);
+	}
+	 return Result_;
+}
+
+int svcs_cs_recv_string   (cs_header* header,char* string) {
+	int Result_=-1;
+	if (header->trnx_type ==  SVCS_V_STRING) {
+	  Result_ = recv(header->sockid,string,header->trnx_payload_size, 0);
+	  //printf("get string length(%0d) (%s) \n",Result_,string);
+	}
+    return Result_;
+}
+
+
 //void svcs_cs_send_double    (const cs_header* header,const double Double); TODO
 
 //double* svcs_cs_recv_double    (cs_header* header); TODO
@@ -156,9 +175,6 @@ int  svcs_cs_recv_doubleV    (cs_header* header,double* Double) {
 // Data exchange utilities (vector)
 
 
-
-//void svcs_cs_send_string   (const cs_header* header,const char* string); TODO
-//char* svcs_cs_recv_string   (cs_header* header); TODO
 
 
 //Data exchange utilities (array)
