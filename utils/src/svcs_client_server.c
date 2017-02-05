@@ -165,28 +165,42 @@ int svcs_cs_recv_string   (cs_header* header,char* string) {
     return Result_;
 }
 
-
-//void svcs_cs_send_double    (const cs_header* header,const double Double); TODO
-
-//double* svcs_cs_recv_double    (cs_header* header); TODO
-
-
-
-// Data exchange utilities (vector)
-
+int svcs_cs_send_intA(const cs_header* header,const int* ArrayI) {	
+	//TODO
+  int Result_=-1;
+  if (header->trnx_type ==  SVCS_A_STRUCTURE) {
+  }
+  return Result_;
+}
 
 
+int svcs_cs_recv_intA(cs_header* header,int* ArrayI) {
+  //TODO
+  int Result_=-1;
+  return Result_;
+}
+int svcs_cs_send_doubleA(cs_header* header,const double* ArrayD) {
+  //TODO
+  int Result_=-1;
+  return Result_;
+}
+int svcs_cs_recv_doubleA(cs_header* header,double* ArrayD) {
+  //TODO
+  int Result_=-1;
+  return Result_;
+}
+int svcs_cs_send_stringA(const cs_header* header,const char* ArrayS) {
+  //TODO
+  int Result_=-1;
+  return Result_;
+}
+int svcs_cs_recv_stringA(cs_header structure,char* ArrayS){
+  //TODO
+  int Result_=-1;
+  return Result_;
+}
 
-//Data exchange utilities (array)
 
-//void svcs_cs_send_intA(const cs_header* header,const int* ArrayI); TODO
-//int* svcs_cs_recv_intA(cs_header* header); TODO
-
-//void svcs_cs_send_doubleA(const int sockfd,const int size,const double* ArrayD); TODO
-//double* svcs_cs_recv_doubleA(cs_header* header); TODO
-
-//void svcs_cs_send_stringA(const cs_header* header,const char* ArrayS); TODO
-//char* svcs_cs_recv_stringA(cs_header structure); TODO
 
 
 #endif
