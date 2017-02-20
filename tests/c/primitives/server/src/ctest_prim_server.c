@@ -46,6 +46,7 @@ int main(void) {
 
     puts("\nctest_prim_server end\n");
   }
+
   if ( success >0)
     return EXIT_SUCCESS;
   else 

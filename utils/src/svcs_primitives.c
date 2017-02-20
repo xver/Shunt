@@ -26,8 +26,7 @@ Data Types: integer,  double
 ////////////////////////////////////
 //Common Functions 
 
-double svcs_prim_hash(const char *str)
-{
+double svcs_prim_hash(const char *str) {
   long hash = 5381;
   int c;
   
@@ -49,8 +48,7 @@ void svcs_prim_error(char *msg) {
 //////////////////////////////////
 //TCP/IP Functions
 
- int svcs_prim_init_tcpserver(const unsigned int portno)
-{
+ int svcs_prim_init_tcpserver(const unsigned int portno) {
   int parentfd; /* parent socket */
   int childfd; /* child socket */
   int clientlen; /* byte size of client's address */
@@ -173,9 +171,9 @@ int svcs_prim_send_int(const int sockfd,const int* Int)
 {
   int numbytes;
 
-  //printf("svcs_prim_send_int:: will send int from addr %x=%x of %d bytes\n",Int,*Int,sizeof(int));
+  //printf("\nsvcs_prim_send_int:: will send int from addr %x=%x of %d bytes",Int,*Int,sizeof(int));
   numbytes = send(sockfd,Int, sizeof(int), 0);
-  if (numbytes < 0)  svcs_prim_error("ERROR in svcs_prim_send_int : numbytes < 0 ");
+  if (numbytes < 0)  svcs_prim_error("\nERROR in svcs_prim_send_int : numbytes < 0 ");
   return numbytes;
 }
 
@@ -185,8 +183,8 @@ int svcs_prim_recv_int    (const int sockfd, int* Int)
   int numbytes;
 
   numbytes = recv(sockfd, Int,sizeof(int) , 0);
-  //printf("svcs_prim_recv_int::get int  (%x) of %0d bytes\n",*Int,numbytes);
-  if (numbytes < 0) svcs_prim_error("ERROR in svcs_prim_recv_int : numbytes < 0 ");
+  //printf("\nsvcs_prim_recv_int::get int  (%x) of %0d bytes",*Int,numbytes);
+  if (numbytes < 0) svcs_prim_error("\nERROR in svcs_prim_recv_int : numbytes < 0 ");
   return numbytes;
   }
 
