@@ -65,9 +65,9 @@ int     *trnx_payload_sizes; // array of payload sizes, number of array elements
 */
 
 typedef struct cs_data_header_t {
-  int      n_payloads;
-  int     *trnx_payload_sizes;
-} cs_data_header;
+   int      n_payloads;
+   int     *trnx_payload_sizes;
+ } cs_data_header;
 
 typedef struct cs_trnx_header_t {
   //int      sockid;
@@ -76,10 +76,10 @@ typedef struct cs_trnx_header_t {
   double   data_type;
 } cs_trnx_header;
 
- typedef struct cs_header_t {
-   cs_trnx_header trnx;
-   cs_data_header data;
- } cs_header;
+typedef struct cs_header_t {
+  cs_trnx_header trnx;
+  cs_data_header data;
+} cs_header;
 
 //
 /*
@@ -273,7 +273,7 @@ int svcs_cs_send_intV   (int sockid,const cs_data_header* h,const int* Int);
   Returns: 
    number of elements have been received  : success > 0
 */
-int svcs_cs_recv_intV   (int sockid,cs_data_header* h,int* Int);
+int svcs_cs_recv_intV   (int sockid,cs_data_header* h,int ** Int);
 
 
 /*

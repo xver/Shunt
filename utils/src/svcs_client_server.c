@@ -25,25 +25,12 @@ array/composite:  integer vectors , double vectors, messages , structure
 
 //Data exchange utilities (header)
 
-/*
-  typedef struct cs_header_t {
-  int      sockid;
-  double   trnx_atribute;
-  double   trnx_type;
-  double   trnx_id;
-  //
-  int      n_payloads;
-  int*     trnx_payload_sizes;
-  } cs_header;
-*/
 
 double svcs_cs_data_type_hash(int data_type,char* data_type_names[],int last_enum) {
   double result_ = -1;
-
+  
   if ( data_type < last_enum+1 && data_type >= 0 ) {
     result_ = svcs_prim_hash(data_type_names[data_type]);
-    //int check_ = svcs_cs_data_type(result_,data_type_names);
-    //if (check_ <=  0) result_ = -1;
   }
   return result_;
 };
@@ -52,7 +39,7 @@ double svcs_cs_data_type_hash(int data_type,char* data_type_names[],int last_enu
 int svcs_cs_data_type(double hash,char* trnx_type_names[],int last_enum) {
   int result_ = -1;
   int i =0;
-
+  
   //printf("\nsvcs_cs_data_type n_=%0d",hash);
   while (i < last_enum+1 && result_ < 0) {
     double hash_ = svcs_prim_hash(trnx_type_names[i]);
@@ -82,100 +69,107 @@ void svcs_cs_print_trnx_header (cs_trnx_header* h,char* data_type_names[],int la
 }
 
 void svcs_cs_print_data_header (cs_data_header* h,char* msg) {
-   printf("\n%s h->n_payloads\t(%0d)",msg,h->n_payloads);
-   for(int i=0;i<h->n_payloads;i++) {
-   printf("\n%s h->trnx_payload_sizes[%0d]=%d",msg,i,h->trnx_payload_sizes[i]);
-   }
+  printf("\n%s h->n_payloads\t(%0d)",msg,h->n_payloads);
+  for(int i=0;i<h->n_payloads;i++) {
+    printf("\n%s h->trnx_payload_sizes[%0d]=%d",msg,i,h->trnx_payload_sizes[i]);
+  }
 }
 
 void svcs_cs_print_header    (cs_header* h,char* data_type_names[],int last_enum,char* msg) {
   svcs_cs_print_trnx_header (&(*h).trnx,data_type_names,last_enum,msg);
   svcs_cs_print_data_header (&(*h).data,msg);
- }
+}
 
 int svcs_cs_send_header    (int sockid,cs_header* h) {
- int Result_=1;
- svcs_cs_send_trnx_header(sockid,&(*h).trnx);
- svcs_cs_send_data_header(sockid,&(*h).data);
- return Result_;
+  int Result_=1;
+  svcs_cs_send_trnx_header(sockid,&(*h).trnx);
+  svcs_cs_send_data_header(sockid,&(*h).data);
+  return Result_;
 }
 
 int svcs_cs_send_trnx_header    (int sockid,cs_trnx_header* h) {
- int Result_=1;
-
- // SVCV_INSTR_HASH_INDEX_DEFINE;
- //char* msg = "svcs_cs_send_trnx_header";
- //svcs_cs_print_trnx_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg)
- if (svcs_prim_send_double(sockid,&h->trnx_type)==0) Result_=0;
- if (svcs_prim_send_double(sockid,&h->trnx_id)==0)   Result_=0;
- if (svcs_prim_send_double(sockid,&h->data_type)==0) Result_=0;
- return Result_;
+  int Result_=1;
+  
+  // SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char* msg = "svcs_cs_send_trnx_header";
+  //svcs_cs_print_trnx_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg)
+  if (svcs_prim_send_double(sockid,&h->trnx_type)==0) Result_=0;
+  if (svcs_prim_send_double(sockid,&h->trnx_id)==0)   Result_=0;
+  if (svcs_prim_send_double(sockid,&h->data_type)==0) Result_=0;
+  return Result_;
 }
 
 int svcs_cs_send_data_header    (int sockid,cs_data_header* h) {
- int Result_=1;
- if (svcs_prim_send_int(sockid,&h->n_payloads)==0) Result_=0;
-   for(int i=0;i<h->n_payloads;i++) {
-     if (svcs_prim_send_int(sockid,&h->trnx_payload_sizes[i])==0) Result_=0;
-   }
- return Result_;
+  int Result_=1;
+  if (svcs_prim_send_int(sockid,&h->n_payloads)==0) Result_=0;
+  for(int i=0;i<h->n_payloads;i++) {
+    if (svcs_prim_send_int(sockid,&h->trnx_payload_sizes[i])==0) Result_=0;
+  }
+  return Result_;
 }
 
 int svcs_cs_recv_header   (int sockid,cs_header* h) {
- int Result_=1;
- svcs_cs_recv_trnx_header(sockid,&(*h).trnx);
- svcs_cs_recv_data_header(sockid,&(*h).data);
- return Result_;
+  int Result_=1;
+  svcs_cs_recv_trnx_header(sockid,&(*h).trnx);
+  svcs_cs_recv_data_header(sockid,&(*h).data);
+  return Result_;
 }
+
 int svcs_cs_recv_trnx_header   (int sockid,cs_trnx_header* h) {
- int Result_=1;
+  int Result_=1;
   //SVCV_INSTR_HASH_INDEX_DEFINE;
   //char* msg = "svcs_cs_recv_trnx_header";
   //svcs_cs_print_trnx_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   if (svcs_prim_recv_double(sockid,&h->trnx_type)==0) Result_=0;
   if (svcs_prim_recv_double(sockid,&h->trnx_id)==0)   Result_=0;
   if (svcs_prim_recv_double(sockid,&h->data_type)==0) Result_=0;
- return Result_;
+  return Result_;
 }
 
 int svcs_cs_recv_data_header   (int sockid,cs_data_header* h) {
-
- int Result_=1;
- (*h).n_payloads=0;
- svcs_prim_recv_int(sockid,&h->n_payloads);
- h->trnx_payload_sizes = malloc(h->n_payloads*sizeof(int));
- for(int i=0;i<h->n_payloads;i++) {
-	 if (svcs_prim_recv_int(sockid,&h->trnx_payload_sizes[i])==0) Result_=0;
+  
+  int Result_=1;
+  (*h).n_payloads=0;
+  svcs_prim_recv_int(sockid,&h->n_payloads);
+  h->trnx_payload_sizes = malloc(h->n_payloads*sizeof(int));
+  for(int i=0;i<h->n_payloads;i++) {
+    if (svcs_prim_recv_int(sockid,&h->trnx_payload_sizes[i])==0) Result_=0;
   }
   return Result_;
 }
 
 // Data exchange utilities (element)
 
-int svcs_cs_send_intV (int sockid,const cs_data_header* h,const int Int[]) {
-  //TODO
-  int Result_=-1;
-  /*
+int svcs_cs_send_intV (int sockid,const cs_data_header* h,const int* Int) {
+  int Result_= 1;
+  int indx =0;
+  
   for(int i=0;i<h->n_payloads;i++) {
-    //Result_ = send(h->sockid,&Int,h->trnx_payload_sizes[i]*sizeof(int), 0);
     for (int j=0;j< h->trnx_payload_sizes[i];j++) {
-      //printf("\n svcs_cs_send_intV Int[%0d]=%d",j,Int[j]);
-      Result_ = svcs_prim_send_int(h->sockid,&Int[j]);
+      //printf("\n svcs_cs_send_intV (%0d) Int[%0d][%0d]=%d",indx,i,j,Int[indx]);
+      Result_ = svcs_prim_send_int(sockid,&Int[indx]);
+      indx++;
     }
   }
-  */
+  
   return Result_;
 }
 
 
-int  svcs_cs_recv_intV    (int sockid,cs_data_header* h,int* Int) {
-  //TODO
-  int Result_=-1;
+int  svcs_cs_recv_intV    (int sockid,cs_data_header* h,int ** Int) {
+  int Result_= 1;
+  
+  int sum_=0;
+  for (int i=0;i< h->n_payloads;i++) {
+    sum_=sum_+ 	h->trnx_payload_sizes[i];
+  }
+  
+  (*Int) = (int *)malloc(sum_* sizeof(int)); 
+  int indx_ =0;
   for(int i=0;i<h->n_payloads;i++) {
-    //Result_ = recv(h->sockid,&Int,h->trnx_payload_sizes[i]*sizeof(int), 0);
     for (int j=0;j< h->trnx_payload_sizes[i];j++) {
-      //printf("\n svcs_cs_recv_intV Int[%0d]=%d",j,Int[j]);
-      Result_ = svcs_prim_recv_int(sockid,&Int[j]);
+      Result_ = svcs_prim_recv_int(sockid,&(*Int)[indx_]);
+      indx_++;
     }
   }
   return Result_;
@@ -185,27 +179,27 @@ int  svcs_cs_recv_intV    (int sockid,cs_data_header* h,int* Int) {
 int svcs_cs_send_doubleV (int sockid,const cs_data_header* h,const double* Double) {
   //TODO
   int Result_=-1;
-
+  
   //Result_ = send(h->sockid,&Double,h->trnx_payload_size*sizeof(double), 0);
   /* TODO
      for (int i=0;i< h->trnx_payload_size;i++) {
      Result_ = svcs_prim_send_double(h->sockid,&Double[i]);
-  	  }
+     }
   */
   return Result_;
 }
 
 
 int  svcs_cs_recv_doubleV    (int sockid,cs_data_header* h,double* Double) {
-	int Result_=-1;
-
-	//Result_  = recv(h->sockid, &Double,h->trnx_payload_size*sizeof(double) , 0);
-	/* TODO
-	   for (int i=0;i< h->trnx_payload_size;i++) {
-	   Result_ = svcs_prim_recv_double(h->sockid,&Double[i]);
-	   }
-	*/
-	return Result_;
+  int Result_=-1;
+  
+  //Result_  = recv(h->sockid, &Double,h->trnx_payload_size*sizeof(double) , 0);
+  /* TODO
+     for (int i=0;i< h->trnx_payload_size;i++) {
+     Result_ = svcs_prim_recv_double(h->sockid,&Double[i]);
+     }
+  */
+  return Result_;
 }
 
 int svcs_cs_send_string   (int sockid,const cs_data_header* h,const char* string) {
@@ -216,10 +210,10 @@ int svcs_cs_send_string   (int sockid,const cs_data_header* h,const char* string
 }
 
 int svcs_cs_recv_string   (int sockid,cs_data_header* h,char* string) {
-	int Result_=-1;
-	//TODO Result_ = recv(h->sockid,string,h->trnx_payload_size, 0);
-	//printf("get string length(%0d) (%s) \n",Result_,string);
-	return Result_;
+  int Result_=-1;
+  //TODO Result_ = recv(h->sockid,string,h->trnx_payload_size, 0);
+  //printf("get string length(%0d) (%s) \n",Result_,string);
+  return Result_;
 }
 
 
@@ -258,9 +252,6 @@ int svcs_cs_recv_stringA(int sockid,cs_data_header h,char* ArrayS[]) {
   int Result_=-1;
   return Result_;
 }
-
-
-
 
 #endif
 
