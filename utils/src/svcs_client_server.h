@@ -65,9 +65,9 @@ int     *trnx_payload_sizes; // array of payload sizes, number of array elements
 */
 
 typedef struct cs_data_header_t {
-   int      n_payloads;
-   int     *trnx_payload_sizes;
- } cs_data_header;
+  int      n_payloads;
+  int     *trnx_payload_sizes;
+} cs_data_header;
 
 typedef struct cs_trnx_header_t {
   //int      sockid;
@@ -76,10 +76,10 @@ typedef struct cs_trnx_header_t {
   double   data_type;
 } cs_trnx_header;
 
-typedef struct cs_header_t {
-  cs_trnx_header trnx;
-  cs_data_header data;
-} cs_header;
+ typedef struct cs_header_t {
+   cs_trnx_header trnx;
+   cs_data_header data;
+ } cs_header;
 
 //
 /*
@@ -239,8 +239,32 @@ int svcs_cs_recv_trnx_header   (int sockid,cs_trnx_header* h);
 */
 int svcs_cs_recv_data_header   (int sockid,cs_data_header* h);
 
+/*Function:
+  svcs_cs_recv_data_header_clean
+   free data header allocated memory
 
+  Parameters:
+  h - cs_data_header structure
 
+  Returns:
+  success > 0;
+
+*/
+
+int svcs_cs_recv_data_header_clean   (cs_data_header* h);
+
+/*Function:
+  svcs_cs_recv_int_clean
+   free data header allocated memory
+
+  Parameters:
+  Int - Int array
+
+  Returns:
+  success > 0;
+
+*/
+int svcs_cs_recv_int_clean   (int ** Int);
 //////////////////////////////////////
 
 

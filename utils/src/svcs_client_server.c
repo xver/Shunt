@@ -132,23 +132,34 @@ int svcs_cs_recv_data_header   (int sockid,cs_data_header* h) {
   (*h).n_payloads=0;
   svcs_prim_recv_int(sockid,&h->n_payloads);
   h->trnx_payload_sizes = malloc(h->n_payloads*sizeof(int));
-  for(int i=0;i<h->n_payloads;i++) {
-    if (svcs_prim_recv_int(sockid,&h->trnx_payload_sizes[i])==0) Result_=0;
+  if (h->trnx_payload_sizes == NULL) {
+ 	  Result_= -1;
+ 	  puts("\n Error: svcs_cs_recv_data_header cannot allocate memory ");
+   }
+  else {
+	  for(int i=0;i<h->n_payloads;i++) {
+		  if (svcs_prim_recv_int(sockid,&h->trnx_payload_sizes[i])==0) Result_=0;
+	  }
   }
   return Result_;
 }
 
+int svcs_cs_recv_data_header_clean   (cs_data_header* h) {
+	 int Result_=1;
+	 free(h->trnx_payload_sizes);
+	 return Result_;
+}
+
 // Data exchange utilities (element)
 
-int svcs_cs_send_intV (int sockid,const cs_data_header* h,const int* Int) {
+int svcs_cs_send_intV (int sockid,const cs_data_header* h,const int * Int) {
   int Result_= 1;
-  int indx =0;
-  
+  int indx_ =0;
   for(int i=0;i<h->n_payloads;i++) {
     for (int j=0;j< h->trnx_payload_sizes[i];j++) {
-      //printf("\n svcs_cs_send_intV (%0d) Int[%0d][%0d]=%d",indx,i,j,Int[indx]);
-      Result_ = svcs_prim_send_int(sockid,&Int[indx]);
-      indx++;
+      //printf("\n svcs_cs_send_intV (%0d) Int[%0d][%0d]=%d",indx_,i,j,Int[indx_]);
+      Result_ = svcs_prim_send_int(sockid,&Int[indx_]);
+      indx_++;
     }
   }
   
@@ -163,18 +174,29 @@ int  svcs_cs_recv_intV    (int sockid,cs_data_header* h,int ** Int) {
   for (int i=0;i< h->n_payloads;i++) {
     sum_=sum_+ 	h->trnx_payload_sizes[i];
   }
-  
-  (*Int) = (int *)malloc(sum_* sizeof(int)); 
-  int indx_ =0;
-  for(int i=0;i<h->n_payloads;i++) {
-    for (int j=0;j< h->trnx_payload_sizes[i];j++) {
-      Result_ = svcs_prim_recv_int(sockid,&(*Int)[indx_]);
-      indx_++;
-    }
+
+  (*Int) = (int *)malloc(sum_* sizeof(int));
+  if (*Int == NULL) {
+	  Result_= -1;
+	  puts("\n Error: svcs_cs_recv_intV cannot allocate memory ");
   }
+  else {
+	  int indx_ =0;
+	  for(int i=0;i<h->n_payloads;i++) {
+		  for (int j=0;j< h->trnx_payload_sizes[i];j++) {
+			  Result_ = svcs_prim_recv_int(sockid,&(*Int)[indx_]);
+			  //printf("\n svcs_cs_resv_intV (%0d) Int[%0d][%0d]=%d",indx_,i,j,(*Int)[indx_]);
+			  indx_++;
+		  }
+	  }
+  	}
   return Result_;
 }
-
+int svcs_cs_recv_int_clean   (int ** Int) {
+	 int Result_=1;
+	 free( (*Int));
+	 return Result_;
+}
 ////////////
 int svcs_cs_send_doubleV (int sockid,const cs_data_header* h,const double* Double) {
   //TODO

@@ -50,15 +50,16 @@ int main(void) {
     if (success == 0 )  printf("\n client trnx_header fail to send");
     
     // data_header test
-    cs_data_header h_data;
+    cs_data_header h_int;
     //char* msg = "client: recv data_header";
-    //recv
-    if (svcs_cs_recv_data_header(socket,&h_data)<= 0) success = 0;
+    //recv+
+    if (svcs_cs_recv_data_header(socket,&h_int)<= 0) success = 0;
     if (success == 0 )  printf("\n client data_header fail to recv");
     //send loopback
-    if (svcs_cs_send_data_header(socket,&h_data)<= 0) success = 0;
+    if (svcs_cs_send_data_header(socket,&h_int)<= 0) success = 0;
     if (success == 0 )  printf("\n client data_header fail to send");
-    
+    //
+     if (svcs_cs_recv_data_header_clean(&h_int)<=0) success = 0;
     //cs_header test
     cs_header h;
     //char* msg = "client: recv cs_header";
@@ -73,11 +74,12 @@ int main(void) {
     //     INTV Test
     //Int Array
     //char* msg = "client: recv int_header";
-    cs_data_header h_int;
+    //cs_data_header h_int;
     //recv
+
+    int* IntA;
     if (svcs_cs_recv_data_header(socket,&h_int)<= 0) success = 0;
     if (success == 0 )  printf("\n client data_header fail to recv");
-    int* IntA;
     if (svcs_cs_recv_intV(socket,&h_int,&IntA)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail to recv");
     //send
@@ -85,7 +87,54 @@ int main(void) {
     if (success == 0 )  printf("\nclient cs_header fail send");
     if (svcs_cs_send_intV(socket,&h_int,IntA)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail send");
-    
+    //
+    if (svcs_cs_recv_data_header_clean(&h_int)<=0) success = 0;
+    //if (svcs_cs_recv_int_clean(&IntA)<=0) success = 0;
+
+    //Int Vector
+    int* IntV;
+    //recv
+    if (svcs_cs_recv_data_header(socket,&h_int)<= 0) success = 0;
+    if (success == 0 )  printf("\n client data_header fail to recv");
+    if (svcs_cs_recv_intV(socket,&h_int,&IntV)<=0) success = 0;
+    if (success == 0 )  printf("\n client Int data fail to recv");
+
+    //send
+    if (svcs_cs_send_data_header(socket,&h_int)<= 0)  printf("\nclient cs_header fail send");
+    if (success == 0 )  printf("\nclient cs_header fail send");
+    if (svcs_cs_send_intV(socket,&h_int,(int *)IntV)<=0) success = 0;
+    if (success == 0 )  printf("\n client Int data fail send");
+    //
+    if (svcs_cs_recv_data_header_clean(&h_int)<=0) success = 0;
+    if (svcs_cs_recv_int_clean(&IntV)<=0) success = 0;
+
+    //Int value
+
+    int *IntI;
+    //recv
+    if (svcs_cs_recv_data_header(socket,&h_int)<= 0) success = 0;
+    if (success == 0 )  printf("\n client data_header fail to recv");
+    if (svcs_cs_recv_intV(socket,&h_int,&IntI)<=0) success = 0;
+    if (success == 0 )  printf("\n client Int data fail to recv");
+
+    //send
+    if (svcs_cs_send_data_header(socket,&h_int)<= 0)  printf("\nclient cs_header fail send");
+    if (success == 0 )  printf("\nclient cs_header fail send");
+    if (svcs_cs_send_intV(socket,&h_int,IntI)<=0) success = 0;
+    if (success == 0 )  printf("\n client Int data fail send");
+        //
+    if (svcs_cs_recv_data_header_clean(&h_int)<=0) success = 0;
+    if (svcs_cs_recv_int_clean(&IntI)<=0) success = 0;
+   /*
+    int indx=0;
+    for(int i=0;i<h_int.n_payloads;i++) {
+     //Result_ = send(h->sockid,&Int,h->trnx_payload_sizes[i]*sizeof(int), 0);
+     for (int j=0;j< h_int.trnx_payload_sizes[i];j++) {
+     printf("\n client recv intA (%0d) IntA[%0d][%0d]=%d",indx,i,j,IntA[indx]);
+     indx++;
+       	    }
+   	    }
+   	    */
 /*
   for(int i=0;i<h_int.n_payloads;i++) {
   //Result_ = send(h->sockid,&Int,h->trnx_payload_sizes[i]*sizeof(int), 0);
@@ -95,7 +144,7 @@ int main(void) {
     	    }
 	    }
 */
-    // puts("\n");
+    //puts("\n");
     /*
     //     INTV Test
     cs_header header;
@@ -115,7 +164,7 @@ int main(void) {
      if (svcs_cs_recv_intV  (&header,IntV)<= 0) success = 0;
      if (success == 0 )  printf("\nIntV client fail recv");
      /-*
-     for (int i = 0; i < header.trnx_payload_sizes[0]; i++) {
+     for (int i = 0; i < header.trnx_payload_sizes[0]; i++) { int indx= 0;
        printf("\nclient IntV[%0d]=%d",i,IntV[i]);
          }
      *-/

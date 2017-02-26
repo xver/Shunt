@@ -94,7 +94,8 @@ int main(void) {
       msg = "server: data_act";
       svcs_cs_print_data_header (&h_data_act,msg);
     }
-    else printf("\n data_header loopback pass");
+    else
+    	printf("\n data_header loopback pass");
     ////////////////////////////////////////////////////
     // cs_header
     //send
@@ -141,42 +142,45 @@ int main(void) {
     success =1;
     msg = "\n\nServer: Int Tests";
     puts(msg);
+
     //Int Array
+    msg = "Server: 2D Int Array Test ";
     cs_data_header h_int_exp;
+    cs_data_header h_int_act;
+
     const int col_n = 4;
     const int row_n = 3;
     int IntA_exp[row_n][col_n];
+    int *IntA_act;
+    int indx= 0;
+
     //send
     h_int_exp.n_payloads = row_n;
     h_int_exp.trnx_payload_sizes = malloc(h_data_exp.n_payloads*sizeof(int));
-    //IntA_exp = malloc(h_data_exp.n_payloads*sizeof(int)*col_n);
+
     for (int i = 0; i < row_n; i++) {
       for   (int j = 0; j < col_n; j++) {
 	IntA_exp[i][j] = rand();//j+i*10;
-	//printf("\nserver IntAexp[%0d][%0d]=%d",i,j,IntA_exp[i][j]);
+	//printf("\nserver IntAexp[%0d][%0d]=%d",i,j,IntA_exp[isuccess = 0;][j]);
       }
     }
     for (int i = 0; i < row_n; i++) {
       h_int_exp.trnx_payload_sizes[i] =  col_n;
     }
-    
-    msg = "server: send IntA_exp";
+
     //svcs_cs_print_data_header (&h_int_exp,msg);
     //send
     if (svcs_cs_send_data_header(socket,&h_int_exp)<= 0) success = 0;
     if (success == 0 )  printf("\n server cs_header fail send");
     if (svcs_cs_send_intV(socket,&h_int_exp,(int *)IntA_exp)<=0) success = 0;
     if (success == 0 )  printf("\n server Int data fail send");
+
     //recv
-    msg = "server: recv IntA_exp ";
-    cs_data_header h_int_act;
     if (svcs_cs_recv_data_header(socket,&h_int_act)<= 0) success = 0;
     if (success == 0 )  printf("\n server data_header fail to recv");
-    int* IntA_act;
     if (svcs_cs_recv_intV(socket,&h_int_act,&IntA_act)<=0) success = 0;
     if (success == 0 )  printf("\n server Int data fail to recv");
-    int indx= 0;
-    
+
     //compare
     if (h_int_exp.n_payloads != h_int_act.n_payloads) success = 0;
     else {
@@ -187,14 +191,143 @@ int main(void) {
     indx=0;
     for (int i = 0; i < h_int_exp.n_payloads; i++) {
       for   (int j = 0; j < h_int_exp.trnx_payload_sizes[i]; j++) {
-	if(IntA_act[indx] !=  IntA_exp[i][j] )
+	if(IntA_act[indx] !=  IntA_exp[i][j] ) {
+      printf("\n%s server [%0d] IntA_act=%d \tIntA_exp=%d",msg,indx,IntA_act[indx],IntA_exp[i][j]) ;
 	  success = 0;
+	}
 	indx++;
       }
     }
-    if (success > 0 )  printf("\n Int loopback pass");
-    else  printf("\n Int loopback fail");
-    
+
+    //
+    if (success > 0 )  printf("\n %s loopback pass",msg);
+    else {
+     printf("\n %s loopback fail",msg);
+	 msg = "server: data_exp";
+	 svcs_cs_print_data_header (&h_int_exp,msg);
+	 msg = "server: data_act";
+	 svcs_cs_print_data_header (&h_int_act,msg);
+    }
+    //clean up memory
+    if (svcs_cs_recv_data_header_clean(&h_int_act)<=0) success = 0;
+    if (svcs_cs_recv_data_header_clean(&h_int_exp)<=0) success = 0;
+    if (svcs_cs_recv_int_clean(&IntA_act)<=0) success = 0;
+
+    //Int Vector
+    msg = "Server: Int Vector Test ";
+    int const row_v = 1;
+    int const col_v = 4;
+    int IntV_exp[col_v];
+    int *IntV_act;
+    //send
+    h_int_exp.n_payloads = row_v;
+    h_int_exp.trnx_payload_sizes = malloc(h_data_exp.n_payloads*sizeof(int));
+    h_int_exp.trnx_payload_sizes[0] =  col_v;
+
+    for (int i = 0; i < col_v; i++) {
+    	IntV_exp[i] = i;
+        }
+
+     //svcs_cs_print_data_header (&h_int_exp,msg);
+     //send
+     if (svcs_cs_send_data_header(socket,&h_int_exp)<= 0) success = 0;
+     if (success == 0 )  printf("\n server cs_header fail send");
+     if (svcs_cs_send_intV(socket,&h_int_exp,(int *)IntV_exp)<=0) success = 0;
+     if (success == 0 )  printf("\n server Int data fail send");
+     //recv
+
+     if (svcs_cs_recv_data_header(socket,&h_int_act)<= 0) success = 0;
+     if (success == 0 )  printf("\n server data_header fail to recv");
+
+     if (svcs_cs_recv_intV(socket,&h_int_act,&IntV_act)<=0) success = 0;
+     if (success == 0 )  printf("\n server Int data fail to recv");
+     indx= 0;
+
+     //compare
+     if (h_int_exp.n_payloads != h_int_act.n_payloads) success = 0;
+     else {
+    	 for(int i=0;i<h_int_exp.n_payloads;i++) {
+    		 if (h_int_exp.trnx_payload_sizes[i] != h_int_act.trnx_payload_sizes[i]) success = 0;
+           }
+         }
+     indx=0;
+     for (int i = 0; i < h_int_exp.n_payloads; i++) {
+    	 for   (int j = 0; j < h_int_exp.trnx_payload_sizes[i]; j++) {
+    		 if(IntV_act[indx] !=  IntV_exp[indx] )
+    		 {
+    			 success = 0;
+    			 printf("\n%s server [%0d] IntV_act=%d \tIntV_exp=%d",msg,indx,IntV_act[indx],IntV_exp[indx]) ;
+    		 }
+    		 indx++;
+           }
+         }
+
+     if (success > 0 )  printf("\n %s loopback pass",msg);
+     else   {
+    	 printf("\n %s loopback fail",msg);
+    	 msg = "server: data_exp";
+    	 svcs_cs_print_data_header (&h_int_exp,msg);
+    	 msg = "server: data_act";
+    	 svcs_cs_print_data_header (&h_int_act,msg);
+     }
+     //clean up memory
+     if (svcs_cs_recv_data_header_clean(&h_int_act)<=0) success = 0;
+     if (svcs_cs_recv_data_header_clean(&h_int_exp)<=0) success = 0;
+     if (svcs_cs_recv_int_clean(&IntV_act)<=0) success = 0;
+
+     //
+     //Int value
+     msg = "Server: Int Value Test ";
+     int row_i = 1;
+     int col_i = 1;
+
+     int IntI_exp=rand();
+     int *IntI_act;
+     //send
+     h_int_exp.n_payloads = row_i;
+     h_int_exp.trnx_payload_sizes = malloc(h_data_exp.n_payloads*sizeof(int));
+     h_int_exp.trnx_payload_sizes[0] =  col_i;
+
+     //svcs_cs_print_data_header (&h_int_exp,msg);
+     //send
+     if (svcs_cs_send_data_header(socket,&h_int_exp)<= 0) success = 0;
+     if (success == 0 )  printf("\n server cs_header fail send");
+     if (svcs_cs_send_intV(socket,&h_int_exp,&IntI_exp)<=0) success = 0;
+     if (success == 0 )  printf("\n server Int data fail send");
+     //recv
+     if (svcs_cs_recv_data_header(socket,&h_int_act)<= 0) success = 0;
+     if (success == 0 )  printf("\n server data_header fail to recv");
+     if (svcs_cs_recv_intV(socket,&h_int_act,&IntI_act)<=0) success = 0;
+     if (success == 0 )  printf("\n server Int data fail to recv");
+     indx= 0;
+
+     //compare
+     if (h_int_exp.n_payloads != h_int_act.n_payloads) success = 0;
+     else {
+    	 for(int i=0;i<h_int_exp.n_payloads;i++) {
+    		 if (h_int_exp.trnx_payload_sizes[i] != h_int_act.trnx_payload_sizes[i]) success = 0;
+    	 }
+     }
+     indx=0;
+
+     if( *IntI_act !=  IntI_exp) {
+    	 success = 0;
+    	 printf("\n%s server IntI_act=%d \tIntI_exp=%d",msg,*IntI_act,IntI_exp) ;
+     }
+
+     if (success > 0 )  printf("\n %s loopback pass",msg);
+     else   {
+    	 printf("\n %s loopback fail",msg);
+    	 msg = "server: data_exp";
+    	 svcs_cs_print_data_header (&h_int_exp,msg);
+    	 msg = "server: data_act";
+    	 svcs_cs_print_data_header (&h_int_act,msg);
+      }
+     //clean up memory
+     if (svcs_cs_recv_data_header_clean(&h_int_act)<=0) success = 0;
+     if (svcs_cs_recv_data_header_clean(&h_int_exp)<=0) success = 0;
+     if (svcs_cs_recv_int_clean(&IntI_act)<=0) success = 0;
+
     /*
     //set up header
       header.sockid = socket;
@@ -341,7 +474,7 @@ int main(void) {
 //       else  printf("\nString loopback fail");
 
 /////////////////////////////////////////////
-      puts("\n\nctest_cs_server end\n");
+      puts("\n\nctest_cs_server end");
     }
 
   if ( success >0)
