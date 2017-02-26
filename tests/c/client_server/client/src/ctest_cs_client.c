@@ -80,12 +80,12 @@ int main(void) {
     int* IntA;
     if (svcs_cs_recv_data_header(socket,&h_int)<= 0) success = 0;
     if (success == 0 )  printf("\n client data_header fail to recv");
-    if (svcs_cs_recv_intV(socket,&h_int,&IntA)<=0) success = 0;
+    if (svcs_cs_recv_int(socket,&h_int,&IntA)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail to recv");
     //send
     if (svcs_cs_send_data_header(socket,&h_int)<= 0)  printf("\nclient cs_header fail send");
     if (success == 0 )  printf("\nclient cs_header fail send");
-    if (svcs_cs_send_intV(socket,&h_int,IntA)<=0) success = 0;
+    if (svcs_cs_send_int(socket,&h_int,IntA)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail send");
     //
     if (svcs_cs_recv_data_header_clean(&h_int)<=0) success = 0;
@@ -96,13 +96,13 @@ int main(void) {
     //recv
     if (svcs_cs_recv_data_header(socket,&h_int)<= 0) success = 0;
     if (success == 0 )  printf("\n client data_header fail to recv");
-    if (svcs_cs_recv_intV(socket,&h_int,&IntV)<=0) success = 0;
+    if (svcs_cs_recv_int(socket,&h_int,&IntV)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail to recv");
 
     //send
     if (svcs_cs_send_data_header(socket,&h_int)<= 0)  printf("\nclient cs_header fail send");
     if (success == 0 )  printf("\nclient cs_header fail send");
-    if (svcs_cs_send_intV(socket,&h_int,(int *)IntV)<=0) success = 0;
+    if (svcs_cs_send_int(socket,&h_int,(int *)IntV)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail send");
     //
     if (svcs_cs_recv_data_header_clean(&h_int)<=0) success = 0;
@@ -114,13 +114,13 @@ int main(void) {
     //recv
     if (svcs_cs_recv_data_header(socket,&h_int)<= 0) success = 0;
     if (success == 0 )  printf("\n client data_header fail to recv");
-    if (svcs_cs_recv_intV(socket,&h_int,&IntI)<=0) success = 0;
+    if (svcs_cs_recv_int(socket,&h_int,&IntI)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail to recv");
 
     //send
     if (svcs_cs_send_data_header(socket,&h_int)<= 0)  printf("\nclient cs_header fail send");
     if (success == 0 )  printf("\nclient cs_header fail send");
-    if (svcs_cs_send_intV(socket,&h_int,IntI)<=0) success = 0;
+    if (svcs_cs_send_int(socket,&h_int,IntI)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail send");
         //
     if (svcs_cs_recv_data_header_clean(&h_int)<=0) success = 0;
@@ -161,7 +161,7 @@ int main(void) {
      int* IntV;
      IntV = malloc(sizeof(int)*sum);
 
-     if (svcs_cs_recv_intV  (&header,IntV)<= 0) success = 0;
+     if (svcs_cs_recv_int  (&header,IntV)<= 0) success = 0;
      if (success == 0 )  printf("\nIntV client fail recv");
      /-*
      for (int i = 0; i < header.trnx_payload_sizes[0]; i++) { int indx= 0;
@@ -170,7 +170,7 @@ int main(void) {
      *-/
 
      svcs_cs_send_header(&header);
-     if (svcs_cs_send_intV (&header,IntV)<= 0) success = 0;
+     if (svcs_cs_send_int (&header,IntV)<= 0) success = 0;
      if (success == 0 )  printf("\nIntV client fail send");
      */
      /////////////////////////////////////

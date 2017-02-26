@@ -49,7 +49,7 @@ cs_data_header data; //data payload header structure (see cs_data_header_t)
 } cs_header;
 
 typedef struct cs_trnx_header_t {
-//int      sockid;          // socket id from init sever/client
+//int      sockid;        // socket id from init sever/client
 double   trnx_type;       // user defined transaction attribute
 double   trnx_id;         // user defined unique transaction number
 double   data_type;       // see SVCV_INSTR_ENUM
@@ -57,9 +57,8 @@ double   data_type;       // see SVCV_INSTR_ENUM
 
 typedef struct cs_data_header_t {
 int      n_payloads;         // number of data payloads
-int     *trnx_payload_sizes; // array of payload sizes, number of array elements are equal to n_payloads array of payload sizes, number of array elements are equal to n_payloads
+int     *trnx_payload_sizes; // array of payload sizes, number of array elements are equal to n_payloads
 } cs_data_header;
-
 
  (end)
 */
@@ -253,6 +252,41 @@ int svcs_cs_recv_data_header   (int sockid,cs_data_header* h);
 
 int svcs_cs_recv_data_header_clean   (cs_data_header* h);
 
+
+//////////////////////////////////////
+
+
+// Section: Data exchange utilities (element)
+
+
+/*
+ Function: svcs_cs_send_int
+  send SVCS transaction with "int" elements vector over TCP/IP 
+  
+  Parameters:
+   sockid - socket id from init sever/client
+   h - cs_data_header structure
+   Int   - data
+    
+   Returns:
+   number of elements have been sent  : success > 0
+*/
+int svcs_cs_send_int   (int sockid,const cs_data_header* h,const int* Int);
+
+/*
+ Function: svcs_cs_recv
+  fetch SVCS transaction with "int" elements vector  elements from TCP/IP 
+  
+  Parameters:
+  sockid - socket id from init sever/client 
+     h - cs_data_header structure
+     Int  - Data received
+
+  Returns: 
+   number of elements have been received  : success > 0
+*/
+int svcs_cs_recv_int   (int sockid,cs_data_header* h,int ** Int);
+
 /*Function:
   svcs_cs_recv_int_clean
    free data header allocated memory
@@ -265,40 +299,6 @@ int svcs_cs_recv_data_header_clean   (cs_data_header* h);
 
 */
 int svcs_cs_recv_int_clean   (int ** Int);
-//////////////////////////////////////
-
-
-// Section: Data exchange utilities (element)
-
-
-/*
- Function: svcs_cs_send_intV
-  send SVCS transaction with "int" elements vector over TCP/IP 
-  
-  Parameters:
-  sockid - socket id from init sever/client 
-   h - cs_data_header structure
-   Int   - data
-    
-   Returns:
-   number of elements have been sent  : success > 0
-*/
-int svcs_cs_send_intV   (int sockid,const cs_data_header* h,const int* Int);
-
-/*
- Function: svcs_cs_recv_intV
-  fetch SVCS transaction with "int" elements vector  elements from TCP/IP 
-  
-  Parameters:
-  sockid - socket id from init sever/client 
-     h - cs_data_header structure
-     IntV  - Data received
-
-  Returns: 
-   number of elements have been received  : success > 0
-*/
-int svcs_cs_recv_intV   (int sockid,cs_data_header* h,int ** Int);
-
 
 /*
  Function: svcs_cs_send_doubleV
@@ -312,6 +312,7 @@ int svcs_cs_recv_intV   (int sockid,cs_data_header* h,int ** Int);
   Returns:
     number of elements have been sent  : success > 0
 */
+
 int svcs_cs_send_doubleV   (int sockid,const cs_data_header* h,const double* Double);
 
 /*
@@ -373,48 +374,6 @@ array ->  sockid - socket id
 
  */
 
-/*
-  Function: svcs_cs_send_intA
-  send SVCS transaction with "int" vectors array over TCP/IP 
-  
-  Parameters:
-  sockid - socket id from init sever/client 
-  h - cs_data_header structure,
-  note: header.trnx_payload_size - The number of array entries is equal to the number of "int" vectors   
-  ArrayI  - data 
-
-  Return : number of elements have been sent  : success > 0
- */
-
- int svcs_cs_send_intA(int sockid, cs_data_header* h,int* ArrayI);
-
-/*
-  Function: svcs_cs_recv_intA
-  fetch SVCS transaction with "int" array of "int" vectors from TCP/IP  
-  
-  Parameters:
-  sockid - socket id from init sever/client 
-    h - cs_data_header structure
-    ArrayI  - Data received
-
-  Returns:
-  number of elements have been received  : success > 0
-*/
-int svcs_cs_recv_intA(int sockid,cs_data_header* h,int* ArrayI);
-
-/*
-  Function: svcs_cs_send_doubleA
-   send SVCS transaction with "double" vector array over TCP/IP 
-  
-  Parameters:
-  sockid - socket id from init sever/client 
-  h - cs_data_header structure,
-  note: header.trnx_payload_size  - The number of array entries is equal to the number of "double" vectors     
-  ArrayD  - data 
-
-  Returns: number of elements have been sent  : success > 0
-*/
-int svcs_cs_send_doubleA(int sockid,cs_data_header* h,const double* ArrayD);
 
 /*
   Function: svcs_cs_recv_doubleA

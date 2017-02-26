@@ -172,13 +172,13 @@ int main(void) {
     //send
     if (svcs_cs_send_data_header(socket,&h_int_exp)<= 0) success = 0;
     if (success == 0 )  printf("\n server cs_header fail send");
-    if (svcs_cs_send_intV(socket,&h_int_exp,(int *)IntA_exp)<=0) success = 0;
+    if (svcs_cs_send_int(socket,&h_int_exp,(int *)IntA_exp)<=0) success = 0;
     if (success == 0 )  printf("\n server Int data fail send");
 
     //recv
     if (svcs_cs_recv_data_header(socket,&h_int_act)<= 0) success = 0;
     if (success == 0 )  printf("\n server data_header fail to recv");
-    if (svcs_cs_recv_intV(socket,&h_int_act,&IntA_act)<=0) success = 0;
+    if (svcs_cs_recv_int(socket,&h_int_act,&IntA_act)<=0) success = 0;
     if (success == 0 )  printf("\n server Int data fail to recv");
 
     //compare
@@ -232,14 +232,14 @@ int main(void) {
      //send
      if (svcs_cs_send_data_header(socket,&h_int_exp)<= 0) success = 0;
      if (success == 0 )  printf("\n server cs_header fail send");
-     if (svcs_cs_send_intV(socket,&h_int_exp,(int *)IntV_exp)<=0) success = 0;
+     if (svcs_cs_send_int(socket,&h_int_exp,(int *)IntV_exp)<=0) success = 0;
      if (success == 0 )  printf("\n server Int data fail send");
      //recv
 
      if (svcs_cs_recv_data_header(socket,&h_int_act)<= 0) success = 0;
      if (success == 0 )  printf("\n server data_header fail to recv");
 
-     if (svcs_cs_recv_intV(socket,&h_int_act,&IntV_act)<=0) success = 0;
+     if (svcs_cs_recv_int(socket,&h_int_act,&IntV_act)<=0) success = 0;
      if (success == 0 )  printf("\n server Int data fail to recv");
      indx= 0;
 
@@ -292,12 +292,12 @@ int main(void) {
      //send
      if (svcs_cs_send_data_header(socket,&h_int_exp)<= 0) success = 0;
      if (success == 0 )  printf("\n server cs_header fail send");
-     if (svcs_cs_send_intV(socket,&h_int_exp,&IntI_exp)<=0) success = 0;
+     if (svcs_cs_send_int(socket,&h_int_exp,&IntI_exp)<=0) success = 0;
      if (success == 0 )  printf("\n server Int data fail send");
      //recv
      if (svcs_cs_recv_data_header(socket,&h_int_act)<= 0) success = 0;
      if (success == 0 )  printf("\n server data_header fail to recv");
-     if (svcs_cs_recv_intV(socket,&h_int_act,&IntI_act)<=0) success = 0;
+     if (svcs_cs_recv_int(socket,&h_int_act,&IntI_act)<=0) success = 0;
      if (success == 0 )  printf("\n server Int data fail to recv");
      indx= 0;
 
@@ -310,7 +310,7 @@ int main(void) {
      }
      indx=0;
 
-     if( *IntI_act !=  IntI_exp) {
+     if(*IntI_act !=  IntI_exp) {
     	 success = 0;
     	 printf("\n%s server IntI_act=%d \tIntI_exp=%d",msg,*IntI_act,IntI_exp) ;
      }
@@ -339,7 +339,7 @@ int main(void) {
 
       //send
       if (svcs_cs_send_header(&header)<= 0) success = 0;
-      if (svcs_cs_send_intV (&header,IntVexp)<= 0) success = 0;
+      if (svcs_cs_send_int (&header,IntVexp)<= 0) success = 0;
       if (success == 0 )  printf("\nIntV loopback fail send");
       
       //recv
@@ -350,7 +350,7 @@ int main(void) {
       }
       int* IntVact;
        IntVact = malloc(sizeof(int)*sum);
-       if (svcs_cs_recv_intV  (&header,IntVact)<= 0) success = 0;
+       if (svcs_cs_recv_int  (&header,IntVact)<= 0) success = 0;
        if (success == 0 )  printf("\nIntV loopback fail recv");
        
        //compare
@@ -397,7 +397,7 @@ int main(void) {
 //        //send
 //        if (svcs_cs_send_header(&header)<= 0) success = 0;
 
-//        //if (svcs_cs_send_intV (&header,IntVexp)<= 0) success = 0;
+//        //if (svcs_cs_send_int (&header,IntVexp)<= 0) success = 0;
 //        //if (success == 0 )  printf("\nIntV loopback fail send");
        
 //       ////////////////////////////////////////////
