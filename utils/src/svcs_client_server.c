@@ -239,6 +239,7 @@ int svcs_cs_recv_string   (int sockid,cs_header* h,char* string) {
 
 //Data exchange utilities (array)
 int svcs_cs_send_intA (int sockid,int n_payloads,const cs_data_header* h,const int * Int) {
+
   int Result_= 1;
   int indx_ =0;
   for(int i=0;i<n_payloads;i++) {
@@ -248,36 +249,48 @@ int svcs_cs_send_intA (int sockid,int n_payloads,const cs_data_header* h,const i
       indx_++;
     }
   }
-  
+
   return Result_;
 }
 
 
-int  svcs_cs_recv_intA    (int sockid,int n_payloads,cs_data_header* h,int ** Int) {
+int  svcs_cs_recv_intA    (int sockid,int n_payloads,cs_data_header* h,int * Int) {
   int Result_= 1;
   
-  //int sum_=0;
-  //puts("\n");
-  //for (int i=0;i< h->n_payloads;i++) {
-  //  sum_=sum_+ 	h->trnx_payload_sizes[i];
-  //}
-  
-  //(*Int) = (int *)malloc(sum_* sizeof(int));
-  //if (*Int == NULL) {
-  //  Result_= -1;
-  //  puts("\n Error: svcs_cs_recv_int cannot allocate memory ");
-  // }
-  // else {
   int indx_ =0;
   for(int i=0;i<n_payloads;i++) {
     for (int j=0;j< h->trnx_payload_sizes[i];j++) {
-      Result_ = svcs_prim_recv_int(sockid,&(*Int)[indx_]);
+      Result_ = svcs_prim_recv_int(sockid,&Int[indx_]);
       //printf("\n svcs_cs_resv_int (%0d) Int[%0d][%0d]=%d",indx_,i,j,(*Int)[indx_]);
       indx_++;
     }
   }
   // }
   return Result_;
+}
+
+void  svcs_cs_print_intA   (int n_payloads,cs_data_header* h,int *Int,char* msg) {
+	int indx=0;
+	for(int i=0;i<n_payloads;i++) {
+		for (int j=0;j< h->trnx_payload_sizes[i];j++) {
+			printf("\n %s (%0d) IntA[%0d][%0d]=%d",msg,indx,i,j,Int[indx]);
+			indx++;
+		}
+	}
+	puts("\n");
+}
+
+int svcs_cs_comp_intA   (int n_payloads,cs_data_header* h,int *lhs,int *rhs){
+	int success = 1;
+    //compare
+	int indx=0;
+		for(int i=0;i<n_payloads;i++) {
+			for (int j=0;j< h->trnx_payload_sizes[i];j++) {
+				if(lhs[indx] != rhs[indx]) success = 0;
+				indx++;
+			}
+		}
+    return success;
 }
 
 /* TODO remove

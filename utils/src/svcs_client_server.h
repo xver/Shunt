@@ -352,7 +352,7 @@ array ->  sockid - socket id
 
   Parameters:
   sockid - socket id from init sever/client
-  int n_payloads - number of data payloads
+  n_payloads - number of data payloads
   h - cs_data_header structure
   Int   - data
   
@@ -367,6 +367,7 @@ int svcs_cs_send_intA (int sockid,int n_payloads,const cs_data_header* h,const i
   
   Parameters:
   sockid - socket id from init sever/client
+  n_payloads - number of data payloads
   h - cs_data_header structure
   Int   - data
   h - cs_data_header structure
@@ -377,20 +378,49 @@ int svcs_cs_send_intA (int sockid,int n_payloads,const cs_data_header* h,const i
 int svcs_cs_send_intA   (int sockid,int n_payloads,const cs_data_header* h,const int* Int);
 
 /*
-  Function: svcs_cs_recv
+  Function: svcs_cs_recvA
   fetch SVCS transaction with "int" elements vector  elements from TCP/IP 
   
   Parameters:
   sockid - socket id from init sever/client 
+  n_payloads - number of data payloads
   h - cs_data_header structure
   Int  - Data received
   
   Returns: 
   number of elements have been received  : success > 0
 */
-int svcs_cs_recv_intA   (int sockid,int n_payloads,cs_data_header* h,int ** Int);
+int svcs_cs_recv_intA   (int sockid,int n_payloads,cs_data_header* h,int * Int);
 
-/* TODO remoovve
+/*
+  Function: svcs_cs_recvA
+  print out IntA Data
+
+  Parameters:
+  n_payloads - number of data payloads
+  h - cs_data_header structure
+  Int  - Data received
+
+  Returns:
+  number of elements have been received  : success > 0
+*/
+void svcs_cs_print_intA   (int n_payloads,cs_data_header* h,int *Int,char* msg);
+
+
+/*
+  Function: svcs_cs_comp_intA
+  compare two intA payloads
+
+  Parameters:
+  n_payloads - number of data payloads
+  lhs,rhs - intA data
+  Returns:
+  success > 0
+*/
+int svcs_cs_comp_intA   (int n_payloads,cs_data_header* h,int *lhs,int *rhs);
+
+
+/* TODO remove
    Function:
    svcs_cs_recv_int_clean
    free data header allocated memory
@@ -433,6 +463,7 @@ int svcs_cs_send_doubleA   (int sockid,int n_payloads,const cs_data_header* h,co
  number of elements have been received  : success > 0
 */
 int svcs_cs_recv_doubleA   (int sockid,int n_payload,cs_data_header* h,double ** Double);
+
 /*
   Function: svcs_cs_send_stringA
   send SVCS transaction with "string" vectors array  over TCP/IP 
