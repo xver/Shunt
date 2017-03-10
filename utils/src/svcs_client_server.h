@@ -116,7 +116,7 @@ int svcs_cs_data_type(double hash,char* data_type_names[],int last_enum);
   h - cs_header structure
   data_type_names - data_type (see SVCV_INSTR_ENUM_NAMES[]) or trnx_type names array 
   last_enum       - number of data_type_names[] elements
-  msg    - header print out prefix
+  msg    - print out prefix
   
   Returns:
   void
@@ -133,7 +133,7 @@ void svcs_cs_print_header    (cs_header* h,char* data_type_names[],int last_enum
   h_data   - cs_data_header structure
   data_type_names - data_type (see SVCV_INSTR_ENUM_NAMES[]) or trnx_type names array
   last_enum       - number of data_type_names[] elements
-  msg - header print out prefix
+  msg - print out prefix
   
   Returns:
   void
@@ -273,6 +273,34 @@ int svcs_cs_send_intV   (int sockid, const cs_header* header,const int* Int);
 */
 int svcs_cs_recv_intV   (int sockid, cs_header* header,int* Int);
 
+/*
+  Function: svcs_cs_print_intV
+  print out IntV Data
+
+  Parameters:
+
+  h - cs_data_header structure
+  Int  - Data received
+  msg    - print out prefix
+
+  Returns:
+  void
+*/
+void svcs_cs_print_intV   (cs_header* h,int *Int,char* msg);
+
+
+/*
+  Function: svcs_cs_comp_intV
+  compare two intV payloads
+
+  Parameters:
+  h - cs_header
+  lhs,rhs - intA data
+  Returns:
+  success > 0
+*/
+int svcs_cs_comp_intV   (cs_header* h,int *lhs,int *rhs);
+
 
 /*
   Function: svcs_cs_send_doubleV
@@ -393,16 +421,16 @@ int svcs_cs_send_intA   (int sockid,int n_payloads,const cs_data_header* h,const
 int svcs_cs_recv_intA   (int sockid,int n_payloads,cs_data_header* h,int * Int);
 
 /*
-  Function: svcs_cs_recvA
+  Function: svcs_cs_print_intA
   print out IntA Data
 
   Parameters:
   n_payloads - number of data payloads
   h - cs_data_header structure
   Int  - Data received
-
+  msg    - print out prefix
   Returns:
-  number of elements have been received  : success > 0
+   void
 */
 void svcs_cs_print_intA   (int n_payloads,cs_data_header* h,int *Int,char* msg);
 

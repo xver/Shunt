@@ -170,11 +170,34 @@ int svcs_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h) {
 */
 /////////////////////////////////////////
 // Data exchange utilities (element/vector)
+
+int svcs_cs_comp_intV   (cs_header* h,int *lhs,int *rhs) {
+	int success = 1;
+	//compare
+    if (h->data_type==  svcs_prim_hash("SVCS_INT")) {
+			 for (int i=0;i< h->n_payloads;i++) {
+				 if(lhs[i] != rhs[i]) success = 0;
+			 }
+		 }
+	 return success;
+}
+
+void svcs_cs_print_intV   (cs_header* h,int *Int,char* msg) {
+	if (h->data_type==  svcs_prim_hash("SVCS_INT")) {
+	  for (int i=0;i< h->n_payloads;i++) {
+		  printf("\n %s IntV[%0d]=%d",msg,i,Int[i]);
+	    }
+	  }
+	puts("\n");
+}
+
+
 int svcs_cs_send_intV (int sockid,const cs_header* h,const int* Int) {
   int Result_=-1;
-  
-  if (h->data_type==  SVCS_INT) {
+  //char *msg = "svcs_cs_send_intV:: ";
+  if (h->data_type==  svcs_prim_hash("SVCS_INT")) {
     for (int i=0;i< h->n_payloads;i++) {
+      //printf("\n %s IntV[%0d]=%d",msg,i,Int[i]);
       Result_ = svcs_prim_send_int(sockid,&Int[i]);
     }
   }
@@ -185,7 +208,7 @@ int svcs_cs_send_intV (int sockid,const cs_header* h,const int* Int) {
 int  svcs_cs_recv_intV    (int sockid,cs_header* h,int* Int) {
   int Result_=-1;
   
-  if (h->data_type ==  SVCS_INT) {
+  if (h->data_type == svcs_prim_hash("SVCS_INT")) {
     for (int i=0;i< h->n_payloads;i++) {
       Result_ = svcs_prim_recv_int(sockid,&Int[i]);
     }
@@ -198,7 +221,7 @@ int  svcs_cs_recv_intV    (int sockid,cs_header* h,int* Int) {
 int svcs_cs_send_doubleV (int sockid,const cs_header* h,const double* Double) {
   int Result_=-1;
   
-  if (h->data_type ==  SVCS_DOUBLE) {
+  if (h->data_type ==  svcs_prim_hash("SVCS_DOUBLE")) {
     for (int i=0;i< h->n_payloads;i++) {
       Result_ = svcs_prim_send_double(sockid,&Double[i]);
     }
@@ -210,7 +233,7 @@ int svcs_cs_send_doubleV (int sockid,const cs_header* h,const double* Double) {
 int  svcs_cs_recv_doubleV    (int sockid,cs_header* h,double* Double) {
   int Result_=-1;
   
-  if (h->data_type ==  SVCS_DOUBLE) {
+  if (h->data_type ==  svcs_prim_hash("SVCS_DOUBLE")) {
     for (int i=0;i< h->n_payloads;i++) {
       Result_ = svcs_prim_recv_double(sockid,&Double[i]);
     }
@@ -222,7 +245,7 @@ int  svcs_cs_recv_doubleV    (int sockid,cs_header* h,double* Double) {
 int svcs_cs_send_string   (int sockid,const cs_header* h,const char* string) {
   int Result_=-1;
   //printf("will send string  (%s) of %d bytes\n",str,length);
-  if (h->data_type ==  SVCS_STRING) {
+  if (h->data_type ==  svcs_prim_hash("SVCS_STRING")) {
     Result_ = send(sockid, string,h->n_payloads, 0);
   }
   return Result_;
@@ -230,7 +253,7 @@ int svcs_cs_send_string   (int sockid,const cs_header* h,const char* string) {
 
 int svcs_cs_recv_string   (int sockid,cs_header* h,char* string) {
   int Result_=-1;
-  if (h->data_type ==  SVCS_STRING) {
+  if (h->data_type ==  svcs_prim_hash("SVCS_STRING")) {
     Result_ = recv(sockid,string,h->n_payloads, 0);
     //printf("get string length(%0d) (%s) \n",Result_,string);
   }
@@ -284,10 +307,10 @@ int svcs_cs_comp_intA   (int n_payloads,cs_data_header* h,int *lhs,int *rhs){
 	int success = 1;
     //compare
 	int indx=0;
-		for(int i=0;i<n_payloads;i++) {
-			for (int j=0;j< h->trnx_payload_sizes[i];j++) {
-				if(lhs[indx] != rhs[indx]) success = 0;
-				indx++;
+	for(int i=0;i<n_payloads;i++) {
+		for (int j=0;j< h->trnx_payload_sizes[i];j++) {
+			if(lhs[indx] != rhs[indx]) success = 0;
+			indx++;
 			}
 		}
     return success;

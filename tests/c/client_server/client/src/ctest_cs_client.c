@@ -60,7 +60,7 @@ int main(void) {
     if (svcs_cs_send_data_header(socket,h_trnx.n_payloads,&h_data)<= 0) success = 0;
     if (success == 0 )  printf("\n client data_header fail to send");
 
-    //     INTV Test
+    //     INT Test
     //Int Array
     //char* msg = "client: recv int_header";
 
@@ -77,43 +77,29 @@ int main(void) {
     if (svcs_cs_send_intA(socket,h_trnx.n_payloads,&h_data,IntA)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail to send");
 
+    //Int vector
+    //char* msg = "client: recv int_header";
+    int* IntV;
 
-    //char* msg = "client: recv intA ";
-    //svcs_cs_print_intA(h_trnx.n_payloads,&h_data,IntA,msg);
-    /*
-    int indx=0;
+    //recv
+    //header
+    if (svcs_cs_recv_header(socket,&h_trnx)<= 0) success = 0;
+    if (success == 0 )  printf("\n client trnx_header fail to recv");
+    //data
+    IntV = (int *)malloc(h_trnx.n_payloads* sizeof(int));
+    if (svcs_cs_recv_intV(socket,&h_trnx,IntV)<=0) success = 0;
+    if (success == 0 )  printf("\n client Int data fail to recv");
 
-    for(int i=0;i<h_trnx.n_payloads;i++) {
-         //Result_ = send(h->sockid,&Int,h->trnx_payload_sizes[i]*sizeof(int), 0);
-         for (int j=0;j< h_data.trnx_payload_sizes[i];j++) {
-         printf("\n client recv intA (%0d) IntA[%0d][%0d]=%d",indx,i,j,IntA[indx]);
-         indx++;
-           	    }
-       	    }
-*/
-/*
-    //send
-    if (svcs_cs_send_data_header(socket,&h_int)<= 0)  printf("\nclient cs_header fail send");
-    if (success == 0 )  printf("\nclient cs_header fail send");
-    if (svcs_cs_send_int(socket,&h_int,IntI)<=0) success = 0;
-    if (success == 0 )  printf("\n client Int data fail send");
-    //
-    if (svcs_cs_recv_data_header_clean(&h_int)<=0) success = 0;
-    if (svcs_cs_recv_int_clean(&IntI)<=0) success = 0;
-    */
-   /*
-    int indx=0;
-    for(int i=0;i<h_int.n_payloads;i++) {
-     //Result_ = send(h->sockid,&Int,h->trnx_payload_sizes[i]*sizeof(int), 0);
-     for (int j=0;j< h_int.trnx_payload_sizes[i];j++) {
-     printf("\n client recv intA (%0d) IntA[%0d][%0d]=%d",indx,i,j,IntA[indx]);
-     indx++;
-       	    }
-   	    }
-   	    */
-    
-/*     if (success == 0 )  printf("\nString client fail send"); */
-/*     //////////////////////////////////// */
+    //send loopback
+    //header
+    if (svcs_cs_send_header(socket,&h_trnx)<= 0) success = 0;
+    if (success == 0 )  printf("\n client trnx_header fail to send");
+    //data
+    if (svcs_cs_send_intV(socket,&h_trnx,IntV)<=0) success = 0;
+    if (success == 0 )  printf("\n client Int data fail to send");
+
+
+////////////////////////////////////
     //puts("\nctest_cs_client end");
   }
 
