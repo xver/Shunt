@@ -490,7 +490,34 @@ int svcs_cs_send_doubleA   (int sockid,int n_payloads,const cs_data_header* h,co
  Returns:
  number of elements have been received  : success > 0
 */
-int svcs_cs_recv_doubleA   (int sockid,int n_payload,cs_data_header* h,double ** Double);
+int  svcs_cs_recv_doubleA    (int sockid,int n_payloads,cs_data_header* h,double* Double);
+
+/*
+  Function: svcs_cs_print_dooubleA
+  print out IntA Data
+
+  Parameters:
+  n_payloads - number of data payloads
+  h - cs_data_header structure
+  Double  - Data received
+  msg    - print out prefix
+  Returns:
+   void
+*/
+void svcs_cs_print_doubleA   (int n_payloads,cs_data_header* h,double *Double,char* msg);
+
+
+/*
+  Function: svcs_cs_comp_dooubleA
+  compare two intA payloads
+
+  Parameters:
+  n_payloads - number of data payloads
+  lhs,rhs - doubleA data
+  Returns:
+  success > 0
+*/
+int svcs_cs_comp_doubleA   (int n_payloads,cs_data_header* h,double *lhs,double *rhs);
 
 /*
   Function: svcs_cs_send_stringA
@@ -504,6 +531,7 @@ int svcs_cs_recv_doubleA   (int sockid,int n_payload,cs_data_header* h,double **
 
   Returns:number of elements have been sent  : success > 0
 */
+
 int svcs_cs_send_stringA(int sockid,const cs_data_header* h,const char* ArrayS[]);
 
 /*

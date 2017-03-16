@@ -57,15 +57,15 @@ void svcs_cs_print_header (cs_header* h,char* data_type_names[],int last_enum,ch
   
   //printf("\n%s h->sockid\t(%0d)",msg,h->sockid);
   
-  printf("\n%s h->trnx_type\t(%f)",msg,h->trnx_type);
-  printf("\n%s h->trnx_id\t(%f)",msg,h->trnx_id);
+  printf("\n%s h_trnx->trnx_type\t(%f)",msg,h->trnx_type);
+  printf("\n%s h_trnx->trnx_id\t(%f)",msg,h->trnx_id);
   //
   int data_type_ = svcs_cs_data_type(h->data_type,data_type_names,last_enum);
   if (data_type_>=0)
-    printf("\n%s h->data_type\t(%s )(%d)\thash=%f",msg,data_type_names[data_type_],data_type_,h->data_type);
+    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%f",msg,data_type_names[data_type_],data_type_,h->data_type);
   else
-    printf("\n%s h->data_type\t(%s )(%d)\thash=%f",msg,"N/A",data_type_,h->trnx_type);
-  printf("\n%s h->n_payloads\t(%0d)",msg,h->n_payloads);
+    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%f",msg,"N/A",data_type_,h->trnx_type);
+  printf("\n%s h_trnx->n_payloads\t(%0d)",msg,h->n_payloads);
   //
 }
 
@@ -91,11 +91,11 @@ int svcs_cs_comp_data_header (cs_data_header h_lhs,cs_data_header h_rhs,int n_pa
 
 void svcs_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_type_names[],int last_enum,char* msg) {
   
-  int data_type_ = svcs_cs_data_type(h->data_type,data_type_names,last_enum);
+  int data_type_ = svcs_cs_data_type(h_data->data_type,data_type_names,last_enum);
   if (data_type_>=0)
-    printf("\n%s h->data_type\t(%s )(%d)\thash=%f",msg,data_type_names[data_type_],data_type_,h->data_type);
+    printf("\n%s h_data->data_type\t(%s )(%d)\thash=%f",msg,data_type_names[data_type_],data_type_,h_data->data_type);
   else
-    printf("\n%s h->data_type\t(%s )(%d)\thash=%f",msg,"N/A",data_type_,h->trnx_type);
+    printf("\n%s h_data->data_type\t(%s )(%d)\thash=%f",msg,"N/A",data_type_,h_data->data_type);
   
   for(int i=0;i<h->n_payloads;i++) {
     printf("\n%s h_data->trnx_payload_sizes[%0d]=%d",msg,i,h_data->trnx_payload_sizes[i]);
@@ -324,30 +324,64 @@ int svcs_cs_comp_intA   (int n_payloads,cs_data_header* h,int *lhs,int *rhs){
    }
 */
 
-int svcs_cs_send_doubleA   (int sockid,int n_payloads,const cs_data_header* h,const double* Double) {
-  int Result_=-1;
+int svcs_cs_send_doubleA (int sockid,int n_payloads,const cs_data_header* h,const double * Double) {
+
+  int Result_= 1;
   int indx_ =0;
+  //printf("\n svcs_cs_send_double n_payloads=%0d",n_payloads);
   for(int i=0;i<n_payloads;i++) {
     for (int j=0;j< h->trnx_payload_sizes[i];j++) {
-      //printf("\n svcs_cs_send_double (%0d) Double[%0d][%0d]=%d",indx_,i,j,Double[indx_]);
-      Result_ = svcs_prim_send_double(sockid,&Double[indx_]);
+     //printf("\n svcs_cs_send_double (%0d) Double[%0d][%0d]=%f",indx_,i,j,Double[indx_]);
+      double Double_ = Double[indx_];
+      Result_ = svcs_prim_send_double(sockid,&Double_);
       indx_++;
     }
   }
+
   return Result_;
 }
 
-int svcs_cs_recv_doubleA   (int sockid,int n_payloads,cs_data_header* h,double ** Double) {
-  int Result_=-1;
+
+int  svcs_cs_recv_doubleA    (int sockid,int n_payloads,cs_data_header* h,double *Double) {
+  int Result_= 1;
+
   int indx_ =0;
+  //printf("\n svcs_cs_recv_double n_payloads=%0d",n_payloads);
   for(int i=0;i<n_payloads;i++) {
     for (int j=0;j< h->trnx_payload_sizes[i];j++) {
-      Result_ = svcs_prim_recv_double(sockid,&(*Double)[indx_]);
-      //printf("\n svcs_cs_resv_double (%0d) Double[%0d][%0d]=%d",indx_,i,j,(*Double)[indx_]);
+      double Double_;
+      Result_ = svcs_prim_recv_double(sockid,&Double_);
+      Double[indx_] = Double_;
+      //printf("\n svcs_cs_recv_double (%0d) Double[%0d][%0d]=%f",indx_,i,j,Double_);//[indx_]);
       indx_++;
     }
   }
+  // }
   return Result_;
+}
+
+void  svcs_cs_print_doubleA   (int n_payloads,cs_data_header* h,double *Double,char* msg) {
+	int indx=0;
+	for(int i=0;i<n_payloads;i++) {
+		for (int j=0;j< h->trnx_payload_sizes[i];j++) {
+			printf("\n %s (%0d) DoubleA[%0d][%0d]=%f",msg,indx,i,j,Double[indx]);
+			indx++;
+		}
+	}
+	puts("\n");
+}
+
+int svcs_cs_comp_doubleA   (int n_payloads,cs_data_header* h,double *lhs,double *rhs){
+	int success = 1;
+    //compare
+	int indx=0;
+	for(int i=0;i<n_payloads;i++) {
+		for (int j=0;j< h->trnx_payload_sizes[i];j++) {
+			if(lhs[indx] != rhs[indx]) success = 0;
+			indx++;
+			}
+		}
+    return success;
 }
 /*
   int svcs_cs_recv_double_clean   (double ** Double) {

@@ -192,23 +192,23 @@ int svcs_prim_send_double    (const int sockfd,const double* Double)
 {
 
   int numbytes;
-  //printf("\nsvcs_prim_send_double:Size of double pointer = %d addr = %d value=%f\n", sizeof(double),Double,*Double);
+  //printf("\nsvcs_prim_send_double:Size of double pointer = %d addr = %x value=%f\n", sizeof(double),Double,*Double);
   numbytes = send(sockfd, Double, sizeof(double), 0);
 
   if (numbytes < 0) svcs_prim_error("ERROR svcs_cs_send_double: numbytes < 0 ");
   return numbytes;
 }
 
-
 int svcs_prim_recv_double    (const int sockfd,double* Double)
 {
  int numbytes;
-  
+
   numbytes = recv(sockfd, Double,sizeof(double) , 0);
-  //printf("svcs_prim_recv_double::get Double  (%f) of %0d bytes\n",*Double,numbytes);
+  //printf("\nsvcs_prim_recv_double::get Double  (%f) of %0d bytes\n",*Double,numbytes);
   if (numbytes < 0) svcs_prim_error("ERROR in svcs_prim_recv_double : numbytes < 0 ");
   return numbytes;
 }
+
 
 
 #endif

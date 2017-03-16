@@ -48,7 +48,7 @@ int main(void) {
     //send loopback
     if (svcs_cs_send_header(socket,&h_trnx)<= 0) success = 0;
     if (success == 0 )  printf("\n client trnx_header fail to send");
-
+    
     // data_header test
     cs_data_header h_data;
     //char* msg = "client: recv data_header";
@@ -59,28 +59,28 @@ int main(void) {
     //send loopback
     if (svcs_cs_send_data_header(socket,h_trnx.n_payloads,&h_data)<= 0) success = 0;
     if (success == 0 )  printf("\n client data_header fail to send");
-
+    
     //     INT Test
     //Int Array
     //char* msg = "client: recv int_header";
-
+    
     //recv
     int* IntA;
     int sum = 0;
     for (int i=0;i< h_trnx.n_payloads;i++) {
-        sum =sum+ 	h_data.trnx_payload_sizes[i];
-     }
+      sum =sum+ 	h_data.trnx_payload_sizes[i];
+    }
     IntA = (int *)malloc(sum * sizeof(int));
-
+    
     if (svcs_cs_recv_intA(socket,h_trnx.n_payloads,&h_data,IntA)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail to recv");
     if (svcs_cs_send_intA(socket,h_trnx.n_payloads,&h_data,IntA)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail to send");
-
+    
     //Int vector
     //char* msg = "client: recv int_header";
     int* IntV;
-
+    
     //recv
     //header
     if (svcs_cs_recv_header(socket,&h_trnx)<= 0) success = 0;
@@ -89,7 +89,7 @@ int main(void) {
     IntV = (int *)malloc(h_trnx.n_payloads* sizeof(int));
     if (svcs_cs_recv_intV(socket,&h_trnx,IntV)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail to recv");
-
+    
     //send loopback
     //header
     if (svcs_cs_send_header(socket,&h_trnx)<= 0) success = 0;
@@ -97,14 +97,65 @@ int main(void) {
     //data
     if (svcs_cs_send_intV(socket,&h_trnx,IntV)<=0) success = 0;
     if (success == 0 )  printf("\n client Int data fail to send");
-
-
-////////////////////////////////////
+    
+    
+    ////////////////////////////////////    
+    
+    //Double Test
+    //Double Array
+    //char* msg = "client: recv double_header";
+    
+    //recv
+    
+    double* DoubleA;
+    //cs_header      h_trnx;
+    //cs_data_header h_data;
+    //int sum;
+    
+    char* msg = "client: recv trnx_header";
+    
+    //recv headers
+    if (svcs_cs_recv_header(socket,&h_trnx)<= 0) success = 0;
+    if (success == 0 )  printf("\n client trnx_header fail to recv");
+    //svcs_cs_print_header(&h_trnx,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+    
+    h_data.trnx_payload_sizes = malloc(h_trnx.n_payloads*sizeof(int));
+    if (svcs_cs_recv_data_header(socket,h_trnx.n_payloads,&h_data)<= 0) success = 0;
+    if (success == 0 )  printf("\n client data_header fail to recv");
+    //svcs_cs_print_data_header(&h_trnx,&h_data,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+    
+    sum = 0;
+    for (int i=0;i< h_trnx.n_payloads;i++) {
+      sum =sum+ 	h_data.trnx_payload_sizes[i];
+    }
+    DoubleA = (double *)malloc(sum * sizeof(double));
+    //recv data
+    if (svcs_cs_recv_doubleA(socket,h_trnx.n_payloads,&h_data,DoubleA)<=0) success = 0;
+    if (success == 0 )  printf("\n client Int data fail to recv");
+    msg = "client: data_exp";
+    //svcs_cs_print_doubleA(h_trnx.n_payloads,&h_data,(double *)DoubleA,msg);
+    
+    //send loopback
+    //send header
+    msg = "client: loopback send header ";
+    //svcs_cs_print_header(&h_trnx,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+    if (svcs_cs_send_header(socket,&h_trnx)<= 0) success = 0;
+    if (success == 0 )  printf("\n%s trnx_header fail send",msg);
+    // send data header
+    //svcs_cs_print_data_header(&h_trnx,&h_data,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+    if (svcs_cs_send_data_header(socket,h_trnx.n_payloads,&h_data)<= 0) success = 0;
+    if (success == 0 )  printf("\n%s data_header fail send",msg);
+    //
+    //send data
+    svcs_cs_send_doubleA(socket,h_trnx.n_payloads,&h_data,DoubleA);
+    
+    ////////////////////////////////////
     //puts("\nctest_cs_client end");
   }
-
+  
   if ( success >0)
     return EXIT_SUCCESS;
   else 
     return EXIT_FAILURE;
 }
+
