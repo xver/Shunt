@@ -331,6 +331,35 @@ int svcs_cs_send_doubleV   (int sockid,const cs_header* header,const double* Dou
 int svcs_cs_recv_doubleV   (int sockid,cs_header* header,double* Double);
 
 /*
+  Function: svcs_cs_comp_doubleV
+  compare two doubleV payloads
+
+  Parameters:
+  h - cs_header
+  lhs,rhs - double V data
+  Returns:
+  success > 0
+*/
+int svcs_cs_comp_doubleV   (cs_header* h,double *lhs,double *rhs);
+
+
+/*
+  Function: svcs_cs_print_doubleV
+  print out DoubleV Data
+
+  Parameters:
+
+  h - cs_data_header structure
+  Double  - Data received
+  msg    - print out prefix
+
+  Returns:
+  void
+*/
+void svcs_cs_print_doubleV   (cs_header* h,double *Double,char* msg);
+
+
+/*
   Function: svcs_cs_send_string
   send SVCS transaction with verilog string/C char* elements over TCP/IP
   

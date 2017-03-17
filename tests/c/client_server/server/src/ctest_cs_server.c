@@ -287,6 +287,52 @@ int main(void) {
       svcs_cs_print_doubleA(h_trnx_act.n_payloads,&h_data_act,(double *)DoubleA_act,msg);
       
     }
+    //
+    // DOUBLEV Test
+    success =1;
+    //Double Vector
+    double DoubleVexp[n];
+    double* DoubleVact;
+    msg = "Server: Double Vector Test ";
+    for (int i = 0; i < n; i++) {
+      DoubleVexp[i] = i+1 ;//rand();
+      //printf("\nserver DoubleVexp[%0d]=%d",i,DoubleVexp[i]);
+    }
+    
+    //set up header
+    h_trnx_exp.trnx_type = rand();
+    h_trnx_exp.trnx_id   = rand();
+    h_trnx_exp.data_type = svcs_cs_data_type_hash(SVCS_DOUBLE,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY);
+    h_trnx_exp.n_payloads = n;
+    
+    //send
+    if (svcs_cs_send_header(socket,&h_trnx_exp)<= 0) success = 0;
+    if (success == 0 )  printf("\nserver: fail send header ");
+    if (svcs_cs_send_doubleV  (socket,&h_trnx_exp,DoubleVexp)<= 0) success = 0;
+    if (success == 0 )  printf("\nserver: fail send data");
+    
+    //recv
+    if (svcs_cs_recv_header (socket,&h_trnx_act)<= 0) success = 0;
+    DoubleVact = malloc(sizeof(double)*h_trnx_act.n_payloads);
+    if (svcs_cs_recv_doubleV  (socket,&h_trnx_exp,DoubleVact)<= 0) success = 0;
+    if (success == 0 )  printf("\nDoubleV loopback fail recv");
+    
+    //compare
+    if (svcs_cs_comp_doubleV  (&h_trnx_exp,DoubleVexp,DoubleVact)<= 0) success = 0;
+    
+    msg = "Server: DoubleV Test ";
+    if (success > 0 )  printf("\n\t%s loopback pass",msg);
+    else  {
+      printf("\n %s loopback fail",msg);
+      msg = "server: header trnx_exp";
+      svcs_cs_print_header (&h_trnx_exp,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+      msg = "server: header trnx_act";
+      svcs_cs_print_header (&h_trnx_act,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+      msg = "server: data_exp";
+      svcs_cs_print_doubleV(&h_trnx_exp,DoubleVexp,msg);
+      msg = "server: data_act";
+      svcs_cs_print_doubleV(&h_trnx_act,DoubleVact,msg);
+    }
     /////////////////////////////////////////////
 
       puts("\n\nctest_cs_server end");

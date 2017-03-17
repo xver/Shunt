@@ -149,6 +149,26 @@ int main(void) {
     //send data
     svcs_cs_send_doubleA(socket,h_trnx.n_payloads,&h_data,DoubleA);
     
+    //Double vector
+    //char* msg = "client: recv double_header";
+    double* DoubleV;
+    
+    //recv
+    //header
+    if (svcs_cs_recv_header(socket,&h_trnx)<= 0) success = 0;
+    if (success == 0 )  printf("\n client trnx_header fail to recv");
+    //data
+    DoubleV = (double *)malloc(h_trnx.n_payloads* sizeof(double));
+    if (svcs_cs_recv_doubleV(socket,&h_trnx,DoubleV)<=0) success = 0;
+    if (success == 0 )  printf("\n client Double data fail to recv");
+    
+    //send loopback
+    //header
+    if (svcs_cs_send_header(socket,&h_trnx)<= 0) success = 0;
+    if (success == 0 )  printf("\n client trnx_header fail to send");
+    //data
+    if (svcs_cs_send_doubleV(socket,&h_trnx,DoubleV)<=0) success = 0;
+    if (success == 0 )  printf("\n client Double data fail to send");
     ////////////////////////////////////
     //puts("\nctest_cs_client end");
   }

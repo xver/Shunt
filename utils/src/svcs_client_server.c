@@ -241,7 +241,25 @@ int  svcs_cs_recv_doubleV    (int sockid,cs_header* h,double* Double) {
   return Result_;
   
 }
+int svcs_cs_comp_doubleV   (cs_header* h,double *lhs,double *rhs) {
+	int success = 1;
+	//compare
+    if (h->data_type==  svcs_prim_hash("SVCS_DOUBLE")) {
+			 for (int i=0;i< h->n_payloads;i++) {
+				 if(lhs[i] != rhs[i]) success = 0;
+			 }
+		 }
+	 return success;
+}
+void svcs_cs_print_doubleV   (cs_header* h,double *Double,char* msg) {
 
+	if (h->data_type==  svcs_prim_hash("SVCS_DOUBLE")) {
+	  for (int i=0;i< h->n_payloads;i++) {
+		  printf("\n %s DoubleV[%0d]=%f",msg,i,Double[i]);
+	    }
+	  }
+}
+///////
 int svcs_cs_send_string   (int sockid,const cs_header* h,const char* string) {
   int Result_=-1;
   //printf("will send string  (%s) of %d bytes\n",str,length);
