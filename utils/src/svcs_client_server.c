@@ -278,6 +278,19 @@ int svcs_cs_recv_string   (int sockid,cs_header* h,char* string) {
   return Result_;
 }
 
+int svcs_cs_comp_string   (cs_header* h,char *lhs,char *rhs) {
+	int success = 1;
+	//compare
+	if (h->data_type==  svcs_prim_hash("SVCS_STRING")) {
+		for (int i=0;i< h->n_payloads;i++) {
+			if(lhs[i] != rhs[i]) success = 0;
+		}
+	}
+	return success;
+}
+////
+
+
 //Data exchange utilities (array)
 int svcs_cs_send_intA (int sockid,int n_payloads,const cs_data_header* h,const int * Int) {
 
@@ -401,6 +414,8 @@ int svcs_cs_comp_doubleA   (int n_payloads,cs_data_header* h,double *lhs,double 
 		}
     return success;
 }
+
+
 /*
   int svcs_cs_recv_double_clean   (double ** Double) {
   int Result_=1;

@@ -150,7 +150,7 @@ int main(void) {
       svcs_cs_print_intA(h_trnx_act.n_payloads,&h_data_act,IntA_act,msg);
     }
     //
-    /*     INTV Test */
+    // INTV Test
     success =1;
     //Int Vector
     const int n=17;
@@ -333,6 +333,55 @@ int main(void) {
       msg = "server: data_act";
       svcs_cs_print_doubleV(&h_trnx_act,DoubleVact,msg);
     }
+
+    // String Test
+    success =1;
+    //String
+
+    char String_exp[n];
+    char *String_act;
+    msg = "Server: String Test ";
+    for (int i = 0; i <= n; i++) {
+    	String_exp[i] = i + 'a';
+    	if (i==n) String_exp[i]='\0';
+    	//printf("\nserver String_exp[%0d]=%c",i,String_exp[i]);
+    }
+
+    //set up header
+    h_trnx_exp.trnx_type = rand();
+    h_trnx_exp.trnx_id   = rand();
+    h_trnx_exp.data_type = svcs_cs_data_type_hash(SVCS_STRING,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY);
+    h_trnx_exp.n_payloads = n;
+
+    //send
+    if (svcs_cs_send_header(socket,&h_trnx_exp)<= 0) success = 0;
+    if (success == 0 )  printf("\nserver: fail send header ");
+    if (svcs_cs_send_string  (socket,&h_trnx_exp,String_exp)<= 0) success = 0;
+    if (success == 0 )  printf("\nserver: fail send data");
+
+    //recv
+    if (svcs_cs_recv_header (socket,&h_trnx_act)<= 0) success = 0;
+    String_act = malloc(sizeof(char)*h_trnx_act.n_payloads);
+    if (svcs_cs_recv_string  (socket,&h_trnx_exp,String_act)<= 0) success = 0;
+    if (success == 0 )  printf("\nString loopback fail recv");
+
+    //compare
+    if (svcs_cs_comp_string  (&h_trnx_exp,String_exp,String_act)<= 0) success = 0;
+
+    msg = "Server: String Test ";
+    if (success > 0 )  printf("\n\t%s loopback pass",msg);
+    else  {
+    	printf("\n %s loopback fail",msg);
+    	msg = "server: header trnx_exp";
+    	svcs_cs_print_header (&h_trnx_exp,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+    	msg = "server: header trnx_act";
+    	svcs_cs_print_header (&h_trnx_act,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+    	msg = "server: data_exp";
+    	printf("\n%s String_exp=%s",msg,String_exp);
+    	msg = "server: data_act";
+    	printf("\n%s String_act=%s",msg,String_act);
+    }
+
     /////////////////////////////////////////////
 
       puts("\n\nctest_cs_server end");
