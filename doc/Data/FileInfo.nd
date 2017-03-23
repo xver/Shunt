@@ -1,73 +1,40 @@
 1.51
-C/C++
-/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.C	1487373791	0	/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.C
-/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/src/ctest_prim_server.c	1487517304	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/src/ctest_prim_server.c
-/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/Debug/sources.mk	1488150320	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/Debug/sources.mk
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/client/src/ctest_prim_client.c	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/client/src/ctest_prim_client.c
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/client/Debug/objects.mk	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/client/Debug/objects.mk
-/home/v/workspace/OpenSrc/SVCS/README.txt	1486830423	1	1. Introduction SVCS
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/server/Debug/src/subdir.mk	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/server/Debug/src/subdir.mk
-/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/src/ctest_cs_client.c	1488147770	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/src/ctest_cs_client.c
-/home/v/workspace/OpenSrc/SVCS/utils_bkup/src/temp.txt	1487422705	0	/home/v/workspace/OpenSrc/SVCS/utils_bkup/src/temp.txt
-/home/v/workspace/OpenSrc/SVCS/utils_bkup/src/svcs_client_server.h	1487428217	1	3. Utilites: Client-Servercs_header
-/home/v/workspace/OpenSrc/SVCS/utils_bkup/Debug/src/subdir.mk	1487428204	0	/home/v/workspace/OpenSrc/SVCS/utils_bkup/Debug/src/subdir.mk
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/client/Debug/objects.mk	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/client/Debug/objects.mk
-/home/v/workspace/OpenSrc/SVCS/utils/src/svcs_user_api.h	1487428468	1	4. Utilites: USER API
-/home/v/workspace/OpenSrc/SVCS/prj_bkp/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.c	1487204190	0	/home/v/workspace/OpenSrc/SVCS/prj_bkp/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.c
-/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.c	1487373791	0	/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.c
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/client/Debug/sources.mk	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/client/Debug/sources.mk
-/home/v/workspace/OpenSrc/SVCS/Debug/objects.mk	1485903848	0	/home/v/workspace/OpenSrc/SVCS/Debug/objects.mk
-/home/v/workspace/OpenSrc/SVCS/utils_bkup/Debug/objects.mk	1487428204	0	/home/v/workspace/OpenSrc/SVCS/utils_bkup/Debug/objects.mk
-/home/v/workspace/OpenSrc/SVCS/utils/src/svcs_client_server.c	1488150420	0	/home/v/workspace/OpenSrc/SVCS/utils/src/svcs_client_server.c
-/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/src/ctest_cs_server.c	1488148430	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/src/ctest_cs_server.c
-/home/v/workspace/OpenSrc/SVCS/Debug/src/subdir.mk	1485903848	0	/home/v/workspace/OpenSrc/SVCS/Debug/src/subdir.mk
-/home/v/workspace/OpenSrc/SVCS/utils_bkup/src/svcs_primitives.c	1485990394	0	/home/v/workspace/OpenSrc/SVCS/utils_bkup/src/svcs_primitives.c
-/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.make.core/specs.c	1487373791	0	/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.make.core/specs.c
-/home/v/workspace/OpenSrc/SVCS/utils_bkup/src/svcs_user_api.h	1485990394	1	4. Utilites: USER API
+Makefile
+/home/v/workspace/OpenSrc/SVCS/utils/src/svcs_primitives.c	1489530460	0	Common Functions
+/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/Debug/src/subdir.mk	1490312744	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/Debug/src/subdir.mk
 /home/v/workspace/OpenSrc/SVCS/Debug/sources.mk	1485903848	0	/home/v/workspace/OpenSrc/SVCS/Debug/sources.mk
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/server/src/ctest_prim_server.c	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/server/src/ctest_prim_server.c
+/home/v/workspace/OpenSrc/SVCS/utils/src/svcs_user_api.h	1487428468	1	4. Utilites: USER API
+/home/v/workspace/OpenSrc/SVCS/utils/src/svcs_client_server.c	1490312724	0	/home/v/workspace/OpenSrc/SVCS/utils/src/svcs_client_server.c
+/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/Debug/objects.mk	1490312744	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/Debug/objects.mk
+/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/Debug/src/subdir.mk	1490312740	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/Debug/src/subdir.mk
+/home/v/workspace/OpenSrc/SVCS/utils/Debug/src/subdir.mk	1490312745	0	/home/v/workspace/OpenSrc/SVCS/utils/Debug/src/subdir.mk
+/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/Debug/src/subdir.mk	1490312743	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/Debug/src/subdir.mk
+/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/Debug/sources.mk	1490312740	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/Debug/sources.mk
 /home/v/workspace/OpenSrc/SVCS/src/SVCS.c	1484437058	0	/home/v/workspace/OpenSrc/SVCS/src/SVCS.c
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/includes/cs_common.h	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/includes/cs_common.h
-/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/src/ctest_prim_client.c	1487517179	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/src/ctest_prim_client.c
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/client/Debug/src/subdir.mk	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/client/Debug/src/subdir.mk
-/home/v/workspace/OpenSrc/SVCS/prj_bkp/.metadata/.plugins/org.eclipse.cdt.make.core/specs.cpp	1487204190	0	/home/v/workspace/OpenSrc/SVCS/prj_bkp/.metadata/.plugins/org.eclipse.cdt.make.core/specs.cpp
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/server/Debug/src/subdir.mk	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/server/Debug/src/subdir.mk
-/home/v/workspace/OpenSrc/SVCS/prj_bkp/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.C	1487204190	0	/home/v/workspace/OpenSrc/SVCS/prj_bkp/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.C
-/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/Debug/objects.mk	1488150320	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/Debug/objects.mk
+/home/v/workspace/OpenSrc/SVCS/README.txt	1486830423	1	1. Introduction SVCS
+/home/v/workspace/OpenSrc/SVCS/utils/Debug/sources.mk	1490312745	0	/home/v/workspace/OpenSrc/SVCS/utils/Debug/sources.mk
+/home/v/workspace/OpenSrc/SVCS/Debug/objects.mk	1485903848	0	/home/v/workspace/OpenSrc/SVCS/Debug/objects.mk
+/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/src/ctest_cs_server.c	1490312295	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/src/ctest_cs_server.c
+/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/Debug/objects.mk	1490312743	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/Debug/objects.mk
+/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/includes/cs_common.h	1488418389	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/includes/cs_common.h
 /home/v/workspace/OpenSrc/SVCS/utils/src/svcs_c2sv_mapping.h	1487428468	1	4. Utilites: "C" to System Verilog mapping
-/home/v/workspace/OpenSrc/SVCS/utils/src/svcs_primitives.c	1487621623	0	Common Functions
-/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.make.core/specs.cpp	1487373791	0	/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.make.core/specs.cpp
-/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/Debug/sources.mk	1488150320	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/Debug/sources.mk
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/server/Debug/objects.mk	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/server/Debug/objects.mk
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/includes/cs_common.h	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/includes/cs_common.h
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/server/Debug/sources.mk	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/server/Debug/sources.mk
-/home/v/workspace/OpenSrc/SVCS/utils_bkup/src/utils.c	1485991080	0	/home/v/workspace/OpenSrc/SVCS/utils_bkup/src/utils.c
-/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/Debug/objects.mk	1488150321	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/Debug/objects.mk
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/client/src/ctest_cs_client.c	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/client/src/ctest_cs_client.c
-/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/Debug/objects.mk	1488150320	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/Debug/objects.mk
-/home/v/workspace/OpenSrc/SVCS/prj_bkp/.metadata/.plugins/org.eclipse.cdt.make.core/specs.c	1487204190	0	/home/v/workspace/OpenSrc/SVCS/prj_bkp/.metadata/.plugins/org.eclipse.cdt.make.core/specs.c
-/home/v/workspace/OpenSrc/SVCS/utils_bkup/src/svcs_client_server.c	1487428128	0	/home/v/workspace/OpenSrc/SVCS/utils_bkup/src/svcs_client_server.c
-/home/v/workspace/OpenSrc/SVCS/utils/src/svcs_client_server.h	1488150391	1	3. Utilites: Client-Servercs_header
-/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/Debug/src/subdir.mk	1488150320	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/Debug/src/subdir.mk
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/server/src/ctest_cs_server.c	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/server/src/ctest_cs_server.c
-/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/Debug/objects.mk	1488150320	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/Debug/objects.mk
-/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/Debug/src/subdir.mk	1488150320	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/Debug/src/subdir.mk
-/home/v/workspace/OpenSrc/SVCS/utils/src/utils.c	1487516427	0	/home/v/workspace/OpenSrc/SVCS/utils/src/utils.c
-/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/Debug/src/subdir.mk	1488150321	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/Debug/src/subdir.mk
-/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/Debug/sources.mk	1488150320	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/Debug/sources.mk
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/server/Debug/objects.mk	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/server/Debug/objects.mk
-/home/v/workspace/OpenSrc/SVCS/utils/Debug/src/subdir.mk	1488150321	0	/home/v/workspace/OpenSrc/SVCS/utils/Debug/src/subdir.mk
+/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.C	1487373791	0	/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.C
 /home/v/workspace/OpenSrc/SVCS/tests/c/primitives/includes/cs_common.h	1487517003	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/includes/cs_common.h
-/home/v/workspace/OpenSrc/SVCS/utils_bkup/Debug/sources.mk	1487428204	0	/home/v/workspace/OpenSrc/SVCS/utils_bkup/Debug/sources.mk
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/client/Debug/sources.mk	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/client/Debug/sources.mk
-/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/Debug/sources.mk	1488150321	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/Debug/sources.mk
 /home/v/workspace/OpenSrc/SVCS/LICENSE.txt	1478739877	1	License
-/home/v/workspace/OpenSrc/SVCS/utils_bkup/src/svcs_c2sv_mapping.h	1485990394	1	4. Utilites: "C" to System Verilog mapping
-/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/Debug/src/subdir.mk	1488150320	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/Debug/src/subdir.mk
-/home/v/workspace/OpenSrc/SVCS/utils/Debug/objects.mk	1488150321	0	/home/v/workspace/OpenSrc/SVCS/utils/Debug/objects.mk
-/home/v/workspace/OpenSrc/SVCS/utils/src/svcs_primitives.h	1487428468	1	2. Client-Server Primitives
-/home/v/workspace/OpenSrc/SVCS/utils/Debug/sources.mk	1488150321	0	/home/v/workspace/OpenSrc/SVCS/utils/Debug/sources.mk
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/server/Debug/sources.mk	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/client_server/server/Debug/sources.mk
-/home/v/workspace/OpenSrc/SVCS/utils_bkup/src/svcs_primitives.h	1485990394	1	2. Client-Server Primitives
-/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/includes/cs_common.h	1487518050	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/includes/cs_common.h
-/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/client/Debug/src/subdir.mk	1487516499	0	/home/v/workspace/OpenSrc/SVCS/tests_bkup/c/primitives/client/Debug/src/subdir.mk
+/home/v/workspace/OpenSrc/SVCS/utils/src/svcs_primitives.h	1489350359	1	2. Client-Server Primitives
+/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.c	1487373791	0	/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.managedbuilder.core/spec.c
+/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/Debug/objects.mk	1490312740	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/Debug/objects.mk
+/home/v/workspace/OpenSrc/SVCS/utils/Debug/objects.mk	1490312745	0	/home/v/workspace/OpenSrc/SVCS/utils/Debug/objects.mk
+/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/Debug/src/subdir.mk	1490312748	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/Debug/src/subdir.mk
+/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.make.core/specs.cpp	1487373791	0	/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.make.core/specs.cpp
+/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/src/ctest_cs_client.c	1490312475	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/client/src/ctest_cs_client.c
+/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/src/ctest_prim_client.c	1487517179	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/src/ctest_prim_client.c
+/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/Debug/sources.mk	1490312743	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/client/Debug/sources.mk
+/home/v/workspace/OpenSrc/SVCS/Debug/src/subdir.mk	1485903848	0	/home/v/workspace/OpenSrc/SVCS/Debug/src/subdir.mk
+/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/src/ctest_prim_server.c	1487517304	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/src/ctest_prim_server.c
+/home/v/workspace/OpenSrc/SVCS/utils/src/svcs_client_server.h	1490312954	1	3. Utilites: Client-Servercs_header
+/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/Debug/sources.mk	1490312744	0	/home/v/workspace/OpenSrc/SVCS/tests/c/primitives/server/Debug/sources.mk
+/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/Debug/sources.mk	1490312748	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/Debug/sources.mk
+/home/v/workspace/OpenSrc/SVCS/utils/src/utils.c	1487516427	0	/home/v/workspace/OpenSrc/SVCS/utils/src/utils.c
+/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.make.core/specs.c	1487373791	0	/home/v/workspace/OpenSrc/SVCS/.metadata/.plugins/org.eclipse.cdt.make.core/specs.c
+/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/Debug/objects.mk	1490312748	0	/home/v/workspace/OpenSrc/SVCS/tests/c/client_server/server/Debug/objects.mk

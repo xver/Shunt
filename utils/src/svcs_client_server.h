@@ -1,26 +1,26 @@
 /* 
-=======svcs_cs=====================================================================
- File        : svcs_client_server.h
- Author      : Victor Besyakov
- Version     : 0.0.0
- Copyright (c) 2016 IC Verimeter. All rights reserved.  
-               Licensed under the MIT License. 
-               See LICENSE file in the project root for full license information.  
- Description : Client-Server utils   
-               System Verilog client server handshake (SVCS)
-******************************************************
-Data Types:
-elements:         integer,  double, char
-vectors:          integers, doubles , string
-array/composite:  integer vectors , double vectors, messages , structure
--------------------------------------------------------
-trnx -> header  ->  trnx_atribute  - hash/random double
-                    trnx_type      - hash double
-                    trnx_id        - random double
-        payload -> size - int , >0
-                   data
- ============================================================================
- */
+   =======svcs_cs=====================================================================
+   File        : svcs_client_server.h
+   Author      : Victor Besyakov
+   Version     : 0.0.0
+   Copyright (c) 2016 IC Verimeter. All rights reserved.  
+   Licensed under the MIT License. 
+   See LICENSE file in the project root for full license information.  
+   Description : Client-Server utils   
+   System Verilog client server handshake (SVCS)
+   ******************************************************
+   Data Types:
+   elements:         integer,  double, char
+   vectors:          integers, doubles , string
+   array/composite:  integer vectors , double vectors, messages , structure
+   -------------------------------------------------------
+   trnx -> header  ->  trnx_atribute  - hash/random double
+   trnx_type      - hash double
+   trnx_id        - random double
+   payload -> size - int , >0
+   data
+   ============================================================================
+*/
 #ifndef SVCS_CLIENT_SERVER_H_
 #define SVCS_CLIENT_SERVER_H_
 
@@ -46,7 +46,6 @@ typedef enum {SVCS_INT,SVCS_DOUBLE,SVCS_STRING,SVCS_A_STRUCTURE,SVCS_HEADER_ONLY
 char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_INT","SVCS_DOUBLE","SVCS_STRING","SVCS_A_STRUCTURE","SVCS_HEADER_ONLY"}
 
 typedef struct cs_header_t {
-//int      sockid;        // socket id from init sever/client
 double   trnx_type;       // user defined transaction attribute
 double   trnx_id;         // user defined unique transaction number
 double   data_type;       // see SVCV_INSTR_ENUM
@@ -55,7 +54,6 @@ int      n_payloads;      // number of data payloads (for Array number of vector
 
 //  Array header extension
 typedef struct cs_data_header_t {
-int      n_payloads;         // number of data payloads
 double   data_type;       // see SVCV_INSTR_ENUM
 int     *trnx_payload_sizes; // array of payload sizes, number of array elements are equal to n_payloads
 } cs_data_header;
@@ -64,30 +62,29 @@ int     *trnx_payload_sizes; // array of payload sizes, number of array elements
 */
 
 typedef struct cs_data_header_t {
-  
   double   data_type;       // see SVCV_INSTR_ENUM
   int     *trnx_payload_sizes;
 } cs_data_header;
 
 typedef struct cs_header_t {
-  //int      sockid;
   double   trnx_type;
   double   trnx_id;
   double   data_type;
   int      n_payloads;
 } cs_header;
 
-
 /*
   Function: svcs_cs_data_type_hash
   map data_type enum to the corresponding hash
   
   Parameters:
+  
   data_type/trnx_type - for valid data_type see SVCV_INSTR_ENUM
   data_type_names - data_type (see SVCV_INSTR_ENUM_NAMES[]) or trnx_type names array 
   last_enum       - number of data_type_names[] elements
   
   Returns:
+  
   hash index
 */
 double svcs_cs_data_type_hash(int data_type,char* data_type_names[],int last_enum);
@@ -97,28 +94,31 @@ double svcs_cs_data_type_hash(int data_type,char* data_type_names[],int last_enu
   map data_type hash to the corresponding enum
   
   Parameters:
+  
   data_type - hash index
   data_type_names - data_type (see SVCV_INSTR_ENUM_NAMES[]) or trnx_type names array 
   last_enum       - number of data_type_names[] elements
   
   Returns:
+  
   valid data_type see SVCV_INSTR_ENUM
   -1 - No enum
 */
 int svcs_cs_data_type(double hash,char* data_type_names[],int last_enum);
-
 
 /*
   Function: svcs_cs_print_header
   print out SVCS header 
   
   Parameters:
+  
   h - cs_header structure
   data_type_names - data_type (see SVCV_INSTR_ENUM_NAMES[]) or trnx_type names array 
   last_enum       - number of data_type_names[] elements
   msg    - print out prefix
   
   Returns:
+  
   void
 */
 void svcs_cs_print_header    (cs_header* h,char* data_type_names[],int last_enum,char* msg);
@@ -129,6 +129,7 @@ void svcs_cs_print_header    (cs_header* h,char* data_type_names[],int last_enum
   print out SVCS header 
   
   Parameters:
+  
   h - cs_header structure
   h_data   - cs_data_header structure
   data_type_names - data_type (see SVCV_INSTR_ENUM_NAMES[]) or trnx_type names array
@@ -136,6 +137,7 @@ void svcs_cs_print_header    (cs_header* h,char* data_type_names[],int last_enum
   msg - print out prefix
   
   Returns:
+  
   void
 */
 
@@ -148,10 +150,12 @@ void svcs_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_t
   send SVCS header over TCP/IP
   
   Parameters:
+  
   sockid - socket id from init sever/client 
   h - cs_header structure
   
   Returns:
+  
   number of elements have been sent  : success > 0
 */
 
@@ -162,11 +166,13 @@ int svcs_cs_send_header    (int sockid,cs_header* h);
   send SVCS header over TCP/IP
   
   Parameters:
+  
   sockid - socket id from init sever/client 
   h - cs_header structure
   n_payloads - number of data payloads
   
   Returns:
+  
   number of elements have been sent  : success > 0
 */
 int svcs_cs_send_data_header    (int sockid,int n_payloads,cs_data_header* h);
@@ -176,8 +182,10 @@ int svcs_cs_send_data_header    (int sockid,int n_payloads,cs_data_header* h);
   compare two SVCS headers
 
   Parameters:
+  
   h_lhs,h_rhs - two cs headers
   Returns:
+  
   success > 0
 */
 int svcs_cs_comp_header    (cs_header h_lhs,cs_header h_rhs);
@@ -185,7 +193,7 @@ int svcs_cs_comp_header    (cs_header h_lhs,cs_header h_rhs);
 /*
   Function: svcs_cs_comp_data_header
   compare two SVCS data headers
-
+  
   Parameters:
   h_lhs,h_rhs - two cs data headers
   n_payloads - number of data payloads
@@ -199,10 +207,12 @@ int svcs_cs_comp_data_header (cs_data_header h_lhs,cs_data_header h_rhs,int n_pa
   fetch SVCS transaction header from TCP/IP socket
   
   Parameters:
+  
   sockid - socket id from init sever/client 
   header - cs_header structure
   
   Returns:
+  
   number of elements have been received  : success > 0
   
 */
@@ -385,7 +395,19 @@ int svcs_cs_send_string   (int sockid,const cs_header* header,const char* string
  Returns:
  number of elements have been received  : success > 0
 */
+
 int svcs_cs_recv_string   (int sockid,cs_header* header,char* string);
+/*
+  Function: svcs_cs_comp_string
+  compare two char * payloads
+
+  Parameters:
+  h - cs_header
+  lhs,rhs - string
+  Returns:
+  success > 0
+*/
+int svcs_cs_comp_string   (cs_header* h,char *lhs,char *rhs);
 
 /*
  Section: Data exchange utilities (array)
@@ -555,13 +577,16 @@ int svcs_cs_comp_doubleA   (int n_payloads,cs_data_header* h,double *lhs,double 
   Parameters:
   sockid - socket id from init sever/client 
   h - cs_data_header structure,
+  n_payloads
   note: header.trnx_payload_size - The number of array entries is equal to the number of strings 
   ArrayS  - data 
 
   Returns:number of elements have been sent  : success > 0
 */
 
-int svcs_cs_send_stringA(int sockid,const cs_data_header* h,const char* ArrayS[]);
+int svcs_cs_send_stringA(int sockid,int n_payloads,cs_data_header* h,const char *ArrayS);
+
+
 
 /*
   Function: svcs_cs_recv_stringA
@@ -575,7 +600,32 @@ int svcs_cs_send_stringA(int sockid,const cs_data_header* h,const char* ArrayS[]
   Returns:
   number of elements have been received  : success > 0
 */
-int svcs_cs_recv_stringA(int sockid,cs_data_header h,char* ArrayS[]);
+int svcs_cs_recv_stringA(int sockid,int n_payloads,cs_data_header* h,char* ArrayS);
+
+/*
+  Function: svcs_cs_print_StringA
+  print out StringA Data
+
+  Parameters:
+  n_payloads - number of data payloads
+  h - cs_data_header structure
+  String  - Data to print
+  msg    - print out prefix
+  Returns:
+   void
+*/
+void svcs_cs_print_StringA   (int n_payloads,cs_data_header* h,char *String,char* msg);
 
 
+/*
+  Function: svcs_cs_comp_StringA
+  compare two StringA payloads
+
+  Parameters:
+  n_payloads - number of data payloads
+  lhs,rhs - StringA data
+  Returns:
+  success > 0
+*/
+int svcs_cs_comp_StringA   (int n_payloads,cs_data_header* h,char *lhs,char *rhs);
 #endif
