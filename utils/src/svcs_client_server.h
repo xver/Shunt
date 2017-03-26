@@ -290,8 +290,8 @@ int svcs_cs_recv_intV   (int sockid, cs_header* header,int* Int);
   Parameters:
 
   h - cs_data_header structure
-  Int  - Data received
-  msg    - print out prefix
+  Int  - Data to print
+  msg  - print out prefix
 
   Returns:
   void

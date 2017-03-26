@@ -30,29 +30,50 @@
 
 /*
   Function: svcs_api_send
-  send data over TCP/IP
+  
+  send data over TCP/IP.
+  Supported data types are:
+  int , intV ,IntA ,double ,doublev ,DoubleA,string,stringA 
   
   Parameters:
-  TODO
   
+  Perm parameters:  
+   sockid - socket id from init sever/client 
+   h_trnx - cs_header structure
+  
+   Non-perm  parameters are: 
+   h_data - cs_data_header  structure
+   Int,Double,String - data to send
+   
+
   Returns:
-  void
+  number of elements have been sent  : success > 0
 */
 
-//void svcs_api_send    (TODO);
+int svcs_api_send    (int sockid,const cs_header* h_trnx, ...);
 
 /*
   Function: svcs_api_recv_trnx
   fetch data from TCP/IP socket
+   Supported data types are:
+  int , intV ,IntA ,double ,doublev ,DoubleA,string,stringA 
   
   Parameters:
-  TODO
   
+  Perm parameters:  
+   sockid - socket id from init sever/client 
+   h_trnx - cs_header structure
+  
+   Non-perm  parameters are: 
+   h_data - cs_data_header  structure
+   Int,Double,String - Data received
+   
+   
   Returns:
-  TODO
+  number of elements have been received  : success > 0
 
 */
-//void svcs_api_recv    (TODO);
+int svcs_api_recv (int sockid,cs_header* h_trnx, ...);
 
 #endif
 
