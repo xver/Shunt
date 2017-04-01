@@ -66,6 +66,7 @@ void svcs_cs_print_header (cs_header* h,char* data_type_names[],int last_enum,ch
   else
     printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%f",msg,"N/A",data_type_,h->trnx_type);
   printf("\n%s h_trnx->n_payloads\t(%0d)",msg,h->n_payloads);
+  puts("\n");
   //
 }
 
@@ -100,15 +101,16 @@ void svcs_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_t
   for(int i=0;i<h->n_payloads;i++) {
     printf("\n%s h_data->trnx_payload_sizes[%0d]=%d",msg,i,h_data->trnx_payload_sizes[i]);
   }
+  puts("\n");
 }
 
 
 int svcs_cs_send_header    (int sockid,cs_header* h) {
   int Result_=1;
   
-  // SVCV_INSTR_HASH_INDEX_DEFINE;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
   //char* msg = "svcs_cs_send_trnx_header";
-  //svcs_cs_print_trnx_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg)
+  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   if (svcs_prim_send_double(sockid,&h->trnx_type)==0) Result_=0;
   if (svcs_prim_send_double(sockid,&h->trnx_id)==0)   Result_=0;
   if (svcs_prim_send_double(sockid,&h->data_type)==0) Result_=0;
@@ -129,13 +131,14 @@ int svcs_cs_recv_header   (int sockid,cs_header* h) {
   int Result_=1;
   //SVCV_INSTR_HASH_INDEX_DEFINE;
   //char* msg = "svcs_cs_recv_trnx_header";
-  //svcs_cs_print_trnx_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   if (svcs_prim_recv_double(sockid,&h->trnx_type)==0) Result_=0;
   if (svcs_prim_recv_double(sockid,&h->trnx_id)==0)   Result_=0;
   if (svcs_prim_recv_double(sockid,&h->data_type)==0) Result_=0;
   if (svcs_prim_recv_int(sockid,&h->n_payloads)==0) Result_=0;
+  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   return Result_;
 }
+
 
 int svcs_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h) {
   
@@ -293,7 +296,7 @@ int  svcs_cs_recv_intA    (int sockid,int n_payloads,cs_data_header* h,int * Int
   for(int i=0;i<n_payloads;i++) {
     for (int j=0;j< h->trnx_payload_sizes[i];j++) {
       Result_ = svcs_prim_recv_int(sockid,&Int[indx_]);
-      //printf("\n svcs_cs_resv_int (%0d) Int[%0d][%0d]=%d",indx_,i,j,(*Int)[indx_]);
+      //printf("\n svcs_cs_resv_int (%0d) Int[%0d][%0d]=%d",indx_,i,j,Int[indx_]);
       indx_++;
     }
   }

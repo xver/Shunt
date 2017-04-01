@@ -21,6 +21,7 @@ int main(void) {
   int success = 1;
   const int col_n = 3;
   const int row_n = 5;
+
   int sum;
   port =       MY_PORT;
   char* msg = "";

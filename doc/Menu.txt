@@ -53,7 +53,7 @@ Group: Utils  {
    File: 2. Client-Server Primitives  (utils/src/svcs_primitives.h)
    File: 3. Utilites: Client-Servercs_header  (utils/src/svcs_client_server.h)
    File: 4. Utilites: "C" to System Verilog mapping  (utils/src/svcs_c2sv_mapping.h)
-   File: 4. Utilites: USER API  (utils/src/svcs_user_api.h)
+   File: 5. Utilites: USER API  (utils/src/svcs_user_api.h)
    }  # Group: Utils
 
 File: License  (LICENSE.txt)
