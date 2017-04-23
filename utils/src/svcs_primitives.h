@@ -186,7 +186,7 @@ int svcs_prim_recv_int    (const int sockfd,int* Int);
 */
 
 int svcs_prim_send_double    (const int sockfd,const double* Double);
-int svcs_prim_send_double_debug    (const int sockfd,const double* Double);
+
 /*
   Function: svcs_prim_recv_double
   fetch verilog "real"/C "double" over TCP/IP 
@@ -199,7 +199,7 @@ int svcs_prim_send_double_debug    (const int sockfd,const double* Double);
  number of bytes have been sent : success > 0
     
 */
-int svcs_prim_recv_double    (const int sockfd,double* Doubl);
+int svcs_prim_recv_double    (const int sockfd,double* Double);
 
 
 #endif

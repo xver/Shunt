@@ -12,7 +12,7 @@
  */
 
 #ifndef SVCS_USER_API_C_
-#define SVCS_USER_API_CC_
+#define SVCS_USER_API_C_
 
 #include "svcs_user_api.h"
 
