@@ -178,7 +178,9 @@ void svcs_cs_print_intV   (cs_header* h,int *Int,char* msg) {
 
 int svcs_cs_send_intV (int sockid,const cs_header* h,const int* Int) {
   int Result_=-1;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
   //char *msg = "svcs_cs_send_intV:: ";
+  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   if (h->data_type==  svcs_prim_hash("SVCS_INT")) {
     for (int i=0;i< h->n_payloads;i++) {
       //printf("\n %s IntV[%0d]=%d",msg,i,Int[i]);
@@ -191,10 +193,13 @@ int svcs_cs_send_intV (int sockid,const cs_header* h,const int* Int) {
 
 int  svcs_cs_recv_intV    (int sockid,cs_header* h,int* Int) {
   int Result_=-1;
-  
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char *msg = "svcs_cs_recv_intV:: ";
+  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   if (h->data_type == svcs_prim_hash("SVCS_INT")) {
     for (int i=0;i< h->n_payloads;i++) {
       Result_ = svcs_prim_recv_int(sockid,&Int[i]);
+      //printf("\n %s IntV[%0d]=%d",msg,i,Int[i]);
     }
   }
   return Result_;

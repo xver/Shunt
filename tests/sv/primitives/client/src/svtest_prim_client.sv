@@ -32,6 +32,8 @@ module svtest_prim_client;
 	$display("svtest_prim_client: socket=%0d",Socket); 
 	int_loopback_test(Socket);
 	real_loopback_test(Socket);
+	intV_loopback_test(Socket);
+	realV_loopback_test(Socket);
 	$display("svtest_prim_client: END");
      end
    
@@ -52,6 +54,20 @@ module svtest_prim_client;
       if (!svcs_dpi_send_int(socket_id,Int)) $display("%s TEST FAIL",Test_name);
    endfunction : int_loopback_test
    
+   function void intV_loopback_test(int socket_id);
+      begin
+	 int  IntV[`V_SIZE];
+	 string Test_name;
+	 
+         foreach(IntV[i]) IntV[i] = 200+(i+1);
+	 Test_name = "client intV_loopback_test recv";
+	 if (!svcs_dpi_recv_intV(socket_id,`V_SIZE,IntV)) $display("%s TEST FAIL",Test_name);
+	 Test_name = "client intV_loopback_test send";
+	 if (!svcs_dpi_send_intV(socket_id,`V_SIZE,IntV)) $display("%s TEST FAIL",Test_name);
+	 
+      end
+   endfunction // intV_loopback_test
+   
    function void real_loopback_test(int socket_id);
       real   Real;
       string Test_name;
@@ -60,5 +76,19 @@ module svtest_prim_client;
       Test_name = "client real_loopback_test send";
       if (!svcs_dpi_send_real(socket_id,Real)) $display("%s TEST FAIL",Test_name);
    endfunction : real_loopback_test
-    
+   
+ function void realV_loopback_test(int socket_id);
+      begin
+	 real  RealV[`V_SIZE];
+	 string Test_name;
+	 
+         foreach(RealV[i]) RealV[i] = 200+(i+1);
+	 Test_name = "client realV_loopback_test recv";
+	 if (!svcs_dpi_recv_realV(socket_id,`V_SIZE,RealV)) $display("%s TEST FAIL",Test_name);
+	 Test_name = "client realV_loopback_test send";
+	 if (!svcs_dpi_send_realV(socket_id,`V_SIZE,RealV)) $display("%s TEST FAIL",Test_name);
+	 
+      end
+ endfunction : realV_loopback_test
+   
 endmodule : svtest_prim_client

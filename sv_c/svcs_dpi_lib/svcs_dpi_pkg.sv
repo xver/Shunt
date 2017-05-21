@@ -21,6 +21,14 @@ package svcs_dpi_pkg;
    
    import "DPI-C" function int svcs_dpi_send_real   (input int sockfd,input  real Real);
    import "DPI-C" function int svcs_dpi_recv_real   (input int sockfd,output real Real);
+
+   import "DPI-C" function int svcs_dpi_send_intV   (input int sockid,input int size,input  int Int[]);
+   import "DPI-C" function int svcs_dpi_recv_intV   (input int sockid,input int size,output int Int[]);
+   
+   import "DPI-C" function int svcs_dpi_send_realV  (input int sockid,input int size,input  real Real[]);
+   import "DPI-C" function int svcs_dpi_recv_realV  (input int sockid,input int size,output real Real[]);
+
+   
    
 endpackage : svcs_dpi_pkg
    

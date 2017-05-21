@@ -171,7 +171,7 @@ int svcs_prim_send_int(const int sockfd,const int* Int)
 {
   int numbytes;
 
-  //printf("\nsvcs_prim_send_int:: will send int from addr %x=%x of %d bytes",Int,*Int,sizeof(int));
+  //printf("\nsvcs_prim_send_int:: will send int from addr %x=%d of %d bytes",Int,*Int,sizeof(int));
   numbytes = send(sockfd,Int, sizeof(int), 0);
   if (numbytes < 0)  svcs_prim_error("\nERROR in svcs_prim_send_int : numbytes < 0 ");
   return numbytes;
@@ -183,7 +183,7 @@ int svcs_prim_recv_int    (const int sockfd, int* Int)
   int numbytes;
 
   numbytes = recv(sockfd, Int,sizeof(int) , 0);
-  //printf("\nsvcs_prim_recv_int::get int  (%x) of %0d bytes",*Int,numbytes);
+  //printf("\nsvcs_prim_recv_int::get int  (%d) of %0d bytes",*Int,numbytes);
   if (numbytes < 0) svcs_prim_error("\nERROR in svcs_prim_recv_int : numbytes < 0 ");
   return numbytes;
   }

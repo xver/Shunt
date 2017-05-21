@@ -45,6 +45,14 @@ module svtest_prim_server;
 	Test_name = "\treal_loopback";
 	Pass=real_loopback_test(Socket);
 	print_status(Test_name,Pass);
+	////////////////////////////
+	Test_name = "\tintV_loopback";
+	Pass =intV_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	////////////////////////////
+	Test_name = "\trealV_loopback";
+	Pass =realV_loopback_test(Socket);
+	print_status(Test_name,Pass);
 	//
 	Test_name = "svtest_prim_server";
 	print_status(Test_name,Pass);
@@ -69,8 +77,8 @@ module svtest_prim_server;
 	 int unsigned Int_act;
 	 success =1;
 	 Int_exp = $urandom();
-	 success = svcs_dpi_send_int(socket_id,Int_exp);
-	 success = svcs_dpi_recv_int(socket_id,Int_act);
+	 if(!svcs_dpi_send_int(socket_id,Int_exp)) success=0;
+	 if(!svcs_dpi_recv_int(socket_id,Int_act)) success=0;
 	 if (Int_exp != Int_act)success=0;
          return  success;
       end
@@ -84,14 +92,50 @@ module svtest_prim_server;
 	 success =1;
 	 Real_exp = $urandom();
 	 Real_act = $urandom();
-	 //$display("serveer real real_exp=%f Real_act=%f",Real_exp,Real_act); 
-	 success = svcs_dpi_send_real(socket_id,Real_exp);
-	 success = svcs_dpi_recv_real(socket_id,Real_act);
+	 if(!svcs_dpi_send_real(socket_id,Real_exp)) success=0;
+	 if(!svcs_dpi_recv_real(socket_id,Real_act)) success=0;
 	 if (Real_exp != Real_act)success=0;
-	 //$display("serveer real real_exp=%f Real_act=%f",Real_exp,Real_act); 
-         return  success;
+	 return  success;
       end
    endfunction : real_loopback_test
+
+   function int intV_loopback_test(int socket_id);
+      begin
+	 int success;
+	 int i;
+         int IntV_exp[`V_SIZE];
+	 int IntV_act[`V_SIZE];
+	 
+	 success =1;
+	 
+	 foreach(IntV_exp[i]) IntV_exp[i] = 100+(i+1);
+	 foreach(IntV_act[i]) IntV_act[i] = 300+(i+1);
+	 if(!svcs_dpi_send_intV(socket_id,`V_SIZE,IntV_exp)) success =0;
+	 if(!svcs_dpi_recv_intV(socket_id,`V_SIZE,IntV_act)) success =0;
+	 foreach(IntV_exp[i]) if(IntV_act[i] != IntV_exp[i]) success =0;
+	 return  success;
+      end
+   endfunction: intV_loopback_test
+   
+   function int realV_loopback_test(int socket_id);
+      begin
+	 int success;
+	 int i;
+         real RealV_exp[`V_SIZE];
+	 real RealV_act[`V_SIZE];
+	 
+	 success =1;
+	 
+	 foreach(RealV_exp[i]) RealV_exp[i] = 100+(i+1);
+	 foreach(RealV_act[i]) RealV_act[i] = 300+(i+1);
+	 if(!svcs_dpi_send_realV(socket_id,`V_SIZE,RealV_exp))  success =0;
+	 if(!svcs_dpi_recv_realV(socket_id,`V_SIZE,RealV_act))  success =0;
+	 foreach(RealV_exp[i]) if(RealV_act[i] != RealV_exp[i]) success =0;
+	 return  success;
+      end
+   endfunction : realV_loopback_test
+   
+   
    
    function void print_status(string Test_name,int Status_int);
       begin
