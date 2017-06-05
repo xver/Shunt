@@ -209,6 +209,30 @@ int svcs_prim_recv_double    (const int sockfd,double* Double)
   return numbytes;
 }
 
+//////////////////////////////////
+int svcs_prim_send_byte(const int sockfd,const char* Byte)
+{
+  int numbytes;
 
+  //printf("\nsvcs_prim_send_byte:: will send byte from addr %x=%x(%c) of %0d bytes",Byte,*Byte,*Byte,sizeof(char));
+  numbytes = send(sockfd,Byte, sizeof(char), 0);
+  if (numbytes < 0)  svcs_prim_error("\nERROR in svcs_prim_send_byte : numbytes < 0 ");
+  return numbytes;
+}
+
+int svcs_prim_recv_byte    (const int sockfd, char* Byte)
+{
+
+  int numbytes=0;
+
+  numbytes = recv(sockfd, Byte,sizeof(char) , 0);
+  //printf("\nsvcs_prim_recv_byte::get byte  (%x)(%c) of %0d bytes",*Byte,*Byte,numbytes);
+  if (numbytes < 0) {
+	  	  svcs_prim_error("\nERROR in svcs_prim_recv_byte : numbytes < 0 ");
+
+  }
+
+  return numbytes;
+  }
 
 #endif

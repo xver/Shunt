@@ -14,13 +14,13 @@
 
 `include "../../includes/cs_common.svh"
 
-module svtest_prim_server;
+module automatic svtest_prim_server;
    
    import svcs_dpi_pkg::*;
-      
+   int Socket; 
+
    initial
      begin
-	int Socket;
 	int Pass;
 	string Status;
 	string Test_name;
@@ -32,11 +32,18 @@ module svtest_prim_server;
 	
 	///////////////////////////
 	Test_name = "\tinit_server";
+
 	Socket = init_server(`MY_PORT);
 	if (!Socket) Pass=0;
 	$display("\tsvtest_prim_server: socket=%0d",Socket);
 	print_status(Test_name,Pass);
 	
+
+	///////////////////////////
+	Test_name = "\tbyte_loopback";
+	Pass=byte_loopback_test(Socket);
+	print_status(Test_name,Pass);
+        ///////////////////////////
 	///////////////////////////
 	Test_name = "\tint_loopback";
 	Pass=int_loopback_test(Socket);
@@ -53,11 +60,16 @@ module svtest_prim_server;
 	Test_name = "\trealV_loopback";
 	Pass =realV_loopback_test(Socket);
 	print_status(Test_name,Pass);
+	////////////////////////////
+	Test_name = "\tstring_loopback";
+	Pass =string_loopback_test(Socket);
+	print_status(Test_name,Pass);
 	//
 	Test_name = "svtest_prim_server";
 	print_status(Test_name,Pass);
-	
+
      end
+ 
    
    
    
@@ -69,7 +81,24 @@ module svtest_prim_server;
 	 return socket_id;
       end
    endfunction : init_server
-
+  
+   function int byte_loopback_test(int socket_id);
+      begin
+	 int success;
+         byte  Byte_exp;
+	 byte  Byte_act;
+	 success =1;
+	 Byte_exp = $urandom();
+	 Byte_act = 'h15;
+	 if(!svcs_dpi_send_byte(socket_id,Byte_exp)) success=0;
+	 if(!svcs_dpi_recv_byte(socket_id,Byte_act)) success=0;
+	
+	 if (Byte_exp != Byte_act)success=0;
+         return  success;
+      end
+   endfunction : byte_loopback_test
+   
+   
    function int int_loopback_test(int socket_id);
       begin
 	 int success;
@@ -83,7 +112,9 @@ module svtest_prim_server;
          return  success;
       end
    endfunction : int_loopback_test
-  
+ 
+   
+   
    function int real_loopback_test(int socket_id);
       begin
 	 int success;
@@ -135,6 +166,23 @@ module svtest_prim_server;
       end
    endfunction : realV_loopback_test
    
+   function int string_loopback_test(int socket_id);
+      begin
+	 int success;
+	 int i;
+         string String_exp;
+	 string String_act;
+	
+	 String_exp = `STRING_MESSAGE;
+	 String_act = `STRING_MESSAGE1;
+	 success =1;
+	 if(!svcs_dpi_send_string(socket_id,String_exp.len(),String_exp))  success =0;
+	 success = svcs_dpi_send_string(socket_id,String_exp.len(),String_exp);
+	 if(!svcs_dpi_recv_string(socket_id,String_exp.len(),String_act))  success =0;
+	 foreach(String_exp[i]) if(String_act[i] != String_exp[i]) success =0;
+	 return  success;
+      end
+   endfunction : string_loopback_test
    
    
    function void print_status(string Test_name,int Status_int);

@@ -149,7 +149,7 @@ int main(void) {
     // INTV Test
     success =1;
     //Int Vector
-    const int n=17;
+    const int n=SIZE_VECTOR;
     int IntVexp[n];
     int* IntVact;
     msg = "Server: Int Vector Test ";
@@ -333,35 +333,36 @@ int main(void) {
     //String
     msg = "\n\nServer: String Tests";
     puts(msg);
-    char String_exp[n];
+    const int n_string = SIZE_STRING;
+    char String_exp[n_string];
     char *String_act;
     msg = "Server: String Test ";
-    for (int i = 0; i <= n; i++) {
+    for (int i = 0; i <= n_string; i++) {
       String_exp[i] = i + 'a';
-      if (i==n) String_exp[i]='\0';
-      //printf("\nserver String_exp[%0d]=%c",i,String_exp[i]);
+      if (i==n_string) String_exp[i]='\0';
+      printf("\nserver String_exp[%0d]=%c",i,String_exp[i]);
     }
     
     //set up header
     h_trnx_exp.trnx_type = rand();
     h_trnx_exp.trnx_id   = rand();
-    h_trnx_exp.data_type = svcs_cs_data_type_hash(SVCS_STRING,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY);
-    h_trnx_exp.n_payloads = n;
+    h_trnx_exp.data_type = svcs_cs_data_type_hash(SVCS_BYTE,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY);
+    h_trnx_exp.n_payloads = n_string;
     
     //send
     if (svcs_cs_send_header(socket,&h_trnx_exp)<= 0) success = 0;
     if (success == 0 )  printf("\nserver: fail send header ");
-    if (svcs_cs_send_string  (socket,&h_trnx_exp,String_exp)<= 0) success = 0;
+    if (svcs_cs_send_byteV  (socket,&h_trnx_exp,String_exp)<= 0) success = 0;
     if (success == 0 )  printf("\nserver: fail send data");
     
     //recv
     if (svcs_cs_recv_header (socket,&h_trnx_act)<= 0) success = 0;
     String_act = malloc(sizeof(char)*h_trnx_act.n_payloads);
-    if (svcs_cs_recv_string  (socket,&h_trnx_exp,String_act)<= 0) success = 0;
+    if (svcs_cs_recv_byteV  (socket,&h_trnx_exp,String_act)<= 0) success = 0;
     if (success == 0 )  printf("\nString loopback fail recv");
     
     //compare
-    if (svcs_cs_comp_string  (&h_trnx_exp,String_exp,String_act)<= 0) success = 0;
+    if (svcs_cs_comp_byteV  (&h_trnx_exp,String_exp,String_act)<= 0) success = 0;
     
     msg = "Server: String Test ";
     if (success > 0 )  printf("\n\t%s loopback pass",msg);
@@ -417,7 +418,7 @@ int main(void) {
     
     if (svcs_cs_send_data_header(socket,h_trnx_exp.n_payloads,&h_data_exp)<= 0) success = 0;
     if (success == 0 )  printf("\n%s data_header fail send",msg);
-    svcs_cs_send_stringA (socket,h_trnx_exp.n_payloads,&h_data_exp,&StringA_exp[0][0]);
+    svcs_cs_send_byteA (socket,h_trnx_exp.n_payloads,&h_data_exp,&StringA_exp[0][0]);
     if (success == 0 )  printf("\nserver: fail send data");
     
     //recv
@@ -434,10 +435,10 @@ int main(void) {
       sum =sum+ 	h_data_act.trnx_payload_sizes[i];
     }
     StringA_act = (char *)malloc(sum * sizeof(char));
-    svcs_cs_recv_stringA (socket,h_trnx_act.n_payloads,&h_data_act,&(StringA_act[0]));
+    svcs_cs_recv_byteA (socket,h_trnx_act.n_payloads,&h_data_act,&(StringA_act[0]));
     
     //compare
-    if (svcs_cs_comp_string  (&h_trnx_exp,String_exp,String_act)<= 0) success = 0;
+    if (svcs_cs_comp_byteV  (&h_trnx_exp,String_exp,String_act)<= 0) success = 0;
     
     msg = "Server: StringA Test ";
     if (success > 0 )  printf("\n\t%s loopback pass",msg);
@@ -448,9 +449,9 @@ int main(void) {
       msg = "server: header trnx_act";
       svcs_cs_print_header (&h_trnx_act,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
       msg = "server: data_exp";
-      svcs_cs_print_StringA(h_trnx_exp.n_payloads,&h_data_exp,&(StringA_exp[0][0]),msg);
+      svcs_cs_print_byteA(h_trnx_exp.n_payloads,&h_data_exp,&(StringA_exp[0][0]),msg);
       msg = "server: data_act";
-      svcs_cs_print_StringA(h_trnx_act.n_payloads,&h_data_act,&(StringA_act[0]),msg);
+      svcs_cs_print_byteA(h_trnx_act.n_payloads,&h_data_act,&(StringA_act[0]),msg);
     }
     /////////////////////////////////////////
 

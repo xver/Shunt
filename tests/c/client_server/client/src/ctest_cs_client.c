@@ -161,14 +161,14 @@ int main(void) {
     //String
     //char* msg = "client: recv double_header";
     char* String;
-    
     //recv
     //header
     if (svcs_cs_recv_header(socket,&h_trnx)<= 0) success = 0;
     if (success == 0 )  printf("\n client trnx_header fail to recv");
     //data
-    String = (char *)malloc(h_trnx.n_payloads* sizeof(char));
-    if(svcs_cs_recv_string(socket,&h_trnx,String)<=0) success = 0;
+   String = (char*)malloc(h_trnx.n_payloads*sizeof(char));
+
+    if(svcs_cs_recv_byteV(socket,&h_trnx,String)<=0) success = 0;
     if (success == 0 )  printf("\n client String data fail to recv");
     
     //send loopback
@@ -176,8 +176,9 @@ int main(void) {
     if (svcs_cs_send_header(socket,&h_trnx)<= 0) success = 0;
     if (success == 0 )  printf("\n client trnx_header fail to send");
     //data
-    if (svcs_cs_send_string(socket,&h_trnx,String)<=0) success = 0;
+    if (svcs_cs_send_byteV(socket,&h_trnx,String)<=0) success = 0;
     if (success == 0 )  printf("\n client String data fail to send");
+    
     
     //String Array
         
@@ -198,7 +199,7 @@ int main(void) {
       sum =sum+ 	h_data.trnx_payload_sizes[i];
     }
     StringA = (char *)malloc(sum * sizeof(char));
-    svcs_cs_recv_stringA (socket,h_trnx.n_payloads,&h_data,&(StringA[0]));
+    svcs_cs_recv_byteA (socket,h_trnx.n_payloads,&h_data,&(StringA[0]));
     
     //send
     //send header
@@ -208,9 +209,11 @@ int main(void) {
     msg = "Client: data_type ";
     if (svcs_cs_send_data_header(socket,h_trnx.n_payloads,&h_data)<= 0) success = 0;
     if (success == 0 )  printf("\n%s data_header fail send",msg);
-    svcs_cs_send_stringA (socket,h_trnx.n_payloads,&h_data,StringA);
+    svcs_cs_send_byteA (socket,h_trnx.n_payloads,&h_data,StringA);
     
     ////////////////////////////////////
+
+    
     //puts("\nctest_cs_client end");
   }
   

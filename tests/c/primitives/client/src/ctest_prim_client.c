@@ -49,6 +49,15 @@ int main(void) {
     if (svcs_prim_send_double(socket,&Double)<=0) success = 0;
     if (success ==0 ) printf("\ndouble loopback client fail");
 
+    ////////
+    //Byte Test
+    char Byte;
+    Byte = '$';
+
+    if (svcs_prim_recv_byte(socket,&Byte)<=0) success = 0;
+    if (svcs_prim_send_byte(socket,&Byte)<=0) success = 0;
+    if (success ==0 ) printf("\nbyte loopback client fail");
+    ////////
   }
   if ( success >0)
     return EXIT_SUCCESS;

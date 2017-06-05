@@ -201,5 +201,31 @@ int svcs_prim_send_double    (const int sockfd,const double* Double);
 */
 int svcs_prim_recv_double    (const int sockfd,double* Double);
 
+/*
+ Function: svcs_prim_send_byte
+  send verilog/C "Byte/Char" data over TCP/IP
+
+  Parameters:
+   sockfd - socket id
+   Byte  -   data
+
+  Returns:
+   number of bytes have been sent : success > 0
+*/
+int svcs_prim_send_byte    (const int sockfd,const char* Byte);
+
+/*
+ Function: svcs_prim_recv_byte
+  fetch verilog/C "Byte/Char" data from TCP/IP socket
+
+  Parameters:
+   sockfd - socket id
+   Byte - data from socket
+
+  Returns:
+    number of bytes have been received  : success > 0
+
+*/
+int svcs_prim_recv_byte    (const int sockfd,char* Byte);
 
 #endif

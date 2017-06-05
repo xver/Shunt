@@ -55,6 +55,19 @@ int main(void) {
       printf("\ndouble loopback fail %f != %f \n",DoubleLoopBack,Double);
     }
 
+    char Byte = 'C';
+    char ByteLoopBack = 'b';
+    if(svcs_prim_send_byte(socket,&Byte)       <= 0 ) success = 0;
+    if(svcs_prim_recv_byte(socket,&ByteLoopBack)<= 0) success = 0;
+    
+    if (ByteLoopBack == Byte && success >0)
+        printf("\nbyte loopback pass");
+    else {
+      success = 0;
+      printf("\nbyte loopback fail %c != %c \n",ByteLoopBack,Byte);
+    }
+    ///////
+
     puts("\nctest_prim_server end\n");
   }
 

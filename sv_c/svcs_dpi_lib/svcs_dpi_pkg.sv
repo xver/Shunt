@@ -16,6 +16,9 @@ package svcs_dpi_pkg;
    import "DPI-C" function int svcs_dpi_server_init (input int portno);
    import "DPI-C" function int svcs_dpi_client_init (input int portno,input string hostname);
    
+   import "DPI-C" function int svcs_dpi_send_byte    (input int sockfd,input  byte Byte);
+   import "DPI-C" function int svcs_dpi_recv_byte    (input int sockfd,output byte Byte);
+   
    import "DPI-C" function int svcs_dpi_send_int    (input int sockfd,input  int Int);
    import "DPI-C" function int svcs_dpi_recv_int    (input int sockfd,output int Int);
    
@@ -28,7 +31,10 @@ package svcs_dpi_pkg;
    import "DPI-C" function int svcs_dpi_send_realV  (input int sockid,input int size,input  real Real[]);
    import "DPI-C" function int svcs_dpi_recv_realV  (input int sockid,input int size,output real Real[]);
 
+   import "DPI-C" function int svcs_dpi_send_string (input int sockid,input int size,input   string String);
+   import "DPI-C" function int svcs_dpi_recv_string (input int sockid,input int size,inout  string String);
    
+
    
 endpackage : svcs_dpi_pkg
    

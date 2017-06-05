@@ -26,8 +26,8 @@
 
 #include "svcs_primitives.h"
 
-typedef enum {SVCS_INT,SVCS_DOUBLE,SVCS_STRING,SVCS_A_STRUCTURE,SVCS_HEADER_ONLY} SVCV_INSTR_ENUM;
-#define SVCV_INSTR_HASH_INDEX_DEFINE char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_INT","SVCS_DOUBLE","SVCS_STRING","SVCS_A_STRUCTURE","SVCS_HEADER_ONLY"}
+typedef enum {SVCS_INT,SVCS_BYTE,SVCS_DOUBLE,SVCS_STRING,SVCS_A_STRUCTURE,SVCS_HEADER_ONLY} SVCV_INSTR_ENUM;
+#define SVCV_INSTR_HASH_INDEX_DEFINE char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_INT","SVCS_BYTE","SVCS_DOUBLE","SVCS_STRING","SVCS_A_STRUCTURE","SVCS_HEADER_ONLY"}
 
 
 //-------------
@@ -42,8 +42,8 @@ Section: Data exchange utilities (header)
 
 (start code)
 
-typedef enum {SVCS_INT,SVCS_DOUBLE,SVCS_STRING,SVCS_A_STRUCTURE,SVCS_HEADER_ONLY} SVCV_INSTR_ENUM;
-char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_INT","SVCS_DOUBLE","SVCS_STRING","SVCS_A_STRUCTURE","SVCS_HEADER_ONLY"}
+typedef enum {SVCS_INT,SVCS_BYTE,SVCS_DOUBLE,SVCS_STRING,SVCS_A_STRUCTURE,SVCS_HEADER_ONLY} SVCV_INSTR_ENUM;
+char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_INT","SVCS_BYTE","SVCS_DOUBLE","SVCS_STRING","SVCS_A_STRUCTURE","SVCS_HEADER_ONLY"}
 
 typedef struct cs_header_t {
 double   trnx_type;       // user defined transaction attribute
@@ -368,37 +368,37 @@ int svcs_cs_comp_doubleV   (cs_header* h,double *lhs,double *rhs);
 */
 void svcs_cs_print_doubleV   (cs_header* h,double *Double,char* msg);
 
-
 /*
-  Function: svcs_cs_send_string
-  send SVCS transaction with verilog string/C char* elements over TCP/IP
+  Function: svcs_cs_send_byteV
+  send SVCS transaction with verilog byteV/string/C char* elements over TCP/IP
   
   Parameters:
   sockid - socket id
   header - cs_header structure
-  string  - data to send
+  byteV  - data to send
   
   Returns:
   number of elements have been sent  : success > 0
 */
-int svcs_cs_send_string   (int sockid,const cs_header* header,const char* string);
+int svcs_cs_send_byteV   (int sockid,const cs_header* header,const char* byteV);
 
 /*
-  Function: svcs_cs_recv_string
-  fetch SVCS transaction with verilog string/C char* elements from TCP/IP
+  Function: svcs_cs_recv_byteV
+  fetch SVCS transaction with verilog byteV/string/C char* elements from TCP/IP
   
   Parameters:
   sockid - socket id
   header - cs_header structure
-  string  - Data received
+  byteV  - Data received
   
  Returns:
  number of elements have been received  : success > 0
 */
 
-int svcs_cs_recv_string   (int sockid,cs_header* header,char* string);
+int svcs_cs_recv_byteV   (int sockid,cs_header* header,char* byteV);
+
 /*
-  Function: svcs_cs_comp_string
+  Function: svcs_cs_comp_byteV
   compare two char * payloads
 
   Parameters:
@@ -407,7 +407,7 @@ int svcs_cs_recv_string   (int sockid,cs_header* header,char* string);
   Returns:
   success > 0
 */
-int svcs_cs_comp_string   (cs_header* h,char *lhs,char *rhs);
+int svcs_cs_comp_byteV   (cs_header* h,char *lhs,char *rhs);
 
 /*
  Section: Data exchange utilities (array)
@@ -571,26 +571,26 @@ void svcs_cs_print_doubleA   (int n_payloads,cs_data_header* h,double *Double,ch
 int svcs_cs_comp_doubleA   (int n_payloads,cs_data_header* h,double *lhs,double *rhs);
 
 /*
-  Function: svcs_cs_send_stringA
-  send SVCS transaction with "string" vectors array  over TCP/IP 
+  Function: svcs_cs_send_byteA
+  send SVCS transaction with "byte" vectors array  over TCP/IP 
   
   Parameters:
   sockid - socket id from init sever/client 
   h - cs_data_header structure,
   n_payloads
-  note: header.trnx_payload_size - The number of array entries is equal to the number of strings 
+  note: header.trnx_payload_size - The number of array entries is equal to the number of bytes 
   ArrayS  - data 
 
   Returns:number of elements have been sent  : success > 0
 */
 
-int svcs_cs_send_stringA(int sockid,int n_payloads,cs_data_header* h,const char *ArrayS);
+int svcs_cs_send_byteA(int sockid,int n_payloads,cs_data_header* h,const char *ArrayS);
 
 
 
 /*
-  Function: svcs_cs_recv_stringA
-  fetch SVCS transaction with string" vectors array from TCP/IP  
+  Function: svcs_cs_recv_byteA
+  fetch SVCS transaction with byte" vectors array from TCP/IP  
   
   Parameters:
   sockid - socket id from init sever/client 
@@ -600,32 +600,32 @@ int svcs_cs_send_stringA(int sockid,int n_payloads,cs_data_header* h,const char 
   Returns:
   number of elements have been received  : success > 0
 */
-int svcs_cs_recv_stringA(int sockid,int n_payloads,cs_data_header* h,char* ArrayS);
+int svcs_cs_recv_byteA(int sockid,int n_payloads,cs_data_header* h,char* ArrayS);
 
 /*
-  Function: svcs_cs_print_StringA
-  print out StringA Data
+  Function: svcs_cs_print_ByteA
+  print out ByteA Data
 
   Parameters:
   n_payloads - number of data payloads
   h - cs_data_header structure
-  String  - Data to print
+  Byte  - Data to print
   msg    - print out prefix
   Returns:
    void
 */
-void svcs_cs_print_StringA   (int n_payloads,cs_data_header* h,char *String,char* msg);
+void svcs_cs_print_byteA   (int n_payloads,cs_data_header* h,char *Byte,char* msg);
 
 
 /*
-  Function: svcs_cs_comp_StringA
-  compare two StringA payloads
+  Function: svcs_cs_comp_ByteA
+  compare two ByteA payloads
 
   Parameters:
   n_payloads - number of data payloads
-  lhs,rhs - StringA data
+  lhs,rhs - ByteA data
   Returns:
   success > 0
 */
-int svcs_cs_comp_StringA   (int n_payloads,cs_data_header* h,char *lhs,char *rhs);
+int svcs_cs_comp_byteA   (int n_payloads,cs_data_header* h,char *lhs,char *rhs);
 #endif

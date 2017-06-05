@@ -60,10 +60,10 @@ int svcs_api_send    (int sockid,cs_header* h_trnx,...) {
     else   Result_ = svcs_cs_send_doubleA(sockid,h_trnx->n_payloads,h_data_,Double_);
     break;
     
-  case  SVCS_STRING:
+  case  SVCS_BYTE:
     String_ = va_arg (ap,char* );
-    if (main_data_type_ !=  SVCS_A_STRUCTURE)  {  Result_ = svcs_cs_send_string(sockid,h_trnx,String_);}
-    else   Result_ = svcs_cs_send_stringA(sockid,h_trnx->n_payloads,h_data_,String_);
+    if (main_data_type_ !=  SVCS_A_STRUCTURE)  {  Result_ = svcs_cs_send_byteV(sockid,h_trnx,String_);}
+    else   Result_ = svcs_cs_send_byteA(sockid,h_trnx->n_payloads,h_data_,String_);
     break;
     
     // default :
@@ -118,10 +118,10 @@ int svcs_api_recv    (int sockid,cs_header* h_trnx,...) {
     else   Result_ = svcs_cs_recv_doubleA(sockid,h_trnx->n_payloads,h_data_,Double_);
     break;
     
-  case  SVCS_STRING:
+  case  SVCS_BYTE:
     String_ = va_arg (ap,char* );
-    if (main_data_type_ !=  SVCS_A_STRUCTURE)  {  Result_ = svcs_cs_recv_string(sockid,h_trnx,String_);}
-    else   Result_ = svcs_cs_recv_stringA(sockid,h_trnx->n_payloads,h_data_,String_);
+    if (main_data_type_ !=  SVCS_A_STRUCTURE)  {  Result_ = svcs_cs_recv_byteV(sockid,h_trnx,String_);}
+    else   Result_ = svcs_cs_recv_byteA(sockid,h_trnx->n_payloads,h_data_,String_);
     break;
     
     // default :

@@ -13,6 +13,8 @@
 #ifndef SVCS_DPI_H_
 #define SVCS_DPI_H_
 
+#define MAX_STRING_LEN 80
+
 #include <svdpi.h>
 #include <svcs_primitives.h>
 #include <svcs_client_server.h>
@@ -116,15 +118,45 @@ int svcs_dpi_send_real    (const unsigned int sockfd,const double Real);
 */
 int svcs_dpi_recv_real    (const unsigned int sockfd,double* Real);
 
-//////////////
+/*
+ Function: svcs_dpi_send_byte
+  send verilog "byte"/C "char" over TCP/IP
+
+  Parameters:
+   sockfd - socket id
+   Byte  - data to send
+
+  Returns:
+    number of bytes have been sent : success =1
+
+    see (svcs_prim_send_byte)
+*/
+
+int svcs_dpi_send_byte    (const unsigned int sockfd,const char Byte);
+
+/*
+  Function: svcs_dpi_recv_byte
+  fetch verilog "byte"/C "char" over TCP/IP
+
+  Parameters:
+  sockfd - socket id
+  Byte - data from socket
+
+  Returns:
+ number of bytes have been sent : success = 1
+
+    see (svcs_prim_recv_byte)
+*/
+int svcs_dpi_recv_byte    (const unsigned int sockfd,char* Byte);
+
 /*
   Function: svcs_dpi_send_intV
   send SVCS transaction with "int" elements vector over TCP/IP
   
   Parameters:
   sockid - socket id
-  header - cs_header structure
-  Int   - data
+  size   - number of vector elements
+  Int    - data
   
   Returns:
   number of elements have been sent  : success > 0
@@ -139,7 +171,7 @@ int svcs_dpi_send_intV   (int sockid, const int size,const svOpenArrayHandle Int
   
   Parameters:
   sockid - socket id
-  header - cs_header structure
+  size - number of vector elements
   IntV  - Data received
   
   Returns:
@@ -165,27 +197,12 @@ void svcs_dpi_print_intV   (cs_header* h,int *Int,char* msg);
 
 
 /*
-  Function: svcs_dpi_comp_intV
-  compare two intV payloads
-
-  Parameters:
-  h - cs_header
-  lhs,rhs - intA data
-  Returns:
-  success > 0
-
-  see ( svcs_cs_comp_intV )
-*/
-int svcs_dpi_comp_intV   (cs_header* h,int *lhs,int *rhs);
-
-
-/*
   Function: svcs_dpi_send_realV
   send SVCS transaction with "real" elements vector over TCP/IP
   
   Parameters:
   sockid - socket id
-  header - cs_header structure
+  size - number of vector elements
   Real - data
   
   Returns:
@@ -201,7 +218,7 @@ int svcs_dpi_send_realV   (int sockid,const int size,const svOpenArrayHandle Rea
   
   Parameters:
   sockid - socket id
-  header - cs_header structure
+  size - number of vector elements
   Real  - Data received
   
   Returns:
@@ -211,38 +228,6 @@ int svcs_dpi_send_realV   (int sockid,const int size,const svOpenArrayHandle Rea
 */
 int svcs_dpi_recv_realV   (int sockid,int size,svOpenArrayHandle Real);
 
-/*
-  Function: svcs_dpi_comp_realV
-  compare two realV payloads
-
-  Parameters:
-  h - cs_header
-  lhs,rhs - real V data
-  Returns:
-  success > 0
-
-  see ( svcs_cs_comp_doubleV )
-*/
-int svcs_dpi_comp_realV   (cs_header* h,double *lhs,double *rhs);
-
-
-/*
-  Function: svcs_dpi_print_realV
-  print out RealV Data
-
-  Parameters:
-
-  h - cs_data_header structure
-  Real  - Data received
-  msg    - print out prefix
-
-  Returns:
-  void
-
-  see ( svcs_cs_print_doubleV )
-*/
-void svcs_dpi_print_realV   (cs_header* h,double *Real,char* msg);
-
 
 /*
   Function: svcs_dpi_send_string
@@ -250,7 +235,7 @@ void svcs_dpi_print_realV   (cs_header* h,double *Real,char* msg);
   
   Parameters:
   sockid - socket id
-  header - cs_header structure
+  size - number of string elements
   string  - data to send
   
   Returns:
@@ -258,7 +243,7 @@ void svcs_dpi_print_realV   (cs_header* h,double *Real,char* msg);
 
   see ( svcs_cs_send_string )
 */
-int svcs_dpi_send_string   (int sockid,const cs_header* header,const char* string);
+int svcs_dpi_send_string   (int sockid,int size,char* string);
 
 /*
   Function: svcs_dpi_recv_string
@@ -266,7 +251,7 @@ int svcs_dpi_send_string   (int sockid,const cs_header* header,const char* strin
   
   Parameters:
   sockid - socket id
-  header - cs_header structure
+  size - number of string elements
   string  - Data received
   
  Returns:
@@ -275,7 +260,8 @@ int svcs_dpi_send_string   (int sockid,const cs_header* header,const char* strin
  see ( svcs_cs_recv_string )
 */
 
-int svcs_dpi_recv_string   (int sockid,cs_header* header,char* string);
+int svcs_dpi_recv_string   (int sockid,int size,char** string);
+
 /*
   Function: svcs_dpi_comp_string
   compare two char * payloads
@@ -288,6 +274,6 @@ int svcs_dpi_recv_string   (int sockid,cs_header* header,char* string);
 
   see ( svcs_cs_comp_string )
 */
-int svcs_dpi_comp_string   (cs_header* h,char *lhs,char *rhs);
+//int svcs_dpi_comp_string   (cs_header* h,svOpenArrayHandle lhs,svOpenArrayHandle rhs);
 
 #endif /* SVCS_DPI_H_ */

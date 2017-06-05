@@ -12,7 +12,7 @@
    ******************************************************
    Data Types:
    elements:         integer,  double, char
-   vectors:          integers, doubles , string
+   vectors:          integers, doubles , bytes(string)
    array/composite:  integer vectors , double vectors, messages , structure
    ============================================================================
 */
@@ -129,6 +129,7 @@ int svcs_cs_send_data_header(int sockid,int n_payloads,cs_data_header* h) {
 
 int svcs_cs_recv_header   (int sockid,cs_header* h) {
   int Result_=1;
+
   //SVCV_INSTR_HASH_INDEX_DEFINE;
   //char* msg = "svcs_cs_recv_trnx_header";
   if (svcs_prim_recv_double(sockid,&h->trnx_type)==0) Result_=0;
@@ -247,35 +248,49 @@ void svcs_cs_print_doubleV   (cs_header* h,double *Double,char* msg) {
     }
   }
 }
-///////
-int svcs_cs_send_string   (int sockid,const cs_header* h,const char* string) {
-  int Result_=-1;
-  //printf("will send string  (%s) of %d bytes\n",str,length);
-  if (h->data_type ==  svcs_prim_hash("SVCS_STRING")) {
-    Result_ = send(sockid, string,h->n_payloads, 0);
-  }
-  return Result_;
+
+int svcs_cs_send_byteV   (int sockid,const cs_header* h,const char* byteV) {
+	int Result_=-1;
+	char B_ = 0;
+	  //SVCV_INSTR_HASH_INDEX_DEFINE;
+	  //char *msg = "svcs_cs_send_byteV:: ";
+	  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+	  if (h->data_type==  svcs_prim_hash("SVCS_BYTE")) {
+	    for (int i=0;i< h->n_payloads;i++) {
+	      B_ = byteV[i];
+	      //printf("\n %s B_[%0d]=%x(%c)",msg,i,B_,B_);
+	      Result_ = svcs_prim_send_byte(sockid,&B_);
+	    }
+	  }
+	  return Result_;
 }
 
-int svcs_cs_recv_string   (int sockid,cs_header* h,char* string) {
-  int Result_=-1;
-  if (h->data_type ==  svcs_prim_hash("SVCS_STRING")) {
-    Result_ = recv(sockid,string,h->n_payloads, 0);
-    //printf("get string length(%0d) (%s) \n",Result_,string);
-  }
-  return Result_;
+int svcs_cs_recv_byteV   (int sockid,cs_header* h,char* byteV) {
+	 int Result_=-1;
+	  char B_=0;
+	 //SVCV_INSTR_HASH_INDEX_DEFINE;
+	 //char *msg = "svcs_cs_recv_byteV:: ";
+	  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+	  if (h->data_type == svcs_prim_hash("SVCS_BYTE")) {
+	    for (int i=0;i< h->n_payloads;i++) {
+	      Result_ = svcs_prim_recv_byte(sockid,&B_);
+	      byteV[i] = B_;
+	      //printf("\n %s byteV[%0d]=%x(%c)",msg,i,B_,B_);
+	    }
+	  }
+	  return Result_;
 }
 
-int svcs_cs_comp_string   (cs_header* h,char *lhs,char *rhs) {
+int svcs_cs_comp_byteV   (cs_header* h,char *lhs,char *rhs) {
   int success = 1;
-  if (h->data_type==  svcs_prim_hash("SVCS_STRING")) {
+  if (h->data_type ==  svcs_prim_hash("SVCS_BYTEV")) {
     for (int i=0;i< h->n_payloads;i++) {
       if(lhs[i] != rhs[i]) success = 0;
     }
   }
   return success;
 }
-////
+
 
 //Data exchange utilities (array)
 int svcs_cs_send_intA (int sockid,int n_payloads,const cs_data_header* h,const int * Int) {
@@ -392,47 +407,53 @@ int svcs_cs_comp_doubleA   (int n_payloads,cs_data_header* h,double *lhs,double 
   return success;
 }
 
-int svcs_cs_send_stringA(int sockid,int n_payloads,cs_data_header* h,const char*  ArrayS)
+int svcs_cs_send_byteA(int sockid,int n_payloads,cs_data_header* h,const char*  ArrayS)
 {
   int Result_= 1;
   int indx_ =0;
-  
+  printf("\n svcs_cs_send_byteA n_payloads=%0d",n_payloads);
   for(int i=0;i<n_payloads;i++) {
-    char *ArrayS_ = (char *)&ArrayS[indx_];
-    
-    indx_ = indx_+ h->trnx_payload_sizes[i];
-    Result_ = send(sockid, ArrayS_,h->trnx_payload_sizes[i], 0);
-    //printf("\n  svcs_cs_send_stringA send Result=%0d",Result_);
-    if (Result_ == 0 )  printf("\n  svcs_cs_send_stringA fail to send Result=%0d",Result_);
+    for (int j=0;j< h->trnx_payload_sizes[i];j++) {
+      printf("\n svcs_cs_send_byteA (%0d) ArrayS[%0d][%0d]=%x(%c)",indx_,i,j,ArrayS[indx_],ArrayS[indx_]);
+      char Byte_ = ArrayS[indx_];
+      Result_ = svcs_prim_send_byte(sockid,&Byte_);
+      indx_++;
+    }
   }
   return Result_;
 }
 
-int svcs_cs_recv_stringA(int sockid,int n_payloads,cs_data_header* h,char* ArrayS)
+int svcs_cs_recv_byteA(int sockid,int n_payloads,cs_data_header* h,char* ArrayS)
 {
   int Result_= 1;
   
   int indx_ =0;
+  printf("\n svcs_cs_recv_ByteA n_payloads=%0d",n_payloads);
   for(int i=0;i<n_payloads;i++) {
-    int size_ = h->trnx_payload_sizes[i];
-    Result_ = recv(sockid, &(ArrayS[indx_]),size_, 0);
-    if (Result_ !=  size_)  printf("\n  svcs_cs_recv_stringA fail to receive Result=%0d",Result_);
-    //printf("\n svcs_cs_recv_stringA (%0d) ArrayS[%0d]=%s",indx_,i,&(ArrayS[indx_]));
-    indx_ = indx_+ h->trnx_payload_sizes[i];
+    for (int j=0;j< h->trnx_payload_sizes[i];j++) {
+      char Byte_;
+      Result_ = svcs_prim_recv_byte(sockid,&Byte_);
+      ArrayS[indx_] = Byte_;
+      printf("\n svcs_cs_recv_ByteA (%0d) ArrayS[%0d][%0d]=%x(%c)",indx_,i,j,Byte_,Byte_);//[indx_]);
+      indx_++;
+    }
   }
   
   return Result_;
 }
 
-void svcs_cs_print_StringA   (int n_payloads,cs_data_header* h,char *String,char* msg) {
+void svcs_cs_print_byteA   (int n_payloads,cs_data_header* h,char *ArrayS,char* msg) {
   int indx_ =0;
   for(int i=0;i<n_payloads;i++) {
-    printf("\n %s (%0d) ArrayS[%0d]=%s",msg,indx_,i,&(String[indx_]));
-    indx_ = indx_+ h->trnx_payload_sizes[i];
+    for (int j=0;j< h->trnx_payload_sizes[i];j++) {
+      printf("\n %s (%0d) ArrayS[%0d][%0d]=%d",msg,indx_,i,j,ArrayS[indx_]);
+      indx_++;
+    }
   }
+  puts("\n");
 }
 
-int svcs_cs_comp_StringA   (int n_payloads,cs_data_header* h,char *lhs,char *rhs) {
+int svcs_cs_comp_byteA   (int n_payloads,cs_data_header* h,char *lhs,char *rhs) {
   int success = 1;
   int indx=0;
   for(int i=0;i<n_payloads;i++) {
