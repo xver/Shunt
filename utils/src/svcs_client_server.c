@@ -108,9 +108,9 @@ void svcs_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_t
 int svcs_cs_send_header    (int sockid,cs_header* h) {
   int Result_=1;
   
-  //SVCV_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "svcs_cs_send_trnx_header";
-  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  SVCV_INSTR_HASH_INDEX_DEFINE;
+  char* msg = "svcs_cs_send_trnx_header";
+  svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   if (svcs_prim_send_double(sockid,&h->trnx_type)==0) Result_=0;
   if (svcs_prim_send_double(sockid,&h->trnx_id)==0)   Result_=0;
   if (svcs_prim_send_double(sockid,&h->data_type)==0) Result_=0;
@@ -130,13 +130,13 @@ int svcs_cs_send_data_header(int sockid,int n_payloads,cs_data_header* h) {
 int svcs_cs_recv_header   (int sockid,cs_header* h) {
   int Result_=1;
 
-  //SVCV_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "svcs_cs_recv_trnx_header";
+  SVCV_INSTR_HASH_INDEX_DEFINE;
+  char* msg = "svcs_cs_recv_trnx_header";
   if (svcs_prim_recv_double(sockid,&h->trnx_type)==0) Result_=0;
   if (svcs_prim_recv_double(sockid,&h->trnx_id)==0)   Result_=0;
   if (svcs_prim_recv_double(sockid,&h->data_type)==0) Result_=0;
   if (svcs_prim_recv_int(sockid,&h->n_payloads)==0) Result_=0;
-  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   return Result_;
 }
 
@@ -252,9 +252,9 @@ void svcs_cs_print_doubleV   (cs_header* h,double *Double,char* msg) {
 int svcs_cs_send_byteV   (int sockid,const cs_header* h,const char* byteV) {
 	int Result_=-1;
 	char B_ = 0;
-	  //SVCV_INSTR_HASH_INDEX_DEFINE;
-	  //char *msg = "svcs_cs_send_byteV:: ";
-	  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+	//SVCV_INSTR_HASH_INDEX_DEFINE;
+	//char *msg = "svcs_cs_send_byteV:: ";
+	//  svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
 	  if (h->data_type==  svcs_prim_hash("SVCS_BYTE")) {
 	    for (int i=0;i< h->n_payloads;i++) {
 	      B_ = byteV[i];
@@ -268,8 +268,8 @@ int svcs_cs_send_byteV   (int sockid,const cs_header* h,const char* byteV) {
 int svcs_cs_recv_byteV   (int sockid,cs_header* h,char* byteV) {
 	 int Result_=-1;
 	  char B_=0;
-	 //SVCV_INSTR_HASH_INDEX_DEFINE;
-	 //char *msg = "svcs_cs_recv_byteV:: ";
+	  //SVCV_INSTR_HASH_INDEX_DEFINE;
+	  //char *msg = "svcs_cs_recv_byteV:: ";
 	  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
 	  if (h->data_type == svcs_prim_hash("SVCS_BYTE")) {
 	    for (int i=0;i< h->n_payloads;i++) {

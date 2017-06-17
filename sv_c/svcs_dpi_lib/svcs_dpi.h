@@ -13,8 +13,6 @@
 #ifndef SVCS_DPI_H_
 #define SVCS_DPI_H_
 
-#define MAX_STRING_LEN 80
-
 #include <svdpi.h>
 #include <svcs_primitives.h>
 #include <svcs_client_server.h>
@@ -23,7 +21,7 @@
 //-------------
 //prototype
 //-------------
-//Title: 6. DPI
+//Title: 6. DPI Direct Link
 
 //Section: TCP/IP socket Client , Server initialization
 
@@ -262,18 +260,135 @@ int svcs_dpi_send_string   (int sockid,int size,char* string);
 
 int svcs_dpi_recv_string   (int sockid,int size,char** string);
 
+//////////////////////
+
 /*
-  Function: svcs_dpi_comp_string
-  compare two char * payloads
+  Function: svcs_dpi_hash 
+  simple hash function 
+  
+  Parameters: 
+  str - hash key
+  
+  Returns: 
+  hash value
+*/
+
+double svcs_dpi_hash(const char *str);
+
+/*
+  Function: svcs_dpi_send_header
+  send SVCS header over TCP/IP
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h - cs_header structure
+  
+  Returns:
+  
+  number of elements have been sent  : success > 0
+*/
+
+int svcs_dpi_send_header    (int sockid,cs_header* h);
+
+/*
+  Function: svcs_dpi_send_data_header
+  send SVCS header over TCP/IP
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h - cs_header structure
+  n_payloads - number of data payloads
+  
+  Returns:
+  
+  number of elements have been sent  : success > 0
+*/
+int svcs_dpi_send_data_header    (int sockid,int n_payloads,cs_data_header* h);
+
+/*
+  Function: svcs_dpi_recv_header
+  fetch SVCS transaction header from TCP/IP socket
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  header - cs_header structure
+  
+  Returns:
+  
+  number of elements have been received  : success > 0
+  
+*/
+int svcs_dpi_recv_header   (int sockid,cs_header* h);
+
+/*
+  Function: svcs_dpi_recv_data_header
+  fetch SVCS transaction header from TCP/IP socket
+  
+  Parameters:
+  sockid - socket id from init sever/client 
+  h - cs_data_header structure
+  
+  Returns:
+  number of elements have been received  : success > 0
+  
+*/
+int svcs_dpi_recv_data_header   (int sockid,int n_payloads,cs_data_header* h);
+
+/*
+  Function: svcs_dpi_hs_send
+
+  send data over TCP/IP.
+  Supported data types are:
+  int , intV ,IntA ,double ,doublev ,DoubleA,string,stringA
 
   Parameters:
-  h - cs_header
-  lhs,rhs - string
-  Returns:
-  success > 0
 
-  see ( svcs_cs_comp_string )
+  Perm parameters:
+   sockid - socket id from init sever/client
+   h_trnx - cs_header structure
+
+   Non-perm  parameters are:
+   h_data - cs_data_header  structure
+   Int,Double,String - data to send
+
+
+   Returns:
+  number of elements have been sent  : success > 0
 */
-//int svcs_dpi_comp_string   (cs_header* h,svOpenArrayHandle lhs,svOpenArrayHandle rhs);
+
+
+int svcs_dpi_hs_send      (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+int svcs_dpi_hs_send_int  (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+int svcs_dpi_hs_send_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+int svcs_dpi_hs_send_real (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+
+/*
+  Function: svcs_dpi_hs_recv
+  fetch data from TCP/IP socket
+  Supported data types are:
+  int , intV ,IntA ,double ,doublev ,DoubleA,string,stringA
+
+  Parameters:
+
+  Perm parameters:
+  sockid - socket id from init sever/client
+  h_trnx - cs_header structure
+
+  Non-perm  parameters are:
+  h_data - cs_data_header  structure
+  Int,Double,String - Data received
+
+
+  Returns:
+  number of elements have been received  : success > 0
+
+*/
+int svcs_dpi_hs_recv      (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
+int svcs_dpi_hs_recv_int  (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
+int svcs_dpi_hs_recv_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
+int svcs_dpi_hs_recv_real (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 
 #endif /* SVCS_DPI_H_ */

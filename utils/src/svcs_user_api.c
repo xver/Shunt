@@ -25,7 +25,7 @@ int svcs_api_send    (int sockid,cs_header* h_trnx,...) {
   double* Double_;
   char* String_;
   va_list ap;
-  //char * msg =" svcs_api_send ";
+  char * msg =" svcs_api_send ";
   int Result_ = 1;
   int main_data_type_ = -1; 
   int data_type_      = -1;
@@ -43,7 +43,7 @@ int svcs_api_send    (int sockid,cs_header* h_trnx,...) {
     va_start( ap,  h_trnx);
   }
   
-  //svcs_cs_print_header (h_trnx,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  svcs_cs_print_header (h_trnx,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   //svcs_cs_print_data_header (h_trnx,h_data_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   
   switch(data_type_) {
@@ -82,7 +82,7 @@ int svcs_api_recv    (int sockid,cs_header* h_trnx,...) {
   double* Double_;
   char* String_;
   va_list ap;
-  //char * msg =" svcs_api_recv ";
+  char * msg =" svcs_api_recv ";
   int Result_ = 1;
   int main_data_type_ = -1;
   int data_type_      = -1;
@@ -100,7 +100,7 @@ int svcs_api_recv    (int sockid,cs_header* h_trnx,...) {
     va_start( ap,  h_trnx);
   }
 
-  //svcs_cs_print_header (h_trnx,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  svcs_cs_print_header (h_trnx,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   //svcs_cs_print_data_header (h_trnx,h_data_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   
   
