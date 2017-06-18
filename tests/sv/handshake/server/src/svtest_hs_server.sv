@@ -43,37 +43,28 @@ module automatic svtest_hs_server;
 	if (!Socket) Pass=0;
 	$display("\tsvtest_hs_server: socket=%0d",Socket);
 	print_status(Test_name,Pass);
-	
-
 	///////////////////////////
 	Test_name = "\tbyte loopback";
-	Pass=byte_loopback_test(Socket,1);
+	Pass=byte_loopback_test(Socket);
 	print_status(Test_name,Pass);
 	Test_name = "\tbyte vector loopback";
 	Pass=byte_loopback_test(Socket,15);
 	print_status(Test_name,Pass);
-	/* -----\/----- EXCLUDED -----\/-----
-         ///////////////////////////
-	 Test_name = "\tint_loopback";
+ 	///////////////////////////
+	Test_name = "\tint_loopback";
 	Pass=int_loopback_test(Socket);
-	 print_status(Test_name,Pass);
-         ///////////////////////////
-	 Test_name = "\treal_loopback";
-	 Pass=real_loopback_test(Socket);
-	 print_status(Test_name,Pass);
-	 ////////////////////////////
-	 Test_name = "\tintV_loopback";
-	 Pass =intV_loopback_test(Socket);
-	 print_status(Test_name,Pass);
-	 ////////////////////////////
-	 Test_name = "\trealV_loopback";
-	 Pass =realV_loopback_test(Socket);
-	 print_status(Test_name,Pass);
-	 ////////////////////////////
-	 Test_name = "\tstring_loopback";
-	 Pass =string_loopback_test(Socket);
-	 print_status(Test_name,Pass);
-	 -----/\----- EXCLUDED -----/\----- */
+	print_status(Test_name,Pass);
+	Test_name = "\tint vector loopback";
+	Pass=int_loopback_test(Socket,9);
+	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\treal_loopback";
+	Pass=real_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	Test_name = "\treal vector loopback";
+	Pass=real_loopback_test(Socket,11);
+	print_status(Test_name,Pass);
+	////////////////////////////
 	//
 	Test_name = "svtest_hs_server";
 	print_status(Test_name,Pass);
@@ -122,14 +113,14 @@ module automatic svtest_hs_server;
 	 Byte_act = new[h_trnx_act.n_payloads];
 	 if (svcs_dpi_hs_recv_byte(socket_id,h_trnx_act,Byte_act)<= 0) success = 0;
 	 if (success == 0 )  $display("\nByte loopback fail recv");
-	 $display("\n%s Byte_exp=%s  Byte_act=%s",Test_name,Byte_exp,Byte_act);
+	 //$display("\n%s Byte_exp=%s  Byte_act=%s",Test_name,Byte_exp,Byte_act);
 	 for(int i=0;i<n_payloads;i++)	if (Byte_exp[i] != Byte_act[i])success=0;
          return  success;
       end
    endfunction : byte_loopback_test
    
    
-   function int int_loopback_test(int socket_id);
+   function int int_loopback_test(int socket_id,int n_payloads=1);
       begin
 	 int success;
          int Int_exp[];
@@ -137,7 +128,7 @@ module automatic svtest_hs_server;
          string Test_name = "server int_loopback_test";
 	 Int_exp = new[n_payloads];
 	 success =1;
-	 for(int i=0;i<n_payloads;i++) Int_exp[i] = "A"+i;
+	 for(int i=0;i<n_payloads;i++) Int_exp[i] = 100 +i;
 	 Int_exp[n_payloads] = "\0";
 	 //for(int i=0;i<n_payloads;i++) $display("\nInt_exp[%0d]=%c",i,Int_exp[i]);
 	 //Int_act[0] = 'h69;
@@ -159,7 +150,7 @@ module automatic svtest_hs_server;
 	 Int_act = new[h_trnx_act.n_payloads];
 	 if (svcs_dpi_hs_recv_int(socket_id,h_trnx_act,Int_act)<= 0) success = 0;
 	 if (success == 0 )  $display("\nInt loopback fail recv");
-	 $display("\n%s Int_exp=%s  Int_act=%s",Test_name,Int_exp,Int_act);
+	 //for(int i=0;i<n_payloads;i++)$display("\n%s Int_exp[%0d]=%d  Int_act[%0d]=%d",Test_name,i,Int_exp[i],i,Int_act[i]);
 	 for(int i=0;i<n_payloads;i++)	if (Int_exp[i] != Int_act[i])success=0;
          return  success;	 
          
@@ -168,18 +159,38 @@ module automatic svtest_hs_server;
  
    
    
-   function int real_loopback_test(int socket_id);
+   function int real_loopback_test(int socket_id,int n_payloads=1);
       begin
 	 int success;
-         real Real_exp;
-	 real Real_act;
+         real Real_exp[];
+	 real Real_act[];
+         string Test_name = "server real_loopback_test";
+	 Real_exp = new[n_payloads];
 	 success =1;
-	 Real_exp = $urandom();
-	 Real_act = $urandom();
-	 if(!svcs_dpi_send_real(socket_id,Real_exp)) success=0;
-	 if(!svcs_dpi_recv_real(socket_id,Real_act)) success=0;
-	 if (Real_exp != Real_act)success=0;
-	 return  success;
+	 for(int i=0;i<n_payloads;i++) Real_exp[i] = 300.123+i;
+	 Real_exp[n_payloads] = "\0";
+	 //for(int i=0;i<n_payloads;i++) $display("\nReal_exp[%0d]=%c",i,Real_exp[i]);
+	 //Real_act[0] = 'h69;
+	 
+	 //set up header
+	 h_trnx_exp.trnx_type = $urandom;
+	 h_trnx_exp.trnx_id   = $urandom;
+	 h_trnx_exp.data_type = svcs_dpi_hash("SVCS_DOUBLE");
+	 h_trnx_exp.n_payloads = n_payloads;
+	 
+	 //send
+	 if (svcs_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+	 if (success == 0 )  $display("\nserver: fail send header ");
+	 if (svcs_dpi_hs_send_real  (socket_id,h_trnx_exp,Real_exp)<= 0) success = 0;
+	 if (success == 0 )  $display("\nserver: fail send data");
+	
+	 //recv
+	 if (svcs_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
+	 Real_act = new[h_trnx_act.n_payloads];
+	 if (svcs_dpi_hs_recv_real(socket_id,h_trnx_act,Real_act)<= 0) success = 0;
+	 //for(int i=0;i<n_payloads;i++)$display("\n%s Real_exp[%0d]=%f  Real_act[%0d]=%f",Test_name,i,Real_exp[i],i,Real_act[i]);
+	 for(int i=0;i<n_payloads;i++)	if (Real_exp[i] != Real_act[i])success=0;
+         return  success;	 
       end
    endfunction : real_loopback_test
 
