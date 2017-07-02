@@ -38,8 +38,8 @@ module automatic svtest_hs_client;
 	Socket = init_client(`MY_PORT, `MY_HOST);
 	$display("svtest_hs_client: socket=%0d",Socket);
 	///////////////////////////
-	//byte_loopback_test(Socket);
-	//byte_loopback_test(Socket);
+	byte_loopback_test(Socket);
+	byte_loopback_test(Socket);
 	//////////////////////////
 	int_loopback_test(Socket);
 	int_loopback_test(Socket);
@@ -49,6 +49,12 @@ module automatic svtest_hs_client;
 	//////////////////////////
 	byteA_loopback_test(Socket);
 	byteA_loopback_test(Socket);
+	//////////////////////////
+	intA_loopback_test(Socket);
+	intA_loopback_test(Socket);
+	//////////////////////////
+	realA_loopback_test(Socket);
+	realA_loopback_test(Socket);
 	//////////////////////////
 	$display("svtest_hs_client: END");
 	
@@ -137,7 +143,71 @@ module automatic svtest_hs_client;
       if(svcs_dpi_send_data_header(socket_id,h_trnx,h_data.data_type,h_data.trnx_payload_sizes)<= 0)$display("%s send_data_header TEST FAIL",Test_name); 
       //send data
       if (svcs_hs_send_byteA(socket_id,h_trnx,h_data,Byte)<=0)$display("%s send_byteA TEST FAIL",Test_name); 
+   
    endfunction :byteA_loopback_test
    
-  
+   function void   intA_loopback_test(int socket_id);
+      int    Int[][];
+      string Test_name;
+      int    trnx_payload_sizes[];
+      real   data_type;
+      
+      Test_name = "client intA_loopback_test recv";
+      
+      //recv
+      if (svcs_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s recv_header TEST FAIL",Test_name);
+      //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",Test_name,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
+      //recv data header 
+      trnx_payload_sizes = new[h_trnx.n_payloads];
+      h_data.trnx_payload_sizes = new[h_trnx.n_payloads];
+      if(svcs_dpi_recv_data_header(socket_id,h_trnx,data_type,trnx_payload_sizes)<=0) $display("%s recv_data_header TEST FAIL",Test_name);
+      h_data.data_type = data_type;
+      for(int i=0;i<h_trnx.n_payloads;i++) h_data.trnx_payload_sizes[i]= trnx_payload_sizes[i];
+      //recv data
+      Int    = new[h_trnx.n_payloads]; 
+      foreach(Int[i]) Int[i] = new[trnx_payload_sizes[i]];
+      if(svcs_hs_recv_intA  (socket_id,h_trnx,h_data,Int)<=0) $display("%s recv_intA TEST FAIL",Test_name);
+      //foreach(Int[i]) foreach(Int[j]) $display("\n %s Int[%0d][%0d]=%d",Test_name,i,j,Int[i][j]);
+      
+      //send
+      //send trnx header
+      if(svcs_dpi_send_header(socket_id,h_trnx)<= 0)  $display("%s send_header TEST FAIL",Test_name);
+      if(svcs_dpi_send_data_header(socket_id,h_trnx,h_data.data_type,h_data.trnx_payload_sizes)<= 0)$display("%s send_data_header TEST FAIL",Test_name); 
+      //send data
+      if (svcs_hs_send_intA(socket_id,h_trnx,h_data,Int)<=0)$display("%s send_intA TEST FAIL",Test_name); 
+   endfunction :intA_loopback_test
+
+   ///////////
+   function void   realA_loopback_test(int socket_id);
+      real   Real[][];
+      string Test_name;
+      int    trnx_payload_sizes[];
+      real   data_type;
+      
+      Test_name = "client realA_loopback_test recv";
+      
+      //recv
+      if (svcs_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s recv_header TEST FAIL",Test_name);
+      //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",Test_name,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
+      //recv data header 
+      trnx_payload_sizes = new[h_trnx.n_payloads];
+      h_data.trnx_payload_sizes = new[h_trnx.n_payloads];
+      if(svcs_dpi_recv_data_header(socket_id,h_trnx,data_type,trnx_payload_sizes)<=0) $display("%s recv_data_header TEST FAIL",Test_name);
+      h_data.data_type = data_type;
+      for(int i=0;i<h_trnx.n_payloads;i++) h_data.trnx_payload_sizes[i]= trnx_payload_sizes[i];
+      //recv data
+      Real   = new[h_trnx.n_payloads]; 
+      foreach(Real[i]) Real[i] = new[trnx_payload_sizes[i]];
+      if(svcs_hs_recv_realA  (socket_id,h_trnx,h_data,Real)<=0) $display("%s recv_realA TEST FAIL",Test_name);
+      //foreach(Real[i]) foreach(Real[j]) $display("\n %s Real[%0d][%0d]=%f",Test_name,i,j,Real[i][j]);
+      
+      //send
+      //send trnx header
+      if(svcs_dpi_send_header(socket_id,h_trnx)<= 0)  $display("%s send_header TEST FAIL",Test_name);
+      if(svcs_dpi_send_data_header(socket_id,h_trnx,h_data.data_type,h_data.trnx_payload_sizes)<= 0)$display("%s send_data_header TEST FAIL",Test_name); 
+      //send data
+      if (svcs_hs_send_realA(socket_id,h_trnx,h_data,Real)<=0)$display("%s send_realA TEST FAIL",Test_name); 
+   
+   endfunction :realA_loopback_test
+   
 endmodule : svtest_hs_client
