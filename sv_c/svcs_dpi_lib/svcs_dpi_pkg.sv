@@ -6,9 +6,7 @@
  Copyright (c) 2016 IC Verimeter. All rights reserved.
                Licensed under the MIT License.
                See LICENSE file in the project root for full license information.
- Description :  prim function svcs dpi bridge test 
-
-               System Verilog client server handshake (SVCS) library SV domain
+ Description : System Verilog client server handshake (SVCS) library SV domain
  ============================================================================
 */
 package svcs_dpi_pkg; 
@@ -67,7 +65,7 @@ package svcs_dpi_pkg;
    import "DPI-C" function int svcs_dpi_send_data_header 
      (
       input int sockid,
-      input int n_payloads,
+      input cs_header_t h,
       input real data_type,
       input int  trnx_payload_sizes[]
       );
@@ -80,26 +78,82 @@ package svcs_dpi_pkg;
    
    import "DPI-C" function int svcs_dpi_recv_data_header    
      (
-      input int sockid,
-      input int n_payloads,
-      output real data_type,
-      output int  trnx_payload_sizes[]
+      input int  sockid,
+      input      cs_header_t h,
+      inout real data_type,
+      inout int  trnx_payload_sizes[]
       );
-   
+
     
    
-   import "DPI-C" function int svcs_dpi_hs_send_byte  (input int sockid,input cs_header_t h_trnx,input  byte Array[]);
+   import "DPI-C" function int svcs_dpi_hs_send_byte  (input int sockid,input cs_header_t h_trnx,input byte Array[]);
    import "DPI-C" function int svcs_dpi_hs_recv_byte  (input int sockid,input cs_header_t h_trnx,inout byte Array[]);
    
-   import "DPI-C" function int svcs_dpi_hs_send_int   (input int sockid,input cs_header_t h_trnx,input  int Array[]);
-   import "DPI-C" function int svcs_dpi_hs_recv_int   (input int sockid,input cs_header_t h_trnx,inout int Array[]);
+   import "DPI-C" function int svcs_dpi_hs_send_int   (input int sockid,input cs_header_t h_trnx,input int  Array[]);
+   import "DPI-C" function int svcs_dpi_hs_recv_int   (input int sockid,input cs_header_t h_trnx,inout int  Array[]);
    
-   import "DPI-C" function int svcs_dpi_hs_send_real  (input int sockid,input cs_header_t h_trnx,input  real Array[]);
+   import "DPI-C" function int svcs_dpi_hs_send_real  (input int sockid,input cs_header_t h_trnx,input real Array[]);
    import "DPI-C" function int svcs_dpi_hs_recv_real  (input int sockid,input cs_header_t h_trnx,inout real Array[]);
    
+   function int svcs_hs_send_byteA  (input int sockid,input cs_header_t h_trnx,input cs_data_header_t h_data,input byte Array[][]);
+      cs_header_t h_trnx_;
+      int 	 Result_;
+      string 	 s_me;
+      s_me = "\nsvcs_hs_send_byteA::";
+      
+      Result_ =0;
+      foreach(h_data.trnx_payload_sizes[i])  begin
+	 h_trnx_.trnx_type  = h_trnx.trnx_type;
+	 h_trnx_.trnx_id    = h_trnx.trnx_id;
+	 h_trnx_.data_type  = h_data.data_type;
+	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
+	 //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",s_me,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
+	 //$display("%s Array[%0d]=%s ",s_me,i,Array[i]);
+	 Result_=  svcs_dpi_hs_send_byte  (sockid,h_trnx_,Array[i]);
+      end
+      return (Result_);
+   endfunction : svcs_hs_send_byteA
    
+   function int svcs_hs_recv_byteA  (input int sockid,input cs_header_t h_trnx,input cs_data_header_t h_data,inout byte Array[][]);
+      cs_header_t h_trnx_;
+      int Result_;
+      string 	 s_me;
+      s_me = "\nsvcs_hs_recv_byteA::";
+      
+      Result_ =0;
+      foreach(h_data.trnx_payload_sizes[i])  begin
+	 h_trnx_.trnx_type  = h_trnx.trnx_type;
+	 h_trnx_.trnx_id    = h_trnx.trnx_id;
+	 h_trnx_.data_type  = h_data.data_type;
+	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
+	 Result_= svcs_dpi_hs_recv_byte  (sockid,h_trnx_,Array[i]);
+	 //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",s_me,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
+	 //$display("%s Array[%0d]=%s ",s_me,i,Array[i]);
+      end
+      return (Result_);
+   endfunction : svcs_hs_recv_byteA
+ 
    
-/* -----\/----- EXCLUDED -----\/-----
+   /* -----\/----- EXCLUDED -----\/-----
+    import "DPI-C" function int svcs_dpi_hs_send_byteA 
+    (
+    input int sockid,
+    input cs_header_t h_trnx,
+    input real data_type,
+    input int trnx_payload_sizes[],
+    input byte Array[][]
+    );
+    
+    import "DPI-C" function int svcs_dpi_hs_recv_byteA
+    (
+    input int sockid,
+    input cs_header_t h_trnx,
+    input real data_type,
+    input int trnx_payload_sizes[],
+    inout byte Array[][]
+    );
+    -----/\----- EXCLUDED -----/\----- */
+   /* -----\/----- EXCLUDED -----\/-----
    import "DPI-C" function int svcs_dpi_hs_send_real (input int sockid,input cs_header_t h_trnx,input  Real[]);
    import "DPI-C" function int svcs_dpi_hs_recv_real (input int sockid,input cs_header_t h_trnx,output Real[]);
    

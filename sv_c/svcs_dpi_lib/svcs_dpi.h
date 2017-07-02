@@ -305,8 +305,8 @@ int svcs_dpi_send_header    (int sockid,cs_header* h);
   
   number of elements have been sent  : success > 0
 */
-int svcs_dpi_send_data_header    (int sockid,int n_payloads,cs_data_header* h);
-
+//int svcs_dpi_send_data_header    (int sockid,cs_header* h,double data_type,int* trnx_payload_sizes);
+int svcs_dpi_send_data_header (int sockid,cs_header* h,double data_type,svOpenArrayHandle trnx_payload_sizes);
 /*
   Function: svcs_dpi_recv_header
   fetch SVCS transaction header from TCP/IP socket
@@ -335,8 +335,7 @@ int svcs_dpi_recv_header   (int sockid,cs_header* h);
   number of elements have been received  : success > 0
   
 */
-int svcs_dpi_recv_data_header   (int sockid,int n_payloads,cs_data_header* h);
-
+int svcs_dpi_recv_data_header   (int sockid,cs_header* h,double* data_type,svOpenArrayHandle**  trnx_payload_sizes);
 /*
   Function: svcs_dpi_hs_send
 
@@ -364,6 +363,8 @@ int svcs_dpi_hs_send      (int sockid,cs_header* h_trnx,svOpenArrayHandle Array)
 int svcs_dpi_hs_send_int  (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
 int svcs_dpi_hs_send_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
 int svcs_dpi_hs_send_real (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+//
+//int svcs_dpi_hs_send_byteA (int sockid,cs_header* h_trnx,double data_type,svOpenArrayHandle trnx_payload_sizes,svOpenArrayHandle Array);
 
 /*
   Function: svcs_dpi_hs_recv
@@ -390,5 +391,7 @@ int svcs_dpi_hs_recv      (int sockid,cs_header* h_trnx,svOpenArrayHandle** Arra
 int svcs_dpi_hs_recv_int  (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 int svcs_dpi_hs_recv_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 int svcs_dpi_hs_recv_real (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
+//
+//int svcs_dpi_hs_recv_byteA (int sockid,cs_header* h_trnx,double data_type,svOpenArrayHandle trnx_payload_sizes,svOpenArrayHandle** Array);
 
 #endif /* SVCS_DPI_H_ */

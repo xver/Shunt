@@ -207,24 +207,46 @@ int svcs_dpi_send_header         (int sockid,cs_header* h){
  Result_ = svcs_cs_send_header(sockid,h);
  return Result_;
 }
-int svcs_dpi_send_data_header    (int sockid,int n_payloads,cs_data_header* h){
- int Result_ =0;
- return Result_;
+
+int svcs_dpi_send_data_header (int sockid,cs_header* h,double data_type,svOpenArrayHandle trnx_payload_sizes) {
+  cs_data_header h_data_;
+  int Result_ =0;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char* msg = "svcs_dpi_send_data_header";
+  h_data_.data_type = data_type;
+  int* Int_ = (int*) svGetArrayPtr(trnx_payload_sizes);
+  for(int i=0;i<h->n_payloads;i++) h_data_.trnx_payload_sizes[i] = Int_[i];
+  //svcs_cs_print_data_header(h,&h_data_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  Result_ = svcs_cs_send_data_header (sockid,h->n_payloads,&h_data_);
+  return Result_;
 }
+
 int svcs_dpi_recv_header         (int sockid,cs_header* h){
  int Result_ =0;
  Result_ = svcs_cs_recv_header(sockid,h);
  return Result_;
 }
-int svcs_dpi_recv_data_header    (int sockid,int n_payloads,cs_data_header* h){
- int Result_ =0;
 
- return Result_;
+int svcs_dpi_recv_data_header   (int sockid,cs_header* h,double* data_type,svOpenArrayHandle**  trnx_payload_sizes) {
+  int Result_;
+  cs_data_header h_data;
+  int n_payloads;
+  n_payloads =  h->n_payloads;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char* msg = "svcs_dpi_recv_data_header";
+  Result_ = svcs_cs_recv_data_header(sockid,n_payloads,&h_data);
+  //svcs_cs_print_data_header_dbg (n_payloads,&h_data,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  int* Int_ = (int *)svGetArrayPtr(trnx_payload_sizes); 
+  *data_type =h_data.data_type;  
+  for (int i=0;i<n_payloads;i++) { 
+    Int_[i]  = h_data.trnx_payload_sizes[i];
+  } 
+  return Result_;
 }
 
 ////  HandShake(hs) send/recv
 
-int svcs_dpi_hs_send                (int sockid,cs_header* h_trnx,svOpenArrayHandle Array){
+int svcs_dpi_hs_send (int sockid,cs_header* h_trnx,svOpenArrayHandle Array){
  int Result_ =0;
  Result_ = svcs_api_send (sockid,h_trnx,Array);
  return Result_;
@@ -238,6 +260,7 @@ int svcs_dpi_hs_send_int (int sockid,cs_header* h_trnx,svOpenArrayHandle Array )
  int* Int_ = (int *) svGetArrayPtr(Array);
   return svcs_dpi_hs_send(sockid,h_trnx,Int_);
 }
+
 int svcs_dpi_hs_send_real (int sockid,cs_header* h_trnx,svOpenArrayHandle Array ){
  double* Real_ = (double *) svGetArrayPtr(Array);
   return svcs_dpi_hs_send(sockid,h_trnx,Real_);
@@ -246,7 +269,7 @@ int svcs_dpi_hs_send_real (int sockid,cs_header* h_trnx,svOpenArrayHandle Array 
 ////  HandShake(hs) send/recv
 int svcs_dpi_hs_recv (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array){
   int Result_ =0;
- Result_ = svcs_api_recv   (sockid,h_trnx,Array);
+  Result_ = svcs_api_recv   (sockid,h_trnx,Array);
   return Result_;
 }
 int svcs_dpi_hs_recv_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array ) {
