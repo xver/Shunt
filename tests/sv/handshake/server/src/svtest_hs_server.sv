@@ -68,6 +68,9 @@ module automatic svtest_hs_server;
 	Test_name = "\tbyteA loopback";
 	Pass=byteA_loopback_test(Socket);
 	print_status(Test_name,Pass);
+	Test_name = "\tbyteA loopback";
+	Pass=byteA_loopback_test(Socket,7);
+	print_status(Test_name,Pass);
 	//
 	Test_name = "svtest_hs_server";
 	print_status(Test_name,Pass);
@@ -252,7 +255,7 @@ module automatic svtest_hs_server;
    endfunction : string_loopback_test
    
    
- function int   byteA_loopback_test(int socket_id,int n_payloads=5);
+ function int   byteA_loopback_test(int socket_id,int n_payloads=1);
    begin
       int success;
       byte Byte_exp[][];

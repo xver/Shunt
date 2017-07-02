@@ -48,6 +48,7 @@ module automatic svtest_hs_client;
 	real_loopback_test(Socket);
 	//////////////////////////
 	byteA_loopback_test(Socket);
+	byteA_loopback_test(Socket);
 	//////////////////////////
 	$display("svtest_hs_client: END");
 	
