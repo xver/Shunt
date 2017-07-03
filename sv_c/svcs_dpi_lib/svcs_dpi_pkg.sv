@@ -48,21 +48,16 @@ package svcs_dpi_pkg;
       int 	 trnx_payload_sizes[];
    }cs_data_header_t;
    
-   typedef struct{
-      int 	 data_int[100]; 
-      real 	 data_real[100];
-      byte       data_byte[100];
-   }cs_data_t;
-   
+ 
    import "DPI-C" function real svcs_dpi_hash(input string str);
    
    import "DPI-C" function int svcs_dpi_send_header
-     (
-      input int sockid,
-      input cs_header_t h
-      );
+     (	
+	input int sockid,
+	input cs_header_t h
+	);
    
-   import "DPI-C" function int svcs_dpi_send_data_header 
+   import "DPI-C" function int svcs_dpi_send_data_header
      (
       input int sockid,
       input cs_header_t h,
@@ -70,7 +65,7 @@ package svcs_dpi_pkg;
       input int  trnx_payload_sizes[]
       );
    
-   import "DPI-C" function int svcs_dpi_recv_header       
+   import "DPI-C" function int svcs_dpi_recv_header
      (
       input int sockid,
       output cs_header_t h

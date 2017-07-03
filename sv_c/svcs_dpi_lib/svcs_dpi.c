@@ -135,7 +135,7 @@ int svcs_dpi_send_realV(int sockid, const int size,const svOpenArrayHandle Real)
   int Result_ =0;
   h_.trnx_type = rand();
   h_.trnx_id   = rand();
-  h_.data_type  = svcs_prim_hash("SVCS_DOUBLE");
+  h_.data_type  = svcs_prim_hash("SVCS_REAL");
   h_.n_payloads = size;
   //svcs_cs_print_header (&h_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   //svcs_cs_print_realV(&h_,Real_,msg);
@@ -155,7 +155,7 @@ int svcs_dpi_recv_realV(int sockid,int size,svOpenArrayHandle Real) {
   int Result_ =0;
   h_.trnx_type = rand();
   h_.trnx_id   = rand();
-  h_.data_type  = svcs_prim_hash("SVCS_DOUBLE");
+  h_.data_type  = svcs_prim_hash("SVCS_REAL");
   h_.n_payloads = size;
   //svcs_cs_print_header (&h_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   Result_ = svcs_cs_recv_doubleV(sockid,&h_,Real_);
@@ -272,6 +272,7 @@ int svcs_dpi_hs_recv (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array){
   Result_ = svcs_api_recv   (sockid,h_trnx,Array);
   return Result_;
 }
+
 int svcs_dpi_hs_recv_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array ) {
  svOpenArrayHandle** Byte_ = svGetArrayPtr(Array);
  return svcs_dpi_hs_recv(sockid,h_trnx,Byte_);

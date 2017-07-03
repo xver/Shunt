@@ -226,7 +226,7 @@ int main(void) {
     if (success == 0 )  printf("\n%s trnx_header fail send",msg);
     //
     msg = "Server: data_type ";
-    h_data_exp.data_type = svcs_cs_data_type_hash(SVCS_DOUBLE,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY);
+    h_data_exp.data_type = svcs_cs_data_type_hash(SVCS_REAL,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY);
     h_data_exp.trnx_payload_sizes = malloc(h_trnx_exp.n_payloads*sizeof(int));
     
     for(int i=0;i< h_trnx_exp.n_payloads;i++) {
@@ -296,7 +296,7 @@ int main(void) {
     //set up header
     h_trnx_exp.trnx_type = rand();
     h_trnx_exp.trnx_id   = rand();
-    h_trnx_exp.data_type = svcs_cs_data_type_hash(SVCS_DOUBLE,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY);
+    h_trnx_exp.data_type = svcs_cs_data_type_hash(SVCS_REAL,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY);
     h_trnx_exp.n_payloads = n;
     
     //send

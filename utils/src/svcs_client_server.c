@@ -211,7 +211,7 @@ int  svcs_cs_recv_intV    (int sockid,cs_header* h,int* Int) {
 int svcs_cs_send_doubleV (int sockid,const cs_header* h,const double* Double) {
   int Result_=-1;
   
-  if (h->data_type ==  svcs_prim_hash("SVCS_DOUBLE")) {
+  if (h->data_type ==  svcs_prim_hash("SVCS_REAL")) {
     for (int i=0;i< h->n_payloads;i++) {
       Result_ = svcs_prim_send_double(sockid,&Double[i]);
     }
@@ -223,7 +223,7 @@ int svcs_cs_send_doubleV (int sockid,const cs_header* h,const double* Double) {
 int  svcs_cs_recv_doubleV    (int sockid,cs_header* h,double* Double) {
   int Result_=-1;
   
-  if (h->data_type ==  svcs_prim_hash("SVCS_DOUBLE")) {
+  if (h->data_type ==  svcs_prim_hash("SVCS_REAL")) {
     for (int i=0;i< h->n_payloads;i++) {
       Result_ = svcs_prim_recv_double(sockid,&Double[i]);
     }
@@ -233,7 +233,7 @@ int  svcs_cs_recv_doubleV    (int sockid,cs_header* h,double* Double) {
 }
 int svcs_cs_comp_doubleV   (cs_header* h,double *lhs,double *rhs) {
   int success = 1;
-  if (h->data_type==  svcs_prim_hash("SVCS_DOUBLE")) {
+  if (h->data_type==  svcs_prim_hash("SVCS_REAL")) {
     for (int i=0;i< h->n_payloads;i++) {
       if(lhs[i] != rhs[i]) success = 0;
     }
@@ -242,7 +242,7 @@ int svcs_cs_comp_doubleV   (cs_header* h,double *lhs,double *rhs) {
 }
 void svcs_cs_print_doubleV   (cs_header* h,double *Double,char* msg) {
   
-  if (h->data_type==  svcs_prim_hash("SVCS_DOUBLE")) {
+  if (h->data_type==  svcs_prim_hash("SVCS_REAL")) {
     for (int i=0;i< h->n_payloads;i++) {
       printf("\n %s DoubleV[%0d]=%f",msg,i,Double[i]);
     }

@@ -195,7 +195,7 @@ module automatic svtest_hs_server;
 	 //set up header
 	 h_trnx_exp.trnx_type = $urandom;
 	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = svcs_dpi_hash("SVCS_DOUBLE");
+	 h_trnx_exp.data_type = svcs_dpi_hash("SVCS_REAL");
 	 h_trnx_exp.n_payloads = n_payloads;
 	 
 	 //send
@@ -400,7 +400,7 @@ function int   realA_loopback_test(int socket_id,int n_payloads=1);
    h_trnx_exp.data_type = svcs_dpi_hash("SVCS_A_STRUCTURE");
    h_trnx_exp.n_payloads = n_payloads;
    //set up data header
-   h_data_exp.data_type = svcs_dpi_hash("SVCS_DOUBLE");
+   h_data_exp.data_type = svcs_dpi_hash("SVCS_REAL");
    h_data_exp.trnx_payload_sizes = new[n_payloads];
    foreach(h_data_exp.trnx_payload_sizes[i]) h_data_exp.trnx_payload_sizes[i] = n_payloads;
    //foreach(h_data_exp.trnx_payload_sizes[i]) $display("\n%s h_data_exp.trnx_payload_sizes[%0d]=%0d",Test_name,i,h_data_exp.trnx_payload_sizes[i]);

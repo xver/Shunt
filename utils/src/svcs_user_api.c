@@ -55,7 +55,7 @@ int svcs_api_send    (int sockid,cs_header* h_trnx,...) {
     else   Result_ = svcs_cs_send_intA(sockid,h_trnx->n_payloads,h_data_,Int_);
     break;
     
-  case  SVCS_DOUBLE :
+  case  SVCS_REAL :
     Double_ = va_arg (ap,double* );
     if (main_data_type_ !=  SVCS_A_STRUCTURE)  {  Result_ = svcs_cs_send_doubleV(sockid,h_trnx,Double_);}
     else   Result_ = svcs_cs_send_doubleA(sockid,h_trnx->n_payloads,h_data_,Double_);
@@ -113,7 +113,7 @@ int svcs_api_recv    (int sockid,cs_header* h_trnx,...) {
     else   Result_ = svcs_cs_recv_intA(sockid,h_trnx->n_payloads,h_data_,Int_);
     break;
     
-  case  SVCS_DOUBLE :
+  case  SVCS_REAL :
     Double_ = va_arg (ap,double* );
     if (main_data_type_ !=  SVCS_A_STRUCTURE)  {  Result_ = svcs_cs_recv_doubleV(sockid,h_trnx,Double_);}
     else   Result_ = svcs_cs_recv_doubleA(sockid,h_trnx->n_payloads,h_data_,Double_);
