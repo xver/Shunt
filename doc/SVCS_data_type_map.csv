@@ -1,50 +1,41 @@
-SystemVeriog type,state,definition,in/out C mapping data type ,SVCS get/fetch function,SVCS example
-,,,,,
+SystemVeriog type,definition,LRM ref.,in/out C mapping data type ,SVCS  CS function,SVCS C2SV function
 integer_atom_type,,,,,
-shortint,2-state data type, 16-bit signed integer,short int/short int*,,
-int, 2-state data type ,32-bit signed integer,int/int*,,
-longint,2-state data type, 64-bit signed integer,long long int/long int*,,
-byte,2-state data type, 8-bit signed integer or ASCII character,char/char*,,
-integer ,4-state data type, 32-bit signed integer,T.B.D,,
-time ,4-state data type, 64-bit unsigned integer,long long int/long int*,,
-,,,,,
+shortint,"2-state data type,16-bit signed integer",6.11 Integer data types,short int/short int*,T.B.D,T.B.D
+int,"2-state data type,32-bit signed integer",6.11 Integer data types,int/int*,T.B.D,T.B.D
+longint,"2-state data type,64-bit signed integer",6.11 Integer data types,long long int/long int*,T.B.D,T.B.D
+byte,"2-state data type, 8-bit signed integer or ASCII character",6.11 Integer data types,char/char*,T.B.D,T.B.D
+integer ,"4-state data type,32-bit signed integer",6.11 Integer data types,T.B.D,T.B.D,T.B.D
+time ,"4-state data type, 64-bit unsigned integer",6.11 Integer data types,long long int/long int*,T.B.D,T.B.D
+bit,"2-state data type,user-defined vector size, unsigned",6.11 Integer data types,svBit or unsigned char /svBit* or unsigned char*,T.B.D,T.B.D
+reg/logic,"4-state data type,user-defined vector size, unsigned",6.11 Integer data types,svLogic or unsigned char/ svLogic* or unsigned char*,T.B.D,T.B.D
 integer_vector_type,,,,,
-bit ,2-state data type, user-defined vector size.Type is unsigned,T.B.D,,
-logic, 4-state data type, user-defined vector size .Type is unsigned,T.B.D,,
-reg ,4-state data type,  user-defined vector size .Type is unsigned,svBit or unsigned char/svBit* or unsigned char,,
-,,, reg svLogic or unsigned char/svLogic* or unsigned char*,,
-bit[N:0],,,const svBitVecVal*/svBitVecVal*,,
-reg[N:0] or logic[N:0],,,const svLogicVecVal*/ svLogicVecVal*,,
+bit[N:0]," 2-state data type,user-defined vector size, unsigned",6.9 Vector declarations,const svBitVecVal*/ svBitVecVal*,T.B.D,T.B.D
+reg[N:0] or logic[N:0]," 4-state data type,user-defined vector size, unsigned",6.9 Vector declarations,const svLogicVecVal*/ svLogicVecVal*,T.B.D,T.B.D
+logic[N:0]," 4-state data type,user-defined vector size, unsigned",6.9 Vector declarations,svBit or unsigned char/svBit* or unsigned char,T.B.D,T.B.D
 non_integer_type IEEE 754,,,,,
-shortreal,N/A,"data type is the same C float 4 byte	1.2E-38 to 3.4E+38 6 decimal places",float/float*,,
-real,N/A,"data type is the same as a C double 8 byte	2.3E-308 to 1.7E+308	15 decimal places",double/double*,,
-realtime,N/A,"same as real 8 byte	2.3E-308 to 1.7E+308	15 decimal places",double/double*,,
-,,,,,
-string,N/A,data type is an ordered collection of characters be indexed in a similar way to an unpacked array of bytes,const char*/char**,,
-string[N],,,const char**/char**,,
-chandle,N/A,data type represents storage for pointers passed using the DPI, const void*/ void*,,
-,,,,,
+shortreal,data type is the same C float 4 byte,"6.12 Real, shortreal, and realtime data types",float/float*,T.B.D,T.B.D
+real,data type is the same as a C double 8 byte,"6.12 Real, shortreal, and realtime data types",double/double*,T.B.D,T.B.D
+realtime,same as real 8 bytes,"6.12 Real, shortreal, and realtime data types",double/double*,T.B.D,T.B.D
+special types,,,,,
+string,string is an ordered collection of characters be indexed as a unpacked array of bytes,6.16 String data type,const char*/char**,T.B.D,T.B.D
+string[N],string is an ordered collection of characters be indexed as a unpacked array of bytes,6.16 String data type,const char**/char**,T.B.D,T.B.D
+chandle,data type represents storage for pointers passed using the DPI,6.14 Chandle data type, const void*/ void*,T.B.D,T.B.D
+Enumeration,An enumerated type declares a set of integral named constants,6.19 Enumerations,T.B.D,T.B.D,T.B.D
 Aggregate data types,,,,,
-,,,,,
-Unpacked structures,N/A,"represents a collection of data types that can be referenced as a whole,can contain any data type.By default, structures are unpacked.Dynamic types and chandle types can only be used in tagged union",T.B.D,,
-,,,,,
-Packed structures,N/A/,"packed structure consists of bit fields, which are packed together in
+Unpacked structures,"represents a collection of data types that can be referenced as a whole,can contain any data type.By default, structures are unpacked.Dynamic types and chandle types can only be used in tagged union",7.2 Structures,T.B.D,T.B.D,T.B.D
+Packed structures,"packed structure consists of bit fields, which are packed together in
 memory without gaps.it is a mechanism for subdividing a vector into subfields, which can be conveniently
-accessed as members",T.B.D,,
-,,,,,
-Unpacked union,N/A," ""it is a data type that represents a single piece of storage that can be accessed using one of the named member data types. Only one of the data types in the union can be used at a time. By default  a union is packed""",T.B.D,,
-Packed  union,N/A,"A tagged union stores both the member value and a tag, i.e.,additional bits representing the current member name.The member value can only be read with a type that is consistent with the current tag value (i.e., member name).A packed array is guaranteed to be represented as a contiguous set of bits.",T.B.D,,
-,,,,,
-Unpacked arrays,N/A,array is used to refer to the dimensions declared after the data identifier name.Elements of net arrays can be used in the same fashion as a scalar or vector net,T.B.D,,
-,,,,,
-Packed arrays,N/A,"packed array is used to refer to the dimensions declared before the data identifier name dynamic arrays,associative arrays",T.B.D,,
-,,,,,
-enum,N/A,An enumerated type declares a set of integral named constants,T.B.D,,
-,,,,,
-fixed-size arrays,N/A,array is a container object that holds a fixed number of values of a single type.,T.B.D,,
-dynamic arrays,N/A,A dynamic array is an unpacked array whose size can be set or changed at run time,const svOpenArrayHandle/ svOpenArrayHandle,,
-associative arrays,N/A,An associative array implements a lookup table of the elements of its declared type.,T.B.D,,
-queues,N/A,"A queue is a variable-size, ordered collection of homogeneous elements",T.B.D,,
-,,,,,
-multi-dimensioned packed/unpacked arrays,,,T.B.D,,
-bit-stream,1 bit, data type that can be packed into a stream of bits.,T.B.D,,
+accessed as members",7.2 Structures,T.B.D,T.B.D,T.B.D
+Unpacked union," ""it is a data type that represents a single piece of storage that can be accessed using one of the named member data types. Only one of the data types in the union can be used at a time. By default  a union is packed""",7.3 Unions,T.B.D,T.B.D,T.B.D
+Packet  union,"The members of a packed,untagged union shall all be the same size (in contrast to an unpacked union or a packed, tagged union, where the members can be different sizes). Thus, a union member that was written as another member can be readback.",7.3.1 Packed unions,T.B.D,T.B.D,T.B.D
+Tagged unions,"A tagged union stores both the member value and a tag, i.e.,additional bits representing the current member name.The member value can only be read with a type that is consistent with the current tag value (i.e., member name).A packed array is guaranteed to be represented as a contiguous set of bits.",7.3.2 Tagged unions,T.B.D,T.B.D,T.B.D
+Arrays,,,,,
+Unpacked arrays,array is used to refer to the dimensions declared after the data identifier name.Elements of net arrays can be used in the same fashion as a scalar or vector net,7.4.2 Unpacked arrays,T.B.D,T.B.D,T.B.D
+Packed arrays,"packed array is used to refer to the dimensions declared before the data identifier name dynamic arrays,associative arrays",7.4.1 Packed arrays,T.B.D,T.B.D,T.B.D
+fixed-size arrays,array is a container object that holds a fixed number of values of a single type.,7.4.2 Unpacked arrays,T.B.D,T.B.D,T.B.D
+dynamic arrays,A dynamic array is an unpacked array whose size can be set or changed at run time,7.5 Dynamic arrays,const svOpenArrayHandle/ svOpenArrayHandle,T.B.D,T.B.D
+associative arrays,An associative array implements a lookup table of the elements of its declared type.,7.8 Associative arrays,T.B.D,T.B.D,T.B.D
+queues,"A queue is a variable-size, ordered collection of homogeneous elements",7.10 Queues,T.B.D,T.B.D,T.B.D
+Multidimensional arrays,A multidimensional array is an array of arrays,7.4.5 Multidimensional arrays,T.B.D,T.B.D,T.B.D
+Type casting,,,,,
+bit-stream, data type that can be packed into a stream of bits.,6.24.3 Bit-stream casting,T.B.D,T.B.D,T.B.D
