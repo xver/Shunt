@@ -17,6 +17,7 @@
 module automatic svtest_hs_server;
    
    import svcs_dpi_pkg::*;
+   import svcs_hs_pkg::*;
    int Socket;
    cs_header_t      h_trnx_exp;
    cs_data_header_t h_data_exp;

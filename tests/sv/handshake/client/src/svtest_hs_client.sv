@@ -16,6 +16,7 @@
 module automatic svtest_hs_client;
  
    import svcs_dpi_pkg::*;
+   import svcs_hs_pkg::*;
    
    string String;
    int 	 Socket; 
