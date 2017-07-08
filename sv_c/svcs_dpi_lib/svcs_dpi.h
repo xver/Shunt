@@ -341,7 +341,7 @@ int svcs_dpi_recv_data_header   (int sockid,cs_header* h,double* data_type,svOpe
 
   send data over TCP/IP.
   Supported data types are:
-  int , intV ,IntA ,double ,doublev ,DoubleA,string,stringA
+  int , intV ,double ,doubleV
 
   Parameters:
 
@@ -363,14 +363,12 @@ int svcs_dpi_hs_send      (int sockid,cs_header* h_trnx,svOpenArrayHandle Array)
 int svcs_dpi_hs_send_int  (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
 int svcs_dpi_hs_send_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
 int svcs_dpi_hs_send_real (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
-//
-//int svcs_dpi_hs_send_byteA (int sockid,cs_header* h_trnx,double data_type,svOpenArrayHandle trnx_payload_sizes,svOpenArrayHandle Array);
 
 /*
   Function: svcs_dpi_hs_recv
   fetch data from TCP/IP socket
   Supported data types are:
-  int , intV ,IntA ,double ,doublev ,DoubleA,string,stringA
+  int , intV ,double ,doubleV,string,
 
   Parameters:
 
@@ -391,7 +389,35 @@ int svcs_dpi_hs_recv      (int sockid,cs_header* h_trnx,svOpenArrayHandle** Arra
 int svcs_dpi_hs_recv_int  (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 int svcs_dpi_hs_recv_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 int svcs_dpi_hs_recv_real (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
-//
-//int svcs_dpi_hs_recv_byteA (int sockid,cs_header* h_trnx,double data_type,svOpenArrayHandle trnx_payload_sizes,svOpenArrayHandle** Array);
+
+/*
+ Function: svcs_dpi_4state_send_byte
+  send 4-stae verilog "byte" over TCP/IP
+
+  Parameters:
+   sockfd - socket id
+   Byte  - data to send
+
+  Returns:
+    number of 4 state variable byte size have been sent : success =1
+
+    see (svcs_prim_send_byte)
+*/
+int svcs_dpi_hs_send_byte4s (const unsigned int sockfd,svLogicVecVal* Byte);
+
+/*
+ Function: svcs_dpi_4state_recv_byte
+  recv 4-stae verilog "byte" over TCP/IP
+
+  Parameters:
+   sockfd - socket id
+   Byte  - data to recv
+
+  Returns:
+    number of 4 state variable byte size have been sent : success =1
+
+    see (svcs_prim_recv_byte)
+*/
+int svcs_dpi_hs_recv_byte4s (const unsigned int sockfd,svLogicVecVal** Byte);
 
 #endif /* SVCS_DPI_H_ */

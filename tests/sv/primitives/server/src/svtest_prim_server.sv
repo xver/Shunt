@@ -44,7 +44,6 @@ module automatic svtest_prim_server;
 	Pass=byte_loopback_test(Socket);
 	print_status(Test_name,Pass);
         ///////////////////////////
-	///////////////////////////
 	Test_name = "\tint_loopback";
 	Pass=int_loopback_test(Socket);
 	print_status(Test_name,Pass);
@@ -63,6 +62,14 @@ module automatic svtest_prim_server;
 	////////////////////////////
 	Test_name = "\tstring_loopback";
 	Pass =string_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\tbyte4s_loopback";
+	Pass = byte4s_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\tint4s_loopback";
+	Pass = int4s_loopback_test(Socket);
 	print_status(Test_name,Pass);
 	//
 	Test_name = "svtest_prim_server";
@@ -177,13 +184,57 @@ module automatic svtest_prim_server;
 	 String_act = `STRING_MESSAGE1;
 	 success =1;
 	 if(!svcs_dpi_send_string(socket_id,String_exp.len(),String_exp))  success =0;
-	 success = svcs_dpi_send_string(socket_id,String_exp.len(),String_exp);
 	 if(!svcs_dpi_recv_string(socket_id,String_exp.len(),String_act))  success =0;
 	 foreach(String_exp[i]) if(String_act[i] != String_exp[i]) success =0;
 	 return  success;
       end
    endfunction : string_loopback_test
+
+
+   function int   byte4s_loopback_test(int socket_id);
+
+      int 	success;
+      reg [7:0] Byte4s_exp;
+      reg [7:0] Byte4s_act;
+      string 	Test_name = "server byte4s_loopback_test";
+      success =1;
+      
+      //set up data
+      Byte4s_exp = 8'b0011_xxzz;
+      
+      //send data
+      if (svcs_dpi_send_byte4s(socket_id,Byte4s_exp)<=0) success = 0;
+      if(svcs_dpi_recv_byte4s (socket_id,Byte4s_act)<=0) success = 0;
+       
+      //comp
+      if(Byte4s_act !== Byte4s_exp) success = 0;  
+      if (success == 0 )  $display("\nserver: fail comp data");
+      //$display("\n%s DEBUG recv_byte4s %b" ,Test_name,Byte4s_act);
+      return  success;
+   endfunction :byte4s_loopback_test
    
+     //////////////////////
+   function int   int4s_loopback_test(int socket_id);
+
+      int 	success;
+      reg [31:0] Int4s_exp;
+      reg [31:0] Int4s_act;
+      string 	Test_name = "server int4s_loopback_test";
+      success =1;
+      
+      //set up data
+      Int4s_exp = 32'hf0xx_zz5a;
+      
+      //send data
+      if (svcs_dpi_send_int4s(socket_id,Int4s_exp)<=0) success = 0;
+      if (svcs_dpi_recv_int4s(socket_id,Int4s_act)<=0) success = 0;
+       
+      //comp
+      if(Int4s_act !== Int4s_exp) success = 0;  
+      if (success == 0 )  $display("\nserver: fail comp data");
+      //$display("\n%s DEBUG recv_int4s %h" ,Test_name,Int4s_act);
+      return  success;
+   endfunction :int4s_loopback_test
    
    function void print_status(string Test_name,int Status_int);
       begin

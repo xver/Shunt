@@ -57,11 +57,13 @@ int svcs_dpi_send_byte(const  unsigned int sockfd, const char Byte) {
   Result_ = svcs_prim_send_byte(sockfd,&Byte);
   return Result_;
 }
+
 int svcs_dpi_recv_byte(const  unsigned int sockfd,char* Byte) {
   int Result_ =0;
   Result_ =svcs_prim_recv_byte(sockfd,Byte);
   return Result_;
 }
+
 ////Direct send/recv  
 int svcs_dpi_send_real(const  unsigned int sockfd,double Real) {
   int Result_ =0;
@@ -286,4 +288,57 @@ int svcs_dpi_hs_recv_real (int sockid,cs_header* h_trnx,svOpenArrayHandle** Arra
 svOpenArrayHandle** Real_ = svGetArrayPtr(Array);
  return svcs_dpi_hs_recv(sockid,h_trnx,Real_);
 }
+//4-states
+int svcs_dpi_send_byte4s (const unsigned int sockfd,svLogicVecVal* Byte) {
+ int Result_;
+ //char* msg = "\nsvcs_dpi_send_byte4s"; 
+ 
+ Result_ = 1;
+ 
+ if (svcs_dpi_send_byte(sockfd, Byte->aval)<=0) Result_=0 ;
+ if (svcs_dpi_send_byte(sockfd, Byte->bval)<=0) Result_=0 ;
+ //printf("  %s  Byte->aval=%x,Byte->bval=%x ",msg,Byte->aval,Byte->bval);
+ 
+ return Result_;
+}
+
+int svcs_dpi_recv_byte4s (const unsigned int sockfd,svLogicVecVal* Byte) {
+  int Result_;
+  //char* msg = "\nsvcs_dpi_recv_byte4s"; 
+  
+  Result_ = 1;
+   
+  if (svcs_dpi_recv_byte (sockfd,(char *)(&Byte->aval))<=0) Result_=0 ;
+  if (svcs_dpi_recv_byte (sockfd,(char *)(&Byte->bval))<=0) Result_=0 ;
+  //printf("  %s  Byte->aval=%x,Byte->bval=%x ",msg,Byte->aval,Byte->bval);  
+
+ return Result_;
+}
+
+int svcs_dpi_send_int4s (const unsigned int sockfd,svLogicVecVal* Int) {
+ int Result_;
+ //char* msg = "\nsvcs_dpi_send_int4s"; 
+ 
+ Result_ = 1;
+ 
+ if (svcs_dpi_send_int(sockfd, Int->aval)<=0) Result_=0 ;
+ if (svcs_dpi_send_int(sockfd, Int->bval)<=0) Result_=0 ;
+ //printf("  %s  Int->aval=%x,Int->bval=%x size(%0d)",msg,Int->aval,Int->bval,sizeof(int));
+ 
+ return Result_;
+}
+
+int svcs_dpi_recv_int4s (const unsigned int sockfd,svLogicVecVal* Int) {
+  int Result_;
+  //char* msg = "\nsvcs_dpi_recv_int4s"; 
+  
+  Result_ = 1;
+   
+  if (svcs_dpi_recv_int (sockfd,(int *)(&Int->aval))<=0) Result_=0 ;
+  if (svcs_dpi_recv_int (sockfd,(int *)(&Int->bval))<=0) Result_=0 ;
+  //printf("  %s  Int->aval=%x,Int->bval=%x ",msg,Int->aval,Int->bval);  
+
+ return Result_;
+}
+
 #endif /* SVCS_DPI_C_ */

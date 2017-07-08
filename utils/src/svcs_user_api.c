@@ -67,7 +67,9 @@ int svcs_api_send    (int sockid,cs_header* h_trnx,...) {
     else   Result_ = svcs_cs_send_byteA(sockid,h_trnx->n_payloads,h_data_,String_);
     break;
     
-    // default :
+   default :
+     Result_ = 0;
+     break;
   }
   va_end(ap);
   return Result_;

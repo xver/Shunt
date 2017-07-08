@@ -42,6 +42,8 @@ module automatic svtest_prim_client;
 	intV_loopback_test(Socket);
 	realV_loopback_test(Socket);
 	string_loopback_test(Socket);
+	byte4s_loopback_test(Socket);
+	int4s_loopback_test(Socket);
 	$display("svtest_prim_client: END");
 	
      end
@@ -118,15 +120,41 @@ module automatic svtest_prim_client;
       Test_name = "SV client string_loopback_test recv";
       
       
-       $display("SV before client String = %s",String);	
+       //$display("SV before client String = %s",String);	
        if (svcs_dpi_recv_string(socket_id,String.len(),String)<=0) $display("%s TEST FAIL",Test_name);
        Result_ = svcs_dpi_recv_string(socket_id,size,String);
-       $display("SV after client String = %s",String);
+       //$display("SV after client String = %s",String);
        Test_name = "client string_loopback_test send";
        if (svcs_dpi_send_string(socket_id,String.len(),String)<=0) $display("%s TEST FAIL",Test_name);
 
       
    endfunction : string_loopback_test
    
-   
+   function void byte4s_loopback_test(int socket_id);
+      reg [7:0] Byte4s;
+      string 	Test_name;
+      
+      Test_name = "client byte4s_loopback_test recv";
+      //recv
+      if (svcs_dpi_recv_byte4s (socket_id,Byte4s)<= 0) $display("%s TEST FAIL",Test_name);
+      //send
+      Test_name = "client byte4s_loopback_test send";
+      if (svcs_dpi_send_byte4s(socket_id,Byte4s)<= 0) $display("%s TEST FAIL",Test_name);
+      
+   endfunction : byte4s_loopback_test
+ 
+
+
+  function void int4s_loopback_test(int socket_id);
+      reg [31:0] Int4s;
+      string 	Test_name;
+      
+      Test_name = "client int4s_loopback_test recv";
+      //recv
+      if (svcs_dpi_recv_int4s (socket_id,Int4s)<= 0) $display("%s TEST FAIL",Test_name);
+      //send
+      Test_name = "client int4s_loopback_test send";
+      if (svcs_dpi_send_int4s(socket_id,Int4s)<= 0) $display("%s TEST FAIL",Test_name);
+      
+   endfunction : int4s_loopback_test  
 endmodule : svtest_prim_client

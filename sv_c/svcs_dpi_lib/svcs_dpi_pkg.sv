@@ -33,7 +33,14 @@ package svcs_dpi_pkg;
 
    import "DPI-C" function int svcs_dpi_send_string (input int sockid,input int size,input  string String);
    import "DPI-C" function int svcs_dpi_recv_string (input int sockid,input int size,inout  string String);
+
+   //4 state  
+   import "DPI-C" function int svcs_dpi_send_byte4s (input int sockfd,input reg[7:0] Byte);
+   import "DPI-C" function int svcs_dpi_recv_byte4s (input int sockfd,inout reg[7:0] Byte);
    
+   import "DPI-C" function int svcs_dpi_send_int4s (input int sockfd,input reg[31:0] Int);
+   import "DPI-C" function int svcs_dpi_recv_int4s (input int sockfd,inout reg[31:0] Int);
+  //   
    //////////////////////
 
    typedef struct{		
@@ -81,17 +88,15 @@ package svcs_dpi_pkg;
 
     
    
-   import "DPI-C" function int svcs_dpi_hs_send_byte  (input int sockid,input cs_header_t h_trnx,input byte Array[]);
-   import "DPI-C" function int svcs_dpi_hs_recv_byte  (input int sockid,input cs_header_t h_trnx,inout byte Array[]);
+   import "DPI-C" function int svcs_dpi_hs_send_byte   (input int sockid,input cs_header_t h_trnx,input byte Array[]);
+   import "DPI-C" function int svcs_dpi_hs_recv_byte   (input int sockid,input cs_header_t h_trnx,inout byte Array[]);
    
-   import "DPI-C" function int svcs_dpi_hs_send_int   (input int sockid,input cs_header_t h_trnx,input int  Array[]);
-   import "DPI-C" function int svcs_dpi_hs_recv_int   (input int sockid,input cs_header_t h_trnx,inout int  Array[]);
+   import "DPI-C" function int svcs_dpi_hs_send_int    (input int sockid,input cs_header_t h_trnx,input int  Array[]);
+   import "DPI-C" function int svcs_dpi_hs_recv_int    (input int sockid,input cs_header_t h_trnx,inout int  Array[]);
    
-   import "DPI-C" function int svcs_dpi_hs_send_real  (input int sockid,input cs_header_t h_trnx,input real Array[]);
-   import "DPI-C" function int svcs_dpi_hs_recv_real  (input int sockid,input cs_header_t h_trnx,inout real Array[]);
-   
+   import "DPI-C" function int svcs_dpi_hs_send_real   (input int sockid,input cs_header_t h_trnx,input real Array[]);
+   import "DPI-C" function int svcs_dpi_hs_recv_real   (input int sockid,input cs_header_t h_trnx,inout real Array[]);
   
-  //  
 endpackage : svcs_dpi_pkg
    
   
