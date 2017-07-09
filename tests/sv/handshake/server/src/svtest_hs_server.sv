@@ -86,28 +86,7 @@ module automatic svtest_hs_server;
 	Test_name = "\trealA loopback";
 	Pass=realA_loopback_test(Socket,5);
 	print_status(Test_name,Pass);
-		///////////////////////////
-	Test_name = "\tbyte loopback";
-	Pass=byte_loopback_test(Socket);
-	print_status(Test_name,Pass);
-	Test_name = "\tbyte vector loopback";
-	Pass=byte_loopback_test(Socket,15);
-	print_status(Test_name,Pass);
- 	///////////////////////////
-	Test_name = "\tint_loopback";
-	Pass=int_loopback_test(Socket);
-	print_status(Test_name,Pass);
-	Test_name = "\tint vector loopback";
-	Pass=int_loopback_test(Socket,9);
-	print_status(Test_name,Pass);
 	///////////////////////////
-	Test_name = "\treal_loopback";
-	Pass=real_loopback_test(Socket);
-	print_status(Test_name,Pass);
-	Test_name = "\treal vector loopback";
-	Pass=real_loopback_test(Socket,11);
-	print_status(Test_name,Pass);
-	////////////////////////////
 	Test_name = "svtest_hs_server";
 	print_status(Test_name,Pass);
 
@@ -460,7 +439,8 @@ function int   realA_loopback_test(int socket_id,int n_payloads=1);
 endfunction :realA_loopback_test
    //  
 
-   
+   //////////////////////////////////
+   /////////////////////////////////
 
    //  
 function void print_status(string Test_name,int Status_int);
