@@ -164,6 +164,66 @@ int svcs_dpi_recv_byte    (const unsigned int sockfd,char* Byte);
 int svcs_dpi_send_intV   (int sockid, const int size,const svOpenArrayHandle Int);
 
 /*
+ Function: svcs_dpi_send_byte4s
+  send verilog "reg[7:0] 4 state aval,bval" over TCP/IP
+
+  Parameters:
+   sockfd - socket id
+   Byte  - data to send
+
+  Returns:
+    number of bytes have been sent : success =1
+
+    see (svcs_prim_send_byte)
+*/
+
+int svcs_dpi_send_byte4s (const unsigned int sockfd,svLogicVecVal* Byte);
+/*
+  Function: svcs_dpi_recv_byte4s
+  fetch verilog "reg[7:0] 4 state aval,bval" from TCP/IP
+
+  Parameters:
+  sockfd - socket id
+  Byte - data from socket
+
+  Returns:
+ number of bytes have been sent : success = 1
+
+    see (svcs_prim_recv_byte)
+*/
+int svcs_dpi_recv_byte4s (const unsigned int sockfd,svLogicVecVal* Byte);
+
+/*
+ Function: svcs_dpi_send_int4s
+  send  verilog "reg[31:0] 4 state aval,bval" over TCP/IP
+
+  Parameters:
+   sockfd - socket id
+   Int  -   data
+
+  Returns:
+   number of bytes have been sent : success > 0
+   see (vcs_prim_send_int)
+
+*/
+  int svcs_dpi_send_int4s (const unsigned int sockfd,svLogicVecVal* Int);
+
+/*
+ Function: svcs_dpi_recv_int
+  fetch verilog "reg[31:0] 4 state aval,bval" from TCP/IP
+
+  Parameters:
+   sockfd - socket id
+   Int - data from socket
+
+  Returns:
+    number of bytes have been received  : success > 0
+
+    see (svcs_prim_recv_in)
+*/
+  int svcs_dpi_recv_int4s (const unsigned int sockfd,svLogicVecVal* Int);
+
+/*
   Function: svcs_dpi_recv_intV
   fetch SVCS transaction with "int" elements vector  elements from TCP/IP
   
@@ -390,34 +450,6 @@ int svcs_dpi_hs_recv_int  (int sockid,cs_header* h_trnx,svOpenArrayHandle** Arra
 int svcs_dpi_hs_recv_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 int svcs_dpi_hs_recv_real (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 
-/*
- Function: svcs_dpi_4state_send_byte
-  send 4-stae verilog "byte" over TCP/IP
 
-  Parameters:
-   sockfd - socket id
-   Byte  - data to send
-
-  Returns:
-    number of 4 state variable byte size have been sent : success =1
-
-    see (svcs_prim_send_byte)
-*/
-int svcs_dpi_hs_send_byte4s (const unsigned int sockfd,svLogicVecVal* Byte);
-
-/*
- Function: svcs_dpi_4state_recv_byte
-  recv 4-stae verilog "byte" over TCP/IP
-
-  Parameters:
-   sockfd - socket id
-   Byte  - data to recv
-
-  Returns:
-    number of 4 state variable byte size have been sent : success =1
-
-    see (svcs_prim_recv_byte)
-*/
-int svcs_dpi_hs_recv_byte4s (const unsigned int sockfd,svLogicVecVal** Byte);
 
 #endif /* SVCS_DPI_H_ */

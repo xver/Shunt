@@ -96,7 +96,10 @@ package svcs_dpi_pkg;
    
    import "DPI-C" function int svcs_dpi_hs_send_real   (input int sockid,input cs_header_t h_trnx,input real Array[]);
    import "DPI-C" function int svcs_dpi_hs_recv_real   (input int sockid,input cs_header_t h_trnx,inout real Array[]);
-  
-endpackage : svcs_dpi_pkg
    
-  
+   import "DPI-C" function int svcs_dpi_hs_send_byte4s (input int sockid,input cs_header_t h_trnx,input reg[7:0] Byte[]);
+   import "DPI-C" function int svcs_dpi_hs_recv_byte4s (input int sockid,input cs_header_t h_trnx,inout reg[7:0] Byte[]);
+   
+   endpackage : svcs_dpi_pkg
+
+

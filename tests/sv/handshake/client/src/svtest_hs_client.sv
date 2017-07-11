@@ -57,6 +57,8 @@ module automatic svtest_hs_client;
 	realA_loopback_test(Socket);
 	realA_loopback_test(Socket);
 	//////////////////////////
+	byte4sV_loopback_test(Socket);
+	//////////////////////////
 	$display("svtest_hs_client: END");
 	
      end
@@ -85,7 +87,23 @@ module automatic svtest_hs_client;
       if (svcs_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
       if (svcs_dpi_hs_send_byte(socket_id,h_trnx,Byte)<= 0) $display("%s TEST FAIL",Test_name);
    endfunction : byte_loopback_test
+   ///////////////////
+   function void byte4sV_loopback_test(int socket_id);
+      reg[7:0]   Byte4sV[];
+      string Test_name;
    
+      Test_name = "client byte4sV_loopback_test recv";
+      //recv
+      if (svcs_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
+      Byte4sV   = new[h_trnx.n_payloads];
+      if (svcs_hs_recv_byte4s (socket_id,Byte4sV)<= 0) $display("%s TEST FAIL",Test_name);
+      //send
+      Test_name = "client byte4sV_loopback_test send";
+      if (svcs_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
+      if (svcs_hs_send_byte4s(socket_id,Byte4sV)<= 0)   $display("%s TEST FAIL",Test_name);
+   endfunction : byte4sV_loopback_test
+   
+   ////////////////////
    function void int_loopback_test(int socket_id);
       int   Int[];
       string Test_name;

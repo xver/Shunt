@@ -87,6 +87,10 @@ module automatic svtest_hs_server;
 	Pass=realA_loopback_test(Socket,5);
 	print_status(Test_name,Pass);
 	///////////////////////////
+	Test_name = "\tbyte4sV loopback";
+	Pass=byte4sV_loopback_test(Socket,5);
+	print_status(Test_name,Pass);
+	//////////////////////////
 	Test_name = "svtest_hs_server";
 	print_status(Test_name,Pass);
 
@@ -440,6 +444,40 @@ endfunction :realA_loopback_test
    //  
 
    //////////////////////////////////
+   function int byte4sV_loopback_test(int socket_id,int n_payloads=1);
+      begin
+	 int success;
+	 int i;
+         reg[7:0] Byte4sV_exp[];
+	 reg[7:0] Byte4sV_act[];
+	 string   s_me = "byte4sV_loopback_test";
+	 success =1;
+	 Byte4sV_exp = new[ n_payloads];
+	 //Byte4sV_act = new[ n_payloads];
+	 foreach(Byte4sV_exp[i]) begin  
+	    if (i==0) Byte4sV_exp[i] =   8'bzx00_0111;
+	    else Byte4sV_exp[i] = Byte4sV_exp[i-1] ^ 1'b1;   
+	 end
+	 //foreach(Byte4sV_exp[i])  $display("\n %s Byte4sV_exp[%0d]=%b",s_me,i, Byte4sV_exp[i]);
+	 foreach(Byte4sV_act[i]) Byte4sV_act[i] = 8'b100_0000 +300+(i+1);
+	 //set up header
+	 h_trnx_exp.trnx_type = $urandom;
+	 h_trnx_exp.trnx_id   = $urandom;
+	 h_trnx_exp.data_type = svcs_dpi_hash("SVCS_BYTE4S");
+	 h_trnx_exp.n_payloads = n_payloads;
+	 
+	 //send
+	 if (svcs_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+	 if(!svcs_hs_send_byte4s(socket_id,Byte4sV_exp))  success =0;
+	 //
+	 if (svcs_dpi_recv_header(socket_id,h_trnx_act)<= 0) success = 0;
+	  Byte4sV_act   = new[h_trnx_act.n_payloads];
+         if(!svcs_hs_recv_byte4s(socket_id,Byte4sV_act))  success =0;
+	 foreach(Byte4sV_exp[i]) if(Byte4sV_act[i] !== Byte4sV_exp[i]) success =0;
+	 //foreach(Byte4sV_exp[i]) $display("\n %s Byte4sV_act[%0d]=%b vs %b",s_me,i, Byte4sV_act[i], Byte4sV_exp[i]);
+	 return  success;
+      end
+   endfunction : byte4sV_loopback_test
    /////////////////////////////////
 
    //  
