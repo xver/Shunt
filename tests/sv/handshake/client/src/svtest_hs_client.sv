@@ -58,6 +58,7 @@ module automatic svtest_hs_client;
 	realA_loopback_test(Socket);
 	//////////////////////////
 	byte4sV_loopback_test(Socket);
+	reg4sV_loopback_test(Socket);
 	//////////////////////////
 	$display("svtest_hs_client: END");
 	
@@ -87,7 +88,7 @@ module automatic svtest_hs_client;
       if (svcs_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
       if (svcs_dpi_hs_send_byte(socket_id,h_trnx,Byte)<= 0) $display("%s TEST FAIL",Test_name);
    endfunction : byte_loopback_test
-   ///////////////////
+   
    function void byte4sV_loopback_test(int socket_id);
       reg[7:0]   Byte4sV[];
       string Test_name;
@@ -103,7 +104,7 @@ module automatic svtest_hs_client;
       if (svcs_hs_send_byte4s(socket_id,Byte4sV)<= 0)   $display("%s TEST FAIL",Test_name);
    endfunction : byte4sV_loopback_test
    
-   ////////////////////
+   
    function void int_loopback_test(int socket_id);
       int   Int[];
       string Test_name;
@@ -196,7 +197,7 @@ module automatic svtest_hs_client;
       if (svcs_hs_send_intA(socket_id,h_trnx,h_data,Int)<=0)$display("%s send_intA TEST FAIL",Test_name); 
    endfunction :intA_loopback_test
 
-   ///////////
+  
    function void   realA_loopback_test(int socket_id);
       real   Real[][];
       string Test_name;
@@ -228,7 +229,22 @@ module automatic svtest_hs_client;
       if (svcs_hs_send_realA(socket_id,h_trnx,h_data,Real)<=0)$display("%s send_realA TEST FAIL",Test_name); 
    
    endfunction :realA_loopback_test
+   ////////
    
-  
+   function void reg4sV_loopback_test(int socket_id);
+      reg [1024:0] Reg4sV;
+      string 	   Test_name;
+      
+      Test_name = "client reg4sV_loopback_test recv";
+      //recv     
+      Reg4sV = 'hz;
+      if (svcs_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
+      if (svcs_dpi_hs_recv_reg4s(socket_id,h_trnx,Reg4sV)<= 0) $display("%s TEST FAIL",Test_name);
+      //$display("\n %s Reg4sV=%h(%h)",Test_name, Reg4sV,Reg4sV[132:0]);
+      //send
+      //Test_name = "client reg4sV_loopback_test send";
+      if (svcs_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
+      if (svcs_dpi_hs_send_reg4s(socket_id,h_trnx,Reg4sV)<= 0)   $display("%s TEST FAIL",Test_name);
+   endfunction : reg4sV_loopback_test
    
 endmodule : svtest_hs_client

@@ -45,6 +45,7 @@ int svcs_dpi_send_int(const  unsigned int sockfd, const int Int) {
   Result_ = svcs_prim_send_int(sockfd,&Int);
   return Result_;
 }
+
 int svcs_dpi_recv_int(const  unsigned int sockfd,int* Int) {
   int Result_ =0;
   Result_ =svcs_prim_recv_int(sockfd,Int);
@@ -341,5 +342,41 @@ int svcs_dpi_recv_int4s (const unsigned int sockfd,svLogicVecVal* Int) {
  return Result_;
 }
 
+////////////////////////
 
+int svcs_dpi_hs_send_reg4s (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
+  int Result_;
+  //char* msg = "\nsvcs_dpi_hs_send_reg4s";
+ 
+  Result_ = 1;
+  svLogicVecVal* Reg_ =  (svLogicVecVal*)svGetArrayPtr((svOpenArrayHandle*)Reg);
+  
+  int Size_ =h_trnx->n_payloads / 32; 
+  if(h_trnx->n_payloads % 32 > 0) ++Size_;
+  for(int i=0;i<Size_ ;i++) {
+    //printf("%s  Reg->aval=%x,Reg->bval=%x size=%0d (%0d/%0d) bits",msg,Reg_[i].aval,Reg_[i].bval,svSizeOfArray((svOpenArrayHandle*)Reg),Size_,h_trnx->n_payloads % 32);
+    if (svcs_dpi_send_int(sockfd, Reg_[i].aval)<=0) Result_=0;
+    if (svcs_dpi_send_int(sockfd, Reg_[i].bval)<=0) Result_ =0;
+  }
+  
+  return Result_;
+}
+
+int svcs_dpi_hs_recv_reg4s (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
+  int Result_;
+  //char* msg = "\nsvcs_dpi_hs_recv_reg4s";
+  Result_ = 1;
+  svLogicVecVal* Reg_ =  (svLogicVecVal*)svGetArrayPtr((svOpenArrayHandle*)Reg);
+  
+  int Size_ =h_trnx->n_payloads / 32; 
+  if(h_trnx->n_payloads % 32 > 0) ++Size_;
+  
+  for(int i=0;i<Size_ ;i++) { 
+    if (svcs_dpi_recv_int(sockfd,(int *)&(Reg_[i].aval))<=0) Result_=0 ; 
+    if (svcs_dpi_recv_int(sockfd,(int *)&(Reg_[i].bval))<=0) Result_=0 ; 
+    //printf("%s  Reg->aval=%x,Reg->bval=%x size=%0d (%0d/%0d) bits",msg,Reg_[i].aval,Reg_[i].bval,svSizeOfArray((svOpenArrayHandle*)Reg),Size_,h_trnx->n_payloads % 32);
+  } 
+  
+ return Result_; 
+}
 #endif /* SVCS_DPI_C_ */

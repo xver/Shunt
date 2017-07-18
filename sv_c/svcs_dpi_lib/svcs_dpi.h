@@ -450,6 +450,36 @@ int svcs_dpi_hs_recv_int  (int sockid,cs_header* h_trnx,svOpenArrayHandle** Arra
 int svcs_dpi_hs_recv_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 int svcs_dpi_hs_recv_real (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 
+/*
+    Function: svcs_dpi_hs_send_reg4s
+    send 4-state verilog reg[n:0] variable over TCP/IP
+    
+    Parameters:
+    sockid - socket id
+    h_trnx - trnx header 
+    Reg  - data to send
+    
+    Returns:
+    number of 4 state variable byte size have been sent : success > 0
+    
+    see (svcs_prim_send_byte)
+    */
+int svcs_dpi_hs_send_reg4s (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
 
+/*
+    Function: svcs_dpi_hs_recv_reg4s
+    fetch 4-state verilog reg[n:0] variable from TCP/IP socket
+    
+    Parameters:
+    sockid - socket id
+    h_trnx - trnx header 
+    Reg  - data to send
+    
+    Returns:
+    number of 4 state variable byte size have been recie   : success > 0
+    
+    see (svcs_prim_recv_byte)
+    */
+int svcs_dpi_hs_recv_reg4s (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
 
 #endif /* SVCS_DPI_H_ */
