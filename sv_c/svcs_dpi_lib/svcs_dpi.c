@@ -40,6 +40,18 @@ unsigned int svcs_dpi_server_init(const unsigned int portno) {
 // Direct send/recv  
 //--------------------
 
+int svcs_dpi_send_short  (const int sockfd,const short int Short) {
+  int Result_ =0;
+  Result_ = svcs_prim_send_short(sockfd,&Short);
+  return Result_;
+}
+
+int svcs_dpi_recv_short  (int sockfd,short int* Short) {
+  int Result_ =0;
+  Result_ =svcs_prim_recv_short(sockfd,Short);
+  return Result_;
+}
+
 int svcs_dpi_send_int(const  unsigned int sockfd, const int Int) {
   int Result_ =0;
   Result_ = svcs_prim_send_int(sockfd,&Int);

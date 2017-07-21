@@ -41,6 +41,7 @@ see (svcs_prim_init_tcpclient )
 */
 unsigned int svcs_dpi_client_init(const unsigned int portno,const char *hostname);
 
+
 /*
  Function: svcs_dpi_server_init 
  TCP/IP server initialization
@@ -54,7 +55,35 @@ unsigned int svcs_dpi_client_init(const unsigned int portno,const char *hostname
  see (svcs_prim_init_tcpserver)   
 */
 unsigned int svcs_dpi_server_init(const unsigned int portno);
+////////////////////////////////////
+/*
+ Function: svcs_dpi_send_short
+  send verilog"shortint" /C "short int" data over TCP/IP
 
+  Parameters:
+   sockfd - socket id
+   Short  -   data
+
+  Returns:
+   number of bytes have been sent : success > 0
+   see (vcs_prim_send_short)
+*/
+int svcs_dpi_send_short  (const int sockfd,const short int Short);
+/*
+ Function: svcs_dpi_recv_short
+  fetch verilog"shortint"/C "short int" data from TCP/IP socket
+
+  Parameters:
+   sockfd - socket id
+   Short - data from socket
+
+  Returns:
+    number of bytes have been received  : success > 0
+
+    see (svcs_prim_recv_in)
+*/
+int svcs_dpi_recv_short  (int sockfd,short int* Short);
+///////////////////////////////////
 /*
  Function: svcs_dpi_send_int
   send verilog/C "int" data over TCP/IP

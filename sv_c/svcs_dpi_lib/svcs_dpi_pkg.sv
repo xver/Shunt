@@ -12,9 +12,41 @@
 package svcs_dpi_pkg; 
 
 `define SVCS_MAX_SIZE = 4096;
+   //Title: 5. Utilites: "C" to System Verilog mapping
+   
+   //Section: integer_atom_type
+   
    
    import "DPI-C" function int svcs_dpi_server_init (input int portno);
    import "DPI-C" function int svcs_dpi_client_init (input int portno,input string hostname);
+   
+   /*
+    Functions:  svcs_dpi_send_short
+    map shortint 2-state data type,16-bit signed integer 
+    see SV LRM 6.11 Integer data types short int/short int*
+    
+    Parameters:
+    sockfd - socket id
+    Short - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_send_short  (input int sockfd,input  shortint Short);
+   
+   /*
+    Functions:  svcs_dpi_recv_short
+    map shortint 2-state data type,16-bit signed integer 
+    see SV LRM 6.11 Integer data types short int/short int*
+    
+    Parameters:
+    sockfd - socket id
+    Short - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_recv_short  (input int sockfd,output shortint Short);
    
    import "DPI-C" function int svcs_dpi_send_byte   (input int sockfd,input  byte Byte);
    import "DPI-C" function int svcs_dpi_recv_byte   (input int sockfd,output byte Byte);

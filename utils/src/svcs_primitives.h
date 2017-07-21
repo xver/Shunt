@@ -201,6 +201,35 @@ int svcs_prim_send_double    (const int sockfd,const double* Double);
 */
 int svcs_prim_recv_double    (const int sockfd,double* Double);
 
+///////////////////////////////
+/*
+ Function: svcs_prim_send_short
+  send verilog "shortint"/C "short int" over TCP/IP 
+  
+  Parameters:
+   sockfd - socket id
+   Short  - data to send
+  
+  Returns:
+    number of bytes have been sent : success > 0
+*/
+
+int svcs_prim_send_short    (const int sockfd,const short int* Short);
+
+/*
+  Function: svcs_prim_recv_short
+  fetch verilog "shortint"/C "short int" over TCP/IP 
+  
+  Parameters:
+  sockfd - socket id
+  Short - data from socket 
+  
+  Returns: 
+ number of bytes have been sent : success > 0
+    
+*/
+int svcs_prim_recv_short    (const int sockfd,short int* Short);
+///////////////////////////////
 /*
  Function: svcs_prim_send_byte
   send verilog/C "Byte/Char" data over TCP/IP

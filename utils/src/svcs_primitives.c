@@ -167,6 +167,28 @@ unsigned int svcs_prim_init_tcpclient(const unsigned int portno,const char *host
 
 //////////////////////////////////
 //Data exchange primitives
+/////////////////////////////////
+int svcs_prim_send_short(const int sockfd,const short int* Short)
+{
+  int numbytes;
+
+  //printf("\nsvcs_prim_send_short:: will send short from addr %x=%x of %d bytes",Short,*Short,sizeof(short int));
+  numbytes = send(sockfd,Short, sizeof(short int), 0);
+  if (numbytes < 0)  svcs_prim_error("\nERROR in svcs_prim_send_short : numbytes < 0 ");
+  return numbytes;
+}
+
+int svcs_prim_recv_short    (const int sockfd, short int* Short)
+{
+
+  int numbytes;
+
+  numbytes = recv(sockfd, Short,sizeof(short int) , 0);
+  //printf("\nsvcs_prim_recv_short::get short  (%x) of %0d bytes",*Short,numbytes);
+  if (numbytes < 0) svcs_prim_error("\nERROR in svcs_prim_recv_short : numbytes < 0 ");
+  return numbytes;
+  }
+////////////////////////////////
 int svcs_prim_send_int(const int sockfd,const int* Int)
 {
   int numbytes;
