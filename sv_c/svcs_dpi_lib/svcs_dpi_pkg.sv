@@ -14,16 +14,18 @@ package svcs_dpi_pkg;
 `define SVCS_MAX_SIZE = 4096;
    //Title: 5. Utilites: "C" to System Verilog mapping
    
-   //Section: integer_atom_type
+
    
    
    import "DPI-C" function int svcs_dpi_server_init (input int portno);
    import "DPI-C" function int svcs_dpi_client_init (input int portno,input string hostname);
    
+   //Section: integer_atom_type 
+   
    /*
     Functions:  svcs_dpi_send_short
     map shortint 2-state data type,16-bit signed integer 
-    see SV LRM 6.11 Integer data types short int/short int*
+    see SV LRM 6.11 Integer data types shortint/short int*
     
     Parameters:
     sockfd - socket id
@@ -37,7 +39,7 @@ package svcs_dpi_pkg;
    /*
     Functions:  svcs_dpi_recv_short
     map shortint 2-state data type,16-bit signed integer 
-    see SV LRM 6.11 Integer data types short int/short int*
+    see SV LRM 6.11 Integer data types shortint/short int*
     
     Parameters:
     sockfd - socket id
@@ -48,12 +50,210 @@ package svcs_dpi_pkg;
     */
    import "DPI-C" function int svcs_dpi_recv_short  (input int sockfd,output shortint Short);
    
-   import "DPI-C" function int svcs_dpi_send_byte   (input int sockfd,input  byte Byte);
-   import "DPI-C" function int svcs_dpi_recv_byte   (input int sockfd,output byte Byte);
-   
+   /*
+    Functions:  svcs_dpi_send_int 
+    map int 2-state data type,32-bit signed integer 
+    LRM 6.11 Integer data types int/int*
+    
+    Parameters:
+    sockfd - socket id
+    Int - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
    import "DPI-C" function int svcs_dpi_send_int    (input int sockfd,input  int Int);
+   
+   /*
+    Functions: svcs_dpi_recv_int 
+    map int 2-state data type,32-bit signed integer 
+    LRM 6.11 Integer data types int/int*
+    
+    Parameters:
+    sockfd - socket id
+    Short - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
    import "DPI-C" function int svcs_dpi_recv_int    (input int sockfd,output int Int);
    
+   /*
+    Functions:  svcs_dpi_send_long
+    map longintlongint 2-state data type,64-bit signed integer
+    see SV LRM 6.11 Integer data types longint/long int*
+    
+    Parameters:
+    sockfd - socket id
+    Long - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_send_long  (input int sockfd,input  longint Long);
+   
+   /*
+    Functions:  svcs_dpi_recv_long
+    map longintlongint 2-state data type,64-bit signed integer
+    see SV LRM 6.11 Integer data types longint/long int*
+    
+    Parameters:
+
+    see SV LRM 6.11 Integer data types long int/long int*
+    
+    Parameters:
+    sockfd - socket id
+    Long - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_recv_long  (input int sockfd,output longint Long);
+   
+   /*
+    Functions:  svcs_dpi_send_byte
+    map byte 2-state data type, 8-bit signed integer or ASCII character  
+    LRM 6.11 Integer data types char/char*
+    
+    Parameters:
+    sockfd - socket id
+    Byte - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_send_byte   (input int sockfd,input  byte Byte);
+  
+   /*
+    Functions:  svcs_dpi_recv_byte
+    map byte 2-state data type, 8-bit signed integer or ASCII character  
+    LRM 6.11 Integer data types char/char*
+        
+    Parameters:
+    sockfd - socket id
+    Byte - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+  
+   /*
+    Functions:  svcs_dpi_send_integer
+    map integer  4-state data type,32-bit signed integer 
+    LRM 6.11 Integer data types
+    
+    Parameters:
+    sockfd - socket id
+    Integer - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_send_integer (input int sockfd,input integer Int);
+   
+   /*
+    Functions:  svcs_dpi_recv_integer
+    map integer  4-state data type,32-bit signed integer 
+    LRM 6.11 Integer data types
+        
+    Parameters:
+    sockfd - socket id
+    Integer - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   
+   import "DPI-C" function int svcs_dpi_recv_integer (input int sockfd,inout integer Int);
+   import "DPI-C" function int svcs_dpi_recv_byte   (input int sockfd,output byte Byte);
+  
+   /*
+    Functions:  svcs_dpi_send_time
+    map time  4-state data type, 64-bit unsigned integer 
+    LRM 6.11 
+    
+    Parameters:
+    sockfd - socket id
+    Time - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_send_time (input int sockfd,input time Time);
+   /*
+    Functions:  svcs_dpi_recv_time
+    map time  4-state data type, 64-bit unsigned integer 
+    LRM 6.11 
+        
+    Parameters:
+    sockfd - socket id
+    Time - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_recv_time (input int sockfd,inout time Time);
+    
+   /*
+    Functions:  svcs_dpi_send_bit
+    map bit 2-state data type,user-defined vector size unsigned 
+    LRM 6.11 
+        
+    Parameters:
+    sockfd - socket id
+    Bit - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_send_bit (input int sockfd,input bit Bit);
+   
+   /*
+    Functions:  svcs_dpi_recv_bit
+    mapbit 2-state data type,user-defined vector size unsigned 
+    LRM 6.11 
+            
+    Parameters:
+    sockfd - socket id
+    Bit - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_recv_bit (input int sockfd,inout bit Bit);
+
+   
+   /* -----\/----- EXCLUDED -----\/-----
+      -----/\----- EXCLUDED -----/\----- */
+/*
+    Functions:  svcs_dpi_send_reg,svcs_dpi_send_logic
+    map
+        
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_send_reg   (input int sockfd,input reg Reg);
+   import "DPI-C" function int svcs_dpi_send_logic (input int sockfd,input logic Logic);
+   /*
+    Functions:  svcs_dpi_recv_reg ,svcs_dpi_recv_logic
+    map
+            
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_recv_reg   (input int sockfd,inout reg Reg);
+   import "DPI-C" function int svcs_dpi_recv_logic (input int sockfd,inout logic Logic);
+   
+   //////////////////END/////////////////////////////////////////////////////////////////////
+     
    import "DPI-C" function int svcs_dpi_send_real   (input int sockfd,input  real Real);
    import "DPI-C" function int svcs_dpi_recv_real   (input int sockfd,output real Real);
 

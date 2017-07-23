@@ -188,7 +188,7 @@ int svcs_prim_recv_short    (const int sockfd, short int* Short)
   if (numbytes < 0) svcs_prim_error("\nERROR in svcs_prim_recv_short : numbytes < 0 ");
   return numbytes;
   }
-////////////////////////////////
+
 int svcs_prim_send_int(const int sockfd,const int* Int)
 {
   int numbytes;
@@ -210,6 +210,27 @@ int svcs_prim_recv_int    (const int sockfd, int* Int)
   return numbytes;
   }
 
+int svcs_prim_send_long(const int sockfd,const long int* Long)
+{
+  int numbytes;
+
+  //printf("\nsvcs_prim_send_long:: will send long %lx of %0d bytes",*Long,sizeof(long int));
+  numbytes = send(sockfd,Long, sizeof(long int), 0);
+  if (numbytes < 0)  svcs_prim_error("\nERROR in svcs_prim_send_long : numbytes < 0 ");
+  return numbytes;
+}
+
+int svcs_prim_recv_long    (const int sockfd, long int* Long)
+{
+
+  int numbytes;
+
+  numbytes = recv(sockfd, Long,sizeof(long int) , 0);
+  //printf("\nsvcs_prim_recv_long::get long  (%lx) of %0d bytes",*Long,numbytes);
+  if (numbytes < 0) svcs_prim_error("\nERROR in svcs_prim_recv_long : numbytes < 0 ");
+  return numbytes;
+  }
+////////////////////////
 int svcs_prim_send_double    (const int sockfd,const double* Double)
 {
 

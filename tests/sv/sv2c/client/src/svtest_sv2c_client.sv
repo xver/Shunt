@@ -40,34 +40,30 @@ module automatic svtest_sv2c_client;
 	$display("svtest_sv2c_client: socket=%0d",Socket);
 	///////////////////////////
 	short_loopback_test(Socket);
+	int_loopback_test(Socket);
+	long_loopback_test(Socket);
+	byte_loopback_test(Socket);
+	integer_loopback_test(Socket);
+	time_loopback_test(Socket);
+	bit_loopback_test(Socket);
+	reg_loopback_test(Socket);
+	logic_loopback_test(Socket);
 	///////////////////////////
-	/* -----\/----- EXCLUDED -----\/-----
-	 byte_loopback_test(Socket);
-	 byte_loopback_test(Socket);
-	 //////////////////////////
-	 int_loopback_test(Socket);
-	 int_loopback_test(Socket);
-	 //////////////////////////
-	 real_loopback_test(Socket);
-	 real_loopback_test(Socket);
-	 //////////////////////////
-	 byteA_loopback_test(Socket);
-	 byteA_loopback_test(Socket);
-	 //////////////////////////
-	 intA_loopback_test(Socket);
-	 intA_loopback_test(Socket);
-	 //////////////////////////
-	 realA_loopback_test(Socket);
-	 realA_loopback_test(Socket);
-	 //////////////////////////
-	 byte4sV_loopback_test(Socket);
-	 reg4sV_loopback_test(Socket);
-	 -----/\----- EXCLUDED -----/\----- */
-	//////////////////////////
+	
 	$display("\nsvtest_sv2c_client: END");
 	
-     end
+     end // initial begin
+
+     
+   function int init_client(int portno,string hostname);
+      int   socket_id;
+      socket_id=0;
+      socket_id = svcs_dpi_client_init(portno,hostname);
+      return socket_id;
+   endfunction : init_client
+   
    //////////////////////////////////////////////////
+
    function void short_loopback_test(int socket_id);
       shortint   Short;
       string Test_name;
@@ -83,16 +79,127 @@ module automatic svtest_sv2c_client;
       if (svcs_dpi_send_short(socket_id,Short)<= 0) $display("%s TEST FAIL",Test_name);
       
    endfunction : short_loopback_test
+
+   function void int_loopback_test(int socket_id);
+      int   Int;
+      string Test_name;
+      
+      Int ='hdead;
+      
+      Test_name = "\nclient int_loopback_test recv";
+      //recv
+      if (svcs_dpi_recv_int (socket_id,Int)<= 0) $display("%s TEST FAIL",Test_name);
+       $display("%s Int=%h",Test_name,Int);
+      //send
+      Test_name = "client int_loopback_test send";
+      if (svcs_dpi_send_int(socket_id,Int)<= 0) $display("%s TEST FAIL",Test_name);
+      
+   endfunction : int_loopback_test
+
+   function void long_loopback_test(int socket_id);
+      longint   Long;
+      string Test_name;
+      
+      Long ='hdead;
+      
+      Test_name = "\nclient long_loopback_test recv";
+      //recv
+      if (svcs_dpi_recv_long (socket_id,Long)<= 0) $display("%s TEST FAIL",Test_name);
+       $display("%s Long=%h",Test_name,Long);
+      //send
+      Test_name = "client long_loopback_test send";
+      if (svcs_dpi_send_long(socket_id,Long)<= 0) $display("%s TEST FAIL",Test_name);
+      
+   endfunction : long_loopback_test
+
+   function void byte_loopback_test(int socket_id);
+      byte   Byte;
+      string Test_name;
+      
+      Byte ='hdead;
+      
+      Test_name = "\nclient byte_loopback_test recv";
+      //recv
+      if (svcs_dpi_recv_byte (socket_id,Byte)<= 0) $display("%s TEST FAIL",Test_name);
+       $display("%s Byte=%h",Test_name,Byte);
+      //send
+      Test_name = "client byte_loopback_test send";
+      if (svcs_dpi_send_byte(socket_id,Byte)<= 0) $display("%s TEST FAIL",Test_name);
+      
+   endfunction : byte_loopback_test
+
+   function void integer_loopback_test(int socket_id);
+      integer Integer;
+      string  Test_name;
+      
+      Test_name = "client integer_loopback_test recv";
+      //recv
+      if (svcs_dpi_recv_integer (socket_id,Integer)<= 0) $display("%s TEST FAIL",Test_name);
+      //send
+      Test_name = "client integer_loopback_test send";
+      if (svcs_dpi_send_integer(socket_id,Integer)<= 0) $display("%s TEST FAIL",Test_name);
+      
+   endfunction : integer_loopback_test
+
+   function void time_loopback_test(int socket_id);
+      time Time;
+      string  Test_name;
+      
+      Test_name = "client time_loopback_test recv";
+      //recv
+      if (svcs_dpi_recv_time (socket_id,Time)<= 0) $display("%s TEST FAIL",Test_name);
+      $display("\n%s Time=%h ",Test_name,Time);
+      //send
+      Test_name = "client time_loopback_test send";
+      if (svcs_dpi_send_time(socket_id,Time)<= 0) $display("%s TEST FAIL",Test_name);
+      
+   endfunction : time_loopback_test
+ 
+   function void bit_loopback_test(int socket_id);
+      bit Bit;
+      string  Test_name;
+      
+      Test_name = "client bit_loopback_test recv";
+      //recv
+      if (svcs_dpi_recv_bit (socket_id,Bit)<= 0) $display("%s TEST FAIL",Test_name);
+      $display("\n%s Bit=%h ",Test_name,Bit);
+      //send
+      Test_name = "client bit_loopback_test send";
+      if (svcs_dpi_send_bit(socket_id,Bit)<= 0) $display("%s TEST FAIL",Test_name);
+      
+   endfunction : bit_loopback_test
+
+   function void reg_loopback_test(int socket_id);
+      reg Reg;
+      string  Test_name;
+      
+      Test_name = "client reg_loopback_test recv";
+      //recv
+      if (svcs_dpi_recv_reg (socket_id,Reg)<= 0) $display("%s TEST FAIL",Test_name);
+      $display("\n%s Reg=%h ",Test_name,Reg);
+      //send
+      Test_name = "client reg_loopback_test send";
+      if (svcs_dpi_send_reg(socket_id,Reg)<= 0) $display("%s TEST FAIL",Test_name);
+      
+   endfunction : reg_loopback_test
+   
+   function void logic_loopback_test(int socket_id);
+      logic Logic;
+      string  Test_name;
+      
+      Test_name = "client logic_loopback_test recv";
+      //recv
+      if (svcs_dpi_recv_logic (socket_id,Logic)<= 0) $display("%s TEST FAIL",Test_name);
+      $display("\n%s Logic=%h ",Test_name,Logic);
+      //send
+      Test_name = "client logic_loopback_test send";
+      if (svcs_dpi_send_logic(socket_id,Logic)<= 0) $display("%s TEST FAIL",Test_name);
+      
+   endfunction : logic_loopback_test
    /////////////////////////////////////////////////
    
-   
-   function int init_client(int portno,string hostname);
-      int   socket_id;
-      socket_id=0;
-      socket_id = svcs_dpi_client_init(portno,hostname);
-      return socket_id;
-   endfunction : init_client
-   
+ 
+/* -----\/----- EXCLUDED -----\/-----
    //////////
    function void byte_loopback_test(int socket_id);
       byte   Byte[];
@@ -266,5 +373,6 @@ module automatic svtest_sv2c_client;
       if (svcs_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
       if (svcs_dpi_hs_send_reg4s(socket_id,h_trnx,Reg4sV)<= 0)   $display("%s TEST FAIL",Test_name);
    endfunction : reg4sV_loopback_test
+ -----/\----- EXCLUDED -----/\----- */
    
 endmodule : svtest_sv2c_client

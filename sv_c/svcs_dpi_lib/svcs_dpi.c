@@ -64,11 +64,64 @@ int svcs_dpi_recv_int(const  unsigned int sockfd,int* Int) {
   return Result_;
 }
 
+int svcs_dpi_send_long  (const int sockfd,const long int Long) {
+  int Result_ =0;
+  Result_ = svcs_prim_send_long(sockfd,&Long);
+  return Result_;
+}
+
+int svcs_dpi_recv_long  (int sockfd,long int* Long) {
+  int Result_ =0;
+  Result_ =svcs_prim_recv_long(sockfd,Long);
+  return Result_;
+}
+
+int svcs_dpi_send_time    (const unsigned int sockfd,svLogicVecVal* Time) {
+  int Result_;
+  //char* msg = "\nsvcs_dpi_send_time"; 
+ 
+ Result_ = 1;
+ for (int  i=0;i<2;i++) {
+   if (svcs_dpi_send_int(sockfd, (int)Time[i].aval)<=0) Result_=0 ;
+   if (svcs_dpi_send_int(sockfd, (int)Time[i].bval)<=0) Result_=0 ;
+   //printf("  %s [%0d] Time->aval=%x,Time->bval=%x ",msg,i,Time[i].aval,Time[i].bval);
+ }
+ 
+ return Result_; 
+
+}
+
+int svcs_dpi_recv_time    (const unsigned int sockfd,svLogicVecVal* Time) {
+  int Result_;
+  //char* msg = "\nsvcs_dpi_recv_time"; 
+  
+  Result_ = 1;
+  for (int  i=0;i<2;i++) { 
+    if (svcs_dpi_recv_int (sockfd,(int*)(&Time[i].aval))<=0) Result_=0 ;
+    if (svcs_dpi_recv_int (sockfd,(int*)(&Time[i].bval))<=0) Result_=0 ;
+    //printf("  %s [%0d] Time.aval=%x,Time.bval=%x ",msg,i,Time[i].aval,Time[i].bval); 
+  } 
+
+ return Result_;
+}
+
 ////Direct send/recv  
 int svcs_dpi_send_byte(const  unsigned int sockfd, const char Byte) {
   int Result_ =0;
   Result_ = svcs_prim_send_byte(sockfd,&Byte);
   return Result_;
+}
+
+int svcs_dpi_send_bit (const unsigned int sockfd,const svBit Bit) {
+  return svcs_dpi_send_byte(sockfd,Bit);
+}
+
+int svcs_dpi_send_reg (const unsigned int sockfd,const svLogic Reg) {
+  return svcs_dpi_send_byte(sockfd,Reg);
+}
+
+int svcs_dpi_send_logic (const unsigned int sockfd,const svLogic Logic) {
+  return svcs_dpi_send_byte(sockfd,Logic);
 }
 
 int svcs_dpi_recv_byte(const  unsigned int sockfd,char* Byte) {
@@ -77,6 +130,16 @@ int svcs_dpi_recv_byte(const  unsigned int sockfd,char* Byte) {
   return Result_;
 }
 
+int svcs_dpi_recv_bit     (const unsigned int sockfd,svBit* Bit) {
+  return svcs_dpi_recv_byte(sockfd,(char*)Bit);
+}
+
+int svcs_dpi_recv_reg     (const unsigned int sockfd,svLogic* Reg) {
+  return svcs_dpi_recv_byte(sockfd,(char*)Reg);
+}
+int svcs_dpi_recv_logic     (const unsigned int sockfd,svLogic* Logic) {
+  return svcs_dpi_recv_byte(sockfd,(char*)Logic);
+}
 ////Direct send/recv  
 int svcs_dpi_send_real(const  unsigned int sockfd,double Real) {
   int Result_ =0;
@@ -340,6 +403,10 @@ int svcs_dpi_send_int4s (const unsigned int sockfd,svLogicVecVal* Int) {
  
  return Result_;
 }
+int svcs_dpi_send_integer (const unsigned int sockfd,svLogicVecVal* Int) {
+  return svcs_dpi_send_int4s (sockfd,Int);
+}
+
 
 int svcs_dpi_recv_int4s (const unsigned int sockfd,svLogicVecVal* Int) {
   int Result_;
@@ -352,6 +419,10 @@ int svcs_dpi_recv_int4s (const unsigned int sockfd,svLogicVecVal* Int) {
   //printf("  %s  Int->aval=%x,Int->bval=%x ",msg,Int->aval,Int->bval);  
 
  return Result_;
+}
+
+int svcs_dpi_recv_integer (const unsigned int sockfd,svLogicVecVal* Int) {
+  return svcs_dpi_recv_int4s (sockfd,Int); 
 }
 
 ////////////////////////
@@ -374,6 +445,8 @@ int svcs_dpi_hs_send_reg4s (const unsigned int sockfd,cs_header* h_trnx,const  s
   return Result_;
 }
 
+
+
 int svcs_dpi_hs_recv_reg4s (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
   int Result_;
   //char* msg = "\nsvcs_dpi_hs_recv_reg4s";
@@ -391,4 +464,6 @@ int svcs_dpi_hs_recv_reg4s (const unsigned int sockfd,cs_header* h_trnx,svLogicV
   
  return Result_; 
 }
+
+
 #endif /* SVCS_DPI_C_ */

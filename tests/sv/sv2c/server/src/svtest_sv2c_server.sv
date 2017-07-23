@@ -48,65 +48,42 @@ module automatic svtest_sv2c_server;
 	Pass=short_loopback_test(Socket);
 	print_status(Test_name,Pass);
 	///////////////////////////
-	/* -----\/----- EXCLUDED -----\/-----
-	 Test_name = "\tbyte loopback";
-	 Pass=byte_loopback_test(Socket);
-	 print_status(Test_name,Pass);
-	 Test_name = "\tbyte vector loopback";
-	 Pass=byte_loopback_test(Socket,15);
-	 print_status(Test_name,Pass);
- 	 ///////////////////////////
-	 Test_name = "\tint_loopback";
-	 Pass=int_loopback_test(Socket);
-	 print_status(Test_name,Pass);
-	 Test_name = "\tint vector loopback";
-	 Pass=int_loopback_test(Socket,9);
-	 print_status(Test_name,Pass);
-	 ///////////////////////////
-	 Test_name = "\treal_loopback";
-	 Pass=real_loopback_test(Socket);
-	 print_status(Test_name,Pass);
-	 Test_name = "\treal vector loopback";
-	 Pass=real_loopback_test(Socket,11);
-	 print_status(Test_name,Pass);
-	 ////////////////////////////
-	 Test_name = "\tbyteA loopback";
-	 Pass=byteA_loopback_test(Socket);
-	 print_status(Test_name,Pass);
-	 Test_name = "\tbyteA loopback";
-	 Pass=byteA_loopback_test(Socket,7);
-	 print_status(Test_name,Pass);
-	 ////////////////////////////
-	 Test_name = "\tintA loopback";
-	 Pass=intA_loopback_test(Socket);
-	 print_status(Test_name,Pass);
-	 Test_name = "\tintA loopback";
-	 Pass=intA_loopback_test(Socket,21);
-	 print_status(Test_name,Pass);
-	 ////////////////////////////
-	 Test_name = "\trealA loopback";
-	 Pass=realA_loopback_test(Socket);
-	 print_status(Test_name,Pass);
-	 Test_name = "\trealA loopback";
-	 Pass=realA_loopback_test(Socket,5);
-	 print_status(Test_name,Pass);
-	 ///////////////////////////
-	 Test_name = "\tbyte4sV loopback";
-	 Pass=byte4sV_loopback_test(Socket,5);
-	 print_status(Test_name,Pass);
-	 //////////////////////////
-	 Test_name = "\treg4sV loopback";
-	 Pass=reg4sV_loopback_test(Socket,5);
-	 print_status(Test_name,Pass);
-	 //////////////////////////
-	 -----/\----- EXCLUDED -----/\----- */
+	Test_name = "\tint loopback";
+	Pass=int_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	//////////////////////////
+	Test_name = "\tlong loopback";
+	Pass=long_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\tbyte loopback";
+	Pass=byte_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\tinteger loopback";
+	Pass=integer_loopback_test(Socket);
+	print_status(Test_name,Pass);
+ 	///////////////////////////
+	Test_name = "\ttime loopback";
+	Pass=time_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\tbit_loopback";
+	Pass=bit_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\treg_loopback";
+	Pass=reg_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\tlogic_loopback";
+	Pass=logic_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	///////////////////////////
 	Test_name = "svtest_sv2c_server";
 	print_status(Test_name,Pass);
 	
      end
-   
-   
-   
    
    function int init_server(int portno);
       begin
@@ -125,7 +102,7 @@ module automatic svtest_sv2c_server;
          string Test_name = "server short_loopback_test";
 	 
 	 success = 1;
-	 Short_exp = 16'hbeef;//$urandom();
+	 Short_exp = $urandom();
 	 
 	 //send
 	 if (svcs_dpi_send_short (socket_id,Short_exp)<= 0) success = 0;
@@ -138,7 +115,201 @@ module automatic svtest_sv2c_server;
 	 return  success;
       end
    endfunction : short_loopback_test
+
+   function int int_loopback_test(int socket_id);
+      begin
+	 int success;
+         int Int_exp;
+	 int Int_act;
+         string Test_name = "server int_loopback_test";
+	 
+	 success = 1;
+	 Int_exp = $urandom();
+	 
+	 //send
+	 if (svcs_dpi_send_int (socket_id,Int_exp)<= 0) success = 0;
+	 if (success == 0 )  $display("\nserver: fail send data");
+	 //recv
+	 if (svcs_dpi_recv_int(socket_id,Int_act)<= 0) success = 0;
+	 if (success == 0 )  $display("\nInt loopback fail recv");
+	 //$display("\n%s Int_exp=%h  Int_act=%h",Test_name,Int_exp,Int_act);
+	 if (Int_exp !== Int_act)success=0;
+	 return  success;
+      end
+   endfunction : int_loopback_test
+
+   function int long_loopback_test(int socket_id);
+      begin
+	 int success;
+         longint Long_exp;
+	 longint Long_act;
+         string Test_name = "server long_loopback_test";
+	 
+	 success = 1;
+	 Long_exp = {$urandom(),$urandom()};
+	 
+	 //send
+	 if (svcs_dpi_send_long (socket_id,Long_exp)<= 0) success = 0;
+	 if (success == 0 )  $display("\nserver: fail send data");
+	 //recv
+	 if (svcs_dpi_recv_long(socket_id,Long_act)<= 0) success = 0;
+	 if (success == 0 )  $display("\nLong loopback fail recv");
+	 //$display("\n%s Long_exp=%h  Long_act=%h",Test_name,Long_exp,Long_act);
+	 if (Long_exp !== Long_act)success=0;
+	 return  success;
+      end
+   endfunction : long_loopback_test
+
+   function int byte_loopback_test(int socket_id);
+      begin
+	 int success;
+         byte Byte_exp;
+	 byte Byte_act;
+         string Test_name = "server byte_loopback_test";
+	 
+	 success = 1;
+	 Byte_exp = $urandom();
+	 
+	 //send
+	 if (svcs_dpi_send_byte (socket_id,Byte_exp)<= 0) success = 0;
+	 if (success == 0 )  $display("\nserver: fail send data");
+	 //recv
+	 if (svcs_dpi_recv_byte(socket_id,Byte_act)<= 0) success = 0;
+	 if (success == 0 )  $display("\nByte loopback fail recv");
+	 //$display("\n%s Byte_exp=%h  Byte_act=%h",Test_name,Byte_exp,Byte_act);
+	 if (Byte_exp !== Byte_act)success=0;
+	 return  success;
+      end
+   endfunction : byte_loopback_test
+   
+   function int   integer_loopback_test(int socket_id);
+      
+      int 	success;
+      integer   Integer_exp;
+      integer   Integer_act;
+      
+      string 	Test_name = "server integer_loopback_test";
+      success =1;
+      
+      //set up data
+      Integer_exp = 32'hf0xx_zz5a;
+      
+      //send data
+      if (svcs_dpi_send_integer(socket_id,Integer_exp)<=0) success = 0;
+      if (svcs_dpi_recv_integer(socket_id,Integer_act)<=0) success = 0;
+      
+      //comp
+      if(Integer_act !== Integer_exp) success = 0;  
+      if (success == 0 )  $display("\nserver: fail comp data");
+      //$display("\n%s Integer_exp=%h  Integer_act=%h",Test_name,Integer_exp,Integer_act);
+      return  success;
+   endfunction :integer_loopback_test
+
+   function int   time_loopback_test(int socket_id);
+      
+      int 	success;
+      time   Time_exp;
+      time   Time_act;
+      
+      string 	Test_name = "server time_loopback_test";
+      success =1;
+      
+      //set up data
+      Time_exp =  64'hf0xx_zz5a_dezz_67xx;
+      Time_act = 0;
+      
+      
+      //send data
+      if (svcs_dpi_send_time(socket_id,Time_exp)<=0) success = 0;
+      if (svcs_dpi_recv_time(socket_id,Time_act)<=0) success = 0;
+      
+      //comp
+      if(Time_act !== Time_exp) success = 0;  
+      if (success == 0 )  $display("\nserver: fail comp data");
+      //$display("\n%s Time_exp=%h  Time_act=%h",Test_name,Time_exp,Time_act);
+   
+      return  success;
+   endfunction :time_loopback_test
+
+   function int   bit_loopback_test(int socket_id);
+      
+      int 	success;
+      bit   Bit_exp;
+      bit   Bit_act;
+      
+      string 	Test_name = "server bit_loopback_test";
+      success =1;
+      
+      //set up data
+      Bit_exp = $random;
+      Bit_act = 0;
+      
+      
+      //send data
+      if (svcs_dpi_send_bit(socket_id,Bit_exp)<=0) success = 0;
+      if (svcs_dpi_recv_bit(socket_id,Bit_act)<=0) success = 0;
+      
+      //comp
+      if(Bit_act !== Bit_exp) success = 0;  
+      if (success == 0 )  $display("\nserver: fail comp data");
+      //$display("\n%s Bit_exp=%h  Bit_act=%h",Test_name,Bit_exp,Bit_act);
+   
+      return  success;
+   endfunction :bit_loopback_test
+   
+   function int   reg_loopback_test(int socket_id);
+      
+      int 	success;
+      reg   Reg_exp;
+      reg   Reg_act;
+      
+      string 	Test_name = "server reg_loopback_test";
+      success =1;
+      
+      //set up data
+      Reg_exp = $random;
+      Reg_act = 0;
+      
+      
+      //send data
+      if (svcs_dpi_send_reg(socket_id,Reg_exp)<=0) success = 0;
+      if (svcs_dpi_recv_reg(socket_id,Reg_act)<=0) success = 0;
+      
+      //comp
+      if(Reg_act !== Reg_exp) success = 0;  
+      if (success == 0 )  $display("\nserver: fail comp data");
+      //$display("\n%s Reg_exp=%h  Reg_act=%h",Test_name,Reg_exp,Reg_act);
+   
+      return  success;
+   endfunction :reg_loopback_test
+
+   function int   logic_loopback_test(int socket_id);
+      
+      int 	success;
+      logic   Logic_exp;
+      logic   Logic_act;
+      
+      string 	Test_name = "server logic_loopback_test";
+      success =1;
+      
+      //set up data
+      Logic_exp = $random;
+      Logic_act = 0;
+      
+      
+      //send data
+      if (svcs_dpi_send_logic(socket_id,Logic_exp)<=0) success = 0;
+      if (svcs_dpi_recv_logic(socket_id,Logic_act)<=0) success = 0;
+      
+      //comp
+      if(Logic_act !== Logic_exp) success = 0;  
+      if (success == 0 )  $display("\nserver: fail comp data");
+      //$display("\n%s Logic_exp=%h  Logic_act=%h",Test_name,Logic_exp,Logic_act);
+   
+      return  success;
+   endfunction :logic_loopback_test
    ////////////////////////////////////////////
+/* -----\/----- EXCLUDED -----\/-----
    function int byte_loopback_test(int socket_id,int n_payloads=1);
       begin
 	 int success;
@@ -546,6 +717,7 @@ module automatic svtest_sv2c_server;
 	 return  success;
       end
    endfunction : reg4sV_loopback_test
+ -----/\----- EXCLUDED -----/\----- */
    //  
    function void print_status(string Test_name,int Status_int);
       begin

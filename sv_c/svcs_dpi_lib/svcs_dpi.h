@@ -83,7 +83,7 @@ int svcs_dpi_send_short  (const int sockfd,const short int Short);
     see (svcs_prim_recv_in)
 */
 int svcs_dpi_recv_short  (int sockfd,short int* Short);
-///////////////////////////////////
+
 /*
  Function: svcs_dpi_send_int
   send verilog/C "int" data over TCP/IP
@@ -123,7 +123,7 @@ int svcs_dpi_recv_int (const unsigned int sockfd,int* Int);
    Real  - data to send
 
   Returns:
-    number of bytes have been sent : success > 0
+  number of bytes have been sent : success > 0
 
     see (svcs_prim_send_double)
 */
@@ -160,7 +160,9 @@ int svcs_dpi_recv_real    (const unsigned int sockfd,double* Real);
 */
 
 int svcs_dpi_send_byte    (const unsigned int sockfd,const char Byte);
-
+int svcs_dpi_send_bit     (const unsigned int sockfd,const svBit Bit);
+int svcs_dpi_send_reg     (const unsigned int sockfd,const svLogic Reg);
+int svcs_dpi_send_logic   (const unsigned int sockfd,const svLogic Logic);
 /*
   Function: svcs_dpi_recv_byte
   fetch verilog "byte"/C "char" over TCP/IP
@@ -175,7 +177,9 @@ int svcs_dpi_send_byte    (const unsigned int sockfd,const char Byte);
     see (svcs_prim_recv_byte)
 */
 int svcs_dpi_recv_byte    (const unsigned int sockfd,char* Byte);
-
+int svcs_dpi_recv_bit     (const unsigned int sockfd,svBit* Bit);
+int svcs_dpi_recv_reg     (const unsigned int sockfd,svLogic* Reg);
+int svcs_dpi_reccv_logic  (const unsigned int sockfd,svLogic* Logic);
 /*
   Function: svcs_dpi_send_intV
   send SVCS transaction with "int" elements vector over TCP/IP
@@ -235,8 +239,8 @@ int svcs_dpi_recv_byte4s (const unsigned int sockfd,svLogicVecVal* Byte);
    see (vcs_prim_send_int)
 
 */
-  int svcs_dpi_send_int4s (const unsigned int sockfd,svLogicVecVal* Int);
-
+int svcs_dpi_send_int4s   (const unsigned int sockfd,svLogicVecVal* Int);
+int svcs_dpi_send_integer (const unsigned int sockfd,svLogicVecVal* Int);
 /*
  Function: svcs_dpi_recv_int
   fetch verilog "reg[31:0] 4 state aval,bval" from TCP/IP
@@ -250,7 +254,8 @@ int svcs_dpi_recv_byte4s (const unsigned int sockfd,svLogicVecVal* Byte);
 
     see (svcs_prim_recv_in)
 */
-  int svcs_dpi_recv_int4s (const unsigned int sockfd,svLogicVecVal* Int);
+int svcs_dpi_recv_int4s   (const unsigned int sockfd,svLogicVecVal* Int);
+int svcs_dpi_recv_integer (const unsigned int sockfd,svLogicVecVal* Int);
 
 /*
   Function: svcs_dpi_recv_intV
@@ -266,6 +271,7 @@ int svcs_dpi_recv_byte4s (const unsigned int sockfd,svLogicVecVal* Byte);
 
 */
 int svcs_dpi_recv_intV(int sockid,int size,svOpenArrayHandle Int);
+
 /*
   Function: svcs_dpi_print_intV
   print out IntV Data
@@ -494,6 +500,7 @@ int svcs_dpi_hs_recv_real (int sockid,cs_header* h_trnx,svOpenArrayHandle** Arra
     see (svcs_prim_send_byte)
     */
 int svcs_dpi_hs_send_reg4s (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
+int svcs_dpi_send_time    (const unsigned int sockfd,svLogicVecVal* Time);
 
 /*
     Function: svcs_dpi_hs_recv_reg4s
@@ -509,6 +516,7 @@ int svcs_dpi_hs_send_reg4s (const unsigned int sockfd,cs_header* h_trnx,const sv
     
     see (svcs_prim_recv_byte)
     */
-int svcs_dpi_hs_recv_reg4s (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
+int svcs_dpi_hs_recv_reg4s   (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
+int svcs_dpi_recv_time (const unsigned int sockfd,svLogicVecVal* Time);
 
 #endif /* SVCS_DPI_H_ */
