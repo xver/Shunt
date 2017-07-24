@@ -80,6 +80,11 @@ module automatic svtest_sv2c_server;
 	Pass=logic_loopback_test(Socket);
 	print_status(Test_name,Pass);
 	///////////////////////////
+	Test_name = "\tbitN_loopback";
+	Pass=bitN_loopback_test(Socket);
+	print_status(Test_name,Pass);
+
+	
 	Test_name = "svtest_sv2c_server";
 	print_status(Test_name,Pass);
 	
@@ -267,7 +272,7 @@ module automatic svtest_sv2c_server;
       success =1;
       
       //set up data
-      Reg_exp = $random;
+      Reg_exp = 1'bz;
       Reg_act = 0;
       
       
@@ -293,7 +298,7 @@ module automatic svtest_sv2c_server;
       success =1;
       
       //set up data
-      Logic_exp = $random;
+      Logic_exp = 1'bx; //$random;
       Logic_act = 0;
       
       
@@ -308,6 +313,43 @@ module automatic svtest_sv2c_server;
    
       return  success;
    endfunction :logic_loopback_test
+
+   function int bitN_loopback_test(int socket_id,int n_payloads=1);
+      begin
+	 localparam N = 133;//N 4*32 bit max
+	 
+	 int success;
+	 int i;
+	 bit [N-1:0] BitN_exp;
+	 bit [N-1:0] BitN_act;
+	 string    s_me = "bitN_loopback_test";
+	 success =1;
+	 
+	 //data set
+	 BitN_exp =  {$urandom(),$urandom(),$urandom(),$urandom()};
+	 
+	 
+	 //set up header
+	 h_trnx_exp.trnx_type = $urandom;
+	 h_trnx_exp.trnx_id   = $urandom;
+	 h_trnx_exp.data_type = svcs_dpi_hash("SVCS_BITN");
+	 h_trnx_exp.n_payloads = N;
+	 
+	 //send
+	 if (svcs_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+	 if(!svcs_dpi_hs_send_bitN(socket_id,h_trnx_exp,BitN_exp))  success =0;
+	 
+	 //recv
+	 if (svcs_dpi_recv_header(socket_id,h_trnx_act)<= 0) success = 0;
+	 if(!svcs_dpi_hs_recv_bitN(socket_id,h_trnx_act,BitN_act))  success =0;
+	 //
+	 if(BitN_act !== BitN_exp) success =0;
+	 //$display("\n %s BitN_act=\n%h vs \n%h",s_me, BitN_act, BitN_exp);
+	 return  success;
+      end
+   endfunction : bitN_loopback_test
+
+   
    ////////////////////////////////////////////
 /* -----\/----- EXCLUDED -----\/-----
    function int byte_loopback_test(int socket_id,int n_payloads=1);

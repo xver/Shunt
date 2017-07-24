@@ -223,11 +223,11 @@ package svcs_dpi_pkg;
    import "DPI-C" function int svcs_dpi_recv_bit (input int sockfd,inout bit Bit);
 
    
-   /* -----\/----- EXCLUDED -----\/-----
-      -----/\----- EXCLUDED -----/\----- */
+  
 /*
     Functions:  svcs_dpi_send_reg,svcs_dpi_send_logic
-    map
+    map reg/logic 4-state data type
+    LRM 6.11 
         
     Parameters:
     sockfd - socket id
@@ -240,7 +240,8 @@ package svcs_dpi_pkg;
    import "DPI-C" function int svcs_dpi_send_logic (input int sockfd,input logic Logic);
    /*
     Functions:  svcs_dpi_recv_reg ,svcs_dpi_recv_logic
-    map
+    map reg/logic 4-state data type
+    LRM  6.11 
             
     Parameters:
     sockfd - socket id
@@ -251,6 +252,51 @@ package svcs_dpi_pkg;
     */
    import "DPI-C" function int svcs_dpi_recv_reg   (input int sockfd,inout reg Reg);
    import "DPI-C" function int svcs_dpi_recv_logic (input int sockfd,inout logic Logic);
+   
+   //Section: integer_vector_type    
+   
+   typedef struct{		
+      real 	 trnx_type;
+      real 	 trnx_id;
+      real 	 data_type;
+      int 	 n_payloads;
+   } cs_header_t;
+   
+   typedef struct{
+      real 	 data_type;
+      int 	 trnx_payload_sizes[];
+   }cs_data_header_t;
+   
+   /* -----\/----- EXCLUDED -----\/-----
+    -----/\----- EXCLUDED -----/\----- */
+   
+   /*
+    Functions: svcs_dpi_hs_send_bitN
+    map bit[N:0]  2-state data type packed array of scalar bit types
+    LRM 6.11 
+        
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_hs_send_bitN(input int sockfd,input cs_header_t h_trnx,input bit[] bitN);
+   
+   /*
+    Functions: svcs_dpi_hs_recv_bitN
+    map bit[N:0] 2-state data type packed array of scalar bit types
+    LRM  6.11 
+            
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_hs_recv_bitN  (input int sockfd,input cs_header_t h_trnx,inout bit[] bitN);
    
    //////////////////END/////////////////////////////////////////////////////////////////////
      
@@ -275,17 +321,7 @@ package svcs_dpi_pkg;
   //   
    //////////////////////
 
-   typedef struct{		
-      real 	 trnx_type;
-      real 	 trnx_id;
-      real 	 data_type;
-      int 	 n_payloads;
-   } cs_header_t;
    
-   typedef struct{
-      real 	 data_type;
-      int 	 trnx_payload_sizes[];
-   }cs_data_header_t;
    
  
    import "DPI-C" function real svcs_dpi_hash(input string str);

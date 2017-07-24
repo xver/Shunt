@@ -519,4 +519,32 @@ int svcs_dpi_send_time    (const unsigned int sockfd,svLogicVecVal* Time);
 int svcs_dpi_hs_recv_reg4s   (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
 int svcs_dpi_recv_time (const unsigned int sockfd,svLogicVecVal* Time);
 
+/*
+    Functions: svcs_dpi_hs_send_bitN
+    map bit[N:0]  2-state data type packed array of scalar bit types
+    LRM 6.11 
+        
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBitVecVal* bitN);
+   
+   /*
+    Functions: svcs_dpi_hs_recv_bitN
+    map bit[N:0] 2-state data type packed array of scalar bit types
+    LRM  6.11 
+            
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+int svcs_dpi_hs_recv_bitN  (const int sockfd,const cs_header* h_trnx,svBitVecVal* bitN);
+
 #endif /* SVCS_DPI_H_ */

@@ -48,6 +48,7 @@ module automatic svtest_sv2c_client;
 	bit_loopback_test(Socket);
 	reg_loopback_test(Socket);
 	logic_loopback_test(Socket);
+	bitN_loopback_test(Socket);
 	///////////////////////////
 	
 	$display("\nsvtest_sv2c_client: END");
@@ -196,6 +197,23 @@ module automatic svtest_sv2c_client;
       if (svcs_dpi_send_logic(socket_id,Logic)<= 0) $display("%s TEST FAIL",Test_name);
       
    endfunction : logic_loopback_test
+
+   function void bitN_loopback_test(int socket_id);
+      reg [1024:0] BitN;
+      string 	   Test_name;
+      
+      Test_name = "client bitN_loopback_test recv";
+      //recv     
+      BitN = 'hz;
+      if (svcs_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
+      if (svcs_dpi_hs_recv_bitN(socket_id,h_trnx,BitN)<= 0) $display("%s TEST FAIL",Test_name);
+      //$display("\n %s BitN=%h(%h)",Test_name, BitN,BitN[132:0]);
+      //send
+      //Test_name = "client bitN_loopback_test send";
+      if (svcs_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
+      if (svcs_dpi_hs_send_bitN(socket_id,h_trnx,BitN)<= 0)   $display("%s TEST FAIL",Test_name);
+   endfunction : bitN_loopback_test
+   
    /////////////////////////////////////////////////
    
  

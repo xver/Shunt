@@ -117,11 +117,11 @@ int svcs_dpi_send_bit (const unsigned int sockfd,const svBit Bit) {
 }
 
 int svcs_dpi_send_reg (const unsigned int sockfd,const svLogic Reg) {
-  return svcs_dpi_send_byte(sockfd,Reg);
+  return svcs_dpi_send_byte(sockfd,Reg); 
 }
 
 int svcs_dpi_send_logic (const unsigned int sockfd,const svLogic Logic) {
-  return svcs_dpi_send_byte(sockfd,Logic);
+  return  svcs_dpi_send_reg (sockfd,Logic);
 }
 
 int svcs_dpi_recv_byte(const  unsigned int sockfd,char* Byte) {
@@ -135,10 +135,11 @@ int svcs_dpi_recv_bit     (const unsigned int sockfd,svBit* Bit) {
 }
 
 int svcs_dpi_recv_reg     (const unsigned int sockfd,svLogic* Reg) {
-  return svcs_dpi_recv_byte(sockfd,(char*)Reg);
+  return svcs_dpi_recv_byte(sockfd,(char*)Reg);  
 }
+
 int svcs_dpi_recv_logic     (const unsigned int sockfd,svLogic* Logic) {
-  return svcs_dpi_recv_byte(sockfd,(char*)Logic);
+  return  svcs_dpi_recv_reg(sockfd,Logic);
 }
 ////Direct send/recv  
 int svcs_dpi_send_real(const  unsigned int sockfd,double Real) {
@@ -465,5 +466,38 @@ int svcs_dpi_hs_recv_reg4s (const unsigned int sockfd,cs_header* h_trnx,svLogicV
  return Result_; 
 }
 
-
+int svcs_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBitVecVal* bitN) {
+  
+  int Result_;
+  //char* msg = "\nsvcs_dpi_hs_send_bitN";
+  
+  Result_ = 1;
+  svBitVecVal* bitN_ =  (svBitVecVal*)svGetArrayPtr((svOpenArrayHandle*)bitN);
+  
+  int Size_ =h_trnx->n_payloads / 32; 
+  if(h_trnx->n_payloads % 32 > 0) ++Size_;
+  for(int i=0;i<Size_ ;i++) {
+    //printf("%s  bitN->aval=%x,bitN->bval=%x size=%0d (%0d/%0d) bits",msg,bitN_[i].aval,bitN_[i].bval,svSizeOfArray((svOpenArrayHandle*)bitN),Size_,h_trnx->n_payloads % 32);
+    if (svcs_dpi_send_int(sockfd, bitN_[i])<=0) Result_=0;
+  }
+  
+  return Result_;
+}
+ 
+int svcs_dpi_hs_recv_bitN  (const int sockfd,const cs_header* h_trnx,svBitVecVal* bitN) {
+ int Result_;
+  //char* msg = "\nsvcs_dpi_hs_recv_bitN";
+  Result_ = 1;
+  svBitVecVal* bitN_ =  (svBitVecVal*)svGetArrayPtr((svOpenArrayHandle*)bitN);
+  
+  int Size_ =h_trnx->n_payloads / 32; 
+  if(h_trnx->n_payloads % 32 > 0) ++Size_;
+  
+  for(int i=0;i<Size_ ;i++) { 
+    if (svcs_dpi_recv_int(sockfd,(int *)&(bitN_[i]))<=0) Result_=0 ; 
+    //printf("%s  bitN->aval=%x,bitN->bval=%x size=%0d (%0d/%0d) bits",msg,bitN_[i].aval,bitN_[i].bval,svSizeOfArray((svOpenArrayHandle*)bitN),Size_,h_trnx->n_payloads % 32);
+  } 
+  
+ return Result_; 
+}
 #endif /* SVCS_DPI_C_ */
