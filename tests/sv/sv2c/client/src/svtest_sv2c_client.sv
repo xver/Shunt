@@ -53,6 +53,7 @@ module automatic svtest_sv2c_client;
 	logicN_loopback_test(Socket);
 	real_loopback_test(Socket);
 	shortreal_loopback_test(Socket);
+	realtime_loopback_test(Socket);
 	///////////////////////////
 	
        $display("\nsvtest_sv2c_client: END");
@@ -256,10 +257,21 @@ module automatic svtest_sv2c_client;
       
       Test_name = "client real_loopback_test recv";
       if (!svcs_dpi_recv_real(socket_id,Real)) $display("%s TEST FAIL",Test_name);
-      $display("\n %s LogicN=%h(%f)",Test_name,Real,Real);
+      $display("\n %s Real=%h(%f)",Test_name,Real,Real);
       Test_name = "client real_loopback_test send";
       if (!svcs_dpi_send_real(socket_id,Real)) $display("%s TEST FAIL",Test_name);
    endfunction : real_loopback_test
+  
+   function void realtime_loopback_test(int socket_id);
+      realtime   Realtime;
+      string Test_name;
+      
+      Test_name = "client realtime_loopback_test recv";
+      if (!svcs_recv_realtime(socket_id,Realtime)) $display("%s TEST FAIL",Test_name);
+      $display("\n %s Realtime=%h(%f)",Test_name,Realtime,Realtime);
+      Test_name = "client realtime_loopback_test send";
+      if (!svcs_send_realtime(socket_id,Realtime)) $display("%s TEST FAIL",Test_name);
+   endfunction : realtime_loopback_test
    
    function void shortreal_loopback_test(int socket_id);
       shortreal   Shortreal;

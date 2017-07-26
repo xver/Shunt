@@ -99,6 +99,10 @@ module automatic svtest_sv2c_server;
 	Test_name = "\tshortreal_loopback";
 	Pass=shortreal_loopback_test(Socket);
 	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\trealtime_loopback";
+	Pass=realtime_loopback_test(Socket);
+	print_status(Test_name,Pass);
 		
 	Test_name = "svtest_sv2c_server";
 	print_status(Test_name,Pass);
@@ -446,7 +450,7 @@ module automatic svtest_sv2c_server;
 	 real Real_act;
 	 string s_me = "real_loopback_test";
 	 success =1;
-	 Real_exp = $urandom();
+	 Real_exp = $urandom()/7.5;
 	 if(!svcs_dpi_send_real(socket_id,Real_exp)) success=0;
 	 if(!svcs_dpi_recv_real(socket_id,Real_act)) success=0;
 	 if (Real_exp != Real_act)success=0;
@@ -454,7 +458,23 @@ module automatic svtest_sv2c_server;
 	 return  success;
       end
    endfunction : real_loopback_test
-
+ 
+   function int realtime_loopback_test(int socket_id);
+      begin
+	 int success;
+         realtime Realtime_exp;
+	 realtime Realtime_act;
+	 string s_me = "realtime_loopback_test";
+	 success =1;
+	 Realtime_exp =  $urandom()/7.5;
+	 if(!svcs_send_realtime(socket_id,Realtime_exp)) success=0;
+	 if(!svcs_recv_realtime(socket_id,Realtime_act)) success=0;
+	 if (Realtime_exp != Realtime_act)success=0;
+	 //$display("\n %s Realtime_act=\n%f vs \n%f",s_me, Realtime_act, Realtime_exp);
+	 return  success;
+      end
+   endfunction : realtime_loopback_test
+   
    function int shortreal_loopback_test(int socket_id);
       begin
 	 int success;

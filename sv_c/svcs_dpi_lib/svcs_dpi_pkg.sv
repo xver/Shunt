@@ -328,8 +328,7 @@ package svcs_dpi_pkg;
    
    //Section: non_integer_type IEEE 754
    
-   /* -----\/----- EXCLUDED -----\/-----
-  -----/\----- EXCLUDED -----/\----- */
+  
    
    /*
     Functions: svcs_dpi_send_real,svcs_dpi_send_realtime
@@ -361,6 +360,9 @@ package svcs_dpi_pkg;
    import "DPI-C" function int svcs_dpi_recv_real      (input int sockfd,output real Real);
    //import "DPI-C" function int svcs_dpi_recv_realtime  (input int sockfd,output realtime Real);
    import "DPI-C" function int svcs_dpi_recv_shortreal (input int sockfd,output shortreal Real);
+
+    /* -----\/----- EXCLUDED -----\/-----
+  -----/\----- EXCLUDED -----/\----- */
    //////////////////END/////////////////////////////////////////////////////////////////////
      
   
