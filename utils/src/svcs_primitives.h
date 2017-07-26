@@ -175,7 +175,7 @@ int svcs_prim_recv_int    (const int sockfd,int* Int);
 
 /*
  Function: svcs_prim_send_double
-  send verilog "real"/C "double" over TCP/IP 
+  send verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" over TCP/IP 
   
   Parameters:
    sockfd - socket id
@@ -186,10 +186,10 @@ int svcs_prim_recv_int    (const int sockfd,int* Int);
 */
 
 int svcs_prim_send_double    (const int sockfd,const double* Double);
-
+int svcs_prim_send_float     (const int sockfd,const float* Float);
 /*
   Function: svcs_prim_recv_double
-  fetch verilog "real"/C "double" over TCP/IP 
+  fetch verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" from TCP/IP 
   
   Parameters:
   sockfd - socket id
@@ -199,8 +199,8 @@ int svcs_prim_send_double    (const int sockfd,const double* Double);
  number of bytes have been sent : success > 0
     
 */
-int svcs_prim_recv_double    (const int sockfd,double* Double);
-
+int svcs_prim_recv_double   (const int sockfd,double* Double);
+int svcs_prim_recv_float    (const int sockfd,float* Float);
 ///////////////////////////////
 /*
  Function: svcs_prim_send_short

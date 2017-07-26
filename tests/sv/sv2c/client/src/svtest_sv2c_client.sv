@@ -49,9 +49,13 @@ module automatic svtest_sv2c_client;
 	reg_loopback_test(Socket);
 	logic_loopback_test(Socket);
 	bitN_loopback_test(Socket);
+	regN_loopback_test(Socket);
+	logicN_loopback_test(Socket);
+	real_loopback_test(Socket);
+	shortreal_loopback_test(Socket);
 	///////////////////////////
 	
-	$display("\nsvtest_sv2c_client: END");
+       $display("\nsvtest_sv2c_client: END");
 	
      end // initial begin
 
@@ -199,7 +203,7 @@ module automatic svtest_sv2c_client;
    endfunction : logic_loopback_test
 
    function void bitN_loopback_test(int socket_id);
-      reg [1024:0] BitN;
+      bit [1024:0] BitN;
       string 	   Test_name;
       
       Test_name = "client bitN_loopback_test recv";
@@ -207,13 +211,66 @@ module automatic svtest_sv2c_client;
       BitN = 'hz;
       if (svcs_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
       if (svcs_dpi_hs_recv_bitN(socket_id,h_trnx,BitN)<= 0) $display("%s TEST FAIL",Test_name);
-      //$display("\n %s BitN=%h(%h)",Test_name, BitN,BitN[132:0]);
+      $display("\n%s BitN=%h ",Test_name,BitN);
       //send
       //Test_name = "client bitN_loopback_test send";
       if (svcs_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
       if (svcs_dpi_hs_send_bitN(socket_id,h_trnx,BitN)<= 0)   $display("%s TEST FAIL",Test_name);
    endfunction : bitN_loopback_test
+
+   function void regN_loopback_test(int socket_id);
+      reg [1024:0] RegN;
+      string 	   Test_name;
+      
+      Test_name = "client regN_loopback_test recv";
+      //recv     
+      RegN = 'hz;
+      if (svcs_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
+      if (svcs_dpi_hs_recv_regN(socket_id,h_trnx,RegN)<= 0) $display("%s TEST FAIL",Test_name);
+      $display("\n %s RegN=%h(%h)",Test_name, RegN,RegN[132:0]);
+      //send
+      //Test_name = "client regN_loopback_test send";
+      if (svcs_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
+      if (svcs_dpi_hs_send_regN(socket_id,h_trnx,RegN)<= 0)   $display("%s TEST FAIL",Test_name);
+   endfunction : regN_loopback_test
+
+   function void logicN_loopback_test(int socket_id);
+      logic [1024:0] LogicN;
+      string 	   Test_name;
+      
+      Test_name = "client logicN_loopback_test recv";
+      //recv     
+      LogicN = 'hz;
+      if (svcs_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
+      if (svcs_dpi_hs_recv_logicN(socket_id,h_trnx,LogicN)<= 0) $display("%s TEST FAIL",Test_name);
+      $display("\n %s LogicN=%h(%h)",Test_name, LogicN,LogicN[132:0]);
+      //send
+      //Test_name = "client logicN_loopback_test send";
+      if (svcs_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
+      if (svcs_dpi_hs_send_logicN(socket_id,h_trnx,LogicN)<= 0)   $display("%s TEST FAIL",Test_name);
+   endfunction : logicN_loopback_test
+
+   function void real_loopback_test(int socket_id);
+      real   Real;
+      string Test_name;
+      
+      Test_name = "client real_loopback_test recv";
+      if (!svcs_dpi_recv_real(socket_id,Real)) $display("%s TEST FAIL",Test_name);
+      $display("\n %s LogicN=%h(%f)",Test_name,Real,Real);
+      Test_name = "client real_loopback_test send";
+      if (!svcs_dpi_send_real(socket_id,Real)) $display("%s TEST FAIL",Test_name);
+   endfunction : real_loopback_test
    
+   function void shortreal_loopback_test(int socket_id);
+      shortreal   Shortreal;
+      string Test_name;
+      
+      Test_name = "client shortreal_loopback_test recv";
+      if (!svcs_dpi_recv_shortreal(socket_id,Shortreal)) $display("%s TEST FAIL",Test_name);
+      $display("\n %s Shortreal=%h(%f)",Test_name,Shortreal,Shortreal);
+      Test_name = "client shortreal_loopback_test send";
+      if (!svcs_dpi_send_shortreal(socket_id,Shortreal)) $display("%s TEST FAIL",Test_name);
+   endfunction : shortreal_loopback_test
    /////////////////////////////////////////////////
    
  

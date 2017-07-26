@@ -242,6 +242,17 @@ int svcs_prim_send_double    (const int sockfd,const double* Double)
   return numbytes;
 }
 
+int svcs_prim_send_float    (const int sockfd,const float* Float)
+{
+
+  int numbytes;
+  //printf("\nsvcs_prim_send_float:Size of float pointer = %d addr = %x value=%f\n", sizeof(float),Float,*Float);
+  numbytes = send(sockfd, Float, sizeof(float), 0);
+
+  if (numbytes < 0) svcs_prim_error("ERROR svcs_cs_send_float: numbytes < 0 ");
+  return numbytes;
+}
+
 int svcs_prim_recv_double    (const int sockfd,double* Double)
 {
  int numbytes;
@@ -249,6 +260,16 @@ int svcs_prim_recv_double    (const int sockfd,double* Double)
   numbytes = recv(sockfd, Double,sizeof(double) , 0);
   //printf("\nsvcs_prim_recv_double::get Double  (%f) of %0d bytes\n",*Double,numbytes);
   if (numbytes < 0) svcs_prim_error("ERROR in svcs_prim_recv_double : numbytes < 0 ");
+  return numbytes;
+}
+
+int svcs_prim_recv_float    (const int sockfd,float* Float)
+{
+ int numbytes;
+
+  numbytes = recv(sockfd, Float,sizeof(float) , 0);
+  //printf("\nsvcs_prim_recv_float::get Float  (%f) of %0d bytes\n",*Float,numbytes);
+  if (numbytes < 0) svcs_prim_error("ERROR in svcs_prim_recv_float : numbytes < 0 ");
   return numbytes;
 }
 

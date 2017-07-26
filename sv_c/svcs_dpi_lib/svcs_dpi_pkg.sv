@@ -267,9 +267,6 @@ package svcs_dpi_pkg;
       int 	 trnx_payload_sizes[];
    }cs_data_header_t;
    
-   /* -----\/----- EXCLUDED -----\/-----
-    -----/\----- EXCLUDED -----/\----- */
-   
    /*
     Functions: svcs_dpi_hs_send_bitN
     map bit[N:0]  2-state data type packed array of scalar bit types
@@ -297,11 +294,76 @@ package svcs_dpi_pkg;
     number of bytes have been recv : success > 0
     */
    import "DPI-C" function int svcs_dpi_hs_recv_bitN  (input int sockfd,input cs_header_t h_trnx,inout bit[] bitN);
+ 
+    /*
+    Functions: svcs_dpi_hs_send_regN, svcs_dpi_hs_send_reg4s, svcs_dpi_hs_send_logicN
+    map reg[N:0] or logic[N:0]  4-state data type,packed array,user-defined vector size, unsigned 
+    LRM 6.11 
+        
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_hs_send_reg4s  (input int sockfd,input cs_header_t h_trnx,input reg[] Reg);
+   import "DPI-C" function int svcs_dpi_hs_send_regN   (input int sockfd,input cs_header_t h_trnx,input reg[] Reg);
+   import "DPI-C" function int svcs_dpi_hs_send_logicN (input int sockfd,input cs_header_t h_trnx,input logic[] Reg);
+   /*
+    Functions: svcs_dpi_hs_recv_regN,svcs_dpi_hs_recv_reg4s,svcs_dpi_hs_recv_logicN
+    map reg[N:0] or logic[N:0]  4-state data type,packed array,user-defined vector size, unsigned
+    LRM  6.11 
+            
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_hs_recv_reg4s  (input int sockfd,input cs_header_t h_trnx,inout reg[] Reg);
+   import "DPI-C" function int svcs_dpi_hs_recv_regN   (input int sockfd,input cs_header_t h_trnx,inout reg[] Reg);
+   import "DPI-C" function int svcs_dpi_hs_recv_logicN (input int sockfd,input cs_header_t h_trnx,inout logic[] Reg);
    
+   //Section: non_integer_type IEEE 754
+   
+   /* -----\/----- EXCLUDED -----\/-----
+  -----/\----- EXCLUDED -----/\----- */
+   
+   /*
+    Functions: svcs_dpi_send_real,svcs_dpi_send_realtime
+    map real data type is the same as a C double 8 byte 
+    LRM 6.12
+           
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */ 
+   import "DPI-C" function int svcs_dpi_send_real      (input int sockfd,input  real Real);
+   //import "DPI-C" function int svcs_dpi_send_realtime  (input int sockfd,input  realtime Real);
+   import "DPI-C" function int svcs_dpi_send_shortreal (input int sockfd,input  shortreal Real);
+   /*
+    Functions: svcs_dpi_recv_real,svcs_dpi_recv_realtime
+    map real data type is the same as a C double 8 byte  
+    LRM 6.12
+    
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_recv_real      (input int sockfd,output real Real);
+   //import "DPI-C" function int svcs_dpi_recv_realtime  (input int sockfd,output realtime Real);
+   import "DPI-C" function int svcs_dpi_recv_shortreal (input int sockfd,output shortreal Real);
    //////////////////END/////////////////////////////////////////////////////////////////////
      
-   import "DPI-C" function int svcs_dpi_send_real   (input int sockfd,input  real Real);
-   import "DPI-C" function int svcs_dpi_recv_real   (input int sockfd,output real Real);
+  
 
    import "DPI-C" function int svcs_dpi_send_intV   (input int sockid,input int size,input  int Int[]);
    import "DPI-C" function int svcs_dpi_recv_intV   (input int sockid,input int size,output int Int[]);
@@ -365,9 +427,6 @@ package svcs_dpi_pkg;
    import "DPI-C" function int svcs_dpi_hs_send_real   (input int sockid,input cs_header_t h_trnx,input real Array[]);
    import "DPI-C" function int svcs_dpi_hs_recv_real   (input int sockid,input cs_header_t h_trnx,inout real Array[]);
    
-   import "DPI-C" function int svcs_dpi_hs_send_reg4s  (input int sockfd,input cs_header_t h_trnx,input reg[] Reg);
-   import "DPI-C" function int svcs_dpi_hs_recv_reg4s  (input int sockfd,input cs_header_t h_trnx,inout reg[] Reg);
-   
-   endpackage : svcs_dpi_pkg
+endpackage : svcs_dpi_pkg
 
 

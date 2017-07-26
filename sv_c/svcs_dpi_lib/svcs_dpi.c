@@ -147,10 +147,31 @@ int svcs_dpi_send_real(const  unsigned int sockfd,double Real) {
   Result_ =svcs_prim_send_double(sockfd,&Real);
   return Result_;
 }
+int svcs_dpi_send_realtime(const  unsigned int sockfd,double Real) {
+  return svcs_dpi_send_real(sockfd,Real);
+}
+
+int svcs_dpi_send_shortreal(const  unsigned int sockfd,float Real) {
+  int Result_ =0;
+  //char* msg = "svcs_dpi_send_shortreal";
+  //printf("  %s  Real=%f ",msg,Real);
+  Result_ =svcs_prim_send_float(sockfd,&Real);
+  return Result_;
+}
+
 int svcs_dpi_recv_real(const  unsigned int sockfd,double* Real) {
   int Result_ =0;
   Result_ =svcs_prim_recv_double(sockfd,Real);
   return Result_;
+}
+
+int svcs_dpi_recv_realtime(const  unsigned int sockfd,double* Real) {
+  return svcs_dpi_recv_real(sockfd,Real);
+}
+int svcs_dpi_recv_shortreal(const  unsigned int sockfd,float* Real) {
+  int Result_ =0;
+  Result_ =svcs_prim_recv_float(sockfd,Real);
+  return Result_; 
 }
 
 ////Direct send/recv  
@@ -445,8 +466,12 @@ int svcs_dpi_hs_send_reg4s (const unsigned int sockfd,cs_header* h_trnx,const  s
   
   return Result_;
 }
-
-
+int svcs_dpi_hs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
+  return  svcs_dpi_hs_send_reg4s(sockfd,h_trnx,Reg);
+}
+int svcs_dpi_hs_send_logicN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
+  return  svcs_dpi_hs_send_reg4s(sockfd,h_trnx,Reg);
+}
 
 int svcs_dpi_hs_recv_reg4s (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
   int Result_;
@@ -464,6 +489,14 @@ int svcs_dpi_hs_recv_reg4s (const unsigned int sockfd,cs_header* h_trnx,svLogicV
   } 
   
  return Result_; 
+}
+
+int svcs_dpi_hs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
+  return svcs_dpi_hs_recv_reg4s (sockfd,h_trnx,Reg);
+}
+
+int svcs_dpi_hs_recv_logicN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
+  return svcs_dpi_hs_recv_reg4s (sockfd,h_trnx,Reg);
 }
 
 int svcs_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBitVecVal* bitN) {

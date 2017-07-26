@@ -128,8 +128,9 @@ int svcs_dpi_recv_int (const unsigned int sockfd,int* Int);
     see (svcs_prim_send_double)
 */
 
-int svcs_dpi_send_real    (const unsigned int sockfd,const double Real);
-
+int svcs_dpi_send_real      (const unsigned int sockfd,const double Real);
+int svcs_dpi_send_realtime  (const unsigned int sockfd,const double Real);
+int svcs_dpi_send_shortreal (const unsigned int sockfd,const float Real);
 /*
   Function: svcs_dpi_recv_real
   fetch verilog "real"/C "double" over TCP/IP
@@ -143,8 +144,9 @@ int svcs_dpi_send_real    (const unsigned int sockfd,const double Real);
 
     see (svcs_prim_recv_double)
 */
-int svcs_dpi_recv_real    (const unsigned int sockfd,double* Real);
-
+int svcs_dpi_recv_real      (const unsigned int sockfd,double* Real);
+int svcs_dpi_recv_realtime  (const unsigned int sockfd,double* Real);
+int svcs_dpi_recv_shortreal (const unsigned int sockfd,float* Real);
 /*
  Function: svcs_dpi_send_byte
   send verilog "byte"/C "char" over TCP/IP
@@ -499,8 +501,10 @@ int svcs_dpi_hs_recv_real (int sockid,cs_header* h_trnx,svOpenArrayHandle** Arra
     
     see (svcs_prim_send_byte)
     */
-int svcs_dpi_hs_send_reg4s (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
-int svcs_dpi_send_time    (const unsigned int sockfd,svLogicVecVal* Time);
+int svcs_dpi_hs_send_reg4s  (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
+int svcs_dpi_hs_send_regN   (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
+int svcs_dpi_hs_send_logicN (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
+int svcs_dpi_send_time      (const unsigned int sockfd,svLogicVecVal* Time);
 
 /*
     Function: svcs_dpi_hs_recv_reg4s
@@ -517,7 +521,9 @@ int svcs_dpi_send_time    (const unsigned int sockfd,svLogicVecVal* Time);
     see (svcs_prim_recv_byte)
     */
 int svcs_dpi_hs_recv_reg4s   (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
-int svcs_dpi_recv_time (const unsigned int sockfd,svLogicVecVal* Time);
+int svcs_dpi_hs_recv_regN    (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
+int svcs_dpi_hs_recv_logicN  (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
+int svcs_dpi_recv_time       (const unsigned int sockfd,svLogicVecVal* Time);
 
 /*
     Functions: svcs_dpi_hs_send_bitN
