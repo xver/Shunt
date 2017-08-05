@@ -26,8 +26,8 @@
 
 #include "svcs_primitives.h"
 
-typedef enum {SVCS_INT,SVCS_BYTE,SVCS_REAL,SVCS_STRING,SVCS_A_STRUCTURE,SVCS_INT4S,SVCS_BYTE4S,SVCS_REG4S,SVCS_HEADER_ONLY} SVCV_INSTR_ENUM;
-#define SVCV_INSTR_HASH_INDEX_DEFINE char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_INT","SVCS_BYTE","SVCS_REAL","SVCS_STRING","SVCS_A_STRUCTURE","SVCS_INT4S","SVCS_BYTE4S","SVCS_REG4S","SVCS_HEADER_ONLY"}
+typedef enum {SVCS_INT,SVCS_REAL,SVCS_SHORTREAL,SVCS_STRING,SVCS_A_STRUCTURE,SVCS_INTEGER,SVCS_BYTE,SVCS_REG,SVCS_BIT,SVCS_SHORTINT,SVCS_LONGINT,SVCS_HEADER_ONLY} SVCV_INSTR_ENUM;
+#define SVCV_INSTR_HASH_INDEX_DEFINE char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_INT","SVCS_REAL","SVCS_SHORTREAL","SVCS_STRING","SVCS_A_STRUCTURE","SVCS_INTEGER","SVCS_BYTE","SVCS_REG","SVCS_BIT","SVCS_SHORTINT","SVCS_LONGINT","SVCS_HEADER_ONLY"}
 
 
 //-------------
@@ -42,8 +42,10 @@ Section: Data exchange utilities (header)
 
 (start code)
 
-typedef enum {SVCS_INT,SVCS_BYTE,SVCS_REAL,SVCS_STRING,SVCS_A_STRUCTURE,SVCS_HEADER_ONLY} SVCV_INSTR_ENUM;
-char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_INT","SVCS_BYTE","SVCS_REAL","SVCS_STRING","SVCS_A_STRUCTURE","SVCS_HEADER_ONLY"}
+typedef enum {SVCS_INT,SVCS_REAL,SVCS_SHORTREAL,SVCS_STRING,SVCS_A_STRUCTURE,SVCS_INTEGER,SVCS_BYTE,SVCS_REG,SVCS_BIT,SVCS_SHORTINT,SVCS_LONGINT,SVCS_HEADER_ONLY} SVCV_INSTR_ENUM;
+#define SVCV_INSTR_HASH_INDEX_DEFINE char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_INT","SVCS_REAL","SVCS_SHORTREAL","SVCS_STRING","SVCS_A_STRUCTURE","SVCS_INTEGER","SVCS_BYTE","SVCS_REG","SVCS_BIT","SVCS_SHORTINT","SVCS_LONGINT","SVCS_HEADER_ONLY"}
+
+
 
 typedef struct cs_header_t {
 double   trnx_type;       // user defined transaction attribute
@@ -256,33 +258,36 @@ int svcs_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h);
 
 
 /*
-  Function: svcs_cs_send_intV
-  send SVCS transaction with "int" elements vector over TCP/IP
+Function: svcs_cs_send_intV, svcs_cs_send_shortV,svcs_cs_send_longV
+  send SVCS transaction with "int" ,"shortint","longint" elements vector over TCP/IP
   
   Parameters:
   sockid - socket id
   header - cs_header structure
-  Int   - data
+  Int,Short,Long   - data
   
   Returns:
   number of elements have been sent  : success > 0
 */
 int svcs_cs_send_intV   (int sockid, const cs_header* header,const int* Int);
+int svcs_cs_send_shortV (int sockid, const cs_header* header,const short int* Short);
+int svcs_cs_send_longV  (int sockid, const cs_header* header,const long int* Long);
 
 /*
-  Function: svcs_cs_recv_intV
-  fetch SVCS transaction with "int" elements vector  elements from TCP/IP
+  Function: svcs_cs_recv_intV,svcs_cs_recv_shortV,svcs_cs_recv_longV
+  fetch SVCS transaction with "int","shortint","longint" elements vector  elements from TCP/IP
   
   Parameters:
   sockid - socket id
   header - cs_header structure
-  IntV  - Data received
+  Int,Short,Long   - Data received
   
   Returns:
   number of elements have been received  : success > 0
 */
 int svcs_cs_recv_intV   (int sockid, cs_header* header,int* Int);
-
+int svcs_cs_recv_shortV (int sockid, cs_header* header,short int* Short);
+int svcs_cs_recv_longV  (int sockid, cs_header* header,long int* Long);
 /*
   Function: svcs_cs_print_intV
   print out IntV Data

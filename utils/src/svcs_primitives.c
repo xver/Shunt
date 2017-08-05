@@ -25,6 +25,7 @@ Data Types: integer,  double
 
 ////////////////////////////////////
 //Common Functions 
+////////////////////////////////////
 
 double svcs_prim_hash(const char *str) {
   long hash = 5381;
@@ -47,6 +48,7 @@ void svcs_prim_error(char *msg) {
 }
 //////////////////////////////////
 //TCP/IP Functions
+//////////////////////////////////
 
  int svcs_prim_init_tcpserver(const unsigned int portno) {
   int parentfd; /* parent socket */
@@ -230,7 +232,7 @@ int svcs_prim_recv_long    (const int sockfd, long int* Long)
   if (numbytes < 0) svcs_prim_error("\nERROR in svcs_prim_recv_long : numbytes < 0 ");
   return numbytes;
   }
-////////////////////////
+
 int svcs_prim_send_double    (const int sockfd,const double* Double)
 {
 
@@ -273,7 +275,7 @@ int svcs_prim_recv_float    (const int sockfd,float* Float)
   return numbytes;
 }
 
-//////////////////////////////////
+
 int svcs_prim_send_byte(const int sockfd,const char* Byte)
 {
   int numbytes;
@@ -298,5 +300,7 @@ int svcs_prim_recv_byte    (const int sockfd, char* Byte)
 
   return numbytes;
   }
+
+
 
 #endif

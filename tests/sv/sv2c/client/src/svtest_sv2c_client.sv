@@ -54,6 +54,7 @@ module automatic svtest_sv2c_client;
 	real_loopback_test(Socket);
 	shortreal_loopback_test(Socket);
 	realtime_loopback_test(Socket);
+	string_loopback_test(Socket);
 	///////////////////////////
 	
        $display("\nsvtest_sv2c_client: END");
@@ -283,6 +284,25 @@ module automatic svtest_sv2c_client;
       Test_name = "client shortreal_loopback_test send";
       if (!svcs_dpi_send_shortreal(socket_id,Shortreal)) $display("%s TEST FAIL",Test_name);
    endfunction : shortreal_loopback_test
+
+   function void string_loopback_test(int socket_id);
+    
+      string Test_name;
+      int    size;
+      int    Result_;
+      
+      String = `STRING_MESSAGE1;
+      Test_name = "SV client string_loopback_test recv";
+      
+      
+      //$display("SV before client String = %s",String);	
+      if (svcs_dpi_recv_string(socket_id,String.len(),String)<=0) $display("%s TEST FAIL",Test_name);
+      Result_ = svcs_dpi_recv_string(socket_id,size,String);
+      $display("SV after client String = %s",String);
+      Test_name = "client string_loopback_test send";
+      if (svcs_dpi_send_string(socket_id,String.len(),String)<=0) $display("%s TEST FAIL",Test_name);
+      
+   endfunction : string_loopback_test
    /////////////////////////////////////////////////
    
  

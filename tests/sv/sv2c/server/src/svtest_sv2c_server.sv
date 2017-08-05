@@ -103,6 +103,10 @@ module automatic svtest_sv2c_server;
 	Test_name = "\trealtime_loopback";
 	Pass=realtime_loopback_test(Socket);
 	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\tstring_loopback";
+	Pass=string_loopback_test(Socket);
+	print_status(Test_name,Pass);
 		
 	Test_name = "svtest_sv2c_server";
 	print_status(Test_name,Pass);
@@ -493,6 +497,26 @@ module automatic svtest_sv2c_server;
 	 return  success;
       end
    endfunction : shortreal_loopback_test
+
+     function int string_loopback_test(int socket_id);
+      begin
+	 int success;
+	 int i;
+         string String_exp;
+	 string String_act;
+	 string s_me = "string_loopback_test";
+	 String_exp = `STRING_MESSAGE;
+	 String_act = `STRING_MESSAGE1;
+	 success =1;
+	 if(!svcs_dpi_send_string(socket_id,String_exp.len(),String_exp))  success =0;
+	 success = svcs_dpi_send_string(socket_id,String_exp.len(),String_exp);
+	 if(!svcs_dpi_recv_string(socket_id,String_exp.len(),String_act))  success =0;
+	 if(String_act != String_exp) success =0;
+	 
+	 $display("\n %s String_act=\n%s vs \n%s",s_me, String_act, String_exp);
+	 return  success;
+      end
+     endfunction : string_loopback_test
    
    ////////////////////////////////////////////
 /* -----\/----- EXCLUDED -----\/-----

@@ -201,7 +201,7 @@ int svcs_prim_send_float     (const int sockfd,const float* Float);
 */
 int svcs_prim_recv_double   (const int sockfd,double* Double);
 int svcs_prim_recv_float    (const int sockfd,float* Float);
-///////////////////////////////
+
 /*
  Function: svcs_prim_send_short
   send verilog "shortint"/C "short int" over TCP/IP 
@@ -229,7 +229,36 @@ int svcs_prim_send_short    (const int sockfd,const short int* Short);
     
 */
 int svcs_prim_recv_short    (const int sockfd,short int* Short);
-///////////////////////////////
+
+
+/*
+ Function: svcs_prim_send_long
+  send verilog "longint"/C "long int" over TCP/IP 
+  
+  Parameters:
+   sockfd - socket id
+   Long  - data to send
+  
+  Returns:
+    number of bytes have been sent : success > 0
+*/
+
+int svcs_prim_send_long    (const int sockfd,const long int* Long);
+
+/*
+  Function: svcs_prim_recv_long
+  fetch verilog "longint"/C "long int" over TCP/IP 
+  
+  Parameters:
+  sockfd - socket id
+  Long - data from socket 
+  
+  Returns: 
+ number of bytes have been sent : success > 0
+    
+*/
+int svcs_prim_recv_long    (const int sockfd,long int* Long);
+
 /*
  Function: svcs_prim_send_byte
   send verilog/C "Byte/Char" data over TCP/IP
@@ -256,5 +285,6 @@ int svcs_prim_send_byte    (const int sockfd,const char* Byte);
 
 */
 int svcs_prim_recv_byte    (const int sockfd,char* Byte);
+
 
 #endif

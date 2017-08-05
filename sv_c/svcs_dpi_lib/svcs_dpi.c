@@ -264,15 +264,16 @@ int svcs_dpi_recv_realV(int sockid,int size,svOpenArrayHandle Real) {
 }
 
 ////Direct send/recv  
+
 int svcs_dpi_send_string(int sockid,int size,char* string) {
   cs_header h_ ;
   //SVCV_INSTR_HASH_INDEX_DEFINE;
   //char* msg = "\nsvcs_dpi_send_string: ";
   int Result_ =0;
-  h_.trnx_type = rand();
-  h_.trnx_id   = rand();
+  h_.trnx_type  = rand();
+  h_.trnx_id    = rand();
   h_.data_type  = svcs_prim_hash("SVCS_BYTE");
-  h_.n_payloads = strlen(string);
+  h_.n_payloads = size;
   //svcs_cs_print_header (&h_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   //printf("before  %s string=%s of %d\n",msg,string,(int)strlen(string));
   Result_ = svcs_cs_send_byteV(sockid, &h_,string);
@@ -447,12 +448,11 @@ int svcs_dpi_recv_integer (const unsigned int sockfd,svLogicVecVal* Int) {
   return svcs_dpi_recv_int4s (sockfd,Int); 
 }
 
-////////////////////////
 
-int svcs_dpi_hs_send_reg4s (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
+int svcs_dpi_hs_send4s (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
   int Result_;
-  //char* msg = "\nsvcs_dpi_hs_send_reg4s";
- 
+  //char* msg = "\nsvcs_dpi_hs_send4s";
+  
   Result_ = 1;
   svLogicVecVal* Reg_ =  (svLogicVecVal*)svGetArrayPtr((svOpenArrayHandle*)Reg);
   
@@ -466,16 +466,21 @@ int svcs_dpi_hs_send_reg4s (const unsigned int sockfd,cs_header* h_trnx,const  s
   
   return Result_;
 }
+
+
+int svcs_dpi_hs_send_reg4s (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
+  return  svcs_dpi_hs_send4s(sockfd,h_trnx,Reg);
+}
 int svcs_dpi_hs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
-  return  svcs_dpi_hs_send_reg4s(sockfd,h_trnx,Reg);
+  return  svcs_dpi_hs_send4s(sockfd,h_trnx,Reg);
 }
 int svcs_dpi_hs_send_logicN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
-  return  svcs_dpi_hs_send_reg4s(sockfd,h_trnx,Reg);
+  return  svcs_dpi_hs_send4s(sockfd,h_trnx,Reg);
 }
 
-int svcs_dpi_hs_recv_reg4s (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
+int svcs_dpi_hs_recv4s (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
   int Result_;
-  //char* msg = "\nsvcs_dpi_hs_recv_reg4s";
+  //char* msg = "\nsvcs_dpi_hs_recv4s";
   Result_ = 1;
   svLogicVecVal* Reg_ =  (svLogicVecVal*)svGetArrayPtr((svOpenArrayHandle*)Reg);
   
@@ -491,46 +496,59 @@ int svcs_dpi_hs_recv_reg4s (const unsigned int sockfd,cs_header* h_trnx,svLogicV
  return Result_; 
 }
 
+int svcs_dpi_hs_recv_reg4s (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
+  return svcs_dpi_hs_recv4s (sockfd,h_trnx,Reg);
+}
+
 int svcs_dpi_hs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
-  return svcs_dpi_hs_recv_reg4s (sockfd,h_trnx,Reg);
+  return svcs_dpi_hs_recv4s (sockfd,h_trnx,Reg);
 }
 
 int svcs_dpi_hs_recv_logicN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
-  return svcs_dpi_hs_recv_reg4s (sockfd,h_trnx,Reg);
+  return svcs_dpi_hs_recv4s (sockfd,h_trnx,Reg);
 }
 
-int svcs_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBitVecVal* bitN) {
+int svcs_dpi_send_bitN  (const int sockfd,const int size,const svBitVecVal* bitN) {
   
   int Result_;
-  //char* msg = "\nsvcs_dpi_hs_send_bitN";
+  //char* msg = "\nsvcs_dpi_send_bitN";
   
   Result_ = 1;
   svBitVecVal* bitN_ =  (svBitVecVal*)svGetArrayPtr((svOpenArrayHandle*)bitN);
   
-  int Size_ =h_trnx->n_payloads / 32; 
-  if(h_trnx->n_payloads % 32 > 0) ++Size_;
+  int Size_ = size / 32; 
+  if(size % 32 > 0) ++Size_;
+  
   for(int i=0;i<Size_ ;i++) {
-    //printf("%s  bitN->aval=%x,bitN->bval=%x size=%0d (%0d/%0d) bits",msg,bitN_[i].aval,bitN_[i].bval,svSizeOfArray((svOpenArrayHandle*)bitN),Size_,h_trnx->n_payloads % 32);
+    //printf("%s  bitN=%x size=%0d (%0d/%0d) bits svDimension=%0d, svSize=%0d",msg,bitN_[i],svSizeOfArray((svOpenArrayHandle*)bitN),Size_,size,d,size_);
     if (svcs_dpi_send_int(sockfd, bitN_[i])<=0) Result_=0;
   }
   
-  return Result_;
+  return Result_;}
+
+int svcs_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBitVecVal* bitN) {
+  return  svcs_dpi_send_bitN  (sockfd,h_trnx->n_payloads,bitN); 
 }
- 
-int svcs_dpi_hs_recv_bitN  (const int sockfd,const cs_header* h_trnx,svBitVecVal* bitN) {
+
+ int svcs_dpi_recv_bitN  (const int sockfd,const int size,svBitVecVal* bitN) {
  int Result_;
-  //char* msg = "\nsvcs_dpi_hs_recv_bitN";
+  //char* msg = "\nsvcs_dpi_recv_bitN";
   Result_ = 1;
   svBitVecVal* bitN_ =  (svBitVecVal*)svGetArrayPtr((svOpenArrayHandle*)bitN);
   
-  int Size_ =h_trnx->n_payloads / 32; 
-  if(h_trnx->n_payloads % 32 > 0) ++Size_;
+  int Size_ =size / 32; 
+  if(size % 32 > 0) ++Size_;
   
   for(int i=0;i<Size_ ;i++) { 
     if (svcs_dpi_recv_int(sockfd,(int *)&(bitN_[i]))<=0) Result_=0 ; 
-    //printf("%s  bitN->aval=%x,bitN->bval=%x size=%0d (%0d/%0d) bits",msg,bitN_[i].aval,bitN_[i].bval,svSizeOfArray((svOpenArrayHandle*)bitN),Size_,h_trnx->n_payloads % 32);
+    //printf("%s  bitN->aval=%x,bitN->bval=%x size=%0d (%0d/%0d) bits",msg,bitN_[i].aval,bitN_[i].bval,svSizeOfArray((svOpenArrayHandle*)bitN),Size_,size % 32);
   } 
   
- return Result_; 
+  return Result_; 
+ }
+
+int svcs_dpi_hs_recv_bitN  (const int sockfd,const cs_header* h_trnx,svBitVecVal* bitN) {
+
+    return svcs_dpi_recv_bitN  (sockfd,h_trnx->n_payloads,bitN);
 }
 #endif /* SVCS_DPI_C_ */

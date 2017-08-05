@@ -190,7 +190,33 @@ int svcs_cs_send_intV (int sockid,const cs_header* h,const int* Int) {
   }
   return Result_;
 }
+int svcs_cs_send_shortV (int sockid,const cs_header* h,const short int * Short) {
+  int Result_=-1;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char *msg = "svcs_cs_send_shortV:: ";
+  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  if (h->data_type==  svcs_prim_hash("SVCS_SHORT")) {
+    for (int i=0;i< h->n_payloads;i++) {
+      //printf("\n %s ShortV[%0d]=%d",msg,i,Short[i]);
+      Result_ = svcs_prim_send_short(sockid,&Short[i]);
+    }
+  }
+  return Result_;
+}
 
+int svcs_cs_send_longV (int sockid,const cs_header* h,const long int * Long) {
+  int Result_=-1;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char *msg = "svcs_cs_send_longV:: ";
+  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  if (h->data_type==  svcs_prim_hash("SVCS_LONG")) {
+    for (int i=0;i< h->n_payloads;i++) {
+      //printf("\n %s LongV[%0d]=%d",msg,i,Long[i]);
+      Result_ = svcs_prim_send_long(sockid,&Long[i]);
+    }
+  }
+  return Result_;
+}
 
 int  svcs_cs_recv_intV    (int sockid,cs_header* h,int* Int) {
   int Result_=-1;
@@ -207,6 +233,35 @@ int  svcs_cs_recv_intV    (int sockid,cs_header* h,int* Int) {
   
 }
 
+int  svcs_cs_recv_shortV    (int sockid,cs_header* h,short int* Shortint) {
+  int Result_=-1;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char *msg = "svcs_cs_recv_shortintV:: ";
+  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  if (h->data_type == svcs_prim_hash("SVCS_SHORTINT")) {
+    for (int i=0;i< h->n_payloads;i++) {
+      Result_ = svcs_prim_recv_short(sockid,&Shortint[i]);
+      //printf("\n %s ShortintV[%0d]=%d",msg,i,Shortint[i]);
+    }
+  }
+  return Result_;
+  
+}
+
+int  svcs_cs_recv_longV    (int sockid,cs_header* h,long int* Longint) {
+  int Result_=-1;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char *msg = "svcs_cs_recv_longintV:: ";
+  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  if (h->data_type == svcs_prim_hash("SVCS_LONGINT")) {
+    for (int i=0;i< h->n_payloads;i++) {
+      Result_ = svcs_prim_recv_long(sockid,&Longint[i]);
+      //printf("\n %s LongintV[%0d]=%d",msg,i,Longint[i]);
+    }
+  }
+  return Result_;
+  
+}
 ////////////
 int svcs_cs_send_doubleV (int sockid,const cs_header* h,const double* Double) {
   int Result_=-1;

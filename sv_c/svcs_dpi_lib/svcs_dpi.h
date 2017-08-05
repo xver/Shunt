@@ -461,6 +461,7 @@ int svcs_dpi_hs_send_int  (int sockid,cs_header* h_trnx,svOpenArrayHandle Array)
 int svcs_dpi_hs_send_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
 int svcs_dpi_hs_send_real (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
 
+
 /*
   Function: svcs_dpi_hs_recv
   fetch data from TCP/IP socket
@@ -501,10 +502,12 @@ int svcs_dpi_hs_recv_real (int sockid,cs_header* h_trnx,svOpenArrayHandle** Arra
     
     see (svcs_prim_send_byte)
     */
+int svcs_dpi_hs_send4s      (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
 int svcs_dpi_hs_send_reg4s  (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
 int svcs_dpi_hs_send_regN   (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
 int svcs_dpi_hs_send_logicN (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
 int svcs_dpi_send_time      (const unsigned int sockfd,svLogicVecVal* Time);
+
 
 /*
     Function: svcs_dpi_hs_recv_reg4s
@@ -520,6 +523,7 @@ int svcs_dpi_send_time      (const unsigned int sockfd,svLogicVecVal* Time);
     
     see (svcs_prim_recv_byte)
     */
+int svcs_dpi_hs_recv4s       (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
 int svcs_dpi_hs_recv_reg4s   (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
 int svcs_dpi_hs_recv_regN    (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
 int svcs_dpi_hs_recv_logicN  (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
@@ -537,8 +541,8 @@ int svcs_dpi_recv_time       (const unsigned int sockfd,svLogicVecVal* Time);
     Returns: 
     number of bytes have been sent : success > 0
     */
-int svcs_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBitVecVal* bitN);
-   
+int svcs_dpi_send_bitN  (const int sockfd,const int size,const svBitVecVal* bitN);
+int svcs_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBitVecVal* bitN);   
    /*
     Functions: svcs_dpi_hs_recv_bitN
     map bit[N:0] 2-state data type packed array of scalar bit types
@@ -551,6 +555,6 @@ int svcs_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBit
     Returns: 
     number of bytes have been recv : success > 0
     */
+int svcs_dpi_recv_bitN     (const int sockfd,const int size,svBitVecVal* bitN);
 int svcs_dpi_hs_recv_bitN  (const int sockfd,const cs_header* h_trnx,svBitVecVal* bitN);
-
 #endif /* SVCS_DPI_H_ */
