@@ -43,6 +43,8 @@ module automatic svtest_sv2c_server;
 	if (!Socket) Pass=0;
 	$display("\tsvtest_sv2c_server: socket=%0d",Socket);
 	print_status(Test_name,Pass);
+	
+
 	///////////////////////////
 	Test_name = "\tshort loopback";
 	Pass=short_loopback_test(Socket);
@@ -103,14 +105,30 @@ module automatic svtest_sv2c_server;
 	Test_name = "\trealtime_loopback";
 	Pass=realtime_loopback_test(Socket);
 	print_status(Test_name,Pass);
-	///////////////////////////
+	
+  	///////////////////////////
 	Test_name = "\tstring_loopback";
 	Pass=string_loopback_test(Socket);
 	print_status(Test_name,Pass);
-		
-	Test_name = "svtest_sv2c_server";
+	///////////////////////////
+	Test_name = "\tshortV loopback";
+	Pass=shortV_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\tlongV loopback";
+	Pass=longV_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\trealV loopback";
+	Pass=realV_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\tshortrealV loopback";
+	Pass=shortrealV_loopback_test(Socket);
 	print_status(Test_name,Pass);
 	
+	Test_name = "svtest_sv2c_server";
+	print_status(Test_name,Pass);
      end
    
    function int init_server(int portno);
@@ -355,7 +373,7 @@ module automatic svtest_sv2c_server;
 	 //set up header
 	 h_trnx_exp.trnx_type = $urandom;
 	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = svcs_dpi_hash("SVCS_BITN");
+	 h_trnx_exp.data_type = svcs_dpi_hash("SVCS_BIT");
 	 h_trnx_exp.n_payloads = N;
 	 
 	 //send
@@ -509,14 +527,106 @@ module automatic svtest_sv2c_server;
 	 String_act = `STRING_MESSAGE1;
 	 success =1;
 	 if(!svcs_dpi_send_string(socket_id,String_exp.len(),String_exp))  success =0;
-	 success = svcs_dpi_send_string(socket_id,String_exp.len(),String_exp);
 	 if(!svcs_dpi_recv_string(socket_id,String_exp.len(),String_act))  success =0;
 	 if(String_act != String_exp) success =0;
 	 
-	 $display("\n %s String_act=\n%s vs \n%s",s_me, String_act, String_exp);
+	 //$display("\n %s String_act=\n%s vs \n%s",s_me, String_act, String_exp);
 	 return  success;
       end
      endfunction : string_loopback_test
+   
+   function int shortV_loopback_test(int socket_id);
+      begin
+	 int success;
+	 int i;
+         shortint ShortV_exp[`V_SIZE];
+	 shortint ShortV_act[`V_SIZE];
+	 string   s_me = "shortV_loopback_test";
+	 success =1;
+	 
+	 foreach(ShortV_exp[i]) ShortV_exp[i] = 100+(i+1);
+	 foreach(ShortV_act[i]) ShortV_act[i] = 300+(i+1);
+	 if(!svcs_dpi_send_shortV(socket_id,`V_SIZE,ShortV_exp)) success =0;
+	 if(!svcs_dpi_recv_shortV(socket_id,`V_SIZE,ShortV_act)) success =0;
+	 foreach(ShortV_exp[i]) if(ShortV_act[i] != ShortV_exp[i]) success =0;
+	 //foreach(ShortV_exp[i]) $display("\n %s (%0d) ShortV_act=%d vs %d",s_me,i,ShortV_act[i], ShortV_exp[i]); 
+	 return  success;
+      end
+   endfunction : shortV_loopback_test
+    
+   function int longV_loopback_test(int socket_id);
+      begin
+	 int success;
+	 int i;
+         longint LongV_exp[`V_SIZE];
+	 longint LongV_act[`V_SIZE];
+	 string   s_me = "longV_loopback_test";
+	 success =1;
+	 
+	 foreach(LongV_exp[i]) LongV_exp[i] = 100+(i+1);
+	 foreach(LongV_act[i]) LongV_act[i] = 300+(i+1);
+	 if(!svcs_dpi_send_longV(socket_id,`V_SIZE,LongV_exp)) success =0;
+	 if (success == 0 )  $display("\nserver: fail send data");
+	 if(!svcs_dpi_recv_longV(socket_id,`V_SIZE,LongV_act)) success =0;
+	 if (success == 0 )  $display("\nserver: fail recv data");
+	 foreach(LongV_exp[i]) if(LongV_act[i] != LongV_exp[i]) success =0;
+	 //foreach(LongV_exp[i]) $display("\n %s (%0d) LongV_act=%d vs %d",s_me,i,LongV_act[i], LongV_exp[i]); 
+	 return  success;
+      end
+   endfunction : longV_loopback_test
+
+   function int realV_loopback_test(int socket_id,int n_payloads=1);
+      begin
+	 int success;
+	 int i;
+         real RealV_exp[`V_SIZE];
+	 real RealV_act[`V_SIZE];
+         string Test_name = "server realV_loopback_test";
+	 success =1;
+	 
+	 for(int i=0;i<`V_SIZE;i++) RealV_exp[i] = 300.123+i;
+	 //for(int i=0;i<`V_SIZE;i++) $display("\nRealV_exp[%0d]=%c",i,RealV_exp[i]);
+	 //RealV_act[0] = 'h69;
+	 
+	 if (svcs_dpi_send_realV  (socket_id,`V_SIZE,RealV_exp)<= 0) success = 0;
+	 if (success == 0 )  $display("\nserver: fail send data");
+	 if (svcs_dpi_recv_realV(socket_id,`V_SIZE,RealV_act)<= 0) success = 0;
+	 if (success == 0 )  $display("\nserver: fail recv data");
+	 //foreach (RealV_exp[i])$display("\n%s RealV_exp[%0d]=%f  RealV_act[%0d]=%f",Test_name,i,RealV_exp[i],i,RealV_act[i]);
+	 foreach (RealV_exp[i])if (RealV_exp[i] != RealV_act[i])success=0;
+         return  success;	 
+      end
+   endfunction : realV_loopback_test
+  
+   function int shortrealV_loopback_test(int socket_id,int n_payloads=1);
+      begin
+	 int success;
+	 int i;
+         shortreal ShortrealV_exp[`V_SIZE];
+	 shortreal ShortrealV_act[`V_SIZE];
+         string Test_name = "server shortrealV_loopback_test";
+	 success =1;
+	 
+	 for(int i=0;i<`V_SIZE;i++) ShortrealV_exp[i] = 540.123+i;
+	 //for(int i=0;i<`V_SIZE;i++) $display("\nShortrealV_exp[%0d]=%c",i,ShortrealV_exp[i]);
+	 //ShortrealV_act[0] = 'h69;
+	 
+	 if (svcs_dpi_send_shortrealV  (socket_id,`V_SIZE,ShortrealV_exp)<= 0) success = 0;
+	 if (success == 0 )  $display("\nserver: fail send data");
+	 if (svcs_dpi_recv_shortrealV(socket_id,`V_SIZE,ShortrealV_act)<= 0) success = 0;
+	 if (success == 0 )  $display("\nserver: fail recv data");
+	 //foreach (ShortrealV_exp[i])$display("\n%s ShortrealV_exp[%0d]=%f  ShortrealV_act[%0d]=%f",Test_name,i,ShortrealV_exp[i],i,ShortrealV_act[i]);
+	 foreach (ShortrealV_exp[i])  begin 
+	    real zero_ = 0;
+	    zero_ = ShortrealV_exp[i] - ShortrealV_act[i];
+	    if (zero_ < 0)  zero_ = ShortrealV_act[i] - ShortrealV_exp[i];
+	    if (zero_ > 0.0001) success=0;
+	 end
+	 if (success == 0 )  $display("\nserver: fail comp data");
+         return  success;	 
+      end
+   endfunction : shortrealV_loopback_test
+
    
    ////////////////////////////////////////////
 /* -----\/----- EXCLUDED -----\/-----

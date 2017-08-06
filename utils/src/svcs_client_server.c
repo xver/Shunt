@@ -190,12 +190,13 @@ int svcs_cs_send_intV (int sockid,const cs_header* h,const int* Int) {
   }
   return Result_;
 }
+
 int svcs_cs_send_shortV (int sockid,const cs_header* h,const short int * Short) {
   int Result_=-1;
   //SVCV_INSTR_HASH_INDEX_DEFINE;
   //char *msg = "svcs_cs_send_shortV:: ";
   //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
-  if (h->data_type==  svcs_prim_hash("SVCS_SHORT")) {
+  if (h->data_type==  svcs_prim_hash("SVCS_SHORTINT")) {
     for (int i=0;i< h->n_payloads;i++) {
       //printf("\n %s ShortV[%0d]=%d",msg,i,Short[i]);
       Result_ = svcs_prim_send_short(sockid,&Short[i]);
@@ -209,7 +210,7 @@ int svcs_cs_send_longV (int sockid,const cs_header* h,const long int * Long) {
   //SVCV_INSTR_HASH_INDEX_DEFINE;
   //char *msg = "svcs_cs_send_longV:: ";
   //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
-  if (h->data_type==  svcs_prim_hash("SVCS_LONG")) {
+  if (h->data_type==  svcs_prim_hash("SVCS_LONGINT")) {
     for (int i=0;i< h->n_payloads;i++) {
       //printf("\n %s LongV[%0d]=%d",msg,i,Long[i]);
       Result_ = svcs_prim_send_long(sockid,&Long[i]);
@@ -262,7 +263,7 @@ int  svcs_cs_recv_longV    (int sockid,cs_header* h,long int* Longint) {
   return Result_;
   
 }
-////////////
+// **********************************************
 int svcs_cs_send_doubleV (int sockid,const cs_header* h,const double* Double) {
   int Result_=-1;
   
@@ -273,7 +274,6 @@ int svcs_cs_send_doubleV (int sockid,const cs_header* h,const double* Double) {
   }
   return Result_;
 }
-
 
 int  svcs_cs_recv_doubleV    (int sockid,cs_header* h,double* Double) {
   int Result_=-1;
@@ -303,7 +303,31 @@ void svcs_cs_print_doubleV   (cs_header* h,double *Double,char* msg) {
     }
   }
 }
+// ******************************************************
+///////////////////////////
+int svcs_cs_send_floatV (int sockid,const cs_header* h,const float* Float) {
+  int Result_=-1;
+  
+  if (h->data_type ==  svcs_prim_hash("SVCS_SHORTREAL")) {
+    for (int i=0;i< h->n_payloads;i++) {
+      Result_ = svcs_prim_send_float(sockid,&Float[i]);
+    }
+  }
+  return Result_;
+}
 
+int  svcs_cs_recv_floatV    (int sockid,cs_header* h,float* Float) {
+  int Result_=-1;
+  
+  if (h->data_type ==  svcs_prim_hash("SVCS_SHORTREAL")) {
+    for (int i=0;i< h->n_payloads;i++) {
+      Result_ = svcs_prim_recv_float(sockid,&Float[i]);
+    }
+  }
+  return Result_;
+  
+}
+///////////////////////////
 int svcs_cs_send_byteV   (int sockid,const cs_header* h,const char* byteV) {
 	int Result_=-1;
 	char B_ = 0;
@@ -518,6 +542,46 @@ int svcs_cs_comp_byteA   (int n_payloads,cs_data_header* h,char *lhs,char *rhs) 
     }
   }
   return success;
+}
+
+int svcs_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* BitN) {
+  int Result_=-1;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char *msg = "svcs_cs_send_BitN:: ";
+  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  int Size_ =   h->n_payloads/ 32; 
+  
+  if(h->n_payloads % 32 > 0) ++Size_; 
+  
+  int* BitN_  = (int*) BitN;  
+  
+  if (h->data_type==  svcs_prim_hash("SVCS_BIT")) {
+    for (int i=0;i<Size_;i++) {
+      //printf("\n %s Bitn_[%0d]=%d",msg,i,BitN_[i]);
+      Result_ = svcs_prim_send_int(sockid,&BitN_[i]);
+    }
+  }
+  return Result_;
+}
+
+int svcs_cs_recv_bitN (int sockid,const cs_header* h,svBitVecVal* BitN) {
+  int Result_=-1;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char *msg = "svcs_cs_recv_BitN:: ";
+  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  
+  int Size_ =   h->n_payloads/ 32; 
+  if(h->n_payloads % 32 > 0) ++Size_; 
+  
+  int* BitN_  = (int*) BitN;  
+  
+  if (h->data_type==  svcs_prim_hash("SVCS_BIT")) {
+    for (int i=0;i<Size_;i++) {
+      Result_ = svcs_prim_recv_int(sockid,&BitN_[i]);
+      //printf("\n %s Bitn_[%0d]=%d",msg,i,BitN_[i]); 
+    }
+  }
+  return Result_;
 }
 ////////////
 #endif

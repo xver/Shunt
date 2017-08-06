@@ -69,6 +69,10 @@ unsigned int svcs_dpi_server_init(const unsigned int portno);
    see (vcs_prim_send_short)
 */
 int svcs_dpi_send_short  (const int sockfd,const short int Short);
+
+
+
+
 /*
  Function: svcs_dpi_recv_short
   fetch verilog"shortint"/C "short int" data from TCP/IP socket
@@ -83,6 +87,38 @@ int svcs_dpi_send_short  (const int sockfd,const short int Short);
     see (svcs_prim_recv_in)
 */
 int svcs_dpi_recv_short  (int sockfd,short int* Short);
+
+/*
+ Function: svcs_dpi_send_long
+  send verilog"longint" /C "long int" data over TCP/IP
+
+  Parameters:
+   sockfd - socket id
+   Long  -   data
+
+  Returns:
+   number of bytes have been sent : success > 0
+   see (vcs_prim_send_long)
+*/
+int svcs_dpi_send_long  (const int sockfd,const long int Long);
+
+
+
+
+/*
+ Function: svcs_dpi_recv_long
+  fetch verilog"longint"/C "long int" data from TCP/IP socket
+
+  Parameters:
+   sockfd - socket id
+   Long - data from socket
+
+  Returns:
+    number of bytes have been received  : success > 0
+
+    see (svcs_prim_recv_in)
+*/
+int svcs_dpi_recv_long  (int sockfd,long int* Long);
 
 /*
  Function: svcs_dpi_send_int
@@ -183,7 +219,7 @@ int svcs_dpi_recv_bit     (const unsigned int sockfd,svBit* Bit);
 int svcs_dpi_recv_reg     (const unsigned int sockfd,svLogic* Reg);
 int svcs_dpi_reccv_logic  (const unsigned int sockfd,svLogic* Logic);
 /*
-  Function: svcs_dpi_send_intV
+  Function: svcs_dpi_send_intV,svcs_dpi_send_shortV
   send SVCS transaction with "int" elements vector over TCP/IP
   
   Parameters:
@@ -197,7 +233,7 @@ int svcs_dpi_reccv_logic  (const unsigned int sockfd,svLogic* Logic);
   see ( svcs_cs_send_intV )
 */
 int svcs_dpi_send_intV   (int sockid, const int size,const svOpenArrayHandle Int);
-
+int svcs_dpi_send_shortV   (int sockid, const int size,const svOpenArrayHandle Int);
 /*
  Function: svcs_dpi_send_byte4s
   send verilog "reg[7:0] 4 state aval,bval" over TCP/IP
@@ -322,7 +358,38 @@ int svcs_dpi_send_realV   (int sockid,const int size,const svOpenArrayHandle Rea
   see ( svcs_cs_recv_doubleV )
 */
 int svcs_dpi_recv_realV   (int sockid,int size,svOpenArrayHandle Real);
+/////////////////////////////////
+/*
+  Function: svcs_dpi_send_shortrealV
+  send SVCS transaction with "shortreal" elements vector over TCP/IP
+  
+  Parameters:
+  sockid - socket id
+  size - number of vector elements
+  Shortreal - data
+  
+  Returns:
+  number of elements have been sent  : success > 0
 
+  see ( svcs_cs_send_doubleV )
+*/
+int svcs_dpi_send_shortrealV   (int sockid,const int size,const svOpenArrayHandle Shortreal);
+
+/*
+  Function: svcs_dpi_recv_shortrealV
+  fetch SVCS transaction with "shortreal" elements vector from TCP/IP
+  
+  Parameters:
+  sockid - socket id
+  size - number of vector elements
+  Shortreal  - Data received
+  
+  Returns:
+  number of elements have been received  : success > 0
+
+  see ( svcs_cs_recv_doubleV )
+*/
+//////////////////////////////////
 
 /*
   Function: svcs_dpi_send_string

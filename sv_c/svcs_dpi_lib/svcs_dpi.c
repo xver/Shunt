@@ -175,6 +175,7 @@ int svcs_dpi_recv_shortreal(const  unsigned int sockfd,float* Real) {
 }
 
 ////Direct send/recv  
+//*****************************************
 int svcs_dpi_send_intV(int sockid, const int size,const svOpenArrayHandle Int){
   cs_header h_ ;
   //SVCV_INSTR_HASH_INDEX_DEFINE;
@@ -196,6 +197,7 @@ int svcs_dpi_send_intV(int sockid, const int size,const svOpenArrayHandle Int){
   return Result_;
 }
 
+
 int svcs_dpi_recv_intV(int sockid,int size,svOpenArrayHandle Int) {
   cs_header h_;
   //SVCV_INSTR_HASH_INDEX_DEFINE;
@@ -212,7 +214,7 @@ int svcs_dpi_recv_intV(int sockid,int size,svOpenArrayHandle Int) {
   h_.n_payloads = size;
   //svcs_cs_print_header (&h_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
   Result_ = svcs_cs_recv_intV(sockid,&h_,Int_);
-  //svcs_cs_print_intV(&h_,Int_,msg);
+  //for(int i=0;i<size;i++) printf("%s Int_[%0d]=%s of %d\n",msg,Int_[i]);
   return Result_;
 }
 
@@ -221,7 +223,93 @@ void svcs_dpi_print_intV(cs_header* h,int *Int,char* msg) {
   svcs_cs_print_intV(h,Int,msg);
   //return Result_;
 }
+// ****************************************************
 
+int svcs_dpi_send_shortV(int sockid, const int size,const svOpenArrayHandle Int){
+  cs_header h_ ;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char* msg = "\nsvcs_dpi_send_shortV:";
+  
+#ifndef C_TEST
+  short int* Short_= (short int *) svGetArrayPtr(Int); 
+#else
+  short int* Short_= (short int *) Int;
+#endif
+  int Result_ =0;
+  h_.trnx_type = rand();
+  h_.trnx_id   = rand();
+  h_.data_type  = svcs_prim_hash("SVCS_SHORTINT");
+  h_.n_payloads = size;
+  //svcs_cs_print_header (&h_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  //for(int i=0;i<size;i++) printf("%s Short_[%0d]=%0d of %0d\n",msg,i,Short_[i],size);
+  Result_ = svcs_cs_send_shortV(sockid,&h_,Short_);
+  return Result_;
+}
+
+
+int svcs_dpi_recv_shortV(int sockid,int size,svOpenArrayHandle Int) {
+  cs_header h_;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char* msg = "\nsvcs_dpi_recv_shortV:";
+#ifndef C_TEST
+   short int* Short_ = (short int *) svGetArrayPtr(Int);
+#else
+   short int* Short_= (short int *) Int;
+#endif
+  int Result_ =0;
+  h_.trnx_type = rand();
+  h_.trnx_id   = rand();
+  h_.data_type  = svcs_prim_hash("SVCS_SHORTINT");
+  h_.n_payloads = size;
+  //svcs_cs_print_header (&h_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  Result_ = svcs_cs_recv_shortV(sockid,&h_,Short_);
+  //for(int i=0;i<size;i++) printf("%s Short_[%0d]=%0d of %0d\n",msg,i,Short_[i],size);
+  return Result_;
+}
+// ****************************************************
+////////////////////////////////
+int svcs_dpi_send_longV(int sockid, const int size,const svOpenArrayHandle Int){
+  cs_header h_ ;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char* msg = "\nsvcs_dpi_send_longV:";
+  
+#ifndef C_TEST
+  long int* Long_= (long int *) svGetArrayPtr(Int); 
+#else
+  long int* Long_= (long int *) Int;
+#endif
+  int Result_ =0;
+  h_.trnx_type = rand();
+  h_.trnx_id   = rand();
+  h_.data_type  = svcs_prim_hash("SVCS_LONGINT");
+  h_.n_payloads = size;
+  //svcs_cs_print_header (&h_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  //for(int i=0;i<size;i++) printf("%s Long_[%0d]=%0d of %0d\n",msg,i,Long_[i],size);
+  Result_ = svcs_cs_send_longV(sockid,&h_,Long_);
+  return Result_;
+}
+
+
+int svcs_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int) {
+  cs_header h_;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char* msg = "\nsvcs_dpi_recv_longV:";
+#ifndef C_TEST
+   long int* Long_ = (long int *) svGetArrayPtr(Int);
+#else
+   long int* Long_= (long int *) Int;
+#endif
+  int Result_ =0;
+  h_.trnx_type = rand();
+  h_.trnx_id   = rand();
+  h_.data_type  = svcs_prim_hash("SVCS_LONGINT");
+  h_.n_payloads = size;
+  //svcs_cs_print_header (&h_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  Result_ = svcs_cs_recv_longV(sockid,&h_,Long_);
+  //for(int i=0;i<size;i++) printf("%s Long_[%0d]=%0d of %0d\n",msg,i,Long_[i],size);
+  return Result_;
+}
+////////////////////////////////
 ////Direct send/recv  
 int svcs_dpi_send_realV(int sockid, const int size,const svOpenArrayHandle Real) {
   cs_header h_ ;
@@ -230,7 +318,7 @@ int svcs_dpi_send_realV(int sockid, const int size,const svOpenArrayHandle Real)
 #ifndef C_TEST
   double* Real_ = (double *) svGetArrayPtr(Real);
 #else
-  int* Real_= (int *) Real;
+  int* Real_= (double *) Real;
 #endif
   int Result_ =0;
   h_.trnx_type = rand();
@@ -250,7 +338,7 @@ int svcs_dpi_recv_realV(int sockid,int size,svOpenArrayHandle Real) {
 #ifndef C_TEST
   double* Real_ = (double *) svGetArrayPtr(Real);
 #else
-  int* Real_= (int *) Real;
+  int* Real_= (double *) Real;
 #endif
   int Result_ =0;
   h_.trnx_type = rand();
@@ -262,7 +350,47 @@ int svcs_dpi_recv_realV(int sockid,int size,svOpenArrayHandle Real) {
   //svcs_cs_print_realV(&h_,Real_,msg);
   return Result_;
 }
+////////////////////////////////////////
+int svcs_dpi_send_shortrealV(int sockid, const int size,const svOpenArrayHandle Shortreal) {
+  cs_header h_ ;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char* msg = "\nsvcs_dpi_send_shortrealV:";
+#ifndef C_TEST
+  float* Shortreal_ = (float *) svGetArrayPtr(Shortreal);
+#else
+  int* Shortreal_= (float *) Shortreal;
+#endif
+  int Result_ =0;
+  h_.trnx_type = rand();
+  h_.trnx_id   = rand();
+  h_.data_type  = svcs_prim_hash("SVCS_SHORTREAL");
+  h_.n_payloads = size;
+  //svcs_cs_print_header (&h_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  //svcs_cs_print_shortrealV(&h_,Shortreal_,msg);
+  Result_ = svcs_cs_send_floatV(sockid,&h_,Shortreal_);
+  return Result_;
+}
 
+int svcs_dpi_recv_shortrealV(int sockid,int size,svOpenArrayHandle Shortreal) {
+  cs_header h_;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char* msg = "\nsvcs_dpi_recv_shortrealV:";
+#ifndef C_TEST
+  float* Shortreal_ = (float *) svGetArrayPtr(Shortreal);
+#else
+  int* Shortreal_= (float *) Shortreal;
+#endif
+  int Result_ =0;
+  h_.trnx_type = rand();
+  h_.trnx_id   = rand();
+  h_.data_type  = svcs_prim_hash("SVCS_SHORTREAL");
+  h_.n_payloads = size;
+  //svcs_cs_print_header (&h_,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  Result_ = svcs_cs_recv_floatV(sockid,&h_,Shortreal_);
+  //svcs_cs_print_shortrealV(&h_,Shortreal_,msg);
+  return Result_;
+}
+////////////////////////////////////////
 ////Direct send/recv  
 
 int svcs_dpi_send_string(int sockid,int size,char* string) {
@@ -527,7 +655,8 @@ int svcs_dpi_send_bitN  (const int sockfd,const int size,const svBitVecVal* bitN
   return Result_;}
 
 int svcs_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBitVecVal* bitN) {
-  return  svcs_dpi_send_bitN  (sockfd,h_trnx->n_payloads,bitN); 
+  svBitVecVal* bitN_ =  (svBitVecVal*)svGetArrayPtr((svOpenArrayHandle*)bitN);
+  return  svcs_cs_send_bitN  (sockfd,h_trnx,bitN_); 
 }
 
  int svcs_dpi_recv_bitN  (const int sockfd,const int size,svBitVecVal* bitN) {
@@ -548,7 +677,7 @@ int svcs_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBit
  }
 
 int svcs_dpi_hs_recv_bitN  (const int sockfd,const cs_header* h_trnx,svBitVecVal* bitN) {
-
-    return svcs_dpi_recv_bitN  (sockfd,h_trnx->n_payloads,bitN);
+    svBitVecVal* bitN_ =  (svBitVecVal*)svGetArrayPtr((svOpenArrayHandle*)bitN);
+    return svcs_cs_recv_bitN  (sockfd,h_trnx,bitN_);
 }
 #endif /* SVCS_DPI_C_ */

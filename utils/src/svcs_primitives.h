@@ -28,7 +28,7 @@ Data Types: integer,  double
 #include <netdb.h>
 #include <time.h>
 #include <stdarg.h>
-
+#include <stdint.h>
 
 //-------------
 //prototypes

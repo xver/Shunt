@@ -16,12 +16,18 @@
 
 #include "svcs_user_api.h"
 
+
+
+
 int svcs_api_send    (int sockid,cs_header* h_trnx,...) {
   
   SVCV_INSTR_HASH_INDEX_DEFINE;
   
   cs_data_header * h_data_;
-  int* Int_;
+
+  int*        Int_;
+  short int*  Short_;
+
   double* Double_;
   char* String_;
   va_list ap;
@@ -53,6 +59,12 @@ int svcs_api_send    (int sockid,cs_header* h_trnx,...) {
     Int_ = va_arg (ap,int* );
     if (main_data_type_ !=  SVCS_A_STRUCTURE)  Result_ = svcs_cs_send_intV(sockid,h_trnx,Int_);
     else   Result_ = svcs_cs_send_intA(sockid,h_trnx->n_payloads,h_data_,Int_);
+    break;
+
+  case SVCS_SHORTINT: 
+    Short_ = va_arg (ap,short* );
+    if (main_data_type_ !=  SVCS_A_STRUCTURE)  Result_ = svcs_cs_send_shortV(sockid,h_trnx,Short_);
+    //else   Result_ = svcs_cs_send_shortA(sockid,h_trnx->n_payloads,h_data_,Short_);
     break;
     
   case  SVCS_REAL :

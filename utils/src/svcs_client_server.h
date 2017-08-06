@@ -26,8 +26,24 @@
 
 #include "svcs_primitives.h"
 
+#ifndef INCLUDED_SVDPI
+
+typedef uint8_t svScalar;
+typedef svScalar svLogic; /* scalar */
+typedef svScalar svBit; /* scalar */
+typedef uint32_t svBitVecVal;
+
+typedef struct t_vpi_vecval {
+  uint32_t a;
+  uint32_t b;
+} s_vpi_vecval;
+typedef s_vpi_vecval svLogicVecVal;
+
+#endif
+
 typedef enum {SVCS_INT,SVCS_REAL,SVCS_SHORTREAL,SVCS_STRING,SVCS_A_STRUCTURE,SVCS_INTEGER,SVCS_BYTE,SVCS_REG,SVCS_BIT,SVCS_SHORTINT,SVCS_LONGINT,SVCS_HEADER_ONLY} SVCV_INSTR_ENUM;
 #define SVCV_INSTR_HASH_INDEX_DEFINE char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_INT","SVCS_REAL","SVCS_SHORTREAL","SVCS_STRING","SVCS_A_STRUCTURE","SVCS_INTEGER","SVCS_BYTE","SVCS_REG","SVCS_BIT","SVCS_SHORTINT","SVCS_LONGINT","SVCS_HEADER_ONLY"}
+
 
 
 //-------------
@@ -372,7 +388,36 @@ int svcs_cs_comp_doubleV   (cs_header* h,double *lhs,double *rhs);
   void
 */
 void svcs_cs_print_doubleV   (cs_header* h,double *Double,char* msg);
+////////////////
+/*
+  Function: svcs_cs_send_floatV
+  send SVCS transaction with "float" elements vector over TCP/IP
+  
+  Parameters:
+  sockid - socket id
+  header - cs_header structure
+  Float - data
+  
+  Returns:
+  number of elements have been sent  : success > 0
+*/
+int svcs_cs_send_floatV   (int sockid,const cs_header* header,const float* Float);
 
+/*
+  Function: svcs_cs_recv_floatV
+  fetch SVCS transaction with "float" elements vector from TCP/IP
+  
+  Parameters:
+  sockid - socket id
+  header - cs_header structure
+  Float  - Data received
+  
+  Returns:
+  number of elements have been received  : success > 0
+*/
+int svcs_cs_recv_floatV   (int sockid,cs_header* header,float* Float);
+
+///////////////
 /*
   Function: svcs_cs_send_byteV
   send SVCS transaction with verilog byteV/string/C char* elements over TCP/IP
@@ -633,4 +678,31 @@ void svcs_cs_print_byteA   (int n_payloads,cs_data_header* h,char *Byte,char* ms
   success > 0
 */
 int svcs_cs_comp_byteA   (int n_payloads,cs_data_header* h,char *lhs,char *rhs);
+
+/*
+    Functions: svcs_dpi_cs_send_bitN
+    map bit[N:0]  2-state data type packed array of scalar bit types
+    LRM 6.11 
+        
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* bitN) ;
+  /*
+    Functions: svcs_dpi_cs_recv_bitN
+    map bit[N:0] 2-state data type packed array of scalar bit types
+    LRM  6.11 
+            
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+int svcs_dpi_cs_bitN     (int sockid,const cs_header* h,svBitVecVal* bitN);
 #endif

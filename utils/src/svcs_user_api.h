@@ -30,9 +30,27 @@
   Function: svcs_api_send
   
   send data over TCP/IP.
-  Supported data types are:
-  int , intV ,IntA ,double ,doublev ,DoubleA,string,stringA 
+  Supported cs_header_t data_types and corresponding verilog data types are:
   
+  Integer 2 states:
+  SVCS_INT         - int
+  SVCS_SHORTINT    - shortint
+  SVCS_LONGINT     - longint
+  SVCS_BYTE        - byte
+  SVCS_BIT         - bit
+  
+  Integer 4 states:
+  SVCS_INTEGER     - integer,time
+  SVCS_REG         - reg,logic
+  
+  Non_integer_type IEEE 754:  
+  SVCS_REAL        - real,realtime
+  SVCS_SHORTREAL   - shortreal
+  SVCS_STRING      - string
+  
+  SVCS_A_STRUCTURE - complex data types/user defined data types : arrays/struct,union,enums
+  SVCS_HEADER_ONLY - cs_header_t header only. 
+ 
   Parameters:
   
   Perm parameters:  
@@ -53,9 +71,27 @@ int svcs_api_send    (int sockid,cs_header* h_trnx, ...);
 /*
   Function: svcs_api_recv
   fetch data from TCP/IP socket
-  Supported data types are:
-  int , intV ,IntA ,double ,doublev ,DoubleA,string,stringA 
   
+  Supported cs_header_t data_types and corresponding verilog data types are:
+  
+  Integer 2 states:
+  SVCS_INT         - int
+  SVCS_SHORTINT    - shortint
+  SVCS_LONGINT     - longint
+  SVCS_BYTE        - byte
+  SVCS_BIT         - bit
+  
+  Integer 4 states:
+  SVCS_INTEGER     - integer,time
+  SVCS_REG         - reg,logic
+  
+  Non integer types IEEE 754:  
+  SVCS_REAL        - real,realtime
+  SVCS_SHORTREAL   - shortreal
+  SVCS_STRING      - string
+  
+  SVCS_A_STRUCTURE - complex data types/user defined data types : arrays/struct,union,enums
+  SVCS_HEADER_ONLY - cs_header_t header only. 
   Parameters:
   
   Perm parameters:  
