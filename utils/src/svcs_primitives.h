@@ -30,6 +30,21 @@ Data Types: integer,  double
 #include <stdarg.h>
 #include <stdint.h>
 
+#ifndef INCLUDED_SVDPI
+
+typedef uint8_t svScalar;
+typedef svScalar svLogic; /* scalar */
+typedef svScalar svBit; /* scalar */
+typedef uint32_t svBitVecVal;
+
+typedef struct t_vpi_vecval {
+uint32_t aval;
+uint32_t bval;
+} s_vpi_vecval, *p_vpi_vecval;
+typedef s_vpi_vecval svLogicVecVal;
+
+#endif
+
 //-------------
 //prototypes
 //-------------
@@ -214,7 +229,7 @@ int svcs_prim_recv_float    (const int sockfd,float* Float);
     number of bytes have been sent : success > 0
 */
 
-int svcs_prim_send_short    (const int sockfd,const short int* Short);
+int svcs_prim_send_short (const int sockfd,const short int* Short);
 
 /*
   Function: svcs_prim_recv_short
@@ -286,5 +301,33 @@ int svcs_prim_send_byte    (const int sockfd,const char* Byte);
 */
 int svcs_prim_recv_byte    (const int sockfd,char* Byte);
 
+/*
+ Function: svcs_dpi_send_int4s
+  send  verilog "reg[31:0] 4 state aval,bval" over TCP/IP
 
+  Parameters:
+   sockfd - socket id
+   Int  -   data
+
+  Returns:
+   number of bytes have been sent : success > 0
+   see (vcs_prim_send_int)
+
+*/
+int svcs_prim_send_integer(const unsigned int sockfd,const svLogicVecVal* Int);
+
+/*
+ Function: svcs_dpi_recv_int
+  fetch verilog "reg[31:0] 4 state aval,bval" from TCP/IP
+
+  Parameters:
+   sockfd - socket id
+   Int - data from socket
+
+  Returns:
+    number of bytes have been received  : success > 0
+
+    see (svcs_prim_recv_in)
+*/
+int svcs_prim_recv_integer (const unsigned int sockfd,svLogicVecVal* Int);
 #endif

@@ -26,20 +26,7 @@
 
 #include "svcs_primitives.h"
 
-#ifndef INCLUDED_SVDPI
 
-typedef uint8_t svScalar;
-typedef svScalar svLogic; /* scalar */
-typedef svScalar svBit; /* scalar */
-typedef uint32_t svBitVecVal;
-
-typedef struct t_vpi_vecval {
-  uint32_t a;
-  uint32_t b;
-} s_vpi_vecval;
-typedef s_vpi_vecval svLogicVecVal;
-
-#endif
 
 typedef enum {SVCS_INT,SVCS_REAL,SVCS_SHORTREAL,SVCS_STRING,SVCS_A_STRUCTURE,SVCS_INTEGER,SVCS_BYTE,SVCS_REG,SVCS_BIT,SVCS_SHORTINT,SVCS_LONGINT,SVCS_HEADER_ONLY} SVCV_INSTR_ENUM;
 #define SVCV_INSTR_HASH_INDEX_DEFINE char* SVCV_INSTR_ENUM_NAMES[] = {"SVCS_INT","SVCS_REAL","SVCS_SHORTREAL","SVCS_STRING","SVCS_A_STRUCTURE","SVCS_INTEGER","SVCS_BYTE","SVCS_REG","SVCS_BIT","SVCS_SHORTINT","SVCS_LONGINT","SVCS_HEADER_ONLY"}
@@ -705,4 +692,33 @@ int svcs_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* bitN) ;
     number of bytes have been recv : success > 0
     */
 int svcs_dpi_cs_bitN     (int sockid,const cs_header* h,svBitVecVal* bitN);
+
+
+/*
+    Functions: svcs_dpi_cs_send_integerV
+    map bit[N:0]  2-state data type packed array of scalar bit types
+    LRM 6.11 
+        
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* integerV) ;
+  /*
+    Functions: svcs_dpi_cs_recv_integerV
+    map bit[N:0] 2-state data type packed array of scalar bit types
+    LRM  6.11 
+            
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+int svcs_cs_recv_integerV     (int sockid,const cs_header* h,svLogicVecVal* integerV);
+
 #endif

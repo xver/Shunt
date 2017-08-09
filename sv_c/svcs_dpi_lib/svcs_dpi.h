@@ -265,7 +265,7 @@ int svcs_dpi_send_byte4s (const unsigned int sockfd,svLogicVecVal* Byte);
 int svcs_dpi_recv_byte4s (const unsigned int sockfd,svLogicVecVal* Byte);
 
 /*
- Function: svcs_dpi_send_int4s
+ Function: svcs_dpi_send_integer
   send  verilog "reg[31:0] 4 state aval,bval" over TCP/IP
 
   Parameters:
@@ -277,10 +277,10 @@ int svcs_dpi_recv_byte4s (const unsigned int sockfd,svLogicVecVal* Byte);
    see (vcs_prim_send_int)
 
 */
-int svcs_dpi_send_int4s   (const unsigned int sockfd,svLogicVecVal* Int);
 int svcs_dpi_send_integer (const unsigned int sockfd,svLogicVecVal* Int);
+
 /*
- Function: svcs_dpi_recv_int
+ Function: svcs_dpi_recv_integer
   fetch verilog "reg[31:0] 4 state aval,bval" from TCP/IP
 
   Parameters:
@@ -292,9 +292,37 @@ int svcs_dpi_send_integer (const unsigned int sockfd,svLogicVecVal* Int);
 
     see (svcs_prim_recv_in)
 */
-int svcs_dpi_recv_int4s   (const unsigned int sockfd,svLogicVecVal* Int);
 int svcs_dpi_recv_integer (const unsigned int sockfd,svLogicVecVal* Int);
+//////////////////////////
+/*
+ Function: svcs_dpi_send_integerV
+  send  verilog "reg[31:0] 4 state aval,bval" over TCP/IP
 
+  Parameters:
+   sockfd - socket id
+   Int  -   data
+
+  Returns:
+   number of bytes have been sent : success > 0
+   see (vcs_prim_send_int)
+
+*/
+int svcs_dpi_send_integerV (const unsigned int sockid,const int size,const svLogicVecVal* IntegerV);
+/*
+ Function: svcs_dpi_recv_integerV
+  fetch verilog "reg[31:0] 4 state aval,bval" from TCP/IP
+
+  Parameters:
+   sockfd - socket id
+   Int - data from socket
+
+  Returns:
+    number of bytes have been received  : success > 0
+
+    see (svcs_prim_recv_in)
+*/
+int svcs_dpi_recv_integerV (const unsigned int sockid,const int size,svLogicVecVal* IntegerV);
+//////////////////////////
 /*
   Function: svcs_dpi_recv_intV
   fetch SVCS transaction with "int" elements vector  elements from TCP/IP
@@ -382,7 +410,7 @@ int svcs_dpi_send_shortrealV   (int sockid,const int size,const svOpenArrayHandl
   Parameters:
   sockid - socket id
   size - number of vector elements
-  Shortreal  - Data received
+  Real  - Data received
   
   Returns:
   number of elements have been received  : success > 0
@@ -624,4 +652,9 @@ int svcs_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBit
     */
 int svcs_dpi_recv_bitN     (const int sockfd,const int size,svBitVecVal* bitN);
 int svcs_dpi_hs_recv_bitN  (const int sockfd,const cs_header* h_trnx,svBitVecVal* bitN);
+
+
+
+
+
 #endif /* SVCS_DPI_H_ */

@@ -16,9 +16,6 @@
 
 #include "svcs_user_api.h"
 
-
-
-
 int svcs_api_send    (int sockid,cs_header* h_trnx,...) {
   
   SVCV_INSTR_HASH_INDEX_DEFINE;

@@ -583,6 +583,42 @@ int svcs_cs_recv_bitN (int sockid,const cs_header* h,svBitVecVal* BitN) {
   }
   return Result_;
 }
+///////////////
+int svcs_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* IntegerV) {
+  int Result_=-1;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char *msg = "svcs_cs_send_integerV:: ";
+  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  
+  int Size_ =   h->n_payloads;
+  //svLogicVecVal* IntegerV_  = IntegerV;
+      
+  if (h->data_type==  svcs_prim_hash("SVCS_INTEGER")) {
+    for (int i=0;i<Size_;i++) {
+      //printf("\n %s IntegerV_[%0d]=%d",msg,i,IntegerV[i]);
+      Result_ = svcs_prim_send_integer(sockid,&IntegerV[i]);
+    }
+  }
+  return Result_;
+}
+
+int svcs_cs_recv_integerV (int sockid,const cs_header* h,svLogicVecVal* IntegerV) {
+  int Result_=-1;
+  //SVCV_INSTR_HASH_INDEX_DEFINE;
+  //char *msg = "svcs_cs_recv_integerV:: ";
+  //svcs_cs_print_header (h,SVCV_INSTR_ENUM_NAMES,SVCS_HEADER_ONLY,msg);
+  
+  int Size_ =   h->n_payloads; 
+  //svLogicVecVal* IntegerV_  = IntegerV;  
+  
+  if (h->data_type==  svcs_prim_hash("SVCS_INTEGER")) {
+    for (int i=0;i<Size_;i++) {
+      Result_ = svcs_prim_recv_integer(sockid,&IntegerV[i]);
+      //printf("\n %s IntegerV_[%0d]=%d",msg,i,IntegerV[i]); 
+    }
+  }
+  return Result_;
+}
 ////////////
 #endif
 

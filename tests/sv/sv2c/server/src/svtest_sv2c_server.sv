@@ -126,6 +126,10 @@ module automatic svtest_sv2c_server;
 	Test_name = "\tshortrealV loopback";
 	Pass=shortrealV_loopback_test(Socket);
 	print_status(Test_name,Pass);
+	///////////////////////////
+	Test_name = "\tintegerV loopback";
+	Pass=integerV_loopback_test(Socket);
+	print_status(Test_name,Pass);
 	
 	Test_name = "svtest_sv2c_server";
 	print_status(Test_name,Pass);
@@ -287,8 +291,8 @@ module automatic svtest_sv2c_server;
       success =1;
       
       //set up data
-      Bit_exp = $random;
-      Bit_act = 0;
+      Bit_exp = 0;//$random;
+      Bit_act = 1;
       
       
       //send data
@@ -626,7 +630,30 @@ module automatic svtest_sv2c_server;
          return  success;	 
       end
    endfunction : shortrealV_loopback_test
-
+  
+   function int integerV_loopback_test(int socket_id,int n_payloads=1);
+      begin
+	 int success;
+	 int i;
+         integer IntegerV_exp[`V_SIZE];
+	 integer IntegerV_act[`V_SIZE];
+         string Test_name = "server integerV_loopback_test";
+	 success =1;
+	 
+	 for(int i=0;i<`V_SIZE;i++) IntegerV_exp[i] = 540+i;
+	 //for(int i=0;i<`V_SIZE;i++) $display("\nIntegerV_exp[%0d]=%c",i,IntegerV_exp[i]);
+	 //IntegerV_act[0] = 'h69;
+	 
+	 if (svcs_dpi_send_integerV  (socket_id,`V_SIZE,IntegerV_exp)<= 0) success = 0;
+	 if (success == 0 )  $display("\nserver: fail send data");
+	 if (svcs_dpi_recv_integerV(socket_id,`V_SIZE,IntegerV_act)<= 0) success = 0;
+	 if (success == 0 )  $display("\nserver: fail recv data");
+	 //foreach (IntegerV_exp[i])$display("\n%s IntegerV_exp[%0d]=%f  IntegerV_act[%0d]=%f",Test_name,i,IntegerV_exp[i],i,IntegerV_act[i]);
+	 foreach (IntegerV_exp[i]) if(IntegerV_act[i] !== IntegerV_exp[i])  success = 0;
+	 if (success == 0 )  $display("\nserver: fail comp data");
+         return  success;	 
+      end
+   endfunction : integerV_loopback_test
    
    ////////////////////////////////////////////
 /* -----\/----- EXCLUDED -----\/-----

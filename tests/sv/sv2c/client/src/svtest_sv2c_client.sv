@@ -60,6 +60,7 @@ module automatic svtest_sv2c_client;
 	longV_loopback_test(Socket);
 	realV_loopback_test(Socket);
 	shortrealV_loopback_test(Socket);
+	integerV_loopback_test(Socket);
 	///////////////////////////
 	
        $display("\nsvtest_sv2c_client: END");
@@ -147,6 +148,7 @@ module automatic svtest_sv2c_client;
       Test_name = "client integer_loopback_test recv";
       //recv
       if (svcs_dpi_recv_integer (socket_id,Integer)<= 0) $display("%s TEST FAIL",Test_name);
+       $display("\n%s Integer=%h ",Test_name,Integer);
       //send
       Test_name = "client integer_loopback_test send";
       if (svcs_dpi_send_integer(socket_id,Integer)<= 0) $display("%s TEST FAIL",Test_name);
@@ -352,6 +354,16 @@ module automatic svtest_sv2c_client;
       foreach (ShortrealV[i])$display("\n %s  ShortrealV[%0d] = %f",Test_name,i,ShortrealV[i]);
       if (svcs_dpi_send_shortrealV(socket_id,`V_SIZE,ShortrealV)<= 0) $display("%s TEST FAIL",Test_name); 
    endfunction : shortrealV_loopback_test
+
+   function void integerV_loopback_test(int socket_id);
+      integer  IntegerV[`V_SIZE];
+      string Test_name;
+      Test_name = "client integerV_loopback_test";
+      
+      if (svcs_dpi_recv_integerV (socket_id,`V_SIZE,IntegerV)<= 0) $display("%s TEST FAIL",Test_name);
+      foreach (IntegerV[i])$display("\n %s  IntegerV[%0d] = %h",Test_name,i,IntegerV[i]);
+      if (svcs_dpi_send_integerV(socket_id,`V_SIZE,IntegerV)<= 0) $display("%s TEST FAIL",Test_name); 
+   endfunction : integerV_loopback_test
    /////////////////////////////////////////////////
    
  

@@ -487,8 +487,7 @@ package svcs_dpi_pkg;
    import "DPI-C" function int svcs_dpi_recv_longV (input int sockid,input int size,output longint Int[]);
 
 
-   /* -----\/----- EXCLUDED -----\/-----
-    -----/\----- EXCLUDED -----/\----- */
+  
     /*
     Functions: vcs_dpi_send_realV  
     map unpacked "real" one-dimensional array
@@ -546,6 +545,41 @@ package svcs_dpi_pkg;
     number of bytes have been recv : success > 0
     */
    import "DPI-C" function int svcs_dpi_recv_shortrealV  (input int sockid,input int size,output shortreal Shortreal[]);
+    
+  
+  /*
+    Functions: vcs_dpi_send_shortrealV  
+    map unpacked "integer" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    IntegerV - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */  
+
+   import "DPI-C"  function int svcs_dpi_send_integerV (input int sockid,input int size,input integer IntegerV[]);
+   
+   /*
+    Functions: svcs_dpi_recv_shortrealV 
+    map unpacked "integer" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    IntegerV - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   import "DPI-C"  function int svcs_dpi_recv_integerV (input  int sockid,input int size,output integer IntegerV[]);
+   
+   /* -----\/----- EXCLUDED -----\/-----
+    -----/\----- EXCLUDED -----/\----- */
    
    //////////////////END/////////////////////////////////////////////////////////////////////
      

@@ -301,6 +301,29 @@ int svcs_prim_recv_byte    (const int sockfd, char* Byte)
   return numbytes;
   }
 
+int svcs_prim_send_integer (const unsigned int sockfd,const svLogicVecVal* Int) {
+ int Result_;
+ //char* msg = "\nsvcs_prim_send_integer"; 
+ 
+ Result_ = 1;
+ if (svcs_prim_send_int (sockfd,(int *)(&Int->aval))<=0) Result_=0 ;
+ if (svcs_prim_send_int (sockfd,(int *)(&Int->bval))<=0) Result_=0 ;
 
+ //printf("  %s  Int->aval=%x,Int->bval=%x size(%0d)",msg,Int->aval,Int->bval,sizeof(int));
+ 
+ return Result_;
+}
+
+int svcs_prim_recv_integer (const unsigned int sockfd,svLogicVecVal* Int) {
+  int Result_;
+  //char* msg = "\nsvcs_prim_recv_integer"; 
+  Result_ = 1;
+   
+  if (svcs_prim_recv_int (sockfd,(int *)(&Int->aval))<=0) Result_=0 ;
+  if (svcs_prim_recv_int (sockfd,(int *)(&Int->bval))<=0) Result_=0 ;
+  //printf("  %s  Int->aval=%x,Int->bval=%x ",msg,Int->aval,Int->bval);  
+
+ return Result_;
+}
 
 #endif
