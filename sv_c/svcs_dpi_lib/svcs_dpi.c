@@ -630,12 +630,6 @@ int svcs_dpi_recv_integerV (const unsigned int sockid,const int size,svLogicVecV
 }
 //////////////////////
 
-
-
-int svcs_dpi_hs_send_reg4s (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
-  svLogicVecVal* Reg_ =  (svLogicVecVal*)svGetArrayPtr((svOpenArrayHandle*)Reg);
-  return  svcs_cs_send_regN(sockfd,h_trnx,Reg_);
-}
 int svcs_dpi_hs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
   svLogicVecVal* Reg_ =  (svLogicVecVal*)svGetArrayPtr((svOpenArrayHandle*)Reg);
   return  svcs_cs_send_regN(sockfd,h_trnx,Reg_);
@@ -643,12 +637,6 @@ int svcs_dpi_hs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  sv
 int svcs_dpi_hs_send_logicN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
   svLogicVecVal* Reg_ =  (svLogicVecVal*)svGetArrayPtr((svOpenArrayHandle*)Reg);
   return  svcs_cs_send_regN(sockfd,h_trnx,Reg_);
-}
-
-
-int svcs_dpi_hs_recv_reg4s (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
- svLogicVecVal* Reg_ =  (svLogicVecVal*)svGetArrayPtr((svOpenArrayHandle*)Reg);
-  return svcs_cs_recv_regN (sockfd,h_trnx,Reg_);
 }
 
 int svcs_dpi_hs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {

@@ -646,7 +646,7 @@ package svcs_dpi_pkg;
     */
    import "DPI-C"  function int svcs_dpi_recv_integerV (input  int sockid,input int size,output integer IntegerV[]);
  
-   //Section: Integer/Non integer dynamic vectors types (unpacked)     
+   //Section: Integer/Non integer dynamic vectors (unpacked)     
 
    /*
     Function: svcs_dpi_hash
@@ -780,16 +780,13 @@ package svcs_dpi_pkg;
    import "DPI-C" function int svcs_dpi_hs_send_shortreal (input int sockid,input cs_header_t h_trnx,input shortreal Array[]);
    import "DPI-C" function int svcs_dpi_hs_recv_shortreal (input int sockid,input cs_header_t h_trnx,inout shortreal Array[]);
 
+   import "DPI-C" function int svcs_dpi_hs_send_bitN    (input int sockfd,input cs_header_t h_trnx,input bit[] bitN);
+   import "DPI-C" function int svcs_dpi_hs_recv_bitN    (input int sockfd,input cs_header_t h_trnx,inout bit[] bitN);
    
    
 //////////////////END/////////////////////////////////////////////////////////////////////
      
-   import "DPI-C" function int svcs_dpi_hs_send_bitN    (input int sockfd,input cs_header_t h_trnx,input bit[] bitN);
-   import "DPI-C" function int svcs_dpi_hs_recv_bitN    (input int sockfd,input cs_header_t h_trnx,inout bit[] bitN);  
-  
-   
-  
-    /*
+   /*
     Functions: svcs_dpi_hs_send_regN, svcs_dpi_hs_send_reg4s, svcs_dpi_hs_send_logicN
     map reg[N:0] or logic[N:0]  4-state data type,packed array,user-defined vector size, unsigned 
     LRM 6.11 
@@ -802,7 +799,6 @@ package svcs_dpi_pkg;
     Returns: 
     number of bytes have been sent : success > 0
     */
-   import "DPI-C" function int svcs_dpi_hs_send_reg4s  (input int sockfd,input cs_header_t h_trnx,input reg[] Reg);
    import "DPI-C" function int svcs_dpi_hs_send_regN   (input int sockfd,input cs_header_t h_trnx,input reg[] Reg);
    import "DPI-C" function int svcs_dpi_hs_send_logicN (input int sockfd,input cs_header_t h_trnx,input logic[] Reg);
 
@@ -819,7 +815,6 @@ package svcs_dpi_pkg;
     Returns: 
     number of bytes have been recv : success > 0
     */
-   import "DPI-C" function int svcs_dpi_hs_recv_reg4s  (input int sockfd,input cs_header_t h_trnx,inout reg[] Reg);
    import "DPI-C" function int svcs_dpi_hs_recv_regN   (input int sockfd,input cs_header_t h_trnx,inout reg[] Reg);
    import "DPI-C" function int svcs_dpi_hs_recv_logicN (input int sockfd,input cs_header_t h_trnx,inout logic[] Reg);
 
