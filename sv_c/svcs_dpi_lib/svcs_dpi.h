@@ -55,7 +55,7 @@ unsigned int svcs_dpi_client_init(const unsigned int portno,const char *hostname
  see (svcs_prim_init_tcpserver)   
 */
 unsigned int svcs_dpi_server_init(const unsigned int portno);
-////////////////////////////////////
+
 /*
  Function: svcs_dpi_send_short
   send verilog"shortint" /C "short int" data over TCP/IP
@@ -234,6 +234,7 @@ int svcs_dpi_reccv_logic  (const unsigned int sockfd,svLogic* Logic);
 */
 int svcs_dpi_send_intV   (int sockid, const int size,const svOpenArrayHandle Int);
 int svcs_dpi_send_shortV   (int sockid, const int size,const svOpenArrayHandle Int);
+
 /*
  Function: svcs_dpi_send_byte4s
   send verilog "reg[7:0] 4 state aval,bval" over TCP/IP
@@ -293,7 +294,7 @@ int svcs_dpi_send_integer (const unsigned int sockfd,svLogicVecVal* Int);
     see (svcs_prim_recv_in)
 */
 int svcs_dpi_recv_integer (const unsigned int sockfd,svLogicVecVal* Int);
-//////////////////////////
+
 /*
  Function: svcs_dpi_send_integerV
   send  verilog "reg[31:0] 4 state aval,bval" over TCP/IP
@@ -308,6 +309,7 @@ int svcs_dpi_recv_integer (const unsigned int sockfd,svLogicVecVal* Int);
 
 */
 int svcs_dpi_send_integerV (const unsigned int sockid,const int size,const svLogicVecVal* IntegerV);
+
 /*
  Function: svcs_dpi_recv_integerV
   fetch verilog "reg[31:0] 4 state aval,bval" from TCP/IP
@@ -322,7 +324,7 @@ int svcs_dpi_send_integerV (const unsigned int sockid,const int size,const svLog
     see (svcs_prim_recv_in)
 */
 int svcs_dpi_recv_integerV (const unsigned int sockid,const int size,svLogicVecVal* IntegerV);
-//////////////////////////
+
 /*
   Function: svcs_dpi_recv_intV
   fetch SVCS transaction with "int" elements vector  elements from TCP/IP
@@ -386,7 +388,7 @@ int svcs_dpi_send_realV   (int sockid,const int size,const svOpenArrayHandle Rea
   see ( svcs_cs_recv_doubleV )
 */
 int svcs_dpi_recv_realV   (int sockid,int size,svOpenArrayHandle Real);
-/////////////////////////////////
+
 /*
   Function: svcs_dpi_send_shortrealV
   send SVCS transaction with "shortreal" elements vector over TCP/IP
@@ -417,7 +419,7 @@ int svcs_dpi_send_shortrealV   (int sockid,const int size,const svOpenArrayHandl
 
   see ( svcs_cs_recv_doubleV )
 */
-//////////////////////////////////
+
 
 /*
   Function: svcs_dpi_send_string
@@ -452,7 +454,7 @@ int svcs_dpi_send_string   (int sockid,int size,char* string);
 
 int svcs_dpi_recv_string   (int sockid,int size,char** string);
 
-//////////////////////
+
 
 /*
   Function: svcs_dpi_hash 
@@ -497,8 +499,8 @@ int svcs_dpi_send_header    (int sockid,cs_header* h);
   
   number of elements have been sent  : success > 0
 */
-//int svcs_dpi_send_data_header    (int sockid,cs_header* h,double data_type,int* trnx_payload_sizes);
 int svcs_dpi_send_data_header (int sockid,cs_header* h,double data_type,svOpenArrayHandle trnx_payload_sizes);
+
 /*
   Function: svcs_dpi_recv_header
   fetch SVCS transaction header from TCP/IP socket
@@ -551,11 +553,14 @@ int svcs_dpi_recv_data_header   (int sockid,cs_header* h,double* data_type,svOpe
 */
 
 
-int svcs_dpi_hs_send      (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
-int svcs_dpi_hs_send_int  (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
-int svcs_dpi_hs_send_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
-int svcs_dpi_hs_send_real (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
-
+int svcs_dpi_hs_send           (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+int svcs_dpi_hs_send_short     (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+int svcs_dpi_hs_send_int       (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+int svcs_dpi_hs_send_long      (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+int svcs_dpi_hs_send_byte      (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+int svcs_dpi_hs_send_integer   (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+int svcs_dpi_hs_send_real      (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+int svcs_dpi_hs_send_shortreal (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
 
 /*
   Function: svcs_dpi_hs_recv
@@ -578,11 +583,14 @@ int svcs_dpi_hs_send_real (int sockid,cs_header* h_trnx,svOpenArrayHandle Array)
   number of elements have been received  : success > 0
 
 */
-int svcs_dpi_hs_recv      (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
-int svcs_dpi_hs_recv_int  (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
-int svcs_dpi_hs_recv_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
-int svcs_dpi_hs_recv_real (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
-
+int svcs_dpi_hs_recv           (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
+int svcs_dpi_hs_recv_short     (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
+int svcs_dpi_hs_recv_int       (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
+int svcs_dpi_hs_recv_long      (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
+int svcs_dpi_hs_recv_byte      (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
+int svcs_dpi_hs_recv_integer   (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
+int svcs_dpi_hs_recv_real      (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
+int svcs_dpi_hs_recv_shortreal (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 /*
     Function: svcs_dpi_hs_send_reg4s
     send 4-state verilog reg[n:0] variable over TCP/IP
@@ -597,7 +605,7 @@ int svcs_dpi_hs_recv_real (int sockid,cs_header* h_trnx,svOpenArrayHandle** Arra
     
     see (svcs_prim_send_byte)
     */
-int svcs_dpi_hs_send4s      (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
+//int svcs_dpi_hs_send4s      (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
 int svcs_dpi_hs_send_reg4s  (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
 int svcs_dpi_hs_send_regN   (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
 int svcs_dpi_hs_send_logicN (const unsigned int sockfd,cs_header* h_trnx,const svLogicVecVal* Reg);
@@ -618,7 +626,7 @@ int svcs_dpi_send_time      (const unsigned int sockfd,svLogicVecVal* Time);
     
     see (svcs_prim_recv_byte)
     */
-int svcs_dpi_hs_recv4s       (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
+//int svcs_dpi_hs_recv4s       (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
 int svcs_dpi_hs_recv_reg4s   (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
 int svcs_dpi_hs_recv_regN    (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
 int svcs_dpi_hs_recv_logicN  (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);

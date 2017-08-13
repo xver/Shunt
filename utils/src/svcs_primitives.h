@@ -9,7 +9,26 @@
  Description : Client-Server utils   
                System Verilog client server handshake (SVCS)
 ******************************************************
-Data Types: integer,  double
+Verilog Data Types elements: 
+
+Integer 2 states:
+SVCS_INT         - int            function :svcs_prim_xxxx_intV
+SVCS_SHORTINT    - shortint       function :svcs_prim_xxxx_shortV
+SVCS_LONGINT     - longint        function :svcs_prim_xxxx_long
+SVCS_BYTE        - byte           function :svcs_prim_xxxx_byte
+SVCS_BIT         - bit            function :N/A see svcs_client_server.c svcs_cs_xxx_bitN
+
+Integer 4 states:
+SVCS_INTEGER     - integer,time   function :svcs_prim_xxxx_integer
+SVCS_REG         - reg,logic      function :N/A see  svcs_client_server.c svcs_cs_xxx_regN
+
+Non integer types IEEE 754:  
+SVCS_REAL        - real,realtime  function :svcs_prim_xxxx_double
+SVCS_SHORTREAL   - shortreal      function :svcs_prim_xxxx_float
+SVCS_STRING      - string (N/A)   function :svcs_client_server.c svcs_cs_xxx_byteV
+
+SVCS_A_STRUCTURE - complex data types/user defined data types : arrays/struct,union,enums (N/A)
+SVCS_HEADER_ONLY - cs_header_t header only                                                (N/A)    
  ============================================================================
  */
 
@@ -147,12 +166,12 @@ Function: Example:  tcpclient,tcpserver init
 (start code)    
  #define MY_HOST "localhost"
  #define MY_PORT  3450
- char *hostname; 
+ char* hostname; 
  int port;
  port = MY_PORT;
  hostname =   MY_HOST;
   
- svcs_prim_init_tcpserver(hostname);
+ svcs_prim_init_tcpserver(port);
  svcs_prim_init_tcpclient(port,hostname);
 (end)
  */
@@ -302,7 +321,7 @@ int svcs_prim_send_byte    (const int sockfd,const char* Byte);
 int svcs_prim_recv_byte    (const int sockfd,char* Byte);
 
 /*
- Function: svcs_dpi_send_int4s
+ Function: svcs_prim_send_integer
   send  verilog "reg[31:0] 4 state aval,bval" over TCP/IP
 
   Parameters:
@@ -317,7 +336,7 @@ int svcs_prim_recv_byte    (const int sockfd,char* Byte);
 int svcs_prim_send_integer(const unsigned int sockfd,const svLogicVecVal* Int);
 
 /*
- Function: svcs_dpi_recv_int
+ Function:  svcs_prim_recv_integer
   fetch verilog "reg[31:0] 4 state aval,bval" from TCP/IP
 
   Parameters:

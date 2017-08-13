@@ -7,6 +7,27 @@
                Licensed under the MIT License.
                See LICENSE file in the project root for full license information.
  Description : System Verilog client server handshake (SVCS) library SV domain
+ 
+ Verilog Data Types : 
+    
+   Integer 2 states:
+   SVCS_INT         - int            function :svcs_cs_xxxx_int
+   SVCS_SHORTINT    - shortint       function :svcs_cs_xxxx_short
+   SVCS_LONGINT     - longint        function :svcs_cs_xxxx_long
+   SVCS_BYTE        - byte           function :svcs_cs_xxxx_byte
+   SVCS_BIT         - bit            function :svcs_cs_xxx_bitN
+   
+   Integer 4 states:
+   SVCS_INTEGER     - integer,time   function :svcs_cs_xxxx_integer
+   SVCS_REG         - reg,logic      function :svcs_cs_xxx_regN
+   
+   Non integer types IEEE 754:  
+   SVCS_REAL        - real,realtime  function :svcs_cs_xxxx_real
+   SVCS_SHORTREAL   - shortreal      function :svcs_cs_xxxx_shortreal
+   SVCS_STRING      - string (N/A)   function :svcs_cs_xxx_string
+   
+   SVCS_A_STRUCTURE - complex data types/user defined data types : arrays/struct,union,enums (N/A)
+   SVCS_HEADER_ONLY - cs_header_t header only                                                (N/A)
  ============================================================================
 */
 package svcs_dpi_pkg; 
@@ -14,13 +35,64 @@ package svcs_dpi_pkg;
 `define SVCS_MAX_SIZE = 4096;
    //Title: 5. Utilites: "C" to System Verilog mapping
    
-
+   //Section: TCP/IP client/server init 
    
-   
+   /*
+    Function: svcs_dpi_server_init
+    TCP/IP server initialization
+    
+    Parameters: 
+    portno - socket port
+    
+    Returns:  
+    socket id
+    (see svcs_prim_init_tcpserver)
+    
+    (start code)
+    //Example:     
+    #define MY_HOST "localhost"
+    #define MY_PORT  3450
+    
+    int port;
+    port = MY_PORT;
+    
+    svcs_prim_init_tcpserver(port);
+    
+    (end)
+    
+    */
+  
    import "DPI-C" function int svcs_dpi_server_init (input int portno);
+   
+   /*
+    Function: svcs_dpi_client_init
+    TCP/IP client initialization
+    
+    portno - socket port
+    hostname - server name    
+    
+    Returns:  
+    socket id
+    ( see  svcs_prim_init_tcpclient)
+    
+    (start code)  
+    //Example:     
+    #define MY_HOST "localhost"
+    #define MY_PORT  3450
+    
+    char* hostname; 
+    int port;
+    port = MY_PORT;
+    hostname =   MY_HOST;
+    
+    svcs_prim_init_tcpclient(port,hostname);
+    (end)
+   
+*/
    import "DPI-C" function int svcs_dpi_client_init (input int portno,input string hostname);
    
-   //Section: integer_atom_type 
+   
+   //Section: Integer types 
    
    /*
     Functions:  svcs_dpi_send_short
@@ -136,7 +208,8 @@ package svcs_dpi_pkg;
     Returns: 
     number of bytes have been recv : success > 0
     */
-  
+    import "DPI-C" function int svcs_dpi_recv_byte   (input int sockfd,output byte Byte);
+   
    /*
     Functions:  svcs_dpi_send_integer
     map integer  4-state data type,32-bit signed integer 
@@ -152,6 +225,20 @@ package svcs_dpi_pkg;
    import "DPI-C" function int svcs_dpi_send_integer (input int sockfd,input integer Int);
    
    /*
+    Functions:  svcs_dpi_send_byte4s
+    map reg[7:0]  4-state data type
+    LRM 6.11 Integer data type
+    
+    Parameters:
+    sockfd - socket id
+    Integer - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_send_byte4s (input int sockfd,input reg[7:0] Byte);
+   
+   /*
     Functions:  svcs_dpi_recv_integer
     map integer  4-state data type,32-bit signed integer 
     LRM 6.11 Integer data types
@@ -165,7 +252,20 @@ package svcs_dpi_pkg;
     */
    
    import "DPI-C" function int svcs_dpi_recv_integer (input int sockfd,inout integer Int);
-   import "DPI-C" function int svcs_dpi_recv_byte   (input int sockfd,output byte Byte);
+   
+   /*
+    Functions:  svcs_dpi_recv_byte4s
+    map reg[7:0]  4-state data type
+    LRM 6.11 Integer data type
+    
+    Parameters:
+    sockfd - socket id
+    Integer - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_recv_byte4s (input int sockfd,inout reg[7:0] Byte);
   
    /*
     Functions:  svcs_dpi_send_time
@@ -253,7 +353,7 @@ package svcs_dpi_pkg;
    import "DPI-C" function int svcs_dpi_recv_reg   (input int sockfd,inout reg Reg);
    import "DPI-C" function int svcs_dpi_recv_logic (input int sockfd,inout logic Logic);
    
-   //Section: integer_vector_type    
+   //Section: Integer vector types (packed)    
    
    typedef struct{		
       real 	 trnx_type;
@@ -279,7 +379,7 @@ package svcs_dpi_pkg;
     Returns: 
     number of bytes have been sent : success > 0
     */
-   import "DPI-C" function int svcs_dpi_hs_send_bitN(input int sockfd,input cs_header_t h_trnx,input bit[] bitN);
+   
    import "DPI-C" function int svcs_dpi_send_bitN(input int sockfd,input int size,input bit[] bitN);
    /*
     Functions: svcs_dpi_hs_recv_bitN
@@ -294,43 +394,11 @@ package svcs_dpi_pkg;
     Returns: 
     number of bytes have been recv : success > 0
     */
-   import "DPI-C" function int svcs_dpi_hs_recv_bitN  (input int sockfd,input cs_header_t h_trnx,inout bit[] bitN);
+  
    import "DPI-C" function int svcs_dpi_recv_bitN  (input int sockfd,input int size,inout bit[] bitN);
    
-   /*
-    Functions: svcs_dpi_hs_send_regN, svcs_dpi_hs_send_reg4s, svcs_dpi_hs_send_logicN
-    map reg[N:0] or logic[N:0]  4-state data type,packed array,user-defined vector size, unsigned 
-    LRM 6.11 
-        
-    Parameters:
-    sockfd - socket id
-    Reg,Logic - data
-    h_trnx - cs_header_t structure
-      
-    Returns: 
-    number of bytes have been sent : success > 0
-    */
-   import "DPI-C" function int svcs_dpi_hs_send_reg4s  (input int sockfd,input cs_header_t h_trnx,input reg[] Reg);
-   import "DPI-C" function int svcs_dpi_hs_send_regN   (input int sockfd,input cs_header_t h_trnx,input reg[] Reg);
-   import "DPI-C" function int svcs_dpi_hs_send_logicN (input int sockfd,input cs_header_t h_trnx,input logic[] Reg);
-   
-   /*
-    Functions: svcs_dpi_hs_recv_regN,svcs_dpi_hs_recv_reg4s,svcs_dpi_hs_recv_logicN
-    map reg[N:0] or logic[N:0]  4-state data type,packed array,user-defined vector size, unsigned
-    LRM  6.11 
-            
-    Parameters:
-    sockfd - socket id
-    Reg,Logic - data
-    h_trnx - cs_header_t structure
-    
-    Returns: 
-    number of bytes have been recv : success > 0
-    */
-   import "DPI-C" function int svcs_dpi_hs_recv_reg4s  (input int sockfd,input cs_header_t h_trnx,inout reg[] Reg);
-   import "DPI-C" function int svcs_dpi_hs_recv_regN   (input int sockfd,input cs_header_t h_trnx,inout reg[] Reg);
-   import "DPI-C" function int svcs_dpi_hs_recv_logicN (input int sockfd,input cs_header_t h_trnx,inout logic[] Reg);
-
+  
+  
    //Section: non_integer_type IEEE 754
       
    /*
@@ -364,7 +432,7 @@ package svcs_dpi_pkg;
    //import "DPI-C" function int svcs_dpi_recv_realtime  (input int sockfd,output realtime Real);
    import "DPI-C" function int svcs_dpi_recv_shortreal (input int sockfd,output shortreal Real);
 
-   //Section: special types (not completed!!!!)
+   //Section: special types
   
    /*
     Functions: svcs_dpi_send_string
@@ -394,7 +462,7 @@ package svcs_dpi_pkg;
     */
    import "DPI-C" function int svcs_dpi_recv_string (input int sockid,input int size,inout  string String);
    
-   //Section: Arrays
+   //Section: Integer vector types (unpacked)    
   
    /*
     Functions:  svcs_dpi_send_intV
@@ -577,70 +645,184 @@ package svcs_dpi_pkg;
     number of bytes have been recv : success > 0
     */
    import "DPI-C"  function int svcs_dpi_recv_integerV (input  int sockid,input int size,output integer IntegerV[]);
+ 
+   //Section: Integer/Non integer dynamic vectors types (unpacked)     
+
+   /*
+    Function: svcs_dpi_hash
+    simple hash function 
+    
+    Parameters: 
+    str - hash key
+    
+    Returns: 
+    hash value
+     see(svcs_prim_hash)
+    */
+   import "DPI-C" function real svcs_dpi_hash(input string str);
+   
+ 
+   /*
+    Function: svcs_dpi_send_header
+    send SVCS header over TCP/IP
+    
+    Parameters:
+    
+    sockid - socket id from init sever/client 
+    h - cs_header verilog structure 
+    (start code) 
+     typedef struct{		
+      real 	 trnx_type;  // user defined transaction attribute
+      real 	 trnx_id;    // user defined unique transaction number
+      real 	 data_type;  // see SVCV_INSTR_ENUM
+      int 	 n_payloads; // Victors:number of data payloads , 
+                             //Arrays:number of vectors
+                             //Packed Vectors:number of bits 
+   } cs_header_t;
+    (end)
+    
+    see( Data exchange utilities cs_header )      
+    Returns:
+    number of elements have been sent  : success > 0
+    */ 
+   import "DPI-C" function int svcs_dpi_send_header(input int sockid,input cs_header_t h);
+
+   /*
+    Function: svcs_dpi_recv_header
+    fetch SVCS transaction header from TCP/IP socket
+    
+    Parameters:
+    
+    sockid - socket id from init sever/client 
+    h - cs_header verilog structure 
+    (start code) 
+     typedef struct{		
+      real 	 trnx_type;  // user defined transaction attribute
+      real 	 trnx_id;    // user defined unique transaction number
+      real 	 data_type;  // see SVCV_INSTR_ENUM
+      int 	 n_payloads; // Victors:number of data payloads , 
+                             //Arrays:number of vectors
+                             //Packed Vectors:number of bits 
+   } cs_header_t;
+    (end)
+    
+    see( Data exchange utilities cs_header )      
+    Returns:
+    number of elements have been sent  : success > 0
+    */ 
+   import "DPI-C" function int svcs_dpi_recv_header(input int sockid,output cs_header_t h);
+   
+   
+   /*
+    Function: svcs_dpi_send_data_header
+    send SVCS data header over TCP/IP
+    (start code)  
+     typedef struct{
+      real 	 data_type;  // see SVCV_INSTR_ENUM
+      int 	 trnx_payload_sizes[]; // array of payload sizes, number of array elements are equal to n_payloads
+    }cs_data_header_t;
+    (end)
+             
+    Parameters:
+    sockid - socket id from init sever/client 
+    h      - cs_header structure
+    data_type - cs_data_header_t.data_type
+    trnx_payload_sizes -cs_data_header_t.trnx_payload_sizes, number of data payloads.trnx_payload_sizes
+    
+    Returns:
+    
+    number of elements have been sent  : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_send_data_header(input int sockid,input cs_header_t h,input real data_type,input int trnx_payload_sizes[]);
+  
+/*
+    Function: svcs_dpi_recv_data_header
+    fetch SVCS transaction data header from TCP/IP socket
+    (start code)  
+     typedef struct{
+      real 	 data_type;  // see SVCV_INSTR_ENUM
+      int 	 trnx_payload_sizes[]; // array of payload sizes, number of array elements are equal to n_payloads
+    }cs_data_header_t;
+    (end)
+             
+    Parameters:
+    sockid - socket id from init sever/client 
+    h      - cs_header structure
+    data_type - cs_data_header_t.data_type
+    trnx_payload_sizes -cs_data_header_t.trnx_payload_sizes, number of data payloads.trnx_payload_sizes
+    
+    Returns:
+    
+    number of elements have been sent  : success > 0
+    */ 
+   import "DPI-C" function int svcs_dpi_recv_data_header(input int sockid,input cs_header_t h,inout real data_type,inout int  trnx_payload_sizes[]);
    
    /* -----\/----- EXCLUDED -----\/-----
     -----/\----- EXCLUDED -----/\----- */
+   import "DPI-C" function int svcs_dpi_hs_send_short     (input int sockid,input cs_header_t h_trnx,input shortint Array[]);
+   import "DPI-C" function int svcs_dpi_hs_recv_short     (input int sockid,input cs_header_t h_trnx,inout shortint Array[]); 
    
-   //////////////////END/////////////////////////////////////////////////////////////////////
+   import "DPI-C" function int svcs_dpi_hs_send_int       (input int sockid,input cs_header_t h_trnx,input int  Array[]);
+   import "DPI-C" function int svcs_dpi_hs_recv_int       (input int sockid,input cs_header_t h_trnx,inout int  Array[]);
+   
+   import "DPI-C" function int svcs_dpi_hs_send_long      (input int sockid,input cs_header_t h_trnx,input longint Array[]);
+   import "DPI-C" function int svcs_dpi_hs_recv_long      (input int sockid,input cs_header_t h_trnx,inout longint Array[]);
+   
+   import "DPI-C" function int svcs_dpi_hs_send_byte      (input int sockid,input cs_header_t h_trnx,input byte Array[]);
+   import "DPI-C" function int svcs_dpi_hs_recv_byte      (input int sockid,input cs_header_t h_trnx,inout byte Array[]);
+
+   import "DPI-C" function int svcs_dpi_hs_send_integer   (input int sockid,input cs_header_t h_trnx,input integer Array[]);
+   import "DPI-C" function int svcs_dpi_hs_recv_integer   (input int sockid,input cs_header_t h_trnx,inout integer Array[]);
+
+   import "DPI-C" function int svcs_dpi_hs_send_real      (input int sockid,input cs_header_t h_trnx,input real Array[]);
+   import "DPI-C" function int svcs_dpi_hs_recv_real      (input int sockid,input cs_header_t h_trnx,inout real Array[]);
+   
+   import "DPI-C" function int svcs_dpi_hs_send_shortreal (input int sockid,input cs_header_t h_trnx,input shortreal Array[]);
+   import "DPI-C" function int svcs_dpi_hs_recv_shortreal (input int sockid,input cs_header_t h_trnx,inout shortreal Array[]);
+
+   
+   
+//////////////////END/////////////////////////////////////////////////////////////////////
      
-   
+   import "DPI-C" function int svcs_dpi_hs_send_bitN    (input int sockfd,input cs_header_t h_trnx,input bit[] bitN);
+   import "DPI-C" function int svcs_dpi_hs_recv_bitN    (input int sockfd,input cs_header_t h_trnx,inout bit[] bitN);  
   
    
-   
+  
+    /*
+    Functions: svcs_dpi_hs_send_regN, svcs_dpi_hs_send_reg4s, svcs_dpi_hs_send_logicN
+    map reg[N:0] or logic[N:0]  4-state data type,packed array,user-defined vector size, unsigned 
+    LRM 6.11 
+        
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    h_trnx - cs_header_t structure
+      
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_hs_send_reg4s  (input int sockfd,input cs_header_t h_trnx,input reg[] Reg);
+   import "DPI-C" function int svcs_dpi_hs_send_regN   (input int sockfd,input cs_header_t h_trnx,input reg[] Reg);
+   import "DPI-C" function int svcs_dpi_hs_send_logicN (input int sockfd,input cs_header_t h_trnx,input logic[] Reg);
 
-   //4 state  
-   import "DPI-C" function int svcs_dpi_send_byte4s (input int sockfd,input reg[7:0] Byte);
-   import "DPI-C" function int svcs_dpi_recv_byte4s (input int sockfd,inout reg[7:0] Byte);
-   
-   import "DPI-C" function int svcs_dpi_send_int4s (input int sockfd,input reg[31:0] Int);
-   import "DPI-C" function int svcs_dpi_recv_int4s (input int sockfd,inout reg[31:0] Int);
-  //   
-   //////////////////////
-
-   
-   
- 
-   import "DPI-C" function real svcs_dpi_hash(input string str);
-   
-   import "DPI-C" function int svcs_dpi_send_header
-     (	
-	input int sockid,
-	input cs_header_t h
-	);
-   
-   import "DPI-C" function int svcs_dpi_send_data_header
-     (
-      input int sockid,
-      input cs_header_t h,
-      input real data_type,
-      input int  trnx_payload_sizes[]
-      );
-   
-   import "DPI-C" function int svcs_dpi_recv_header
-     (
-      input int sockid,
-      output cs_header_t h
-      );
-   
-   import "DPI-C" function int svcs_dpi_recv_data_header    
-     (
-      input int  sockid,
-      input      cs_header_t h,
-      inout real data_type,
-      inout int  trnx_payload_sizes[]
-      );
-
+    /*
+    Functions: svcs_dpi_hs_recv_regN,svcs_dpi_hs_recv_reg4s,svcs_dpi_hs_recv_logicN
+    map reg[N:0] or logic[N:0]  4-state data type,packed array,user-defined vector size, unsigned
+    LRM  6.11 
+            
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    h_trnx - cs_header_t structure
     
-   
-   import "DPI-C" function int svcs_dpi_hs_send_byte   (input int sockid,input cs_header_t h_trnx,input byte Array[]);
-   import "DPI-C" function int svcs_dpi_hs_recv_byte   (input int sockid,input cs_header_t h_trnx,inout byte Array[]);
-   
-   import "DPI-C" function int svcs_dpi_hs_send_int    (input int sockid,input cs_header_t h_trnx,input int  Array[]);
-   import "DPI-C" function int svcs_dpi_hs_recv_int    (input int sockid,input cs_header_t h_trnx,inout int  Array[]);
-   
-   import "DPI-C" function int svcs_dpi_hs_send_real   (input int sockid,input cs_header_t h_trnx,input real Array[]);
-   import "DPI-C" function int svcs_dpi_hs_recv_real   (input int sockid,input cs_header_t h_trnx,inout real Array[]);
-   
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_hs_recv_reg4s  (input int sockfd,input cs_header_t h_trnx,inout reg[] Reg);
+   import "DPI-C" function int svcs_dpi_hs_recv_regN   (input int sockfd,input cs_header_t h_trnx,inout reg[] Reg);
+   import "DPI-C" function int svcs_dpi_hs_recv_logicN (input int sockfd,input cs_header_t h_trnx,inout logic[] Reg);
+
 endpackage : svcs_dpi_pkg
 
 

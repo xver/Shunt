@@ -24,13 +24,13 @@
 //Title: 5. Utilites: USER API
 
 //Section: Data exchange utilities (API)
-
+//Note: version 1.0 element and vectors only . Arrays are not suported.
 
 /*
   Function: svcs_api_send
   
   send data over TCP/IP.
-  Supported cs_header_t data_types and corresponding verilog data types are:
+  Supported cs_header_t data_types and corresponding verilog data types are(element and vecotrs):
   
   Integer 2 states:
   SVCS_INT         - int
@@ -43,7 +43,7 @@
   SVCS_INTEGER     - integer,time
   SVCS_REG         - reg,logic
   
-  Non_integer_type IEEE 754:  
+  Non integer types IEEE 754:  
   SVCS_REAL        - real,realtime
   SVCS_SHORTREAL   - shortreal
   SVCS_STRING      - string

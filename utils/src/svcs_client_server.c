@@ -153,7 +153,7 @@ int svcs_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h) {
   return Result_;
 }
 
-/////////////////////////////////////////
+
 // Data exchange utilities (element/vector)
 
 int svcs_cs_comp_intV   (cs_header* h,int *lhs,int *rhs) {
@@ -304,7 +304,7 @@ void svcs_cs_print_doubleV   (cs_header* h,double *Double,char* msg) {
   }
 }
 // ******************************************************
-///////////////////////////
+
 int svcs_cs_send_floatV (int sockid,const cs_header* h,const float* Float) {
   int Result_=-1;
   
@@ -327,7 +327,7 @@ int  svcs_cs_recv_floatV    (int sockid,cs_header* h,float* Float) {
   return Result_;
   
 }
-///////////////////////////
+
 int svcs_cs_send_byteV   (int sockid,const cs_header* h,const char* byteV) {
 	int Result_=-1;
 	char B_ = 0;
@@ -387,8 +387,88 @@ int svcs_cs_send_intA (int sockid,int n_payloads,const cs_data_header* h,const i
   return Result_;
 }
 
+int svcs_cs_send_regA(int sockid,int n_payloads,const cs_data_header* h,const svLogicVecVal* Reg) {
+int Result_= 1;
+  char * msg ="svcs_cs_send_regA";
+  printf("\nError: %s is not implemented\n",msg);
+  return Result_ = 0;
+}
+int svcs_cs_send_bitA(int sockid,int n_payloads,const cs_data_header* h,const  svBitVecVal* Bit) {
+int Result_= 1;
+  char * msg ="svcs_cs_send_bitA";
+  printf("\nError: %s is not implemented\n",msg);
+  return Result_ = 0;
+}
 
-int  svcs_cs_recv_intA    (int sockid,int n_payloads,cs_data_header* h,int * Int) {
+int svcs_cs_send_longA (int sockid,int n_payloads,const cs_data_header* h,const long int * Int) {
+  int Result_= 1;
+  char * msg ="svcs_cs_send_longA";
+  printf("\nError: %s is not implemented\n",msg);
+  return Result_ = 0;
+}
+int svcs_cs_send_shortA (int sockid,int n_payloads,const cs_data_header* h,const short int * Int) {
+  int Result_= 1;
+  char * msg ="svcs_cs_send_shortA\n";
+  printf("\nError: %s is not implemented\n",msg);
+  return Result_ = 0;
+}
+
+int svcs_cs_send_integerA(int sockid,int n_payloads,const cs_data_header* h,const  svLogicVecVal* Integer) {
+  int Result_= 1;
+  char * msg ="svcs_cs_send_integerA";
+  printf("\nError: %s is not implemented\n",msg);
+  return Result_ = 0;
+}
+
+int svcs_cs_send_floatA (int sockid,int n_payloads,const cs_data_header* h,const float* Float) {
+  int Result_= 1;
+  char * msg ="svcs_cs_send_floatA";
+  printf("\nError: %s is not implemented\n",msg);
+  return Result_ = 0;
+}
+///////////////////////
+int svcs_cs_recv_regA(int sockid,int n_payloads,const cs_data_header* h,svLogicVecVal* Reg) {
+int Result_= 1;
+  char * msg ="svcs_cs_recv_regA";
+  printf("\nError: %s is not implemented\n",msg);
+  return Result_ = 0;
+}
+int svcs_cs_recv_bitA(int sockid,int n_payloads,const cs_data_header* h,svBitVecVal* Bit) {
+int Result_= 1;
+  char * msg ="svcs_cs_recv_bitA";
+  printf("\nError: %s is not implemented\n",msg);
+  return Result_ = 0;
+}
+
+int svcs_cs_recv_longA (int sockid,int n_payloads,const cs_data_header* h,long int * Int) {
+  int Result_= 1;
+  char * msg ="svcs_cs_recv_longA";
+  printf("\nError: %s is not implemented\n",msg);
+  return Result_ = 0;
+}
+
+int svcs_cs_recv_shortA (int sockid,int n_payloads,const cs_data_header* h,short int * Int) {
+  int Result_= 1;
+  char * msg ="svcs_cs_recv_shortA\n";
+  printf("\nError: %s is not implemented\n",msg);
+  return Result_ = 0;
+}
+
+int svcs_cs_recv_integerA(int sockid,int n_payloads,const cs_data_header* h,svLogicVecVal* Integer) {
+  int Result_= 1;
+  char * msg ="svcs_cs_recv_integerA";
+  printf("\nError: %s is not implemented\n",msg);
+  return Result_ = 0;
+}
+
+int svcs_cs_recv_floatA (int sockid,int n_payloads,const cs_data_header* h,float* Float) {
+  int Result_= 1;
+  char * msg ="svcs_cs_recv_floatA";
+  printf("\nError: %s is not implemented\n",msg);
+  return Result_ = 0;
+}
+///////////////////////
+int  svcs_cs_recv_intA    (int sockid,int n_payloads,const cs_data_header* h,int * Int) {
   int Result_= 1;
   
   int indx_ =0;
@@ -583,7 +663,7 @@ int svcs_cs_recv_bitN (int sockid,const cs_header* h,svBitVecVal* BitN) {
   }
   return Result_;
 }
-///////////////
+
 int svcs_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* IntegerV) {
   int Result_=-1;
   //SVCV_INSTR_HASH_INDEX_DEFINE;
@@ -619,6 +699,48 @@ int svcs_cs_recv_integerV (int sockid,const cs_header* h,svLogicVecVal* IntegerV
   }
   return Result_;
 }
+//////////////////////////
+
+int svcs_cs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
+  int Result_;
+  //char* msg = "\nsvcs_cs_send_regN";
+  
+  Result_ = 1;
+  svLogicVecVal* Reg_ =  (svLogicVecVal* )Reg;
+  
+  int Size_ =h_trnx->n_payloads / 32; 
+  if(h_trnx->n_payloads % 32 > 0) ++Size_;
+  
+  for(int i=0;i<Size_ ;i++) {
+    //printf("%s  Reg->aval=%x,Reg->bval=%x size=%0d (%0d/%0d) bits",msg,Reg_[i].aval,Reg_[i].bval,svSizeOfArray((svOpenArrayHandle*)Reg),Size_,h_trnx->n_payloads % 32);
+    int* Aval_ = (int*)&(Reg_[i].aval);
+    int* Bval_ = (int*)&(Reg_[i].bval);
+    if (svcs_prim_send_int(sockfd,Aval_)<=0) Result_=0;
+    if (svcs_prim_send_int(sockfd,Bval_)<=0) Result_ =0;
+  }
+  
+  return Result_;
+}
+
+
+int svcs_cs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
+  int Result_;
+  //char* msg = "\nsvcs_cs_recv_regN";
+  Result_ = 1;
+  svLogicVecVal* Reg_ =  Reg;
+  
+  int Size_ =h_trnx->n_payloads / 32; 
+  if(h_trnx->n_payloads % 32 > 0) ++Size_;
+  
+  for(int i=0;i<Size_ ;i++) { 
+    if (svcs_prim_recv_int(sockfd,(int *)&(Reg_[i].aval))<=0) Result_=0 ; 
+    if (svcs_prim_recv_int(sockfd,(int *)&(Reg_[i].bval))<=0) Result_=0 ; 
+    //printf("%s  Reg->aval=%x,Reg->bval=%x size=%0d (%0d/%0d) bits",msg,Reg_[i].aval,Reg_[i].bval,svSizeOfArray((svOpenArrayHandle*)Reg),Size_,h_trnx->n_payloads % 32);
+  } 
+  
+ return Result_; 
+}
+
 ////////////
 #endif
 

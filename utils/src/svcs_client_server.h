@@ -8,11 +8,28 @@
    See LICENSE file in the project root for full license information.  
    Description : Client-Server utils   
    System Verilog client server handshake (SVCS)
-   ******************************************************
-   Data Types:
-   elements:         integer,  double, char
-   vectors:          integers, doubles , string
-   array/composite:  integer vectors , double vectors, messages , structure
+  
+  ******************************************************
+  Verilog Data Types Vectors: 
+    
+   Integer 2 states:
+   SVCS_INT         - int            function :svcs_cs_xxxx_intV
+   SVCS_SHORTINT    - shortint       function :svcs_cs_xxxx_shortV
+   SVCS_LONGINT     - longint        function :svcs_cs_xxxx_longV
+   SVCS_BYTE        - byte           function :svcs_cs_xxxx_byte
+   SVCS_BIT         - bit            function :svcs_cs_xxx_bitN
+   
+   Integer 4 states:
+   SVCS_INTEGER     - integer,time   function :svcs_cs_xxxx_integerV
+   SVCS_REG         - reg,logic      function :svcs_cs_xxx_regN
+   
+   Non integer types IEEE 754:  
+   SVCS_REAL        - real,realtime  function :svcs_cs_xxxx_doubleV
+   SVCS_SHORTREAL   - shortreal      function :svcs_cs_xxxx_floatV
+   SVCS_STRING      - string (N/A)   function :svcs_cs_xxx_byteV
+   
+   SVCS_A_STRUCTURE - complex data types/user defined data types : arrays/struct,union,enums (N/A)
+   SVCS_HEADER_ONLY - cs_header_t header only                                                (N/A)
    -------------------------------------------------------
    trnx -> header  ->  trnx_atribute  - hash/random double
    trnx_type      - hash double
@@ -111,43 +128,7 @@ double svcs_cs_data_type_hash(int data_type,char* data_type_names[],int last_enu
 */
 int svcs_cs_data_type(double hash,char* data_type_names[],int last_enum);
 
-/*
-  Function: svcs_cs_print_header
-  print out SVCS header 
-  
-  Parameters:
-  
-  h - cs_header structure
-  data_type_names - data_type (see SVCV_INSTR_ENUM_NAMES[]) or trnx_type names array 
-  last_enum       - number of data_type_names[] elements
-  msg    - print out prefix
-  
-  Returns:
-  
-  void
-*/
-void svcs_cs_print_header    (cs_header* h,char* data_type_names[],int last_enum,char* msg);
 
-
-/*
-  Function: svcs_cs_print_data_header
-  print out SVCS header 
-  
-  Parameters:
-  
-  h - cs_header structure
-  h_data   - cs_data_header structure
-  data_type_names - data_type (see SVCV_INSTR_ENUM_NAMES[]) or trnx_type names array
-  last_enum       - number of data_type_names[] elements
-  msg - print out prefix
-  
-  Returns:
-  
-  void
-*/
-
-void svcs_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_type_names[],int last_enum,char* msg);
-//
 
 
 /*
@@ -182,30 +163,7 @@ int svcs_cs_send_header    (int sockid,cs_header* h);
 */
 int svcs_cs_send_data_header    (int sockid,int n_payloads,cs_data_header* h);
 
-/*
-  Function: svcs_cs_comp_header
-  compare two SVCS headers
 
-  Parameters:
-  
-  h_lhs,h_rhs - two cs headers
-  Returns:
-  
-  success > 0
-*/
-int svcs_cs_comp_header    (cs_header h_lhs,cs_header h_rhs);
-
-/*
-  Function: svcs_cs_comp_data_header
-  compare two SVCS data headers
-  
-  Parameters:
-  h_lhs,h_rhs - two cs data headers
-  n_payloads - number of data payloads
-  Returns:
-  success > 0
-*/
-int svcs_cs_comp_data_header (cs_data_header h_lhs,cs_data_header h_rhs,int n_payloads);
 
 /*
   Function: svcs_cs_recv_header
@@ -237,24 +195,8 @@ int svcs_cs_recv_header   (int sockid,cs_header* h);
 */
 int svcs_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h);
 
-/* TOODOO remove
-   Function:
-   svcs_cs_recv_data_header_clean
-   free data header allocated memory
-   
-   Parameters:
-   h - cs_data_header structure
-   n_payloads - number of data payloads
-   
-   Returns:
-   success > 0;
-
-*/
-
-//int svcs_cs_recv_data_header_clean   (cs_data_header* h);
 
 
-//////////////////////////////////////
 
 
 // Section: Data exchange utilities (element)
@@ -291,33 +233,7 @@ int svcs_cs_send_longV  (int sockid, const cs_header* header,const long int* Lon
 int svcs_cs_recv_intV   (int sockid, cs_header* header,int* Int);
 int svcs_cs_recv_shortV (int sockid, cs_header* header,short int* Short);
 int svcs_cs_recv_longV  (int sockid, cs_header* header,long int* Long);
-/*
-  Function: svcs_cs_print_intV
-  print out IntV Data
 
-  Parameters:
-
-  h - cs_data_header structure
-  Int  - Data to print
-  msg  - print out prefix
-
-  Returns:
-  void
-*/
-void svcs_cs_print_intV   (cs_header* h,int *Int,char* msg);
-
-
-/*
-  Function: svcs_cs_comp_intV
-  compare two intV payloads
-
-  Parameters:
-  h - cs_header
-  lhs,rhs - intA data
-  Returns:
-  success > 0
-*/
-int svcs_cs_comp_intV   (cs_header* h,int *lhs,int *rhs);
 
 
 /*
@@ -348,34 +264,7 @@ int svcs_cs_send_doubleV   (int sockid,const cs_header* header,const double* Dou
 */
 int svcs_cs_recv_doubleV   (int sockid,cs_header* header,double* Double);
 
-/*
-  Function: svcs_cs_comp_doubleV
-  compare two doubleV payloads
 
-  Parameters:
-  h - cs_header
-  lhs,rhs - double V data
-  Returns:
-  success > 0
-*/
-int svcs_cs_comp_doubleV   (cs_header* h,double *lhs,double *rhs);
-
-
-/*
-  Function: svcs_cs_print_doubleV
-  print out DoubleV Data
-
-  Parameters:
-
-  h - cs_data_header structure
-  Double  - Data received
-  msg    - print out prefix
-
-  Returns:
-  void
-*/
-void svcs_cs_print_doubleV   (cs_header* h,double *Double,char* msg);
-////////////////
 /*
   Function: svcs_cs_send_floatV
   send SVCS transaction with "float" elements vector over TCP/IP
@@ -404,7 +293,6 @@ int svcs_cs_send_floatV   (int sockid,const cs_header* header,const float* Float
 */
 int svcs_cs_recv_floatV   (int sockid,cs_header* header,float* Float);
 
-///////////////
 /*
   Function: svcs_cs_send_byteV
   send SVCS transaction with verilog byteV/string/C char* elements over TCP/IP
@@ -432,24 +320,13 @@ int svcs_cs_send_byteV   (int sockid,const cs_header* header,const char* byteV);
  number of elements have been received  : success > 0
 */
 
-int svcs_cs_recv_byteV   (int sockid,cs_header* header,char* byteV);
 
-/*
-  Function: svcs_cs_comp_byteV
-  compare two char * payloads
-
-  Parameters:
-  h - cs_header
-  lhs,rhs - string
-  Returns:
-  success > 0
-*/
-int svcs_cs_comp_byteV   (cs_header* h,char *lhs,char *rhs);
 
 /*
  Section: Data exchange utilities (array)
  
  (start code)
+NOTE: Not suported with 1.0 release
  ---------------------------------------------------------------
 array ->  sockid - socket id
           header ->   trnx_atribute - hash/random double
@@ -461,6 +338,74 @@ array ->  sockid - socket id
  (end)
 
  */
+/*
+    Functions: svcs_dpi_cs_send_regA
+    send SVCS transaction with "reg" elements vector over TCP/IP
+    NOTE: function is not implemented yet    
+    Parameters:
+    sockfd - socket id
+    Reg - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_send_regA(int sockid,int n_payloads,const cs_data_header* h,const svLogicVecVal* Reg);
+
+/*
+    Functions: svcs_dpi_cs_send_bitA
+    send SVCS transaction with "bit" elements vector over TCP/IP
+    NOTE: function is not implemented yet    
+    Parameters:
+    sockfd - socket id
+    Bit - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_send_bitA(int sockid,int n_payloads,const cs_data_header* h,const  svBitVecVal* Bit);
+
+/*
+    Functions: svcs_dpi_cs_send_integerA
+    send SVCS transaction with "integer" elements vector over TCP/IP
+    NOTE: function is not implemented yet    
+    Parameters:
+    sockfd - socket id
+    Integer - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_send_integerA(int sockid,int n_payloads,const cs_data_header* h,const  svLogicVecVal* Integer);
+
+/*
+    Functions: svcs_dpi_cs_send_floatA
+    send SVCS transaction with "shortreal" elements vector over TCP/IP
+    NOTE: function is not implemented yet    
+    Parameters:
+    sockfd - socket id
+    Integer - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_send_floatA (int sockid,int n_payloads,const cs_data_header* h,const float* Float);
+
+/*
+  Function: svcs_cs_send_shortA
+  send SVCS transaction with "int" elements vector over TCP/IP
+  NOTE: function is not implemented yet
+
+  Parameters:
+  sockid - socket id from init sever/client
+  n_payloads - number of data payloads
+  h - cs_data_header structure
+  Int   - data
+  
+  Returns:
+  number of elements have been sent  : success > 0
+*/
+int svcs_cs_send_shortA  (int sockid,int n_payloads,const cs_data_header* h,const short int * Int);
+
 
 /*
   Function: svcs_cs_send_intA
@@ -478,77 +423,121 @@ array ->  sockid - socket id
 int svcs_cs_send_intA (int sockid,int n_payloads,const cs_data_header* h,const int * Int);
 
 /*
-  Function: svcs_cs_send_int
-  send SVCS transaction with "int" elements vector over TCP/IP 
-  
+  Function: svcs_cs_send_longA
+  send SVCS transaction with "int" elements vector over TCP/IP
+  NOTE: function is not implemented yet
+
   Parameters:
   sockid - socket id from init sever/client
   n_payloads - number of data payloads
   h - cs_data_header structure
   Int   - data
-  h - cs_data_header structure
   
   Returns:
   number of elements have been sent  : success > 0
 */
-int svcs_cs_send_intA   (int sockid,int n_payloads,const cs_data_header* h,const int* Int);
+int svcs_cs_send_longA (int sockid,int n_payloads,const cs_data_header* h,const long int * Int);
 
 /*
-  Function: svcs_cs_recvA
-  fetch SVCS transaction with "int" elements vector  elements from TCP/IP 
-  
+    Functions: svcs_dpi_cs_recv_regA
+    SVCS transaction with "reg" elements vector from TCP/IP socket
+    NOTE: function is not implemented yet    
+    Parameters:
+    sockfd - socket id
+    Reg - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_recv_regA(int sockid,int n_payloads,const cs_data_header* h,svLogicVecVal* Reg);
+
+/*
+    Functions: svcs_dpi_cs_recv_bitA
+    SVCS transaction with "bit" elements vector from TCP/IP socket
+    NOTE: function is not implemented yet    
+    Parameters:
+    sockfd - socket id
+    Bit - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_recv_bitA(int sockid,int n_payloads,const cs_data_header* h, svBitVecVal* Bit);
+
+/*
+    Functions: svcs_dpi_cs_recv_integerA
+    SVCS transaction with "integer" elements vector from TCP/IP socket
+    NOTE: function is not implemented yet    
+    Parameters:
+    sockfd - socket id
+    Integer - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_recv_integerA(int sockid,int n_payloads,const cs_data_header* h, svLogicVecVal* Integer);
+
+/*
+    Functions: svcs_dpi_cs_recv_floatA
+    SVCS transaction with "shortreal" elements vector from TCP/IP socket
+    NOTE: function is not implemented yet    
+    Parameters:
+    sockfd - socket id
+    Integer - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_recv_floatA (int sockid,int n_payloads,const cs_data_header* h,float* Float);
+
+/*
+  Function: svcs_cs_recv_shortA
+  SVCS transaction with "int" elements vector from TCP/IP socket
+  NOTE: function is not implemented yet
+
   Parameters:
-  sockid - socket id from init sever/client 
+  sockid - socket id from init sever/client
   n_payloads - number of data payloads
   h - cs_data_header structure
-  Int  - Data received
+  Int   - data
   
-  Returns: 
-  number of elements have been received  : success > 0
+  Returns:
+  number of elements have been sent  : success > 0
 */
-int svcs_cs_recv_intA   (int sockid,int n_payloads,cs_data_header* h,int * Int);
+int svcs_cs_recv_shortA  (int sockid,int n_payloads,const cs_data_header* h,short int * Int);
+
 
 /*
-  Function: svcs_cs_print_intA
-  print out IntA Data
+  Function: svcs_cs_recv_intA
+  SVCS transaction with "int" elements vector from TCP/IP socket
 
   Parameters:
+  sockid - socket id from init sever/client
   n_payloads - number of data payloads
   h - cs_data_header structure
-  Int  - Data received
-  msg    - print out prefix
+  Int   - data
+  
   Returns:
-   void
+  number of elements have been sent  : success > 0
 */
-void svcs_cs_print_intA   (int n_payloads,cs_data_header* h,int *Int,char* msg);
-
+int svcs_cs_recv_intA(int sockid,int n_payloads,const cs_data_header* h,int * Int);
 
 /*
-  Function: svcs_cs_comp_intA
-  compare two intA payloads
+  Function: svcs_cs_recv_longA
+  SVCS transaction with "int" elements vector from TCP/IP
+  NOTE: function is not implemented yet
 
   Parameters:
+  sockid - socket id from init sever/client
   n_payloads - number of data payloads
-  lhs,rhs - intA data
-  Returns:
-  success > 0
-*/
-int svcs_cs_comp_intA   (int n_payloads,cs_data_header* h,int *lhs,int *rhs);
-
-
-/* TODO remove
-   Function:
-   svcs_cs_recv_int_clean
-   free data header allocated memory
-
-   Parameters:
-   Int - Int array
-   
-  Returns:
-  success > 0;
+  h - cs_data_header structure
+  Int   - data
   
+  Returns:
+  number of elements have been sent  : success > 0
 */
-//int svcs_cs_recv_int_clean   (int ** Int);
+int svcs_cs_recv_longA (int sockid,int n_payloads,const cs_data_header* h,long int * Int);
+
 
 /*
   Function: svcs_cs_send_doubleV
@@ -580,32 +569,7 @@ int svcs_cs_send_doubleA   (int sockid,int n_payloads,const cs_data_header* h,co
 */
 int  svcs_cs_recv_doubleA    (int sockid,int n_payloads,cs_data_header* h,double* Double);
 
-/*
-  Function: svcs_cs_print_dooubleA
-  print out IntA Data
 
-  Parameters:
-  n_payloads - number of data payloads
-  h - cs_data_header structure
-  Double  - Data received
-  msg    - print out prefix
-  Returns:
-   void
-*/
-void svcs_cs_print_doubleA   (int n_payloads,cs_data_header* h,double *Double,char* msg);
-
-
-/*
-  Function: svcs_cs_comp_dooubleA
-  compare two intA payloads
-
-  Parameters:
-  n_payloads - number of data payloads
-  lhs,rhs - doubleA data
-  Returns:
-  success > 0
-*/
-int svcs_cs_comp_doubleA   (int n_payloads,cs_data_header* h,double *lhs,double *rhs);
 
 /*
   Function: svcs_cs_send_byteA
@@ -639,6 +603,233 @@ int svcs_cs_send_byteA(int sockid,int n_payloads,cs_data_header* h,const char *A
 */
 int svcs_cs_recv_byteA(int sockid,int n_payloads,cs_data_header* h,char* ArrayS);
 
+
+
+/*
+    Functions: svcs_dpi_cs_send_bitN
+    map bit[N:0]  2-state data type packed array of scalar bit types
+    LRM 6.11 
+        
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* bitN) ;
+  /*
+    Functions: svcs_cs_recv_bitN
+    map bit[N:0] 2-state data type packed array of scalar bit types
+    LRM  6.11 
+            
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+int svcs_cs_recv_bitN     (int sockid,const cs_header* h,svBitVecVal* bitN);
+
+
+/*
+    Functions: svcs_dpi_cs_send_integerV
+    map verilog "reg[31:0] 4 state aval,bval
+    LRM 6.11 
+        
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* integerV) ;
+  /*
+    Functions: svcs_dpi_cs_recv_integerV
+    map verilog "reg[31:0] 4 state aval,bval
+    LRM  6.11 
+            
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+int svcs_cs_recv_integerV     (int sockid,const cs_header* h,svLogicVecVal* integerV);
+/*
+    Functions: svcs_cs_send_regN
+    
+    LRM 6.11 
+        
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
+int svcs_cs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg);
+/*
+    Functions:  svcs_cs_recv_regN 
+    map bit[N:0] 2-state data type packed array of scalar bit types
+    LRM  6.11 
+            
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+int svcs_cs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
+
+//Section: Auxiliary tasks 
+/*
+  Function: svcs_cs_print_intV
+  print out IntV Data
+
+  Parameters:
+
+  h - cs_data_header structure
+  Int  - Data to print
+  msg  - print out prefix
+
+  Returns:
+  void
+*/
+void svcs_cs_print_intV   (cs_header* h,int *Int,char* msg);
+
+
+/*
+  Function: svcs_cs_comp_intV
+  compare two intV payloads
+
+  Parameters:
+  h - cs_header
+  lhs,rhs - intA data
+  Returns:
+  success > 0
+*/
+int svcs_cs_comp_intV   (cs_header* h,int *lhs,int *rhs);
+/*
+  Function: svcs_cs_comp_doubleV
+  compare two doubleV payloads
+
+  Parameters:
+  h - cs_header
+  lhs,rhs - double V data
+  Returns:
+  success > 0
+*/
+int svcs_cs_comp_doubleV   (cs_header* h,double *lhs,double *rhs);
+
+
+/*
+  Function: svcs_cs_print_doubleV
+  print out DoubleV Data
+
+  Parameters:
+
+  h - cs_data_header structure
+  Double  - Data received
+  msg    - print out prefix
+
+  Returns:
+  void
+*/
+void svcs_cs_print_doubleV   (cs_header* h,double *Double,char* msg);
+/*
+  Function: svcs_cs_print_intA
+  print out IntA Data
+
+  Parameters:
+  n_payloads - number of data payloads
+  h - cs_data_header structure
+  Int  - Data received
+  msg    - print out prefix
+  Returns:
+   void
+*/
+void svcs_cs_print_intA   (int n_payloads,cs_data_header* h,int *Int,char* msg);
+
+
+/*
+  Function: svcs_cs_comp_intA
+  compare two intA payloads
+
+  Parameters:
+  n_payloads - number of data payloads
+  lhs,rhs - intA data
+  Returns:
+  success > 0
+*/
+int svcs_cs_comp_intA   (int n_payloads,cs_data_header* h,int *lhs,int *rhs);
+
+/*
+  Function: svcs_cs_print_header
+  print out SVCS header 
+  
+  Parameters:
+  
+  h - cs_header structure
+  data_type_names - data_type (see SVCV_INSTR_ENUM_NAMES[]) or trnx_type names array 
+  last_enum       - number of data_type_names[] elements
+  msg    - print out prefix
+  
+  Returns:
+  
+  void
+*/
+void svcs_cs_print_header    (cs_header* h,char* data_type_names[],int last_enum,char* msg);
+
+
+/*
+  Function: svcs_cs_print_data_header
+  print out SVCS header 
+  
+  Parameters:
+  
+  h - cs_header structure
+  h_data   - cs_data_header structure
+  data_type_names - data_type (see SVCV_INSTR_ENUM_NAMES[]) or trnx_type names array
+  last_enum       - number of data_type_names[] elements
+  msg - print out prefix
+  
+  Returns:
+  
+  void
+*/
+
+void svcs_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_type_names[],int last_enum,char* msg);
+/*
+  Function: svcs_cs_print_dooubleA
+  print out IntA Data
+
+  Parameters:
+  n_payloads - number of data payloads
+  h - cs_data_header structure
+  Double  - Data received
+  msg    - print out prefix
+  Returns:
+   void
+*/
+void svcs_cs_print_doubleA   (int n_payloads,cs_data_header* h,double *Double,char* msg);
+
+
+/*
+  Function: svcs_cs_comp_dooubleA
+  compare two intA payloads
+
+  Parameters:
+  n_payloads - number of data payloads
+  lhs,rhs - doubleA data
+  Returns:
+  success > 0
+*/
+int svcs_cs_comp_doubleA   (int n_payloads,cs_data_header* h,double *lhs,double *rhs);
 /*
   Function: svcs_cs_print_ByteA
   print out ByteA Data
@@ -665,60 +856,42 @@ void svcs_cs_print_byteA   (int n_payloads,cs_data_header* h,char *Byte,char* ms
   success > 0
 */
 int svcs_cs_comp_byteA   (int n_payloads,cs_data_header* h,char *lhs,char *rhs);
+/*
+  Function: svcs_cs_comp_header
+  compare two SVCS headers
+
+  Parameters:
+  
+  h_lhs,h_rhs - two cs headers
+  Returns:
+  
+  success > 0
+*/
+int svcs_cs_comp_header    (cs_header h_lhs,cs_header h_rhs);
 
 /*
-    Functions: svcs_dpi_cs_send_bitN
-    map bit[N:0]  2-state data type packed array of scalar bit types
-    LRM 6.11 
-        
-    Parameters:
-    sockfd - socket id
-    Reg,Logic - data
-    
-    Returns: 
-    number of bytes have been sent : success > 0
-    */
-int svcs_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* bitN) ;
-  /*
-    Functions: svcs_dpi_cs_recv_bitN
-    map bit[N:0] 2-state data type packed array of scalar bit types
-    LRM  6.11 
-            
-    Parameters:
-    sockfd - socket id
-    Reg,Logic - data
-    
-    Returns: 
-    number of bytes have been recv : success > 0
-    */
-int svcs_dpi_cs_bitN     (int sockid,const cs_header* h,svBitVecVal* bitN);
+  Function: svcs_cs_comp_data_header
+  compare two SVCS data headers
+  
+  Parameters:
+  h_lhs,h_rhs - two cs data headers
+  n_payloads - number of data payloads
+  Returns:
+  success > 0
+*/
+int svcs_cs_comp_data_header (cs_data_header h_lhs,cs_data_header h_rhs,int n_payloads);
 
+int svcs_cs_recv_byteV   (int sockid,cs_header* header,char* byteV);
 
 /*
-    Functions: svcs_dpi_cs_send_integerV
-    map bit[N:0]  2-state data type packed array of scalar bit types
-    LRM 6.11 
-        
-    Parameters:
-    sockfd - socket id
-    Reg,Logic - data
-    
-    Returns: 
-    number of bytes have been sent : success > 0
-    */
-int svcs_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* integerV) ;
-  /*
-    Functions: svcs_dpi_cs_recv_integerV
-    map bit[N:0] 2-state data type packed array of scalar bit types
-    LRM  6.11 
-            
-    Parameters:
-    sockfd - socket id
-    Reg,Logic - data
-    
-    Returns: 
-    number of bytes have been recv : success > 0
-    */
-int svcs_cs_recv_integerV     (int sockid,const cs_header* h,svLogicVecVal* integerV);
+  Function: svcs_cs_comp_byteV
+  compare two char * payloads
 
+  Parameters:
+  h - cs_header
+  lhs,rhs - string
+  Returns:
+  success > 0
+*/
+int svcs_cs_comp_byteV   (cs_header* h,char *lhs,char *rhs);
 #endif
