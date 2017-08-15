@@ -65,7 +65,8 @@ module automatic svtest_hs_client;
 	///////////////////////////
 	shortreal_loopback_test(Socket);
 	shortreal_loopback_test(Socket);
-	
+	//////////////////////////////
+	string_loopback_test(Socket);
 	// *****************END**********************************
 	
 	/* -----\/----- EXCLUDED -----\/-----
@@ -96,6 +97,25 @@ module automatic svtest_hs_client;
    endfunction : init_client
    
    //////////
+    function void string_loopback_test(int socket_id);
+      begin
+	 int success;
+	 int i;
+         string String;
+	 string Test_name = "client tring_loopback_test recv";
+	 
+	 String = `STRING_MESSAGE1;
+	 success =1;
+	 
+	 //recv
+	 if (svcs_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
+	 if (svcs_dpi_hs_recv_string(socket_id,h_trnx,String)<= 0)$display("%s TEST FAIL",Test_name);
+	 //send
+	 if (svcs_dpi_send_header(socket_id,h_trnx)<= 0)  $display("%s TEST FAIL",Test_name);
+	 if (svcs_dpi_hs_send_string  (socket_id,h_trnx,String)<= 0) $display("%s TEST FAIL",Test_name);
+      end
+    endfunction : string_loopback_test
+   
    function void byte_loopback_test(int socket_id);
       byte   Byte[];
       string Test_name;

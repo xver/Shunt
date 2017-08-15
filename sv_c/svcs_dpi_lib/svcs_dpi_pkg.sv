@@ -280,6 +280,7 @@ package svcs_dpi_pkg;
     number of bytes have been sent : success > 0
     */
    import "DPI-C" function int svcs_dpi_send_time (input int sockfd,input time Time);
+   
    /*
     Functions:  svcs_dpi_recv_time
     map time  4-state data type, 64-bit unsigned integer 
@@ -770,6 +771,9 @@ package svcs_dpi_pkg;
    
    import "DPI-C" function int svcs_dpi_hs_send_byte      (input int sockid,input cs_header_t h_trnx,input byte Array[]);
    import "DPI-C" function int svcs_dpi_hs_recv_byte      (input int sockid,input cs_header_t h_trnx,inout byte Array[]);
+
+   import "DPI-C" function int svcs_dpi_hs_send_string    (input int sockid,input cs_header_t h_trnx,input string String);
+   import "DPI-C" function int svcs_dpi_hs_recv_string    (input int sockid,input cs_header_t h_trnx,inout string String);
 
    import "DPI-C" function int svcs_dpi_hs_send_integer   (input int sockid,input cs_header_t h_trnx,input integer Array[]);
    import "DPI-C" function int svcs_dpi_hs_recv_integer   (input int sockid,input cs_header_t h_trnx,inout integer Array[]);

@@ -558,6 +558,7 @@ int svcs_dpi_hs_send_short     (int sockid,cs_header* h_trnx,svOpenArrayHandle A
 int svcs_dpi_hs_send_int       (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
 int svcs_dpi_hs_send_long      (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
 int svcs_dpi_hs_send_byte      (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
+int svcs_dpi_hs_send_string    (int sockid,cs_header* h_trnx,char* Array);
 int svcs_dpi_hs_send_integer   (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
 int svcs_dpi_hs_send_real      (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
 int svcs_dpi_hs_send_shortreal (int sockid,cs_header* h_trnx,svOpenArrayHandle Array);
@@ -588,6 +589,7 @@ int svcs_dpi_hs_recv_short     (int sockid,cs_header* h_trnx,svOpenArrayHandle**
 int svcs_dpi_hs_recv_int       (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 int svcs_dpi_hs_recv_long      (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 int svcs_dpi_hs_recv_byte      (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
+int svcs_dpi_hs_recv_string    (int sockid,cs_header* h_trnx,char** Array);
 int svcs_dpi_hs_recv_integer   (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 int svcs_dpi_hs_recv_real      (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);
 int svcs_dpi_hs_recv_shortreal (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array);

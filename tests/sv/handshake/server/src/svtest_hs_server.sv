@@ -23,7 +23,7 @@
   Non integer types IEEE 754:  
   SVCS_REAL        - real_loopback,realtime
   SVCS_SHORTREAL   - shortreal_loopback
-  SVCS_STRING      - string ????
+  SVCS_STRING      - string_loopback
   
   SVCS_A_STRUCTURE - complex data types/user defined data types : arrays/struct,union,enums
   SVCS_HEADER_ONLY - cs_header_t header only. 
@@ -121,6 +121,11 @@ module automatic svtest_hs_server;
 	print_status(Test_name,Pass);
 	Test_name = "\tshortreal vector loopback";
 	Pass=shortreal_loopback_test(Socket,11);
+	//////////////////////////
+        Test_name = "\tstring_loopback";
+	Pass=string_loopback_test(Socket);
+	print_status(Test_name,Pass);
+	
 	
 	// *****************END**********************************
 	/* -----\/----- EXCLUDED -----\/-----
@@ -279,6 +284,38 @@ module automatic svtest_hs_server;
       end
    endfunction : short_loopback_test
 
+   function int string_loopback_test(int socket_id);
+      begin
+	 int success;
+	 int i;
+         string String_exp;
+	 string String_act;
+	    string Test_name = "string_loopback_test";
+	 String_exp = `STRING_MESSAGE;
+	 String_act = `STRING_MESSAGE1;
+	 success =1;
+	 //set up header
+	 h_trnx_exp.trnx_type = $urandom;
+	 h_trnx_exp.trnx_id   = $urandom;
+	 h_trnx_exp.data_type = svcs_dpi_hash("SVCS_STRING");
+	 h_trnx_exp.n_payloads = String_exp.len();
+	 
+	 //send
+	 if (svcs_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+ 	 if (success == 0 )  $display("\nserver: fail send header ");
+	 if (svcs_dpi_hs_send_string  (socket_id,h_trnx_exp,String_exp)<= 0) success = 0;
+	 if (success == 0 )  $display("\nserver: fail send data");
+	 
+	 //recv
+	 if (svcs_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
+	 String_act = new[h_trnx_act.n_payloads];
+	 if (svcs_dpi_hs_recv_string(socket_id,h_trnx_act,String_act)<= 0) success = 0;
+	 $display("\n%s \nString_exp=%s \nString_act=%s",Test_name,String_exp,String_act);
+	 foreach(String_exp[i]) if(String_act[i] != String_exp[i]) success =0;
+	 return  success;
+      end
+   endfunction : string_loopback_test
+   
    function int long_loopback_test(int socket_id,int n_payloads=1);
       begin
 	 int success;
@@ -427,23 +464,7 @@ module automatic svtest_hs_server;
       end
    endfunction : realV_loopback_test
    
-   function int string_loopback_test(int socket_id);
-      begin
-	 int success;
-	 int i;
-         string String_exp;
-	 string String_act;
-	 
-	 String_exp = `STRING_MESSAGE;
-	 String_act = `STRING_MESSAGE1;
-	 success =1;
-	 if(!svcs_dpi_send_string(socket_id,String_exp.len(),String_exp))  success =0;
-	 success = svcs_dpi_send_string(socket_id,String_exp.len(),String_exp);
-	 if(!svcs_dpi_recv_string(socket_id,String_exp.len(),String_act))  success =0;
-	 foreach(String_exp[i]) if(String_act[i] != String_exp[i]) success =0;
-	 return  success;
-      end
-   endfunction : string_loopback_test
+   
    
    
    function int   byteA_loopback_test(int socket_id,int n_payloads=1);

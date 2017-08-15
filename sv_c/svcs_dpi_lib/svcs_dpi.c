@@ -500,6 +500,10 @@ int svcs_dpi_hs_send_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle Array 
   return svcs_dpi_hs_send(sockid,h_trnx,Byte_);
 }
 
+int svcs_dpi_hs_send_string (int sockid,cs_header* h_trnx,char* Array){
+  return svcs_dpi_hs_send(sockid,h_trnx,Array);
+}
+
 int svcs_dpi_hs_send_integer   (int sockid,cs_header* h_trnx,svOpenArrayHandle Array) {
   svLogicVecVal* Integer_ = (svLogicVecVal*)svGetArrayPtr(Array);
   return svcs_dpi_hs_send(sockid,h_trnx,Integer_);
@@ -538,6 +542,10 @@ svOpenArrayHandle** Long_ = svGetArrayPtr(Array);
 int svcs_dpi_hs_recv_byte (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array ) {
  svOpenArrayHandle** Byte_ = svGetArrayPtr(Array);
  return svcs_dpi_hs_recv(sockid,h_trnx,Byte_);
+}
+
+int svcs_dpi_hs_recv_string (int sockid,cs_header* h_trnx,char** Array ) {
+  return svcs_dpi_hs_recv(sockid,h_trnx,(svOpenArrayHandle**)(*Array));
 }
 
 int svcs_dpi_hs_recv_integer (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array ) {
