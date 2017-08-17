@@ -587,7 +587,7 @@ package svcs_dpi_pkg;
    import "DPI-C" function int svcs_dpi_recv_realV  (input int sockid,input int size,output real Real[]);
    
     /*
-    Functions: vcs_dpi_send_shortrealV  
+    Functions: svcs_dpi_send_shortrealV  
     map unpacked "shortreal" one-dimensional array
     LRM 7.4.2 
     
@@ -617,7 +617,7 @@ package svcs_dpi_pkg;
     
   
   /*
-    Functions: vcs_dpi_send_shortrealV  
+    Functions: vcs_dpi_send_integerV  
     map unpacked "integer" one-dimensional array
     LRM 7.4.2 
     
@@ -633,7 +633,7 @@ package svcs_dpi_pkg;
    import "DPI-C"  function int svcs_dpi_send_integerV (input int sockid,input int size,input integer IntegerV[]);
    
    /*
-    Functions: svcs_dpi_recv_shortrealV 
+    Functions: svcs_dpi_recv_integerV 
     map unpacked "integer" one-dimensional array
     LRM 7.4.2 
     
@@ -760,31 +760,275 @@ package svcs_dpi_pkg;
    
    /* -----\/----- EXCLUDED -----\/-----
     -----/\----- EXCLUDED -----/\----- */
+   /*
+    Functions: svcs_dpi_hs_send_short
+    map unpacked dynamic "shortint" one-dimensional array 
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
    import "DPI-C" function int svcs_dpi_hs_send_short     (input int sockid,input cs_header_t h_trnx,input shortint Array[]);
+  
+   /*
+    Functions:  svcs_dpi_hs_recv_short
+    map unpacked dynamic  "shortint" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */ 
    import "DPI-C" function int svcs_dpi_hs_recv_short     (input int sockid,input cs_header_t h_trnx,inout shortint Array[]); 
    
+   /*
+    Functions: svcs_dpi_hs_send_int 
+    map unpacked dynamic "int" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
    import "DPI-C" function int svcs_dpi_hs_send_int       (input int sockid,input cs_header_t h_trnx,input int  Array[]);
+    
+   /*
+    Functions:  svcs_dpi_hs_recv_int
+    map unpacked dynamic "int" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
    import "DPI-C" function int svcs_dpi_hs_recv_int       (input int sockid,input cs_header_t h_trnx,inout int  Array[]);
-   
+
+    /*
+    Functions: svcs_dpi_hs_send_long  
+    map unpacked dynamic "longint" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
    import "DPI-C" function int svcs_dpi_hs_send_long      (input int sockid,input cs_header_t h_trnx,input longint Array[]);
+
+   /*
+    Functions: svcs_dpi_hs_recv_long
+    map unpacked dynamic  "longint" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
    import "DPI-C" function int svcs_dpi_hs_recv_long      (input int sockid,input cs_header_t h_trnx,inout longint Array[]);
    
+   /*
+    Functions: svcs_dpi_hs_send_byte
+    map  unpacked dynamic "byte" one-dimensional array 
+    LRM 6.11 Integer data types char/char*
+    
+    Parameters:
+    sockfd - socket id
+    Byte - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    */
    import "DPI-C" function int svcs_dpi_hs_send_byte      (input int sockid,input cs_header_t h_trnx,input byte Array[]);
+  
+   /*
+    Functions:  svcs_dpi_hs_recv_byte
+    map  unpacked dynamic "byte" one-dimensional array 
+    LRM 6.11 Integer data types char/char*
+        
+    Parameters:
+    sockfd - socket id
+    Byte - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
    import "DPI-C" function int svcs_dpi_hs_recv_byte      (input int sockid,input cs_header_t h_trnx,inout byte Array[]);
 
+   /*
+    Functions: svcs_dpi_hs_send_string
+    map string string is an ordered collection of characters be indexed as a unpacked array of bytes 
+    LRM 6.16   
+           
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been sent : success > 0
+    
+    see(svcs_dpi_send_string)
+    */ 
    import "DPI-C" function int svcs_dpi_hs_send_string    (input int sockid,input cs_header_t h_trnx,input string String);
+
+   /*
+    Functions:svcs_dpi_hs_recv_string  
+    map string string is an ordered collection of characters be indexed as a unpacked array of bytes 
+    LRM 6.16 
+    
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    
+    see(svcs_dpi_recv_string)
+    */
    import "DPI-C" function int svcs_dpi_hs_recv_string    (input int sockid,input cs_header_t h_trnx,inout string String);
-
-   import "DPI-C" function int svcs_dpi_hs_send_integer   (input int sockid,input cs_header_t h_trnx,input integer Array[]);
-   import "DPI-C" function int svcs_dpi_hs_recv_integer   (input int sockid,input cs_header_t h_trnx,inout integer Array[]);
-
-   import "DPI-C" function int svcs_dpi_hs_send_real      (input int sockid,input cs_header_t h_trnx,input real Array[]);
-   import "DPI-C" function int svcs_dpi_hs_recv_real      (input int sockid,input cs_header_t h_trnx,inout real Array[]);
    
+   /*
+    Functions: vcs_dpi_send_integer  
+    map  unpacked dynamic  "integer" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    IntegerV - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */  
+   import "DPI-C" function int svcs_dpi_hs_send_integer   (input int sockid,input cs_header_t h_trnx,input integer Array[]);
+   
+   /*
+    Functions: svcs_dpi_recv_integer 
+    map unpacked  dynamic "integer" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    IntegerV - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_hs_recv_integer   (input int sockid,input cs_header_t h_trnx,inout integer Array[]);
+   
+   /*
+    Functions: svcs_dpi_hs_send_real
+    map unpacked dynamic  "real" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    Real - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */  
+   import "DPI-C" function int svcs_dpi_hs_send_real      (input int sockid,input cs_header_t h_trnx,input real Array[]);
+   /*
+    Functions: svcs_dpi_hs_recv_real
+    map unpacked  dynamic "real" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    Real - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
+   import "DPI-C" function int svcs_dpi_hs_recv_real      (input int sockid,input cs_header_t h_trnx,inout real Array[]);
+    
+   /*
+    Functions: svcs_dpi_hs_send_shortreal
+    map unpacked dynamic "shortreal" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockfd - socket id
+    size - number of vector elements 
+    Shortreal - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */  
    import "DPI-C" function int svcs_dpi_hs_send_shortreal (input int sockid,input cs_header_t h_trnx,input shortreal Array[]);
+    /*
+    Functions:  svcs_dpi_hs_recv_shortreal
+    map unpacked dynamic "shortreal" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters: svcs_dpi_hs_recv_shortreal
+    sockfd - socket id
+    size - number of vector elements 
+    Shortreal - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    */
    import "DPI-C" function int svcs_dpi_hs_recv_shortreal (input int sockid,input cs_header_t h_trnx,inout shortreal Array[]);
-
+   
+   /*
+    Functions: 
+    map bit[N:0]  2-state data type packed array of scalar bit types
+    LRM 6.11 
+        
+    Parameters: svcs_dpi_hs_send_bitN 
+    sockfd - socket id
+    Reg,Logic - data
+    h_trnx - cs_header_t structure
+    Returns: 
+    number of bytes have been sent : success > 0
+   
+    see(svcs_dpi_hs_send_bitN)
+    */
    import "DPI-C" function int svcs_dpi_hs_send_bitN    (input int sockfd,input cs_header_t h_trnx,input bit[] bitN);
+
+   /*
+    Functions: svcs_dpi_hs_recv_bitN 
+    map bit[N:0] 2-state data type packed array of scalar bit types
+    LRM  6.11 
+            
+    Parameters:
+    sockfd - socket id
+    Reg,Logic - data
+    h_trnx - cs_header_t structure
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    
+    see(svcs_dpi_hs_recv_bitN)
+    */
    import "DPI-C" function int svcs_dpi_hs_recv_bitN    (input int sockfd,input cs_header_t h_trnx,inout bit[] bitN);
    
    
@@ -804,6 +1048,7 @@ package svcs_dpi_pkg;
     number of bytes have been sent : success > 0
     */
    import "DPI-C" function int svcs_dpi_hs_send_regN   (input int sockfd,input cs_header_t h_trnx,input reg[] Reg);
+   
    import "DPI-C" function int svcs_dpi_hs_send_logicN (input int sockfd,input cs_header_t h_trnx,input logic[] Reg);
 
     /*

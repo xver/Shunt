@@ -310,7 +310,7 @@ module automatic svtest_hs_server;
 	 if (svcs_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
 	 String_act = new[h_trnx_act.n_payloads];
 	 if (svcs_dpi_hs_recv_string(socket_id,h_trnx_act,String_act)<= 0) success = 0;
-	 $display("\n%s \nString_exp=%s \nString_act=%s",Test_name,String_exp,String_act);
+	 //$display("\n%s \nString_exp=%s \nString_act=%s",Test_name,String_exp,String_act);
 	 foreach(String_exp[i]) if(String_act[i] != String_exp[i]) success =0;
 	 return  success;
       end
