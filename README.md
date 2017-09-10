@@ -1,6 +1,6 @@
-Welcome to the Shunt wiki!
+Welcome to the Shunt!
 
-* The Shunt is Open Source Client/Server TCP/IP socket based communication library for SystemVerilog simulation.
+The Shunt is Open Source Client/Server TCP/IP socket based communication library for SystemVerilog simulation.
 
 * It aims to enable quick and easy development of communication between stand-alone SystemVerilog simulations and/or external applications
 
