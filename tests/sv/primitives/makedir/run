@@ -1,4 +1,0 @@
-make all
-make sim_server&
-sleep 15
-make sim_client

@@ -1,4 +1,0 @@
-../server/Debug/ctest_api_server&
-touch temp
-../client/Debug/ctest_api_client
-rm temp
