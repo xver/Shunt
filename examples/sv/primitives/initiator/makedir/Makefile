@@ -1,6 +1,6 @@
 
 compile_sv:
-	cd ../bin && echo $PWD "COMPILE_SV PLACEHOLDER ${SHUNT_HOME}/utils/dpi/src/shunt_dpi_pkg.sv ../src/Initiator.sv"
+	cd ../bin && echo ${PWD} "<COMPLE_SV PLACEHOLDER ${SHUNT_HOME}/utils/dpi/src/shunt_dpi_pkg.sv ../src/Initiator.sv>"
 
 .PHONY: clean
 clean:	

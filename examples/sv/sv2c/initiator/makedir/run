@@ -1,2 +1,2 @@
 cd ../bin
-echo $PWD "<RUN PLACEHOLDER>"
+echo ${PWD} "<RUN PLACEHOLDER>"
