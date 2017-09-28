@@ -8,47 +8,59 @@
 #
 # Changes to be committed:
 #	new file:   all_files
+rm   bin/libutils.so
 #	new file:   examples/c/client_server/includes/cs_common.h
 #	new file:   examples/c/client_server/initiator/makedir/makefile
 #	new file:   examples/c/client_server/initiator/makedir/objects.mk
 #	new file:   examples/c/client_server/initiator/makedir/sources.mk
-#	new file:   examples/c/client_server/initiator/makedir/src/subdir.mk
+rm   examples/c/client_server/initiator/makedir/src/csC_Initiator.d
+rm   examples/c/client_server/initiator/makedir/src/csC_Initiator.o
+rm   examples/c/client_server/initiator/makedir/src/subdir.mk
 #	new file:   examples/c/client_server/initiator/src/csC_Initiator.c
 #	new file:   examples/c/client_server/makedir/Makefile
 #	new file:   examples/c/client_server/makedir/run
 #	new file:   examples/c/client_server/target/makedir/makefile
 #	new file:   examples/c/client_server/target/makedir/objects.mk
 #	new file:   examples/c/client_server/target/makedir/sources.mk
-#	new file:   examples/c/client_server/target/makedir/src/subdir.mk
+rm   examples/c/client_server/target/makedir/src/csC_Target.d
+rm   examples/c/client_server/target/makedir/src/csC_Target.o
+rm   examples/c/client_server/target/makedir/src/subdir.mk
 #	new file:   examples/c/client_server/target/src/csC_Target.c
 #	new file:   examples/c/primitives/includes/cs_common.h
 #	new file:   examples/c/primitives/initiator/makedir/makefile
 #	new file:   examples/c/primitives/initiator/makedir/objects.mk
 #	new file:   examples/c/primitives/initiator/makedir/sources.mk
-#	new file:   examples/c/primitives/initiator/makedir/src/subdir.mk
+rm   examples/c/primitives/initiator/makedir/src/primC_Initiator.d
+rm   examples/c/primitives/initiator/makedir/src/primC_Initiator.o
+rm   examples/c/primitives/initiator/makedir/src/subdir.mk
 #	new file:   examples/c/primitives/initiator/src/primC_Initiator.c
 #	new file:   examples/c/primitives/makedir/Makefile
 #	new file:   examples/c/primitives/makedir/run
 #	new file:   examples/c/primitives/target/makedir/makefile
 #	new file:   examples/c/primitives/target/makedir/objects.mk
 #	new file:   examples/c/primitives/target/makedir/sources.mk
-#	new file:   examples/c/primitives/target/makedir/src/subdir.mk
+rm   examples/c/primitives/target/makedir/src/primC_Target.d
+rm   examples/c/primitives/target/makedir/src/primC_Target.o
+rm   examples/c/primitives/target/makedir/src/subdir.mk
 #	new file:   examples/c/primitives/target/src/primC_Target.c
 #	new file:   examples/c/user_api/includes/cs_common.h
 #	new file:   examples/c/user_api/initiator/makedir/makefile
 #	new file:   examples/c/user_api/initiator/makedir/objects.mk
 #	new file:   examples/c/user_api/initiator/makedir/sources.mk
-#	new file:   examples/c/user_api/initiator/makedir/src/subdir.mk
+rm   examples/c/user_api/initiator/makedir/src/apiC_Initiator.d
+rm   examples/c/user_api/initiator/makedir/src/apiC_Initiator.o
+rm   examples/c/user_api/initiator/makedir/src/subdir.mk
 #	new file:   examples/c/user_api/initiator/src/apiC_Initiator.c
 #	new file:   examples/c/user_api/makedir/Makefile
 #	new file:   examples/c/user_api/makedir/run
 #	new file:   examples/c/user_api/target/makedir/makefile
 #	new file:   examples/c/user_api/target/makedir/objects.mk
 #	new file:   examples/c/user_api/target/makedir/sources.mk
-#	new file:   examples/c/user_api/target/makedir/src/subdir.mk
+rm   examples/c/user_api/target/makedir/src/apiC_Target.d
+rm   examples/c/user_api/target/makedir/src/apiC_Target.o
+rm   examples/c/user_api/target/makedir/src/subdir.mk
 #	new file:   examples/c/user_api/target/src/apiC_Target.c
 #	new file:   examples/sv/handshake/includes/cs_common.svh
-#	new file:   examples/sv/handshake/initiator/bin/transcript
 #	new file:   examples/sv/handshake/initiator/makedir/Makefile
 #	new file:   examples/sv/handshake/initiator/makedir/run
 #	new file:   examples/sv/handshake/initiator/src/Initiator.sv
@@ -85,9 +97,20 @@
 #	new file:   utils/dpi/src/shunt_dpi.c
 #	new file:   utils/dpi/src/shunt_dpi_pkg.sv
 #	new file:   utils/dpi/src/shunt_hs_pkg.sv
-#	new file:   utils/makedir/c/src/subdir.mk
-#	new file:   utils/makedir/dpi/src/subdir.mk
+rm   utils/makedir/c/src/shunt_client_server.d
+rm   utils/makedir/c/src/shunt_client_server.o
+rm   utils/makedir/c/src/shunt_primitives.d
+rm   utils/makedir/c/src/shunt_primitives.o
+rm   utils/makedir/c/src/shunt_user_api.d
+rm   utils/makedir/c/src/shunt_user_api.o
+rm   utils/makedir/c/src/subdir.mk
+rm   utils/makedir/dpi/src/shunt_dpi.d
+rm   utils/makedir/dpi/src/shunt_dpi.o
+rm   utils/makedir/dpi/src/subdir.mk
 #	new file:   utils/makedir/makefile
 #	new file:   utils/makedir/objects.mk
 #	new file:   utils/makedir/sources.mk
+#
+# Untracked files:
+#	.directory
 #
