@@ -1,0 +1,5 @@
+echo ${SHUNT_HOME}
+${SHUNT_HOME}/bin/csC_Initiator&
+touch temp
+${SHUNT_HOME}/bin/csC_Target
+rm temp

@@ -1,0 +1,5 @@
+echo ${SHUNT_HOME}
+${SHUNT_HOME}/bin/apiC_Initiator&
+touch temp
+${SHUNT_HOME}/bin/apiC_Target
+rm temp

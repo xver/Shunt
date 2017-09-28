@@ -1,0 +1,4 @@
+make all
+make run_initiator &
+sleep 15
+make run_target

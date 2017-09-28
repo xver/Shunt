@@ -1,0 +1,5 @@
+echo ${SHUNT_HOME}
+${SHUNT_HOME}/bin/primC_Initiator&
+touch temp
+${SHUNT_HOME}/bin/primC_Target
+rm temp

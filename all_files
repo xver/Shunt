@@ -1,0 +1,93 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# Explicit paths specified without -i or -o; assuming --only paths...
+# On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	new file:   all_files
+#	new file:   examples/c/client_server/includes/cs_common.h
+#	new file:   examples/c/client_server/initiator/makedir/makefile
+#	new file:   examples/c/client_server/initiator/makedir/objects.mk
+#	new file:   examples/c/client_server/initiator/makedir/sources.mk
+#	new file:   examples/c/client_server/initiator/makedir/src/subdir.mk
+#	new file:   examples/c/client_server/initiator/src/csC_Initiator.c
+#	new file:   examples/c/client_server/makedir/Makefile
+#	new file:   examples/c/client_server/makedir/run
+#	new file:   examples/c/client_server/target/makedir/makefile
+#	new file:   examples/c/client_server/target/makedir/objects.mk
+#	new file:   examples/c/client_server/target/makedir/sources.mk
+#	new file:   examples/c/client_server/target/makedir/src/subdir.mk
+#	new file:   examples/c/client_server/target/src/csC_Target.c
+#	new file:   examples/c/primitives/includes/cs_common.h
+#	new file:   examples/c/primitives/initiator/makedir/makefile
+#	new file:   examples/c/primitives/initiator/makedir/objects.mk
+#	new file:   examples/c/primitives/initiator/makedir/sources.mk
+#	new file:   examples/c/primitives/initiator/makedir/src/subdir.mk
+#	new file:   examples/c/primitives/initiator/src/primC_Initiator.c
+#	new file:   examples/c/primitives/makedir/Makefile
+#	new file:   examples/c/primitives/makedir/run
+#	new file:   examples/c/primitives/target/makedir/makefile
+#	new file:   examples/c/primitives/target/makedir/objects.mk
+#	new file:   examples/c/primitives/target/makedir/sources.mk
+#	new file:   examples/c/primitives/target/makedir/src/subdir.mk
+#	new file:   examples/c/primitives/target/src/primC_Target.c
+#	new file:   examples/c/user_api/includes/cs_common.h
+#	new file:   examples/c/user_api/initiator/makedir/makefile
+#	new file:   examples/c/user_api/initiator/makedir/objects.mk
+#	new file:   examples/c/user_api/initiator/makedir/sources.mk
+#	new file:   examples/c/user_api/initiator/makedir/src/subdir.mk
+#	new file:   examples/c/user_api/initiator/src/apiC_Initiator.c
+#	new file:   examples/c/user_api/makedir/Makefile
+#	new file:   examples/c/user_api/makedir/run
+#	new file:   examples/c/user_api/target/makedir/makefile
+#	new file:   examples/c/user_api/target/makedir/objects.mk
+#	new file:   examples/c/user_api/target/makedir/sources.mk
+#	new file:   examples/c/user_api/target/makedir/src/subdir.mk
+#	new file:   examples/c/user_api/target/src/apiC_Target.c
+#	new file:   examples/sv/handshake/includes/cs_common.svh
+#	new file:   examples/sv/handshake/initiator/bin/transcript
+#	new file:   examples/sv/handshake/initiator/makedir/Makefile
+#	new file:   examples/sv/handshake/initiator/makedir/run
+#	new file:   examples/sv/handshake/initiator/src/Initiator.sv
+#	new file:   examples/sv/handshake/makedir/Makefile
+#	new file:   examples/sv/handshake/makedir/run
+#	new file:   examples/sv/handshake/target/makedir/Makefile
+#	new file:   examples/sv/handshake/target/makedir/run
+#	new file:   examples/sv/handshake/target/src/Target.sv
+#	new file:   examples/sv/primitives/includes/cs_common.svh
+#	new file:   examples/sv/primitives/initiator/makedir/Makefile
+#	new file:   examples/sv/primitives/initiator/makedir/run
+#	new file:   examples/sv/primitives/initiator/src/Initiator.sv
+#	new file:   examples/sv/primitives/makedir/Makefile
+#	new file:   examples/sv/primitives/makedir/run
+#	new file:   examples/sv/primitives/target/makedir/Makefile
+#	new file:   examples/sv/primitives/target/makedir/run
+#	new file:   examples/sv/primitives/target/src/Target.sv
+#	new file:   examples/sv/sv2c/includes/cs_common.svh
+#	new file:   examples/sv/sv2c/initiator/makedir/Makefile
+#	new file:   examples/sv/sv2c/initiator/makedir/run
+#	new file:   examples/sv/sv2c/initiator/src/Initiator.sv
+#	new file:   examples/sv/sv2c/makedir/Makefile
+#	new file:   examples/sv/sv2c/makedir/run
+#	new file:   examples/sv/sv2c/target/makedir/Makefile
+#	new file:   examples/sv/sv2c/target/makedir/run
+#	new file:   examples/sv/sv2c/target/src/Target.sv
+#	new file:   utils/c/include/shunt_client_server.h
+#	new file:   utils/c/include/shunt_primitives.h
+#	new file:   utils/c/include/shunt_user_api.h
+#	new file:   utils/c/src/shunt_client_server.c
+#	new file:   utils/c/src/shunt_primitives.c
+#	new file:   utils/c/src/shunt_user_api.c
+#	new file:   utils/dpi/include/shunt_dpi.h
+#	new file:   utils/dpi/src/shunt_dpi.c
+#	new file:   utils/dpi/src/shunt_dpi_pkg.sv
+#	new file:   utils/dpi/src/shunt_hs_pkg.sv
+#	new file:   utils/makedir/c/src/subdir.mk
+#	new file:   utils/makedir/dpi/src/subdir.mk
+#	new file:   utils/makedir/makefile
+#	new file:   utils/makedir/objects.mk
+#	new file:   utils/makedir/sources.mk
+#
