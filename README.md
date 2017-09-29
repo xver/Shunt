@@ -2,6 +2,7 @@ Welcome to the **Shunt**!
 
 ![](https://github.com/xver/Shunt/blob/master/doc/shunt_logo.png)
 
+icshunt.help@gmail.com
 
 The **Shunt** is Open Source Client/Server TCP/IP socket based communication library for SystemVerilog simulation.
 
