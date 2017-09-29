@@ -13,5 +13,5 @@ Tne **Shunt** is available under a "MIT" License. It can be used without restric
 
 http://htmlpreview.github.io/?https://github.com/xver/SVCS/blob/master/doc/menu.html
 
-!["Copyright (c) 2016 IC Verimeter"](https://github.com/xver/Shunt/blob/master/doc/IcVerimeter_logo.png)
+!["Copyright (c) 2016 IC Verimeter"](https://github.com/xver/Shunt/blob/master/doc/IcVerimeter_logo.png) icshunt.help@gmail.com
 
