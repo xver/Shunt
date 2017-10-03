@@ -7,27 +7,7 @@
                See LICENSE file in the project root for full license information.  
  Description : target-initiator primitive(basic) utils
                System Verilog target initiator handshake (TCP/IP SystemVerilog SHUNT)
-******************************************************
-Verilog Data Types elements: 
 
-Integer 2 states:
-SHUNT_INT         - int            function :shunt_prim_xxxx_intV
-SHUNT_SHORTINT    - shortint       function :shunt_prim_xxxx_shortV
-SHUNT_LONGINT     - longint        function :shunt_prim_xxxx_long
-SHUNT_BYTE        - byte           function :shunt_prim_xxxx_byte
-SHUNT_BIT         - bit            function :N/A see shunt_client_server.c shunt_cs_xxx_bitN
-
-Integer 4 states:
-SHUNT_INTEGER     - integer,time   function :shunt_prim_xxxx_integer
-SHUNT_REG         - reg,logic      function :N/A see  shunt_client_server.c shunt_cs_xxx_regN
-
-Non integer types IEEE 754:  
-SHUNT_REAL        - real,realtime  function :shunt_prim_xxxx_double
-SHUNT_SHORTREAL   - shortreal      function :shunt_prim_xxxx_float
-SHUNT_STRING      - string (N/A)   function :shunt_client_server.c shunt_cs_xxx_byteV
-
-SHUNT_A_STRUCTURE - complex data types/user defined data types : arrays/struct,union,enums (N/A)
-SHUNT_HEADER_ONLY - cs_header_t header only                                                (N/A)    
  ============================================================================
  */
 
@@ -74,7 +54,56 @@ typedef s_vpi_vecval svLogicVecVal;
 
 //Title: Client-Server Primitives
 
-  
+/* 
+ * About: Verilog Data Types elements: 
+ * 
+ * Integer 2 states::
+ *
+ * (start code)
+ *  
+ *    SHUNT ENUM       |  SV type    | function
+ *  ------------------------------------------------------------------------
+ *  SHUNT_INT          | int         | shunt_prim_xxxx_int.
+ *  SHUNT_SHORTINT     | shortint    | shunt_prim_xxxx_short.
+ *  SHUNT_LONGINT      | longint     | shunt_prim_xxxx_long.
+ *  SHUNT_BYTE         | byte        | shunt_prim_xxxx_byte.
+ *  SHUNT_BIT          | bit         | N/A see shunt_client_server.c shunt_cs_xxx_bitN.
+ * 
+ * (end code)
+ *
+ * Integer 4 states::
+ *
+ * (start code)
+ *  
+ *    SHUNT ENUM       |  SV type     |  function
+ *  ------------------------------------------------------------------------
+ *    SHUNT_INTEGER    | integer,time |  shunt_prim_xxxx_integer
+ *    SHUNT_REG        | reg,logic    |  N/A see  shunt_client_server.c shunt_cs_xxx_regN
+ *
+ * (end code)
+ * 
+ * Non integer types IEEE 754::  
+ *
+ * (start code)
+ *  
+ *    SHUNT ENUM       |  SV type     |  function
+ *  ------------------------------------------------------------------------
+ *   SHUNT_REAL        | real,realtime| shunt_prim_xxxx_double
+ *   SHUNT_SHORTREAL   | shortreal    | shunt_prim_xxxx_float
+ *   SHUNT_STRING      | string (N/A) | shunt_client_server.c shunt_cs_xxx_byte
+ *
+ * (end code)
+ *
+ *  Special Shunt types::   
+ *
+ * (start code)
+ *  
+ *   SHUNT_A_STRUCTURE | complex data types/user defined data types : arrays/struct,union,enums (N/A)
+ *   SHUNT_HEADER_ONLY | cs_header_t header only                                                (N/A)     
+ *
+ * (end code)
+*/
+
 ///////////////////////////////
 //Section:  Common Functions 
 
