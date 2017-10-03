@@ -1,6 +1,6 @@
 Welcome to the **Shunt**!
 
-![](https://github.com/xver/Shunt/blob/master/doc/shunt_logo.png)
+![](https://github.com/xver/Shunt/blob/master/doc/shut_log_min.png)
 
 icshunt.help@gmail.com
 
