@@ -342,22 +342,6 @@ int shunt_dpi_recv_integerV (const unsigned int sockid,const int size,svLogicVec
 */
 int shunt_dpi_recv_intV(int sockid,int size,svOpenArrayHandle Int);
 
-/*
-  Function: shunt_dpi_print_intV
-  print out IntV Data
-
-  Parameters:
-
-  h - cs_data_header structure
-  Int  - Data to print
-  msg  - print out prefix
-
-  Returns:
-  
-  see ( shunt_cs_print_intV )
-*/
-void shunt_dpi_print_intV   (cs_header* h,int *Int,char* msg);
-
 
 /*
   Function: shunt_dpi_send_realV

@@ -29,21 +29,20 @@ double shunt_prim_hash(const char *str) {
   return hash;
 }
 
-//
 void shunt_prim_error(char *msg) {
   extern int errno;
-  //printf("Value of errno: %d\n", errno);
   if (errno==0) {
     printf(" ERROR: shunt_cs:: %s\n", msg);
   }
   else perror(msg);
   exit(1);
 }
+
 //////////////////////////////////
 //TCP/IP Functions
 //////////////////////////////////
 
- int shunt_prim_init_initiator(const unsigned int portno) {
+int shunt_prim_init_initiator(const unsigned int portno) {
   int parentfd; /* parent socket */
   int childfd; /* child socket */
   int targetlen; /* byte size of target's address */
@@ -163,11 +162,11 @@ unsigned int shunt_prim_init_target(const unsigned int portno,const char *hostna
 //////////////////////////////////
 //Data exchange primitives
 /////////////////////////////////
+
 int shunt_prim_send_short(const int sockfd,const short int* Short)
 {
   int numbytes;
 
-  //printf("\nshunt_prim_send_short:: will send short from addr %x=%x of %d bytes",Short,*Short,sizeof(short int));
   numbytes = send(sockfd,Short, sizeof(short int), 0);
   if (numbytes < 0)  shunt_prim_error("\nERROR in shunt_prim_send_short : numbytes < 0 ");
   return numbytes;
@@ -179,7 +178,6 @@ int shunt_prim_recv_short    (const int sockfd, short int* Short)
   int numbytes;
 
   numbytes = recv(sockfd, Short,sizeof(short int) , 0);
-  //printf("\nshunt_prim_recv_short::get short  (%x) of %0d bytes",*Short,numbytes);
   if (numbytes < 0) shunt_prim_error("\nERROR in shunt_prim_recv_short : numbytes < 0 ");
   return numbytes;
   }
@@ -188,7 +186,6 @@ int shunt_prim_send_int(const int sockfd,const int* Int)
 {
   int numbytes;
 
-  //printf("\nshunt_prim_send_int:: will send int from addr %x=%d of %d bytes",Int,*Int,sizeof(int));
   numbytes = send(sockfd,Int, sizeof(int), 0);
   if (numbytes < 0)  shunt_prim_error("\nERROR in shunt_prim_send_int : numbytes < 0 ");
   return numbytes;
@@ -200,7 +197,6 @@ int shunt_prim_recv_int    (const int sockfd, int* Int)
   int numbytes;
 
   numbytes = recv(sockfd, Int,sizeof(int) , 0);
-  //printf("\nshunt_prim_recv_int::get int  (%d) of %0d bytes",*Int,numbytes);
   if (numbytes < 0) shunt_prim_error("\nERROR in shunt_prim_recv_int : numbytes < 0 ");
   return numbytes;
   }
@@ -209,7 +205,6 @@ int shunt_prim_send_long(const int sockfd,const long int* Long)
 {
   int numbytes;
 
-  //printf("\nshunt_prim_send_long:: will send long %lx of %0d bytes",*Long,sizeof(long int));
   numbytes = send(sockfd,Long, sizeof(long int), 0);
   if (numbytes < 0)  shunt_prim_error("\nERROR in shunt_prim_send_long : numbytes < 0 ");
   return numbytes;
@@ -221,7 +216,6 @@ int shunt_prim_recv_long    (const int sockfd, long int* Long)
   int numbytes;
 
   numbytes = recv(sockfd, Long,sizeof(long int) , 0);
-  //printf("\nshunt_prim_recv_long::get long  (%lx) of %0d bytes",*Long,numbytes);
   if (numbytes < 0) shunt_prim_error("\nERROR in shunt_prim_recv_long : numbytes < 0 ");
   return numbytes;
   }
@@ -230,7 +224,6 @@ int shunt_prim_send_double    (const int sockfd,const double* Double)
 {
 
   int numbytes;
-  //printf("\nshunt_prim_send_double:Size of double pointer = %d addr = %x value=%f\n", sizeof(double),Double,*Double);
   numbytes = send(sockfd, Double, sizeof(double), 0);
 
   if (numbytes < 0) shunt_prim_error("ERROR shunt_cs_send_double: numbytes < 0 ");
@@ -241,7 +234,6 @@ int shunt_prim_send_float    (const int sockfd,const float* Float)
 {
 
   int numbytes;
-  //printf("\nshunt_prim_send_float:Size of float pointer = %d addr = %x value=%f\n", sizeof(float),Float,*Float);
   numbytes = send(sockfd, Float, sizeof(float), 0);
 
   if (numbytes < 0) shunt_prim_error("ERROR shunt_cs_send_float: numbytes < 0 ");
@@ -253,7 +245,6 @@ int shunt_prim_recv_double    (const int sockfd,double* Double)
  int numbytes;
 
   numbytes = recv(sockfd, Double,sizeof(double) , 0);
-  //printf("\nshunt_prim_recv_double::get Double  (%f) of %0d bytes\n",*Double,numbytes);
   if (numbytes < 0) shunt_prim_error("ERROR in shunt_prim_recv_double : numbytes < 0 ");
   return numbytes;
 }
@@ -263,7 +254,6 @@ int shunt_prim_recv_float    (const int sockfd,float* Float)
  int numbytes;
 
   numbytes = recv(sockfd, Float,sizeof(float) , 0);
-  //printf("\nshunt_prim_recv_float::get Float  (%f) of %0d bytes\n",*Float,numbytes);
   if (numbytes < 0) shunt_prim_error("ERROR in shunt_prim_recv_float : numbytes < 0 ");
   return numbytes;
 }
@@ -273,7 +263,6 @@ int shunt_prim_send_byte(const int sockfd,const char* Byte)
 {
   int numbytes;
 
-  //printf("\nshunt_prim_send_byte:: will send byte from addr %x=%x(%c) of %0d bytes",Byte,*Byte,*Byte,sizeof(char));
   numbytes = send(sockfd,Byte, sizeof(char), 0);
   if (numbytes < 0)  shunt_prim_error("\nERROR in shunt_prim_send_byte : numbytes < 0 ");
   return numbytes;
@@ -285,10 +274,9 @@ int shunt_prim_recv_byte    (const int sockfd, char* Byte)
   int numbytes=0;
 
   numbytes = recv(sockfd, Byte,sizeof(char) , 0);
-  //printf("\nshunt_prim_recv_byte::get byte  (%x)(%c) of %0d bytes",*Byte,*Byte,numbytes);
   if (numbytes < 0) {
-	  	  shunt_prim_error("\nERROR in shunt_prim_recv_byte : numbytes < 0 ");
-
+    shunt_prim_error("\nERROR in shunt_prim_recv_byte : numbytes < 0 ");
+		  
   }
 
   return numbytes;
@@ -296,27 +284,32 @@ int shunt_prim_recv_byte    (const int sockfd, char* Byte)
 
 int shunt_prim_send_integer (const unsigned int sockfd,const svLogicVecVal* Int) {
  int Result_;
- //char* msg = "\nshunt_prim_send_integer"; 
- 
+  
  Result_ = 1;
  if (shunt_prim_send_int (sockfd,(int *)(&Int->aval))<=0) Result_=0 ;
  if (shunt_prim_send_int (sockfd,(int *)(&Int->bval))<=0) Result_=0 ;
-
- //printf("  %s  Int->aval=%x,Int->bval=%x size(%0d)",msg,Int->aval,Int->bval,sizeof(int));
  
  return Result_;
 }
 
 int shunt_prim_recv_integer (const unsigned int sockfd,svLogicVecVal* Int) {
   int Result_;
-  //char* msg = "\nshunt_prim_recv_integer"; 
   Result_ = 1;
    
   if (shunt_prim_recv_int (sockfd,(int *)(&Int->aval))<=0) Result_=0 ;
   if (shunt_prim_recv_int (sockfd,(int *)(&Int->bval))<=0) Result_=0 ;
-  //printf("  %s  Int->aval=%x,Int->bval=%x ",msg,Int->aval,Int->bval);  
-
+  
  return Result_;
 }
 
 #endif
+
+
+
+
+
+
+
+
+
+

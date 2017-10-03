@@ -1,53 +1,22 @@
 
-TITLE: 1. Introduction SVCS
+TITLE: 1. Introduction
 
 
- *(SVCS) System Verilog client server handshake:*
+Welcome to the SystemVerilog TCP/IP "Shunt" !
 
- - *SVCS is a framework which is aimed to enable quick and easy development of communication between stand-alone "System Verilog" simulations and/or external applications.*
+icshunt.help@gmail.com
 
-TODO!!!
-(start code)
-******************************************************
-Data Types: 
- 
-Elements:
-         integer,  double, char
 
-Vectors: 
-         integers, doubles , string
+The Shunt is Open Source Client/Server TCP/IP socket based communication library for SystemVerilog simulation.
 
-Array/composite:
-	  integer vectors , double vectors, messages , structure
+    -It aims to enable quick and easy development of communication between stand-alone SystemVerilog simulations and/or external applications
 
--------------------------------------------------------
-Common Data Structure:
-			trnx -> header  ->  trnx_atribute  - hash/random double    
-					    trnx_type      - hash double 
-					    trnx_id        - random double 
-                          
-				payload -> size - int , >0   
-				data
--------------------------------------------------------
-vector:
+    -It provides a common SystemVerilog/C API and supports mostly all System Verilog data types and data structures.
 
-element -> header ->   trnx_atribute - hash/random double     
-                       trnx_type     - hash ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING") 
-                       trnx_id       - random double 
-                       
-           payload ->  size - if vector >1, if element = 1;    
-                       data element;
----------------------------------------------------------------
-array:
-composite -> header ->     trnx_atribute - hash/random double    
-                           trnx_type     - hash ("SVCS_A_STRUCTURE") 
-                           trnx_id       - random double 
-                           
-             payload->     size - int , > 1   
-                           data - vector  
----------------------------------------------------------------
-(end)
+
+Tne Shunt is available under a "MIT" License. It can be used without restriction in an open-source or commercial application.
+
+
  ============================================================================
- Copyright (c) 2016 IC Verimeter. All rights reserved.  
-               Licensed under the MIT License. 
+ Copyright (c) 2016-2017 IC Verimeter. All rights reserved.  
 ============================================================================= 

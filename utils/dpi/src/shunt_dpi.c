@@ -14,9 +14,7 @@
 #define SHUNT_DPI_C_
 
 #include "shunt_dpi.h"
-//#include "shunt_primitives.c"
-//#include "shunt_client_server.c"
-//#include "shunt_user_api.c"
+
 
 //--------------------
 // TCP/IP socket init
@@ -76,13 +74,11 @@ int shunt_dpi_recv_long  (int sockfd,long int* Long) {
 
 int shunt_dpi_send_time    (const unsigned int sockfd,svLogicVecVal* Time) {
   int Result_;
-  //char* msg = "\nshunt_dpi_send_time"; 
- 
+   
  Result_ = 1;
  for (int  i=0;i<2;i++) {
    if (shunt_dpi_send_int(sockfd, (int)Time[i].aval)<=0) Result_=0 ;
    if (shunt_dpi_send_int(sockfd, (int)Time[i].bval)<=0) Result_=0 ;
-   //printf("  %s [%0d] Time->aval=%x,Time->bval=%x ",msg,i,Time[i].aval,Time[i].bval);
  }
  
  return Result_; 
@@ -91,14 +87,12 @@ int shunt_dpi_send_time    (const unsigned int sockfd,svLogicVecVal* Time) {
 
 int shunt_dpi_recv_time    (const unsigned int sockfd,svLogicVecVal* Time) {
   int Result_;
-  //char* msg = "\nshunt_dpi_recv_time"; 
   
   Result_ = 1;
   for (int  i=0;i<2;i++) { 
     if (shunt_dpi_recv_int (sockfd,(int*)(&Time[i].aval))<=0) Result_=0 ;
     if (shunt_dpi_recv_int (sockfd,(int*)(&Time[i].bval))<=0) Result_=0 ;
-    //printf("  %s [%0d] Time.aval=%x,Time.bval=%x ",msg,i,Time[i].aval,Time[i].bval); 
-  } 
+    } 
 
  return Result_;
 }
@@ -151,8 +145,6 @@ int shunt_dpi_send_realtime(const  unsigned int sockfd,double Real) {
 
 int shunt_dpi_send_shortreal(const  unsigned int sockfd,float Real) {
   int Result_ =0;
-  //char* msg = "shunt_dpi_send_shortreal";
-  //printf("  %s  Real=%f ",msg,Real);
   Result_ =shunt_prim_send_float(sockfd,&Real);
   return Result_;
 }
@@ -176,9 +168,7 @@ int shunt_dpi_recv_shortreal(const  unsigned int sockfd,float* Real) {
 //*****************************************
 int shunt_dpi_send_intV(int sockid, const int size,const svOpenArrayHandle Int){
   cs_header h_ ;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_send_intV:";
-  
+    
 #ifndef C_TEST
   int* Int_= (int *) svGetArrayPtr(Int); 
 #else
@@ -189,8 +179,6 @@ int shunt_dpi_send_intV(int sockid, const int size,const svOpenArrayHandle Int){
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_INT");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
-  //shunt_cs_print_intV(&h_,Int_,msg);
   Result_ = shunt_cs_send_intV(sockid,&h_,Int_);
   return Result_;
 }
@@ -198,8 +186,6 @@ int shunt_dpi_send_intV(int sockid, const int size,const svOpenArrayHandle Int){
 
 int shunt_dpi_recv_intV(int sockid,int size,svOpenArrayHandle Int) {
   cs_header h_;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_recv_intV:";
 #ifndef C_TEST
   int* Int_ = (int *) svGetArrayPtr(Int);
 #else
@@ -210,24 +196,16 @@ int shunt_dpi_recv_intV(int sockid,int size,svOpenArrayHandle Int) {
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_INT");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
   Result_ = shunt_cs_recv_intV(sockid,&h_,Int_);
-  //for(int i=0;i<size;i++) printf("%s Int_[%0d]=%s of %d\n",msg,Int_[i]);
   return Result_;
 }
 
-void shunt_dpi_print_intV(cs_header* h,int *Int,char* msg) {
 
-  shunt_cs_print_intV(h,Int,msg);
-  //return Result_;
-}
 // ****************************************************
 
 int shunt_dpi_send_shortV(int sockid, const int size,const svOpenArrayHandle Int){
   cs_header h_ ;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_send_shortV:";
-  
+    
 #ifndef C_TEST
   short int* Short_= (short int *) svGetArrayPtr(Int); 
 #else
@@ -238,8 +216,6 @@ int shunt_dpi_send_shortV(int sockid, const int size,const svOpenArrayHandle Int
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_SHORTINT");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
-  //for(int i=0;i<size;i++) printf("%s Short_[%0d]=%0d of %0d\n",msg,i,Short_[i],size);
   Result_ = shunt_cs_send_shortV(sockid,&h_,Short_);
   return Result_;
 }
@@ -247,29 +223,22 @@ int shunt_dpi_send_shortV(int sockid, const int size,const svOpenArrayHandle Int
 
 int shunt_dpi_recv_shortV(int sockid,int size,svOpenArrayHandle Int) {
   cs_header h_;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_recv_shortV:";
 #ifndef C_TEST
-   short int* Short_ = (short int *) svGetArrayPtr(Int);
+  short int* Short_ = (short int *) svGetArrayPtr(Int);
 #else
-   short int* Short_= (short int *) Int;
+  short int* Short_= (short int *) Int;
 #endif
   int Result_ =0;
   h_.trnx_type = rand();
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_SHORTINT");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
   Result_ = shunt_cs_recv_shortV(sockid,&h_,Short_);
-  //for(int i=0;i<size;i++) printf("%s Short_[%0d]=%0d of %0d\n",msg,i,Short_[i],size);
   return Result_;
 }
 // ****************************************************
-////////////////////////////////
 int shunt_dpi_send_longV(int sockid, const int size,const svOpenArrayHandle Int){
   cs_header h_ ;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_send_longV:";
   
 #ifndef C_TEST
   long int* Long_= (long int *) svGetArrayPtr(Int); 
@@ -281,8 +250,7 @@ int shunt_dpi_send_longV(int sockid, const int size,const svOpenArrayHandle Int)
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_LONGINT");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
-  //for(int i=0;i<size;i++) printf("%s Long_[%0d]=%0d of %0d\n",msg,i,Long_[i],size);
+  
   Result_ = shunt_cs_send_longV(sockid,&h_,Long_);
   return Result_;
 }
@@ -290,8 +258,7 @@ int shunt_dpi_send_longV(int sockid, const int size,const svOpenArrayHandle Int)
 
 int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int) {
   cs_header h_;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_recv_longV:";
+  
 #ifndef C_TEST
    long int* Long_ = (long int *) svGetArrayPtr(Int);
 #else
@@ -302,9 +269,8 @@ int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int) {
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_LONGINT");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
   Result_ = shunt_cs_recv_longV(sockid,&h_,Long_);
-  //for(int i=0;i<size;i++) printf("%s Long_[%0d]=%0d of %0d\n",msg,i,Long_[i],size);
+  
   return Result_;
 }
 ////////////////////////////////
@@ -312,8 +278,7 @@ int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int) {
 
 int shunt_dpi_send_realV(int sockid, const int size,const svOpenArrayHandle Real) {
   cs_header h_ ;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_send_realV:";
+
 #ifndef C_TEST
   double* Real_ = (double *) svGetArrayPtr(Real);
 #else
@@ -324,16 +289,12 @@ int shunt_dpi_send_realV(int sockid, const int size,const svOpenArrayHandle Real
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_REAL");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
-  //shunt_cs_print_realV(&h_,Real_,msg);
   Result_ = shunt_cs_send_doubleV(sockid,&h_,Real_);
   return Result_;
 }
 
 int shunt_dpi_recv_realV(int sockid,int size,svOpenArrayHandle Real) {
   cs_header h_;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_recv_realV:";
 #ifndef C_TEST
   double* Real_ = (double *) svGetArrayPtr(Real);
 #else
@@ -344,16 +305,12 @@ int shunt_dpi_recv_realV(int sockid,int size,svOpenArrayHandle Real) {
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_REAL");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
   Result_ = shunt_cs_recv_doubleV(sockid,&h_,Real_);
-  //shunt_cs_print_realV(&h_,Real_,msg);
   return Result_;
 }
 
 int shunt_dpi_send_shortrealV(int sockid, const int size,const svOpenArrayHandle Shortreal) {
   cs_header h_ ;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_send_shortrealV:";
 #ifndef C_TEST
   float* Shortreal_ = (float *) svGetArrayPtr(Shortreal);
 #else
@@ -364,16 +321,14 @@ int shunt_dpi_send_shortrealV(int sockid, const int size,const svOpenArrayHandle
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_SHORTREAL");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
-  //shunt_cs_print_shortrealV(&h_,Shortreal_,msg);
+  
   Result_ = shunt_cs_send_floatV(sockid,&h_,Shortreal_);
   return Result_;
 }
 
 int shunt_dpi_recv_shortrealV(int sockid,int size,svOpenArrayHandle Shortreal) {
   cs_header h_;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_recv_shortrealV:";
+  
 #ifndef C_TEST
   float* Shortreal_ = (float *) svGetArrayPtr(Shortreal);
 #else
@@ -384,33 +339,28 @@ int shunt_dpi_recv_shortrealV(int sockid,int size,svOpenArrayHandle Shortreal) {
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_SHORTREAL");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
   Result_ = shunt_cs_recv_floatV(sockid,&h_,Shortreal_);
-  //shunt_cs_print_shortrealV(&h_,Shortreal_,msg);
-  return Result_;
+    return Result_;
 }
 
 ////Direct send/recv  
 
 int shunt_dpi_send_string(int sockid,int size,char* string) {
   cs_header h_ ;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_send_string: ";
+  
   int Result_ =0;
   h_.trnx_type  = rand();
   h_.trnx_id    = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_BYTE");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
-  //printf("before  %s string=%s of %d\n",msg,string,(int)strlen(string));
+  
   Result_ = shunt_cs_send_byteV(sockid, &h_,string);
   return Result_;
 }
 
 int shunt_dpi_recv_string(int sockid,int size,char** string) {
   cs_header h_ ;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_recv_string: ";
+  
   int Result_ =0;
   h_.trnx_type = rand();
   h_.trnx_id   = rand();
@@ -439,12 +389,11 @@ int shunt_dpi_send_header         (int sockid,cs_header* h){
 int shunt_dpi_send_data_header (int sockid,cs_header* h,double data_type,svOpenArrayHandle trnx_payload_sizes) {
   cs_data_header h_data_;
   int Result_ =0;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "shunt_dpi_send_data_header";
+  
   h_data_.data_type = data_type;
   int* Int_ = (int*) svGetArrayPtr(trnx_payload_sizes);
   for(int i=0;i<h->n_payloads;i++) h_data_.trnx_payload_sizes[i] = Int_[i];
-  //shunt_cs_print_data_header(h,&h_data_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
+  
   Result_ = shunt_cs_send_data_header (sockid,h->n_payloads,&h_data_);
   return Result_;
 }
@@ -460,10 +409,9 @@ int shunt_dpi_recv_data_header   (int sockid,cs_header* h,double* data_type,svOp
   cs_data_header h_data;
   int n_payloads;
   n_payloads =  h->n_payloads;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "shunt_dpi_recv_data_header";
+  
   Result_ = shunt_cs_recv_data_header(sockid,n_payloads,&h_data);
-  //shunt_cs_print_data_header_dbg (n_payloads,&h_data,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
+  
   int* Int_ = (int *)svGetArrayPtr(trnx_payload_sizes); 
   *data_type =h_data.data_type;  
   for (int i=0;i<n_payloads;i++) { 
@@ -564,27 +512,23 @@ svOpenArrayHandle** Float_ = svGetArrayPtr(Array);
 //4-states
 int shunt_dpi_send_byte4s (const unsigned int sockfd,svLogicVecVal* Byte) {
  int Result_;
- //char* msg = "\nshunt_dpi_send_byte4s"; 
- 
+  
  Result_ = 1;
  
  if (shunt_dpi_send_byte(sockfd, Byte->aval)<=0) Result_=0 ;
  if (shunt_dpi_send_byte(sockfd, Byte->bval)<=0) Result_=0 ;
- //printf("  %s  Byte->aval=%x,Byte->bval=%x ",msg,Byte->aval,Byte->bval);
- 
+  
  return Result_;
 }
 
 int shunt_dpi_recv_byte4s (const unsigned int sockfd,svLogicVecVal* Byte) {
   int Result_;
-  //char* msg = "\nshunt_dpi_recv_byte4s"; 
-  
+    
   Result_ = 1;
    
   if (shunt_dpi_recv_byte (sockfd,(char *)(&Byte->aval))<=0) Result_=0 ;
   if (shunt_dpi_recv_byte (sockfd,(char *)(&Byte->bval))<=0) Result_=0 ;
-  //printf("  %s  Byte->aval=%x,Byte->bval=%x ",msg,Byte->aval,Byte->bval);  
-
+  
  return Result_;
 }
 
@@ -601,8 +545,7 @@ int shunt_dpi_recv_integer (const unsigned int sockfd,svLogicVecVal* Int) {
 //////////////////////
 int shunt_dpi_send_integerV (const unsigned int sockid,const int size,const svLogicVecVal* IntegerV){
   cs_header h_;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_recv_integerV:";
+  
 #ifndef C_TEST
   svLogicVecVal* IntegerV_ =  (svLogicVecVal*)svGetArrayPtr((svOpenArrayHandle*)IntegerV);
 #else
@@ -612,15 +555,13 @@ int shunt_dpi_send_integerV (const unsigned int sockid,const int size,const svLo
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_INTEGER");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
-  //for(int i=0;i<size;i++) printf("%s IntegerV_[%0d]=%s of %d\n",msg,IntegerV_[i]);
+  
   return shunt_cs_send_integerV(sockid,&h_,IntegerV_);
 }
 
 int shunt_dpi_recv_integerV (const unsigned int sockid,const int size,svLogicVecVal* IntegerV) {
   cs_header h_;
-  //SHUNT_INSTR_HASH_INDEX_DEFINE;
-  //char* msg = "\nshunt_dpi_recv_intV:";
+  
 #ifndef C_TEST
   svLogicVecVal* IntegerV_ = (svLogicVecVal*) svGetArrayPtr(IntegerV);
 #else
@@ -630,8 +571,7 @@ int shunt_dpi_recv_integerV (const unsigned int sockid,const int size,svLogicVec
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_INTEGER");
   h_.n_payloads = size;
-  //shunt_cs_print_header (&h_,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
-  //for(int i=0;i<size;i++) printf("%s IntegerV_[%0d]=%s of %d\n",msg,IntegerV_[i]);
+  
   return shunt_cs_recv_integerV(sockid,&h_,IntegerV_); 
 }
 //////////////////////
@@ -655,8 +595,7 @@ int shunt_dpi_hs_recv_logicN (const unsigned int sockfd,cs_header* h_trnx,svLogi
   return shunt_cs_recv_regN (sockfd,h_trnx,Reg_);
 }
 int shunt_dpi_send_bitN  (const int sockfd,const int size,const svBitVecVal* bitN) {
-  //char* msg = "\nshunt_dpi_send_bitN";
-  
+    
   cs_header* h_ = NULL;
 
   h_->trnx_type = rand(); 

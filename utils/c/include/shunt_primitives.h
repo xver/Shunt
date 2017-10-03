@@ -72,7 +72,7 @@ typedef s_vpi_vecval svLogicVecVal;
 //prototypes
 //-------------
 
-//Title: 2. Client-Server Primitives
+//Title: Client-Server Primitives
 
   
 ///////////////////////////////
