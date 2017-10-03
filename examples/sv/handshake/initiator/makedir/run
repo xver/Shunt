@@ -1,2 +1,0 @@
-cd ../bin
-echo ${PWD} "<RUN PLACEHOLDER>"
