@@ -1,2 +1,2 @@
 cd ../bin
-vsim -do "run -all; quit" -c Target -sv_lib  ${SHUNT_HOME}/bin/libutils
+echo ${PWD} "<RUN PLACEHOLDER>"
