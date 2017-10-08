@@ -250,10 +250,29 @@ int shunt_prim_recv_int    (const int sockfd,int* Int);
   
   Returns:
     number of bytes have been sent : success > 0
+  
+    See Also:
+   <shunt_prim_send_float>
 */
 
 int shunt_prim_send_double    (const int sockfd,const double* Double);
+
+/*
+ Function: shunt_prim_send_float
+  send verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" over TCP/IP 
+  
+  Parameters:
+   sockfd - socket id
+   Double  - data to send
+  
+  Returns:
+    number of bytes have been sent : success > 0
+  
+    See Also:
+   <shunt_prim_send_double>
+*/
 int shunt_prim_send_float     (const int sockfd,const float* Float);
+
 /*
   Function: shunt_prim_recv_double
   fetch verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" from TCP/IP 
@@ -263,10 +282,29 @@ int shunt_prim_send_float     (const int sockfd,const float* Float);
   Double - data from socket 
   
   Returns: 
- number of bytes have been sent : success > 0
+ number of bytes have been sent : success > 0 
+
+See Also:
+   <shunt_prim_recv_float>
     
 */
 int shunt_prim_recv_double   (const int sockfd,double* Double);
+
+/*
+  Function: shunt_prim_recv_float
+  fetch verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" from TCP/IP 
+  
+  Parameters:
+  sockfd - socket id
+  Double - data from socket 
+  
+  Returns: 
+ number of bytes have been sent : success > 0 
+
+See Also:
+   <shunt_prim_recv_double>
+    
+*/
 int shunt_prim_recv_float    (const int sockfd,float* Float);
 
 /*
@@ -363,7 +401,9 @@ int shunt_prim_recv_byte    (const int sockfd,char* Byte);
 
   Returns:
    number of bytes have been sent : success > 0
-   see (vcs_prim_send_int)
+   
+   See Also:
+   <shunt_prim_send_int>
 
 */
 int shunt_prim_send_integer(const unsigned int sockfd,const svLogicVecVal* Int);
@@ -378,8 +418,10 @@ int shunt_prim_send_integer(const unsigned int sockfd,const svLogicVecVal* Int);
 
   Returns:
     number of bytes have been received  : success > 0
+ 
+    See Also:
+   <shunt_prim_send_int>
 
-    see (shunt_prim_recv_in)
 */
 int shunt_prim_recv_integer (const unsigned int sockfd,svLogicVecVal* Int);
 #endif
