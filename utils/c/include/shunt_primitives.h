@@ -63,10 +63,10 @@ typedef s_vpi_vecval svLogicVecVal;
  *  
  *    SHUNT ENUM       |  SV type    | function
  *  ------------------------------------------------------------------------
- *  SHUNT_INT          | int         | shunt_prim_xxxx_int.
- *  SHUNT_SHORTINT     | shortint    | shunt_prim_xxxx_short.
- *  SHUNT_LONGINT      | longint     | shunt_prim_xxxx_long.
- *  SHUNT_BYTE         | byte        | shunt_prim_xxxx_byte.
+ *  SHUNT_INT          | int         | shunt_prim_xxxx_int
+ *  SHUNT_SHORTINT     | shortint    | shunt_prim_xxxx_short
+ *  SHUNT_LONGINT      | longint     | shunt_prim_xxxx_long
+ *  SHUNT_BYTE         | byte        | shunt_prim_xxxx_byte
  *  SHUNT_BIT          | bit         | N/A see shunt_client_server.c shunt_cs_xxx_bitN.
  * 
  * (end code)
