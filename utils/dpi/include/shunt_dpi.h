@@ -23,9 +23,9 @@
 //-------------
 //prototype
 //-------------
-//Title: 6. DPI Direct Link
+// Title: DPI Direct Link
 
-//Section: TCP/IP socket Target , Initiator initialization
+// Section: TCP/IP socket Target , Initiator initialization
 
 /*
  Function: shunt_dpi_target_init 
