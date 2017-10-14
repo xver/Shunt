@@ -35,7 +35,7 @@ module automatic Target;
 	$display("Target: START");
 	Socket = init_target(`MY_PORT, `MY_HOST);
 	$display("Target: socket=%0d",Socket);
-	///////////////////////////
+	
 	short_loopback_test(Socket);
 	int_loopback_test(Socket);
 	long_loopback_test(Socket);
@@ -50,16 +50,13 @@ module automatic Target;
 	logicN_loopback_test(Socket);
 	real_loopback_test(Socket);
 	shortreal_loopback_test(Socket);
-	//realtime_loopback_test(Socket);
-	//
- 	string_loopback_test(Socket);
+	string_loopback_test(Socket);
 	shortV_loopback_test(Socket);
 	longV_loopback_test(Socket);
 	realV_loopback_test(Socket);
 	shortrealV_loopback_test(Socket);
 	integerV_loopback_test(Socket);
-	///////////////////////////
-	
+		
        $display("\nTarget: END");
 	
      end // initial begin
@@ -72,7 +69,7 @@ module automatic Target;
       return socket_id;
    endfunction : init_target
    
-   //////////////////////////////////////////////////
+   //Functions:
 
    function void short_loopback_test(int socket_id);
       shortint   Short;
@@ -219,7 +216,7 @@ module automatic Target;
       if (shunt_dpi_hs_recv_bitN(socket_id,h_trnx,BitN)<= 0) $display("%s TEST FAIL",Test_name);
       $display("\n%s BitN=%h ",Test_name,BitN);
       //send
-      //Test_name = "target bitN_loopback_test send";
+      Test_name = "target bitN_loopback_test send";
       if (shunt_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
       if (shunt_dpi_hs_send_bitN(socket_id,h_trnx,BitN)<= 0)   $display("%s TEST FAIL",Test_name);
    endfunction : bitN_loopback_test
@@ -235,7 +232,7 @@ module automatic Target;
       if (shunt_dpi_hs_recv_regN(socket_id,h_trnx,RegN)<= 0) $display("%s TEST FAIL",Test_name);
       $display("\n %s RegN=%h(%h)",Test_name, RegN,RegN[132:0]);
       //send
-      //Test_name = "target regN_loopback_test send";
+      Test_name = "target regN_loopback_test send";
       if (shunt_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
       if (shunt_dpi_hs_send_regN(socket_id,h_trnx,RegN)<= 0)   $display("%s TEST FAIL",Test_name);
    endfunction : regN_loopback_test
@@ -251,7 +248,7 @@ module automatic Target;
       if (shunt_dpi_hs_recv_logicN(socket_id,h_trnx,LogicN)<= 0) $display("%s TEST FAIL",Test_name);
       $display("\n %s LogicN=%h(%h)",Test_name, LogicN,LogicN[132:0]);
       //send
-      //Test_name = "target logicN_loopback_test send";
+      Test_name = "target logicN_loopback_test send";
       if (shunt_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
       if (shunt_dpi_hs_send_logicN(socket_id,h_trnx,LogicN)<= 0)   $display("%s TEST FAIL",Test_name);
    endfunction : logicN_loopback_test
@@ -266,19 +263,6 @@ module automatic Target;
       Test_name = "target real_loopback_test send";
       if (!shunt_dpi_send_real(socket_id,Real)) $display("%s TEST FAIL",Test_name);
    endfunction : real_loopback_test
-  
-/* -----\/----- EXCLUDED -----\/-----
-   function void realtime_loopback_test(int socket_id);
-      realtime   Realtime;
-      string Test_name;
-      
-      Test_name = "target realtime_loopback_test recv";
-      if (!shunt_recv_realtime(socket_id,Realtime)) $display("%s TEST FAIL",Test_name);
-      $display("\n %s Realtime=%h(%f)",Test_name,Realtime,Realtime);
-      Test_name = "target realtime_loopback_test send";
-      if (!shunt_send_realtime(socket_id,Realtime)) $display("%s TEST FAIL",Test_name);
-   endfunction : realtime_loopback_test
- -----/\----- EXCLUDED -----/\----- */
    
    function void shortreal_loopback_test(int socket_id);
       shortreal   Shortreal;
@@ -300,8 +284,6 @@ module automatic Target;
       String = `STRING_MESSAGE1;
       Test_name = "target string_loopback_test recv";
       
-      
-      //$display("SV before target String = %s",String);	
       if (shunt_dpi_recv_string(socket_id,String.len(),String)<=0) $display("%s TEST FAIL",Test_name);
       $display("\n %s String = %s",Test_name,String);
       Test_name = "target string_loopback_test send";
@@ -363,183 +345,6 @@ module automatic Target;
       foreach (IntegerV[i])$display("\n %s  IntegerV[%0d] = %h",Test_name,i,IntegerV[i]);
       if (shunt_dpi_send_integerV(socket_id,`V_SIZE,IntegerV)<= 0) $display("%s TEST FAIL",Test_name); 
    endfunction : integerV_loopback_test
-   /////////////////////////////////////////////////
-   
  
-/* -----\/----- EXCLUDED -----\/-----
-   //////////
-   function void byte_loopback_test(int socket_id);
-      byte   Byte[];
-      string Test_name;
-   
-      Test_name = "target byte_loopback_test recv";
-      //recv
-      if (shunt_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
-      Byte   = new[h_trnx.n_payloads];
-      if (shunt_dpi_hs_recv_byte (socket_id,h_trnx,Byte)<= 0) $display("%s TEST FAIL",Test_name);
-      //send
-      Test_name = "target byte_loopback_test send";
-      if (shunt_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
-      if (shunt_dpi_hs_send_byte(socket_id,h_trnx,Byte)<= 0) $display("%s TEST FAIL",Test_name);
-   endfunction : byte_loopback_test
-   
-   function void byte4sV_loopback_test(int socket_id);
-      reg[7:0]   Byte4sV[];
-      string Test_name;
-   
-      Test_name = "target byte4sV_loopback_test recv";
-      //recv
-      if (shunt_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
-      Byte4sV   = new[h_trnx.n_payloads];
-      if (shunt_hs_recv_byte4s (socket_id,Byte4sV)<= 0) $display("%s TEST FAIL",Test_name);
-      //send
-      Test_name = "target byte4sV_loopback_test send";
-      if (shunt_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
-      if (shunt_hs_send_byte4s(socket_id,Byte4sV)<= 0)   $display("%s TEST FAIL",Test_name);
-   endfunction : byte4sV_loopback_test
-   
-   
-   function void int_loopback_test(int socket_id);
-      int   Int[];
-      string Test_name;
-      //recv
-      Test_name = "target int_loopback_test recv";
-      if (shunt_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
-      Int   = new[h_trnx.n_payloads];
-      if (shunt_dpi_hs_recv_int (socket_id,h_trnx,Int)<= 0) $display("%s TEST FAIL",Test_name);
-      //send       
-      Test_name = "target int_loopback_test send";
-      if (shunt_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
-      if (shunt_dpi_hs_send_int(socket_id,h_trnx,Int)<= 0) $display("%s TEST FAIL",Test_name);
-   endfunction : int_loopback_test
-   
-   function void real_loopback_test(int socket_id);
-      real  Real[];
-      string Test_name;
-      
-      Test_name = "target real_loopback_test recv";
-      //recv
-      if (shunt_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
-      Real   = new[h_trnx.n_payloads];
-      if (shunt_dpi_hs_recv_real (socket_id,h_trnx,Real)<= 0) $display("%s TEST FAIL",Test_name);
-      //send
-      Test_name = "target real_loopback_test send";
-      if (shunt_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
-      if (shunt_dpi_hs_send_real(socket_id,h_trnx,Real)<= 0) $display("%s TEST FAIL",Test_name); 
-   endfunction : real_loopback_test
-   
-   function void   byteA_loopback_test(int socket_id);
-      byte   Byte[][];
-      string Test_name;
-      int    trnx_payload_sizes[];
-      real   data_type;
-      
-      Test_name = "target byteA_loopback_test recv";
-      
-      //recv
-      if (shunt_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s recv_header TEST FAIL",Test_name);
-      //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",Test_name,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
-      //recv data header 
-      trnx_payload_sizes = new[h_trnx.n_payloads];
-      h_data.trnx_payload_sizes = new[h_trnx.n_payloads];
-      if(shunt_dpi_recv_data_header(socket_id,h_trnx,data_type,trnx_payload_sizes)<=0) $display("%s recv_data_header TEST FAIL",Test_name);
-      h_data.data_type = data_type;
-      for(int i=0;i<h_trnx.n_payloads;i++) h_data.trnx_payload_sizes[i]= trnx_payload_sizes[i];
-      //recv data
-      Byte   = new[h_trnx.n_payloads]; 
-      foreach(Byte[i]) Byte[i] = new[trnx_payload_sizes[i]];
-      if(shunt_hs_recv_byteA  (socket_id,h_trnx,h_data,Byte)<=0) $display("%s recv_byteA TEST FAIL",Test_name);
-      //foreach(Byte[i]) foreach(Byte[j]) $display("\n %s Byte[%0d][%0d]=%c",Test_name,i,j,Byte[i][j]);
-      
-      //send
-      //send trnx header
-      if(shunt_dpi_send_header(socket_id,h_trnx)<= 0)  $display("%s send_header TEST FAIL",Test_name);
-      if(shunt_dpi_send_data_header(socket_id,h_trnx,h_data.data_type,h_data.trnx_payload_sizes)<= 0)$display("%s send_data_header TEST FAIL",Test_name); 
-      //send data
-      if (shunt_hs_send_byteA(socket_id,h_trnx,h_data,Byte)<=0)$display("%s send_byteA TEST FAIL",Test_name); 
-   
-   endfunction :byteA_loopback_test
-   
-   function void   intA_loopback_test(int socket_id);
-      int    Int[][];
-      string Test_name;
-      int    trnx_payload_sizes[];
-      real   data_type;
-      
-      Test_name = "target intA_loopback_test recv";
-      
-      //recv
-      if (shunt_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s recv_header TEST FAIL",Test_name);
-      //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",Test_name,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
-      //recv data header 
-      trnx_payload_sizes = new[h_trnx.n_payloads];
-      h_data.trnx_payload_sizes = new[h_trnx.n_payloads];
-      if(shunt_dpi_recv_data_header(socket_id,h_trnx,data_type,trnx_payload_sizes)<=0) $display("%s recv_data_header TEST FAIL",Test_name);
-      h_data.data_type = data_type;
-      for(int i=0;i<h_trnx.n_payloads;i++) h_data.trnx_payload_sizes[i]= trnx_payload_sizes[i];
-      //recv data
-      Int    = new[h_trnx.n_payloads]; 
-      foreach(Int[i]) Int[i] = new[trnx_payload_sizes[i]];
-      if(shunt_hs_recv_intA  (socket_id,h_trnx,h_data,Int)<=0) $display("%s recv_intA TEST FAIL",Test_name);
-      //foreach(Int[i]) foreach(Int[j]) $display("\n %s Int[%0d][%0d]=%d",Test_name,i,j,Int[i][j]);
-      
-      //send
-      //send trnx header
-      if(shunt_dpi_send_header(socket_id,h_trnx)<= 0)  $display("%s send_header TEST FAIL",Test_name);
-      if(shunt_dpi_send_data_header(socket_id,h_trnx,h_data.data_type,h_data.trnx_payload_sizes)<= 0)$display("%s send_data_header TEST FAIL",Test_name); 
-      //send data
-      if (shunt_hs_send_intA(socket_id,h_trnx,h_data,Int)<=0)$display("%s send_intA TEST FAIL",Test_name); 
-   endfunction :intA_loopback_test
-
-  
-   function void   realA_loopback_test(int socket_id);
-      real   Real[][];
-      string Test_name;
-      int    trnx_payload_sizes[];
-      real   data_type;
-      
-      Test_name = "target realA_loopback_test recv";
-      
-      //recv
-      if (shunt_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s recv_header TEST FAIL",Test_name);
-      //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",Test_name,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
-      //recv data header 
-      trnx_payload_sizes = new[h_trnx.n_payloads];
-      h_data.trnx_payload_sizes = new[h_trnx.n_payloads];
-      if(shunt_dpi_recv_data_header(socket_id,h_trnx,data_type,trnx_payload_sizes)<=0) $display("%s recv_data_header TEST FAIL",Test_name);
-      h_data.data_type = data_type;
-      for(int i=0;i<h_trnx.n_payloads;i++) h_data.trnx_payload_sizes[i]= trnx_payload_sizes[i];
-      //recv data
-      Real   = new[h_trnx.n_payloads]; 
-      foreach(Real[i]) Real[i] = new[trnx_payload_sizes[i]];
-      if(shunt_hs_recv_realA  (socket_id,h_trnx,h_data,Real)<=0) $display("%s recv_realA TEST FAIL",Test_name);
-      //foreach(Real[i]) foreach(Real[j]) $display("\n %s Real[%0d][%0d]=%f",Test_name,i,j,Real[i][j]);
-      
-      //send
-      //send trnx header
-      if(shunt_dpi_send_header(socket_id,h_trnx)<= 0)  $display("%s send_header TEST FAIL",Test_name);
-      if(shunt_dpi_send_data_header(socket_id,h_trnx,h_data.data_type,h_data.trnx_payload_sizes)<= 0)$display("%s send_data_header TEST FAIL",Test_name); 
-      //send data
-      if (shunt_hs_send_realA(socket_id,h_trnx,h_data,Real)<=0)$display("%s send_realA TEST FAIL",Test_name); 
-   
-   endfunction :realA_loopback_test
-   ////////
-   
-   function void reg4sV_loopback_test(int socket_id);
-      reg [1024:0] Reg4sV;
-      string 	   Test_name;
-      
-      Test_name = "target reg4sV_loopback_test recv";
-      //recv     
-      Reg4sV = 'hz;
-      if (shunt_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
-      if (shunt_dpi_hs_recv_reg4s(socket_id,h_trnx,Reg4sV)<= 0) $display("%s TEST FAIL",Test_name);
-      //$display("\n %s Reg4sV=%h(%h)",Test_name, Reg4sV,Reg4sV[132:0]);
-      //send
-      //Test_name = "target reg4sV_loopback_test send";
-      if (shunt_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
-      if (shunt_dpi_hs_send_reg4s(socket_id,h_trnx,Reg4sV)<= 0)   $display("%s TEST FAIL",Test_name);
-   endfunction : reg4sV_loopback_test
- -----/\----- EXCLUDED -----/\----- */
    
 endmodule : Target
