@@ -80,9 +80,12 @@ Section: Data exchange utilities (header)
 
 (start code)
 
-typedef enum {SHUNT_INT,SHUNT_REAL,SHUNT_SHORTREAL,SHUNT_STRING,SHUNT_A_STRUCTURE,SHUNT_INTEGER,SHUNT_BYTE,SHUNT_REG,SHUNT_BIT,SHUNT_SHORTINT,SHUNT_LONGINT,SHUNT_HEADER_ONLY} SHUNT_INSTR_ENUM;
-#define SHUNT_INSTR_HASH_INDEX_DEFINE char* SHUNT_INSTR_ENUM_NAMES[] = {"SHUNT_INT","SHUNT_REAL","SHUNT_SHORTREAL","SHUNT_STRING","SHUNT_A_STRUCTURE","SHUNT_INTEGER","SHUNT_BYTE","SHUNT_REG","SHUNT_BIT","SHUNT_SHORTINT","SHUNT_LONGINT","SHUNT_HEADER_ONLY"}
-
+typedef enum {
+SHUNT_INT,SHUNT_REAL,SHUNT_SHORTREAL,SHUNT_STRING,SHUNT_A_STRUCTURE,SHUNT_INTEGER,SHUNT_BYTE,SHUNT_REG,SHUNT_BIT,SHUNT_SHORTINT,SHUNT_LONGINT,SHUNT_HEADER_ONLY
+} SHUNT_INSTR_ENUM;
+#define SHUNT_INSTR_HASH_INDEX_DEFINE char* SHUNT_INSTR_ENUM_NAMES[] = {
+"SHUNT_INT","SHUNT_REAL","SHUNT_SHORTREAL","SHUNT_STRING","SHUNT_A_STRUCTURE","SHUNT_INTEGER","SHUNT_BYTE","SHUNT_REG","SHUNT_BIT","SHUNT_SHORTINT","SHUNT_LONGINT","SHUNT_HEADER_ONLY"
+}
 
 typedef struct cs_header_t {
 double   trnx_type;       // user defined transaction attribute
@@ -93,7 +96,7 @@ int      n_payloads;      // number of data payloads (for Array number of vector
 
 //  Array header extension
 typedef struct cs_data_header_t {
-double   data_type;       // see SHUNT_INSTR_ENUM
+double   data_type;          // see SHUNT_INSTR_ENUM
 int     *trnx_payload_sizes; // array of payload sizes, number of array elements are equal to n_payloads
 } cs_data_header;
 
@@ -209,7 +212,7 @@ int shunt_cs_recv_header   (int sockid,cs_header* h);
 */
 int shunt_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h);
 
-// Section: Data exchange utilities (element)
+// Section: Data exchange utilities
 
 
 /*
