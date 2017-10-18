@@ -193,13 +193,13 @@ int shunt_prim_send_int(const int sockfd,const int* Int)
 
 int shunt_prim_recv_int    (const int sockfd, int* Int)
 {
-
+  
   int numbytes;
-
+  
   numbytes = recv(sockfd, Int,sizeof(int) , 0);
   if (numbytes < 0) shunt_prim_error("\nERROR in shunt_prim_recv_int : numbytes < 0 ");
   return numbytes;
-  }
+}
 
 int shunt_prim_send_long(const int sockfd,const long int* Long)
 {
@@ -212,20 +212,20 @@ int shunt_prim_send_long(const int sockfd,const long int* Long)
 
 int shunt_prim_recv_long    (const int sockfd, long int* Long)
 {
-
+  
   int numbytes;
 
   numbytes = recv(sockfd, Long,sizeof(long int) , 0);
   if (numbytes < 0) shunt_prim_error("\nERROR in shunt_prim_recv_long : numbytes < 0 ");
   return numbytes;
-  }
+}
 
 int shunt_prim_send_double    (const int sockfd,const double* Double)
 {
-
+  
   int numbytes;
   numbytes = send(sockfd, Double, sizeof(double), 0);
-
+  
   if (numbytes < 0) shunt_prim_error("ERROR shunt_cs_send_double: numbytes < 0 ");
   return numbytes;
 }
@@ -235,7 +235,7 @@ int shunt_prim_send_float    (const int sockfd,const float* Float)
 
   int numbytes;
   numbytes = send(sockfd, Float, sizeof(float), 0);
-
+  
   if (numbytes < 0) shunt_prim_error("ERROR shunt_cs_send_float: numbytes < 0 ");
   return numbytes;
 }
@@ -243,16 +243,16 @@ int shunt_prim_send_float    (const int sockfd,const float* Float)
 int shunt_prim_recv_double    (const int sockfd,double* Double)
 {
  int numbytes;
-
-  numbytes = recv(sockfd, Double,sizeof(double) , 0);
-  if (numbytes < 0) shunt_prim_error("ERROR in shunt_prim_recv_double : numbytes < 0 ");
-  return numbytes;
+ 
+ numbytes = recv(sockfd, Double,sizeof(double) , 0);
+ if (numbytes < 0) shunt_prim_error("ERROR in shunt_prim_recv_double : numbytes < 0 ");
+ return numbytes;
 }
 
 int shunt_prim_recv_float    (const int sockfd,float* Float)
 {
- int numbytes;
-
+  int numbytes;
+  
   numbytes = recv(sockfd, Float,sizeof(float) , 0);
   if (numbytes < 0) shunt_prim_error("ERROR in shunt_prim_recv_float : numbytes < 0 ");
   return numbytes;
@@ -262,7 +262,7 @@ int shunt_prim_recv_float    (const int sockfd,float* Float)
 int shunt_prim_send_byte(const int sockfd,const char* Byte)
 {
   int numbytes;
-
+  
   numbytes = send(sockfd,Byte, sizeof(char), 0);
   if (numbytes < 0)  shunt_prim_error("\nERROR in shunt_prim_send_byte : numbytes < 0 ");
   return numbytes;
@@ -270,21 +270,21 @@ int shunt_prim_send_byte(const int sockfd,const char* Byte)
 
 int shunt_prim_recv_byte    (const int sockfd, char* Byte)
 {
-
+  
   int numbytes=0;
 
   numbytes = recv(sockfd, Byte,sizeof(char) , 0);
   if (numbytes < 0) {
     shunt_prim_error("\nERROR in shunt_prim_recv_byte : numbytes < 0 ");
-		  
+    
   }
-
+  
   return numbytes;
   }
 
 int shunt_prim_send_integer (const unsigned int sockfd,const svLogicVecVal* Int) {
  int Result_;
-  
+ 
  Result_ = 1;
  if (shunt_prim_send_int (sockfd,(int *)(&Int->aval))<=0) Result_=0 ;
  if (shunt_prim_send_int (sockfd,(int *)(&Int->bval))<=0) Result_=0 ;
