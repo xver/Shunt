@@ -6,7 +6,7 @@
    Licensed under the MIT License. 
    See LICENSE file in the project root for full license information.  
    Description : Target-Initiator (Client-Server aka cs) handshake utils    
-                 System Verilog client server handshake (TCP/IP SystemVerilog SHUNT)
+   System Verilog client server handshake (TCP/IP SystemVerilog SHUNT)
    ============================================================================
 */
 
@@ -18,7 +18,6 @@
 
 //Data exchange utilities (header)
 
-
 double shunt_cs_data_type_hash(int data_type,char* data_type_names[],int last_enum) {
   double result_ = -1;
   
@@ -28,20 +27,17 @@ double shunt_cs_data_type_hash(int data_type,char* data_type_names[],int last_en
   return result_;
 };
 
-
 int shunt_cs_data_type(double hash,char* trnx_type_names[],int last_enum) {
   int result_ = -1;
   int i =0;
   
-    while (i < last_enum+1 && result_ < 0) {
+  while (i < last_enum+1 && result_ < 0) {
     double hash_ = shunt_prim_hash(trnx_type_names[i]);
     if (hash == hash_) result_ = i;
     i++;
   }
-  //printf("\n result_=%f",result_);
   return result_;
-  
-}
+};
 
 void shunt_cs_print_header (cs_header* h,char* data_type_names[],int last_enum,char* msg) {
   
@@ -58,8 +54,6 @@ void shunt_cs_print_header (cs_header* h,char* data_type_names[],int last_enum,c
   //
 }
 
-
-
 void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_type_names[],int last_enum,char* msg) {
   
   int data_type_ = shunt_cs_data_type(h_data->data_type,data_type_names,last_enum);
@@ -73,7 +67,6 @@ void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_
   }
   puts("\n");
 }
-
 
 int shunt_cs_send_header    (int sockid,cs_header* h) {
   int Result_=1;
@@ -96,7 +89,7 @@ int shunt_cs_send_data_header(int sockid,int n_payloads,cs_data_header* h) {
 
 int shunt_cs_recv_header   (int sockid,cs_header* h) {
   int Result_=1;
-
+  
   if (shunt_prim_recv_double(sockid,&h->trnx_type)==0) Result_=0;
   if (shunt_prim_recv_double(sockid,&h->trnx_id)==0)   Result_=0;
   if (shunt_prim_recv_double(sockid,&h->data_type)==0) Result_=0;
@@ -104,7 +97,6 @@ int shunt_cs_recv_header   (int sockid,cs_header* h) {
   
   return Result_;
 }
-
 
 int shunt_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h) {
   
@@ -117,7 +109,6 @@ int shunt_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h) {
   }
   return Result_;
 }
-
 
 // Data exchange utilities (element/vector)
 
@@ -164,7 +155,6 @@ int shunt_cs_send_doubleV (int sockid,const cs_header* h,const double* Double) {
 
 int shunt_cs_send_floatV (int sockid,const cs_header* h,const float* Float) {
   int Result_=-1;
-  
   if (h->data_type ==  shunt_prim_hash("SHUNT_SHORTREAL")) {
     for (int i=0;i< h->n_payloads;i++) {
       Result_ = shunt_prim_send_float(sockid,&Float[i]);
@@ -174,20 +164,19 @@ int shunt_cs_send_floatV (int sockid,const cs_header* h,const float* Float) {
 }
 
 int shunt_cs_send_byteV   (int sockid,const cs_header* h,const char* byteV) {
-	int Result_=-1;
-	char B_ = 0;
-	if (h->data_type==  shunt_prim_hash("SHUNT_BYTE" )|| h->data_type==  shunt_prim_hash("SHUNT_STRING")) {
-	  for (int i=0;i< h->n_payloads;i++) {
-	    B_ = byteV[i];
-	    Result_ = shunt_prim_send_byte(sockid,&B_);
-	  }
-	}
-	return Result_;
+  int Result_=-1;
+  char B_ = 0;
+  if (h->data_type==  shunt_prim_hash("SHUNT_BYTE" )|| h->data_type==  shunt_prim_hash("SHUNT_STRING")) {
+    for (int i=0;i< h->n_payloads;i++) {
+      B_ = byteV[i];
+      Result_ = shunt_prim_send_byte(sockid,&B_);
+    }
+  }
+  return Result_;
 }
 
 int shunt_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* IntegerV) {
   int Result_=-1;
-  
   int Size_ =   h->n_payloads;
   
   if (h->data_type==  shunt_prim_hash("SHUNT_INTEGER")) {
@@ -197,9 +186,10 @@ int shunt_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* I
   }
   return Result_;
 }
+
 int shunt_cs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
   int Result_;
-    
+  
   Result_ = 1;
   svLogicVecVal* Reg_ =  (svLogicVecVal* )Reg;
   
@@ -212,9 +202,9 @@ int shunt_cs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLog
     if (shunt_prim_send_int(sockfd,Aval_)<=0) Result_=0;
     if (shunt_prim_send_int(sockfd,Bval_)<=0) Result_ =0;
   }
-  
   return Result_;
 }
+
 int shunt_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* BitN) {
   int Result_=-1;
   int Size_ =   h->n_payloads/ 32; 
@@ -225,12 +215,12 @@ int shunt_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* BitN) {
   
   if (h->data_type==  shunt_prim_hash("SHUNT_BIT")) {
     for (int i=0;i<Size_;i++) {
-      //printf("\n %s Bitn_[%0d]=%d",msg,i,BitN_[i]);
       Result_ = shunt_prim_send_int(sockid,&BitN_[i]);
     }
   }
   return Result_;
 }
+
 //////////////////////////////////////////
 
 int  shunt_cs_recv_intV    (int sockid,cs_header* h,int* Int) {
@@ -241,7 +231,6 @@ int  shunt_cs_recv_intV    (int sockid,cs_header* h,int* Int) {
     }
   }
   return Result_;
-  
 }
 
 int  shunt_cs_recv_shortV    (int sockid,cs_header* h,short int* Shortint) {
@@ -252,17 +241,16 @@ int  shunt_cs_recv_shortV    (int sockid,cs_header* h,short int* Shortint) {
     }
   }
   return Result_;
-  
 }
 
 int  shunt_cs_recv_longV    (int sockid,cs_header* h,long int* Longint) {
   int Result_=-1;
   if (h->data_type == shunt_prim_hash("SHUNT_LONGINT")) {
     for (int i=0;i< h->n_payloads;i++) {
+      Result_ = shunt_prim_recv_long(sockid,&Longint[i]);
     }
   }
   return Result_;
-  
 }
 
 
@@ -275,7 +263,6 @@ int  shunt_cs_recv_doubleV    (int sockid,cs_header* h,double* Double) {
     }
   }
   return Result_;
-  
 }
 
 
@@ -288,7 +275,6 @@ int  shunt_cs_recv_floatV    (int sockid,cs_header* h,float* Float) {
     }
   }
   return Result_;
-  
 }
 
 int shunt_cs_recv_byteV   (int sockid,cs_header* h,char* byteV) {
@@ -322,7 +308,7 @@ int shunt_cs_recv_bitN (int sockid,const cs_header* h,svBitVecVal* BitN) {
 int shunt_cs_recv_integerV (int sockid,const cs_header* h,svLogicVecVal* IntegerV) {
   int Result_=-1;
   int Size_ =   h->n_payloads; 
-    
+  
   if (h->data_type==  shunt_prim_hash("SHUNT_INTEGER")) {
     for (int i=0;i<Size_;i++) {
       Result_ = shunt_prim_recv_integer(sockid,&IntegerV[i]);
@@ -344,7 +330,7 @@ int shunt_cs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVa
     if (shunt_prim_recv_int(sockfd,(int *)&(Reg_[i].bval))<=0) Result_=0 ; 
   } 
   
- return Result_; 
+  return Result_; 
 }
 
 #endif
