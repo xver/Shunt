@@ -301,6 +301,7 @@ module automatic Target;
 	 if(shunt_dpi_recv_shortV(socket_id,`V_SIZE,ShortV)<=0) $display("%s TEST FAIL",Test_name);
 	 foreach (ShortV[i])$display("\n %s  ShortV[%0d] = %d",Test_name,i,ShortV[i]);
 	 if(shunt_dpi_send_shortV(socket_id,`V_SIZE,ShortV)<=0) $display("%s TEST FAIL",Test_name);
+	 
       end
    endfunction : shortV_loopback_test
    
