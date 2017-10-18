@@ -161,7 +161,6 @@ int shunt_cs_data_type(double hash,char* data_type_names[],int last_enum);
   
   number of elements have been sent  : success > 0
 */
-
 int shunt_cs_send_header    (int sockid,cs_header* h);
 
 /*
@@ -300,7 +299,6 @@ int shunt_cs_recv_shortV (int sockid, cs_header* header,short int* Short);
 int shunt_cs_recv_longV  (int sockid, cs_header* header,long int* Long);
 
 
-
 /*
   Function: shunt_cs_send_doubleV
   send SHUNT transaction with "double" elements vector over TCP/IP
@@ -384,9 +382,7 @@ int shunt_cs_send_byteV   (int sockid,const cs_header* header,const char* byteV)
  Returns:
  number of elements have been received  : success > 0
 */
-
 int shunt_cs_recv_byteV   (int sockid,cs_header* header,char* byteV);
-
 
 /*
     Functions: shunt_dpi_cs_send_bitN
@@ -416,7 +412,6 @@ int shunt_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* bitN) ;
     */
 int shunt_cs_recv_bitN     (int sockid,const cs_header* h,svBitVecVal* bitN);
 
-
 /*
     Functions: shunt_dpi_cs_send_integerV
     map verilog "reg[31:0] 4 state aval,bval
@@ -428,10 +423,10 @@ int shunt_cs_recv_bitN     (int sockid,const cs_header* h,svBitVecVal* bitN);
     
     Returns: 
     number of bytes have been sent : success > 0
-    */
+*/
 int shunt_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* integerV) ;
 
-  /*
+/*
     Functions: shunt_dpi_cs_recv_integerV
     map verilog "reg[31:0] 4 state aval,bval
     LRM  6.11 
@@ -443,8 +438,8 @@ int shunt_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* i
     Returns: 
     number of bytes have been recv : success > 0
     */
-
 int shunt_cs_recv_integerV     (int sockid,const cs_header* h,svLogicVecVal* integerV);
+
 /*
     Functions: shunt_cs_send_regN
     
@@ -457,8 +452,8 @@ int shunt_cs_recv_integerV     (int sockid,const cs_header* h,svLogicVecVal* int
     Returns: 
     number of bytes have been sent : success > 0
     */
-
 int shunt_cs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg);
+
 /*
     Functions:  shunt_cs_recv_regN 
     map bit[N:0] 2-state data type packed array of scalar bit types
@@ -473,10 +468,7 @@ int shunt_cs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLog
     */
 int shunt_cs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
 
-
 //Section: Auxiliary tasks 
-
-
 /*
   Function: shunt_cs_print_header
   print out SHUNT header 
@@ -494,7 +486,6 @@ int shunt_cs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVa
 */
 void shunt_cs_print_header    (cs_header* h,char* data_type_names[],int last_enum,char* msg);
 
-
 /*
   Function: shunt_cs_print_data_header
   print out SHUNT header 
@@ -511,7 +502,6 @@ void shunt_cs_print_header    (cs_header* h,char* data_type_names[],int last_enu
   
   void
 */
-
 void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_type_names[],int last_enum,char* msg);
 
 #endif
