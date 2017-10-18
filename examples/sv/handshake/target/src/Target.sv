@@ -199,7 +199,7 @@ module automatic Target;
       //recv
       Test_name = "target long_loopback_test recv";
       if (shunt_dpi_recv_header (socket_id,h_trnx)<= 0) $display("%s TEST FAIL",Test_name);
-      Int   = new[h_trnx.n_payloads];
+      Int    = new[h_trnx.n_payloads];
       if (shunt_dpi_hs_recv_long (socket_id,h_trnx,Int)<= 0) $display("%s TEST FAIL",Test_name);
       //send       
       Test_name = "target long_loopback_test send";
