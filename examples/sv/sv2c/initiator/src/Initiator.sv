@@ -487,7 +487,6 @@ module automatic Initiator;
 	 
 	 Shortreal_exp = 123;
 	 
-	 
 	 if(!shunt_dpi_send_shortreal(socket_id,Shortreal_exp)) success=0;
 	 if(!shunt_dpi_recv_shortreal(socket_id,Shortreal_act)) success=0;
 	 if (Shortreal_exp != Shortreal_act) success=0;
@@ -528,7 +527,6 @@ module automatic Initiator;
 	 if(!shunt_dpi_send_shortV(socket_id,`V_SIZE,ShortV_exp)) success =0;
 	 if(!shunt_dpi_recv_shortV(socket_id,`V_SIZE,ShortV_act)) success =0;
 	 foreach(ShortV_exp[i]) if(ShortV_act[i] != ShortV_exp[i]) success =0;
-	 
 	 return  success;
       end
    endfunction : shortV_loopback_test
@@ -591,7 +589,6 @@ module automatic Initiator;
 	 if (success == 0 )  $display("\ninitiator: fail send data");
 	 if (shunt_dpi_recv_shortrealV(socket_id,`V_SIZE,ShortrealV_act)<= 0) success = 0;
 	 if (success == 0 )  $display("\ninitiator: fail recv data");
-	 
 	 foreach (ShortrealV_exp[i])  begin 
 	    real zero_ = 0;
 	    zero_ = ShortrealV_exp[i] - ShortrealV_act[i];
