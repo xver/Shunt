@@ -23,7 +23,7 @@ int main(void) {
   //
   cs_header      h_trnx;
   cs_data_header h_data;
-  int* IntA;
+  
   //
   SHUNT_INSTR_HASH_INDEX_DEFINE;
   
@@ -44,44 +44,6 @@ int main(void) {
     h_trnx.n_payloads = -1;
     
     //Int Test
-    //Int Array
-    //recv
-    char* msg = "target: recv trnx_header";
-    
-    //recv headers
-    if (shunt_cs_recv_header(socket,&h_trnx)<= 0) success = 0;
-    if (success == 0 )  printf("\n target trnx_header fail to recv");
-    
-    h_data.trnx_payload_sizes = malloc(h_trnx.n_payloads*sizeof(int));
-    if (shunt_cs_recv_data_header(socket,h_trnx.n_payloads,&h_data)<= 0) success = 0;
-    if (success == 0 )  printf("\n target data_header fail to recv");
-    //shunt_cs_print_data_header(&h_trnx,&h_data,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
-    
-    sum = 0;
-    for (int i=0;i< h_trnx.n_payloads;i++) {
-      sum =sum+ 	h_data.trnx_payload_sizes[i];
-    }
-    IntA = (int *)malloc(sum * sizeof(int));
-    //recv data
-    if (shunt_api_recv(socket,&h_trnx,&h_data,IntA)<=0) success = 0;
-    if (success == 0 )  printf("\n target Int data fail to recv");
-    msg = "target: data_exp";
-    //shunt_cs_print_intA   (h_trnx.n_payloads,&h_data,&(IntA[0]),msg);
-    
-    //send loopback
-    //send header
-    msg = "target: loopback send header ";
-    if (shunt_cs_send_header(socket,&h_trnx)<= 0) success = 0;
-    if (success == 0 )  printf("\n%s trnx_header fail send",msg);
-    
-    // send data header
-    if (shunt_cs_send_data_header(socket,h_trnx.n_payloads,&h_data)<= 0) success = 0;
-    if (success == 0 )  printf("\n%s data_header fail send",msg);
-    
-    //
-    //send data
-    shunt_api_send(socket,&h_trnx,&h_data,IntA);
-
     //Int vector
     int* IntV;
     
@@ -104,44 +66,6 @@ int main(void) {
     ////////////////////////////////////    
     
     //Double Test
-    //Double Array
-        
-    //recv
-    
-    double* DoubleA;
-    msg = "target: recv trnx_header";
-    
-    //recv headers
-    if (shunt_cs_recv_header(socket,&h_trnx)<= 0) success = 0;
-    if (success == 0 )  printf("\n target trnx_header fail to recv");
-    
-    h_data.trnx_payload_sizes = malloc(h_trnx.n_payloads*sizeof(int));
-    if (shunt_cs_recv_data_header(socket,h_trnx.n_payloads,&h_data)<= 0) success = 0;
-    if (success == 0 )  printf("\n target data_header fail to recv");
-        
-    sum = 0;
-    for (int i=0;i< h_trnx.n_payloads;i++) {
-      sum =sum+ 	h_data.trnx_payload_sizes[i];
-    }
-    DoubleA = (double *)malloc(sum * sizeof(double));
-    //recv data
-    if (shunt_api_recv(socket,&h_trnx,&h_data,DoubleA)<=0) success = 0;
-    if (success == 0 )  printf("\n target Int data fail to recv");
-    msg = "target: data_exp";
-        
-    //send loopback
-    //send header
-    msg = "target: loopback send header ";
-    if (shunt_cs_send_header(socket,&h_trnx)<= 0) success = 0;
-    if (success == 0 )  printf("\n%s trnx_header fail send",msg);
-    
-    // send data header
-    if (shunt_cs_send_data_header(socket,h_trnx.n_payloads,&h_data)<= 0) success = 0;
-    if (success == 0 )  printf("\n%s data_header fail send",msg);
-    //
-    //send data
-    shunt_api_send(socket,&h_trnx,&h_data,DoubleA);
-    
     //Double vector
     double* DoubleV;
     
@@ -188,7 +112,7 @@ int main(void) {
     //recv
     
     char* StringA;
-    msg = "target: recv trnx_header";
+    char* msg = "target: recv trnx_header";
     
     //recv
     if (shunt_cs_recv_header(socket,&h_trnx)<= 0) success = 0;
