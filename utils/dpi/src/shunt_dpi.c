@@ -340,7 +340,7 @@ int shunt_dpi_recv_shortrealV(int sockid,int size,svOpenArrayHandle Shortreal) {
   h_.data_type  = shunt_prim_hash("SHUNT_SHORTREAL");
   h_.n_payloads = size;
   Result_ = shunt_cs_recv_floatV(sockid,&h_,Shortreal_);
-    return Result_;
+  return Result_;
 }
 
 ////Direct send/recv  
