@@ -19,11 +19,8 @@ int main(void) {
   char *hostname;
   int port;
   int success=1;
-  int sum =0;
   //
   cs_header      h_trnx;
-  cs_data_header h_data;
-  
   //
   SHUNT_INSTR_HASH_INDEX_DEFINE;
   
@@ -107,36 +104,7 @@ int main(void) {
     if (shunt_api_send(socket,&h_trnx,String)<=0) success = 0;
     if (success == 0 )  printf("\n target String data fail to send");
     
-    //String Array
     
-    //recv
-    
-    char* StringA;
-    char* msg = "target: recv trnx_header";
-    
-    //recv
-    if (shunt_cs_recv_header(socket,&h_trnx)<= 0) success = 0;
-    if (success == 0 )  printf("\n target trnx_header fail to recv");
-    
-    h_data.trnx_payload_sizes = malloc(h_trnx.n_payloads*sizeof(int));
-    if (shunt_cs_recv_data_header(socket,h_trnx.n_payloads,&h_data)<= 0) success = 0;
-    if (success == 0 )  printf("\n target data_header fail to recv");
-    sum = 0;
-    for (int i=0;i< h_trnx.n_payloads;i++) {
-      sum =sum+ 	h_data.trnx_payload_sizes[i];
-    }
-    StringA = (char *)malloc(sum * sizeof(char));
-    shunt_api_recv (socket,&h_trnx,&h_data,&(StringA[0]));
-    
-    //send
-    //send header
-    if (shunt_cs_send_header(socket,&h_trnx)<= 0) success = 0;
-    if (success == 0 )  printf("\n%s trnx_header fail send",msg);
-    //
-    msg = "Target: data_type ";
-    if (shunt_cs_send_data_header(socket,h_trnx.n_payloads,&h_data)<= 0) success = 0;
-    if (success == 0 )  printf("\n%s data_header fail send",msg);
-    shunt_api_send (socket,&h_trnx,&h_data,StringA);
     
     ////////////////////////////////////
     //puts("\napiC_Target end");
