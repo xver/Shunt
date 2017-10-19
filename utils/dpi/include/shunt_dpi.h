@@ -73,8 +73,6 @@ unsigned int shunt_dpi_initiator_init(const unsigned int portno);
 int shunt_dpi_send_short  (const int sockfd,const short int Short);
 
 
-
-
 /*
  Function: shunt_dpi_recv_short
   fetch verilog"shortint"/C "short int" data from TCP/IP socket
