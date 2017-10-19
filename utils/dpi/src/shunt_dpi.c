@@ -169,7 +169,7 @@ int shunt_dpi_recv_shortreal(const  unsigned int sockfd,float* Real) {
 int shunt_dpi_send_intV(int sockid, const int size,const svOpenArrayHandle Int){
   cs_header h_ ;
     
-#ifndef C_TEST
+#ifndef C_SHUNT
   int* Int_= (int *) svGetArrayPtr(Int); 
 #else
   int* Int_= (int *) Int;
@@ -186,7 +186,7 @@ int shunt_dpi_send_intV(int sockid, const int size,const svOpenArrayHandle Int){
 
 int shunt_dpi_recv_intV(int sockid,int size,svOpenArrayHandle Int) {
   cs_header h_;
-#ifndef C_TEST
+#ifndef C_SHUNT
   int* Int_ = (int *) svGetArrayPtr(Int);
 #else
   int* Int_= (int *) Int;
@@ -206,7 +206,7 @@ int shunt_dpi_recv_intV(int sockid,int size,svOpenArrayHandle Int) {
 int shunt_dpi_send_shortV(int sockid, const int size,const svOpenArrayHandle Int){
   cs_header h_ ;
     
-#ifndef C_TEST
+#ifndef C_SHUNT
   short int* Short_= (short int *) svGetArrayPtr(Int); 
 #else
   short int* Short_= (short int *) Int;
@@ -223,7 +223,7 @@ int shunt_dpi_send_shortV(int sockid, const int size,const svOpenArrayHandle Int
 
 int shunt_dpi_recv_shortV(int sockid,int size,svOpenArrayHandle Int) {
   cs_header h_;
-#ifndef C_TEST
+#ifndef C_SHUNT
   short int* Short_ = (short int *) svGetArrayPtr(Int);
 #else
   short int* Short_= (short int *) Int;
@@ -240,7 +240,7 @@ int shunt_dpi_recv_shortV(int sockid,int size,svOpenArrayHandle Int) {
 int shunt_dpi_send_longV(int sockid, const int size,const svOpenArrayHandle Int){
   cs_header h_ ;
   
-#ifndef C_TEST
+#ifndef C_SHUNT
   long int* Long_= (long int *) svGetArrayPtr(Int); 
 #else
   long int* Long_= (long int *) Int;
@@ -259,7 +259,7 @@ int shunt_dpi_send_longV(int sockid, const int size,const svOpenArrayHandle Int)
 int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int) {
   cs_header h_;
   
-#ifndef C_TEST
+#ifndef C_SHUNT
    long int* Long_ = (long int *) svGetArrayPtr(Int);
 #else
    long int* Long_= (long int *) Int;
@@ -279,7 +279,7 @@ int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int) {
 int shunt_dpi_send_realV(int sockid, const int size,const svOpenArrayHandle Real) {
   cs_header h_ ;
 
-#ifndef C_TEST
+#ifndef C_SHUNT
   double* Real_ = (double *) svGetArrayPtr(Real);
 #else
   int* Real_= (double *) Real;
@@ -295,7 +295,7 @@ int shunt_dpi_send_realV(int sockid, const int size,const svOpenArrayHandle Real
 
 int shunt_dpi_recv_realV(int sockid,int size,svOpenArrayHandle Real) {
   cs_header h_;
-#ifndef C_TEST
+#ifndef C_SHUNT
   double* Real_ = (double *) svGetArrayPtr(Real);
 #else
   int* Real_= (double *) Real;
@@ -311,7 +311,7 @@ int shunt_dpi_recv_realV(int sockid,int size,svOpenArrayHandle Real) {
 
 int shunt_dpi_send_shortrealV(int sockid, const int size,const svOpenArrayHandle Shortreal) {
   cs_header h_ ;
-#ifndef C_TEST
+#ifndef C_SHUNT
   float* Shortreal_ = (float *) svGetArrayPtr(Shortreal);
 #else
   int* Shortreal_= (float *) Shortreal;
@@ -329,7 +329,7 @@ int shunt_dpi_send_shortrealV(int sockid, const int size,const svOpenArrayHandle
 int shunt_dpi_recv_shortrealV(int sockid,int size,svOpenArrayHandle Shortreal) {
   cs_header h_;
   
-#ifndef C_TEST
+#ifndef C_SHUNT
   float* Shortreal_ = (float *) svGetArrayPtr(Shortreal);
 #else
   int* Shortreal_= (float *) Shortreal;
@@ -451,7 +451,13 @@ int shunt_dpi_hs_send_string (int sockid,cs_header* h_trnx,char* Array){
 }
 
 int shunt_dpi_hs_send_integer   (int sockid,cs_header* h_trnx,svOpenArrayHandle Array) {
+
+#ifndef C_SHUNT
   svLogicVecVal* Integer_ = (svLogicVecVal*)svGetArrayPtr(Array);
+#else
+  svLogicVecVal* Integer_= Array;
+#endif
+
   return shunt_dpi_hs_send(sockid,h_trnx,Integer_);
 }
 
@@ -546,7 +552,7 @@ int shunt_dpi_recv_integer (const unsigned int sockfd,svLogicVecVal* Int) {
 int shunt_dpi_send_integerV (const unsigned int sockid,const int size,const svLogicVecVal* IntegerV){
   cs_header h_;
   
-#ifndef C_TEST
+#ifndef C_SHUNT
   svLogicVecVal* IntegerV_ =  (svLogicVecVal*)svGetArrayPtr((svOpenArrayHandle*)IntegerV);
 #else
   svLogicVecVal* IntegerV_= IntegerV;
@@ -562,7 +568,7 @@ int shunt_dpi_send_integerV (const unsigned int sockid,const int size,const svLo
 int shunt_dpi_recv_integerV (const unsigned int sockid,const int size,svLogicVecVal* IntegerV) {
   cs_header h_;
   
-#ifndef C_TEST
+#ifndef C_SHUNT
   svLogicVecVal* IntegerV_ = (svLogicVecVal*) svGetArrayPtr(IntegerV);
 #else
   svLogicVecVal* IntegerV_= (svLogicVecVal*) IntegerV;
