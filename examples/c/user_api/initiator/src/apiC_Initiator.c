@@ -17,17 +17,12 @@ int main(void) {
   int  socket=0;
   int  port;
   int success = 1;
-  const int col_n = 3;
-  const int row_n = 5;
-  int sum;
   const int n=17;
   port =       MY_PORT;
   char* msg = "";
   //
   cs_header      h_trnx_exp;
   cs_header      h_trnx_act;
-  cs_data_header h_data_exp;
-  cs_data_header h_data_act;
   //
   
   socket= shunt_prim_init_initiator(port);
@@ -205,77 +200,7 @@ int main(void) {
     
     success =1;
     
-    //String Array Test
     
-    char  StringA_exp[row_n][col_n+1];
-    char* StringA_act;
-    
-    msg = "Initiator: String Array Test ";
-    
-    //set up header
-    h_trnx_exp.trnx_type = rand();
-    h_trnx_exp.trnx_id   = rand();
-    h_trnx_exp.data_type = shunt_cs_data_type_hash(SHUNT_A_STRUCTURE,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY);
-    h_trnx_exp.n_payloads = row_n;
-    
-    for (int i = 0; i < row_n; i++) {
-      for   (int j = 0; j < col_n+1; j++) {
-	int indx =  j+(i*10) + '0';
-	StringA_exp[i][j] = (char) indx;
-	if (j == col_n) StringA_exp[i][col_n] = '\0';
-      }
-      printf("\ninitiator  StringA_exp[%0d]=%s",i,&(StringA_exp[i][0]));
-    }
-    
-    //send header
-    if (shunt_cs_send_header(socket,&h_trnx_exp)<= 0) success = 0;
-    if (success == 0 )  printf("\n%s trnx_header fail send",msg);
-    //
-    msg = "Initiator: data_type ";
-    h_data_exp.data_type = shunt_cs_data_type_hash(SHUNT_BYTE,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY);
-    h_data_exp.trnx_payload_sizes = malloc(h_trnx_exp.n_payloads*sizeof(int));
-    
-    for(int i=0;i< h_trnx_exp.n_payloads;i++) {
-      h_data_exp.trnx_payload_sizes[i]   = col_n+1;
-    }
-    msg = "Initiator: data_type ";
-    
-    if (shunt_cs_send_data_header(socket,h_trnx_exp.n_payloads,&h_data_exp)<= 0) success = 0;
-    if (success == 0 )  printf("\n%s data_header fail send",msg);
-    shunt_api_send (socket,&h_trnx_exp,&h_data_exp,&StringA_exp[0][0]);
-    if (success == 0 )  printf("\ninitiator: fail send data");
-    
-    //recv
-    if (shunt_cs_recv_header(socket,&h_trnx_act)<= 0) success = 0;
-    if (success == 0 )  printf("\n initiator trnx_header fail to recv");
-    
-    h_data_act.trnx_payload_sizes = malloc(h_trnx_act.n_payloads*sizeof(int));
-    if (shunt_cs_recv_data_header(socket,h_trnx_act.n_payloads,&h_data_act)<= 0) success = 0;
-    if (success == 0 )  printf("\n initiator data_header fail to recv");
-    
-    sum = 0;
-    for (int i=0;i< h_trnx_act.n_payloads;i++) {
-      sum =sum+ 	h_data_act.trnx_payload_sizes[i];
-    }
-    StringA_act = (char *)malloc(sum * sizeof(char));
-    shunt_api_recv (socket,&h_trnx_act,&h_data_act,&(StringA_act[0]));
-    
-    //compare
-    if (shunt_cs_comp_byteV  (&h_trnx_exp,String_exp,String_act)<= 0) success = 0;
-    
-    msg = "Initiator: StringA Test ";
-    if (success > 0 )  printf("\n\t%s loopback pass",msg);
-    else  {
-      printf("\n %s loopback fail",msg);
-      msg = "initiator: header trnx_exp";
-      shunt_cs_print_header (&h_trnx_exp,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
-      msg = "initiator: header trnx_act";
-      shunt_cs_print_header (&h_trnx_act,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
-      msg = "initiator: data_exp";
-      shunt_cs_print_byteA(h_trnx_exp.n_payloads,&h_data_exp,&(StringA_exp[0][0]),msg);
-      msg = "initiator: data_act";
-      shunt_cs_print_byteA(h_trnx_act.n_payloads,&h_data_act,&(StringA_act[0]),msg);
-    }
 
     ////////////////////////////////////////
       
