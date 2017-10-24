@@ -53,19 +53,26 @@
 /*
   Function: shunt_api_send
   
-  send data over TCP/IP.
+  variadic function,send data over TCP/IP.
   
   Parameters:
+    
+  *Named arguments* :
   
-  Perm parameters:
-  
-   sockid - socket id from init sever/client 
-   h_trnx - cs_header structure
+  sockid - socket id from init sever/client 
+  h_trnx - cs_header structure
    
-   Non-perm  parameters are:
- 
-   Int,Double,String - data to send
-      
+  *Unnamed arguments* :
+  
+   - int*;           
+   - short int*;     
+   - long  int*;     
+   - svLogicVecVal* (Integer,Reg);
+   - svBitVecVal*   (Bit);
+   - double*;
+   - float*;
+   - char*         (String);   
+   
    Returns:
 
    number of elements have been sent  : success > 0
@@ -74,18 +81,27 @@ int shunt_api_send    (int sockid,cs_header* h_trnx, ...);
 
 /*
   Function: shunt_api_recv
-  fetch data from TCP/IP socket
+  variadic function,fetch data from TCP/IP socket
   
   Parameters:
   
-  Perm parameters:
+  *Named arguments* :
   
   sockid - socket id from init sever/client 
   h_trnx - cs_header structure
   
-  Non-perm  parameters are:
- 
-  Int,Double,String - Data received
+  
+  *Unnamed arguments* :
+
+  - int*;           
+  - short int*;     
+  - long  int*;     
+  - svLogicVecVal* (Integer,Reg);
+  - svBitVecVal*   (Bit);
+  - double*;
+  - float*;
+  - char*         (String); 
+  
    
   Returns:
   number of elements have been received  : success > 0
