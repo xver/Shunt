@@ -14,7 +14,7 @@
 
 #include "shunt_primitives.h"
 
-//Title: 2. Utilites: Client-Initiator cs_header
+//Title: Utilites: Client-Initiator cs_header
 
 /* 
  * About: Verilog Data Types elements: 
@@ -69,45 +69,53 @@
 //prototypes
 //-------------
 
+//Section: Data exchange structures and utilities
 
+/*
+Variable: SHUNT_INSTR_ENUM
 
+ *Integer 2 states:*
+  
+  SHUNT_INT         - int
+  SHUNT_SHORTINT    - shortint
+  SHUNT_LONGINT     - longint
+  SHUNT_BYTE        - byte
+  SHUNT_BIT         - bit
+  
+  *Integer 4 states:*
+  
+  SHUNT_INTEGER     - integer,time
+  SHUNT_REG         - reg,logic
+  
+  *Non integer types IEEE 754:*
+  
+  SHUNT_REAL        - real,realtime
+  SHUNT_SHORTREAL   - shortreal
+  SHUNT_STRING      - string
+  
+  SHUNT_A_STRUCTURE - complex data types/user defined data types : arrays/struct,union,enums 
+  SHUNT_HEADER_ONLY - cs_header_t header only.
+ 
+*/
 typedef enum {SHUNT_INT,SHUNT_REAL,SHUNT_SHORTREAL,SHUNT_STRING,SHUNT_A_STRUCTURE,SHUNT_INTEGER,SHUNT_BYTE,SHUNT_REG,SHUNT_BIT,SHUNT_SHORTINT,SHUNT_LONGINT,SHUNT_HEADER_ONLY} SHUNT_INSTR_ENUM;
+
+/*
+Variable: SHUNT_INSTR_ENUM_NAMES
+
+> = {"SHUNT_INT","SHUNT_REAL","SHUNT_SHORTREAL","SHUNT_STRING","SHUNT_A_STRUCTURE","SHUNT_INTEGER","SHUNT_BYTE","SHUNT_REG","SHUNT_BIT","SHUNT_SHORTINT","SHUNT_LONGINT","SHUNT_HEADER_ONLY"}  
+
+*/
 #define SHUNT_INSTR_HASH_INDEX_DEFINE char* SHUNT_INSTR_ENUM_NAMES[] = {"SHUNT_INT","SHUNT_REAL","SHUNT_SHORTREAL","SHUNT_STRING","SHUNT_A_STRUCTURE","SHUNT_INTEGER","SHUNT_BYTE","SHUNT_REG","SHUNT_BIT","SHUNT_SHORTINT","SHUNT_LONGINT","SHUNT_HEADER_ONLY"}
 
 /*
+  Variable: cs_header_t
   
-Section: Data exchange utilities (header)
-
-(start code)
-
-typedef enum {
-SHUNT_INT,SHUNT_REAL,SHUNT_SHORTREAL,SHUNT_STRING,SHUNT_A_STRUCTURE,SHUNT_INTEGER,SHUNT_BYTE,SHUNT_REG,SHUNT_BIT,SHUNT_SHORTINT,SHUNT_LONGINT,SHUNT_HEADER_ONLY
-} SHUNT_INSTR_ENUM;
-#define SHUNT_INSTR_HASH_INDEX_DEFINE char* SHUNT_INSTR_ENUM_NAMES[] = {
-"SHUNT_INT","SHUNT_REAL","SHUNT_SHORTREAL","SHUNT_STRING","SHUNT_A_STRUCTURE","SHUNT_INTEGER","SHUNT_BYTE","SHUNT_REG","SHUNT_BIT","SHUNT_SHORTINT","SHUNT_LONGINT","SHUNT_HEADER_ONLY"
-}
-
-typedef struct cs_header_t {
-double   trnx_type;       // user defined transaction attribute
-double   trnx_id;         // user defined unique transaction number
-double   data_type;       // see SHUNT_INSTR_ENUM
-int      n_payloads;      // number of data payloads (for Array number of vectors)
-} cs_header;
-
-//  Array header extension
-typedef struct cs_data_header_t {
-double   data_type;          // see SHUNT_INSTR_ENUM
-int     *trnx_payload_sizes; // array of payload sizes, number of array elements are equal to n_payloads
-} cs_data_header;
-
-(end)
+  - trnx_type      user defined transaction attribute
+  - trnx_id        user defined unique transaction number
+  - data_type      <SHUNT_INSTR_ENUM>
+  - n_payloads     number of data payloads (for Array number of vectors)
+  
 */
-
-typedef struct cs_data_header_t {
-  double   data_type;       // see SHUNT_INSTR_ENUM
-  int     *trnx_payload_sizes;
-} cs_data_header;
-
 typedef struct cs_header_t {
   double   trnx_type;
   double   trnx_id;
@@ -116,18 +124,31 @@ typedef struct cs_header_t {
 } cs_header;
 
 /*
+  Variable: cs_data_header_t
+  - data_type           <SHUNT_INSTR_ENUM>
+  - trnx_payload_sizes   array of payload sizes, number of array elements are equal to n_payloads
+*/
+typedef struct cs_data_header_t {
+  double   data_type;          // see SHUNT_INSTR_ENUM
+  int     *trnx_payload_sizes; // array of payload sizes, number of array elements are equal to n_payloads
+} cs_data_header;
+
+/*
   Function: shunt_cs_data_type_hash
   map data_type enum to the corresponding hash
   
   Parameters:
   
-  data_type/trnx_type - for valid data_type see SHUNT_INSTR_ENUM
-  data_type_names - data_type (see SHUNT_INSTR_ENUM_NAMES[]) or trnx_type names array 
-  last_enum       - number of data_type_names[] elements
+  data_type/trnx_type - for valid data_type see <SHUNT_INSTR_ENUM>
+  data_type_names     - data_type ( see <SHUNT_INSTR_ENUM_NAMES> ) or trnx_type names array 
+  last_enum           - number of data_type_names[] elements
   
   Returns:
-  
   hash index
+  
+  See Also:
+   <shunt_cs_data_type_hash>
+
 */
 double shunt_cs_data_type_hash(int data_type,char* data_type_names[],int last_enum);
 
@@ -138,13 +159,16 @@ double shunt_cs_data_type_hash(int data_type,char* data_type_names[],int last_en
   Parameters:
   
   data_type - hash index
-  data_type_names - data_type (see SHUNT_INSTR_ENUM_NAMES[]) or trnx_type names array 
+  data_type_names - data_type (see <SHUNT_INSTR_ENUM_NAMES> ) or trnx_type names array 
   last_enum       - number of data_type_names[] elements
   
   Returns:
   
-  valid data_type see SHUNT_INSTR_ENUM
+  valid data_type see <SHUNT_INSTR_ENUM>
   -1 - No enum
+  
+  See Also:
+  <shunt_cs_data_type_hash>
 */
 int shunt_cs_data_type(double hash,char* data_type_names[],int last_enum);
 
@@ -160,6 +184,10 @@ int shunt_cs_data_type(double hash,char* data_type_names[],int last_enum);
   Returns:
   
   number of elements have been sent  : success > 0
+  
+  See Also:
+  <cs_header_t>
+
 */
 int shunt_cs_send_header    (int sockid,cs_header* h);
 
@@ -176,6 +204,10 @@ int shunt_cs_send_header    (int sockid,cs_header* h);
   Returns:
   
   number of elements have been sent  : success > 0
+
+  See Also:
+  <cs_data_header_t>
+
 */
 int shunt_cs_send_data_header    (int sockid,int n_payloads,cs_data_header* h);
 
@@ -193,7 +225,10 @@ int shunt_cs_send_data_header    (int sockid,int n_payloads,cs_data_header* h);
   Returns:
   
   number of elements have been received  : success > 0
-  
+ 
+ See Also:
+  <cs_data_header_t>
+
 */
 int shunt_cs_recv_header   (int sockid,cs_header* h);
 
@@ -208,6 +243,9 @@ int shunt_cs_recv_header   (int sockid,cs_header* h);
   Returns:
   number of elements have been received  : success > 0
   
+See Also:
+  <cs_data_header_t>
+
 */
 int shunt_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h);
 
@@ -225,36 +263,12 @@ Function: shunt_cs_send_intV
   
   Returns:
   number of elements have been sent  : success > 0
+
+  See Also:
+  <shunt_cs_recv_intV>
+
 */
 int shunt_cs_send_intV   (int sockid, const cs_header* header,const int* Int);
-
-/*
-Function: shunt_cs_send_shortV
-  send SHUNT transaction with "shortint" elements vector over TCP/IP
-  
-  Parameters:
-  sockid - socket id
-  header - cs_header structure
-  Short   - data
-  
-  Returns:
-  number of elements have been sent  : success > 0
-*/
-int shunt_cs_send_shortV (int sockid, const cs_header* header,const short int* Short);
-
-/*
-Function: shunt_cs_send_longV
-  send SHUNT transaction with "longint" elements vector over TCP/IP
-  
-  Parameters:
-  sockid - socket id
-  header - cs_header structure
-  Int,Short,Long   - data
-  
-  Returns:
-  number of elements have been sent  : success > 0
-*/
-int shunt_cs_send_longV  (int sockid, const cs_header* header,const long int* Long);
 
 /*
   Function: shunt_cs_recv_intV
@@ -267,8 +281,28 @@ int shunt_cs_send_longV  (int sockid, const cs_header* header,const long int* Lo
   
   Returns:
   number of elements have been received  : success > 0
+ See Also:
+    <shunt_cs_send_intV>
 */
 int shunt_cs_recv_intV   (int sockid, cs_header* header,int* Int);
+
+/*
+Function: shunt_cs_send_shortV
+  send SHUNT transaction with "shortint" elements vector over TCP/IP
+  
+  Parameters:
+  sockid - socket id
+  header - cs_header structure
+  Short   - data
+  
+  Returns:
+  number of elements have been sent  : success > 0
+  
+  See Also:
+  <shunt_cs_recv_shortV>
+
+*/
+int shunt_cs_send_shortV (int sockid, const cs_header* header,const short int* Short);
 
 /*
   Function: shunt_cs_recv_shortV
@@ -281,8 +315,29 @@ int shunt_cs_recv_intV   (int sockid, cs_header* header,int* Int);
   
   Returns:
   number of elements have been received  : success > 0
+  
+  See Also:
+    <shunt_cs_send_shortV>
 */
 int shunt_cs_recv_shortV (int sockid, cs_header* header,short int* Short);
+
+
+/*
+Function: shunt_cs_send_longV
+  send SHUNT transaction with "longint" elements vector over TCP/IP
+  
+  Parameters:
+  sockid - socket id
+  header - cs_header structure
+  Int,Short,Long   - data
+  
+  Returns:
+  number of elements have been sent  : success > 0
+  
+    See Also:
+    <shunt_cs_recv_longV>
+*/
+int shunt_cs_send_longV  (int sockid, const cs_header* header,const long int* Long);
 
 /*
   Function: shunt_cs_recv_longV
@@ -295,6 +350,10 @@ int shunt_cs_recv_shortV (int sockid, cs_header* header,short int* Short);
   
   Returns:
   number of elements have been received  : success > 0
+ 
+
+  See Also:
+    <shunt_cs_send_longV>
 */
 int shunt_cs_recv_longV  (int sockid, cs_header* header,long int* Long);
 
@@ -310,6 +369,9 @@ int shunt_cs_recv_longV  (int sockid, cs_header* header,long int* Long);
   
   Returns:
   number of elements have been sent  : success > 0
+
+  See Also:
+    <shunt_cs_recv_doubleV>
 */
 int shunt_cs_send_doubleV   (int sockid,const cs_header* header,const double* Double);
 
@@ -324,6 +386,10 @@ int shunt_cs_send_doubleV   (int sockid,const cs_header* header,const double* Do
   
   Returns:
   number of elements have been received  : success > 0
+  
+  See Also:
+  <shunt_cs_send_doubleV>
+ 
 */
 int shunt_cs_recv_doubleV   (int sockid,cs_header* header,double* Double);
 
@@ -339,6 +405,9 @@ int shunt_cs_recv_doubleV   (int sockid,cs_header* header,double* Double);
   
   Returns:
   number of elements have been sent  : success > 0
+
+  See Also:
+  <shunt_cs_recv_floatV>
 */
 int shunt_cs_send_floatV   (int sockid,const cs_header* header,const float* Float);
 
@@ -353,6 +422,10 @@ int shunt_cs_send_floatV   (int sockid,const cs_header* header,const float* Floa
   
   Returns:
   number of elements have been received  : success > 0
+  
+  See Also:
+  <shunt_cs_send_floatV>
+
 */
 int shunt_cs_recv_floatV   (int sockid,cs_header* header,float* Float);
 
@@ -367,6 +440,9 @@ int shunt_cs_recv_floatV   (int sockid,cs_header* header,float* Float);
   
   Returns:
   number of elements have been sent  : success > 0
+  
+  See Also:
+  <shunt_cs_recv_byteV>
 */
 int shunt_cs_send_byteV   (int sockid,const cs_header* header,const char* byteV);
 
@@ -380,12 +456,15 @@ int shunt_cs_send_byteV   (int sockid,const cs_header* header,const char* byteV)
   byteV  - Data received
   
  Returns:
- number of elements have been received  : success > 0
+ number of elements have been received  : success > 0  
+  
+See Also:
+  <shunt_cs_send_byteV>
 */
 int shunt_cs_recv_byteV   (int sockid,cs_header* header,char* byteV);
 
 /*
-    Functions: shunt_dpi_cs_send_bitN
+    Functions: shunt_cs_send_bitN
     map bit[N:0]  2-state data type packed array of scalar bit types
     LRM 6.11 
         
@@ -395,6 +474,7 @@ int shunt_cs_recv_byteV   (int sockid,cs_header* header,char* byteV);
     
     Returns: 
     number of bytes have been sent : success > 0
+    
     */
 int shunt_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* bitN) ;
 
@@ -408,12 +488,15 @@ int shunt_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* bitN) ;
     Reg,Logic - data
     
     Returns: 
-    number of bytes have been recv : success > 0
+    number of bytes have been recv : success > 0  
+
+See Also:
+  <shunt_cs_recv_bitN>
     */
 int shunt_cs_recv_bitN     (int sockid,const cs_header* h,svBitVecVal* bitN);
 
 /*
-    Functions: shunt_dpi_cs_send_integerV
+    Functions: shunt_cs_send_integerV
     map verilog "reg[31:0] 4 state aval,bval
     LRM 6.11 
         
@@ -423,11 +506,14 @@ int shunt_cs_recv_bitN     (int sockid,const cs_header* h,svBitVecVal* bitN);
     
     Returns: 
     number of bytes have been sent : success > 0
+
+See Also:
+  <shunt_cs_recv_integer>
 */
 int shunt_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* integerV) ;
 
 /*
-    Functions: shunt_dpi_cs_recv_integerV
+    Functions: shunt_cs_recv_integerV
     map verilog "reg[31:0] 4 state aval,bval
     LRM  6.11 
             
@@ -437,6 +523,9 @@ int shunt_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* i
     
     Returns: 
     number of bytes have been recv : success > 0
+
+See Also:
+  <shunt_cs_send_integerV>
     */
 int shunt_cs_recv_integerV     (int sockid,const cs_header* h,svLogicVecVal* integerV);
 
@@ -451,6 +540,9 @@ int shunt_cs_recv_integerV     (int sockid,const cs_header* h,svLogicVecVal* int
     
     Returns: 
     number of bytes have been sent : success > 0
+
+See Also:
+  <shunt_cs_recv_regN>
     */
 int shunt_cs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg);
 
@@ -465,6 +557,9 @@ int shunt_cs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLog
     
     Returns: 
     number of bytes have been recv : success > 0
+
+See Also:
+  <shunt_cs_send_regN>
     */
 int shunt_cs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
 
@@ -476,13 +571,16 @@ int shunt_cs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVa
   Parameters:
   
   h - cs_header structure
-  data_type_names - data_type (see SHUNT_INSTR_ENUM_NAMES[]) or trnx_type names array 
+  data_type_names - data_type (see <SHUNT_INSTR_ENUM_NAMES> ) or trnx_type names array 
   last_enum       - number of data_type_names[] elements
   msg    - print out prefix
   
   Returns:
-  
   void
+  
+See Also:
+  <cs_header_t>
+ 
 */
 void shunt_cs_print_header    (cs_header* h,char* data_type_names[],int last_enum,char* msg);
 
@@ -494,13 +592,17 @@ void shunt_cs_print_header    (cs_header* h,char* data_type_names[],int last_enu
   
   h - cs_header structure
   h_data   - cs_data_header structure
-  data_type_names - data_type (see SHUNT_INSTR_ENUM_NAMES[]) or trnx_type names array
+  data_type_names - data_type (see <SHUNT_INSTR_ENUM_NAMES> ) or trnx_type names array
   last_enum       - number of data_type_names[] elements
   msg - print out prefix
   
   Returns:
   
   void
+  
+See Also:
+  <cs_data_header_t>
+ 
 */
 void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_type_names[],int last_enum,char* msg);
 
