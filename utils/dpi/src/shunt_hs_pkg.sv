@@ -242,12 +242,14 @@ package shunt_hs_pkg;
     see (shunt_prim_send_byte)
     */
    
+/* -----\/----- EXCLUDED -----\/-----
    function int shunt_hs_send_byte4s (input int sockid,input reg[7:0] Byte[]);
       int Result_;
       Result_ = 1; 
       foreach(Byte[i]) if(!shunt_dpi_send_byte4s(sockid,Byte[i])) Result_ =0;
       return Result_;
    endfunction : shunt_hs_send_byte4s
+ -----/\----- EXCLUDED -----/\----- */
   
    /*
     Function: shunt_dpi_4state_recv_byte
@@ -262,14 +264,7 @@ package shunt_hs_pkg;
     
     see (shunt_prim_recv_byte)
     */
-   
-   function int shunt_hs_recv_byte4s (input int sockid,inout reg[7:0] Byte[]);
-      int Result_;
-      Result_ = 1; 
-      foreach(Byte[i]) if(!shunt_dpi_recv_byte4s(sockid,Byte[i])) Result_ =0;
-      return Result_;
-   endfunction : shunt_hs_recv_byte4s
-   
+
    function int shunt_send_realtime  (input int sockfd,input  realtime Real);
       real Real_; 
       int  Result_;
