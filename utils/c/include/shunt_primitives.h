@@ -214,15 +214,18 @@ Function: Example:  target,initiator init
 
 
 /*
- Function: shunt_prim_send_int
+  Function: shunt_prim_send_int
   send verilog/C "int" data over TCP/IP 
   
   Parameters:
-   sockfd - socket id
-   Int  -   data
+  sockfd - socket id
+  Int  -   data
   
   Returns:
-   number of bytes have been sent : success > 0
+  number of bytes have been sent : success > 0
+  
+  See Also:
+  <shunt_prim_recv_int>  
 */
 int shunt_prim_send_int    (const int sockfd,const int* Int);
 
@@ -231,18 +234,20 @@ int shunt_prim_send_int    (const int sockfd,const int* Int);
   fetch verilog/C "int" data from TCP/IP socket
   
   Parameters:
-   sockfd - socket id
-   Int - data from socket 
-     
+  sockfd - socket id
+  Int - data from socket 
+  
   Returns: 
-    number of bytes have been received  : success > 0
-    
+  number of bytes have been received  : success > 0
+  
+  See Also:
+  <shunt_prim_send_int>  
 */
 int shunt_prim_recv_int    (const int sockfd,int* Int);
 
 /*
  Function: shunt_prim_send_double
-  send verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" over TCP/IP 
+  send verilog "double" over TCP/IP 
   
   Parameters:
    sockfd - socket id
@@ -252,26 +257,10 @@ int shunt_prim_recv_int    (const int sockfd,int* Int);
     number of bytes have been sent : success > 0
   
     See Also:
-   <shunt_prim_send_float>
+    
+    <shunt_prim_recv_double>
 */
-
 int shunt_prim_send_double    (const int sockfd,const double* Double);
-
-/*
- Function: shunt_prim_send_float
-  send verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" over TCP/IP 
-  
-  Parameters:
-   sockfd - socket id
-   Double  - data to send
-  
-  Returns:
-    number of bytes have been sent : success > 0
-  
-    See Also:
-   <shunt_prim_send_double>
-*/
-int shunt_prim_send_float     (const int sockfd,const float* Float);
 
 /*
   Function: shunt_prim_recv_double
@@ -285,10 +274,27 @@ int shunt_prim_send_float     (const int sockfd,const float* Float);
  number of bytes have been sent : success > 0 
 
 See Also:
-   <shunt_prim_recv_float>
+   <shunt_prim_recv_double>
     
 */
 int shunt_prim_recv_double   (const int sockfd,double* Double);
+
+/*
+ Function: shunt_prim_send_float
+  send verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" over TCP/IP 
+  
+  Parameters:
+   sockfd - socket id
+   Double  - data to send
+  
+  Returns:
+    number of bytes have been sent : success > 0
+  
+    See Also:
+   <shunt_prim_recv_float>
+*/
+int shunt_prim_send_float     (const int sockfd,const float* Float);
+
 
 /*
   Function: shunt_prim_recv_float
@@ -299,26 +305,28 @@ int shunt_prim_recv_double   (const int sockfd,double* Double);
   Double - data from socket 
   
   Returns: 
- number of bytes have been sent : success > 0 
+  number of bytes have been sent : success > 0 
 
-See Also:
-   <shunt_prim_recv_double>
+  See Also:
+  <shunt_prim_send_float>
     
 */
 int shunt_prim_recv_float    (const int sockfd,float* Float);
 
 /*
- Function: shunt_prim_send_short
+  Function: shunt_prim_send_short
   send verilog "shortint"/C "short int" over TCP/IP 
   
   Parameters:
-   sockfd - socket id
-   Short  - data to send
+  sockfd - socket id
+  Short  - data to send
   
   Returns:
-    number of bytes have been sent : success > 0
+  number of bytes have been sent : success > 0
+  
+  See Also:
+  <shunt_prim_recv_short>
 */
-
 int shunt_prim_send_short (const int sockfd,const short int* Short);
 
 /*
@@ -330,7 +338,10 @@ int shunt_prim_send_short (const int sockfd,const short int* Short);
   Short - data from socket 
   
   Returns: 
- number of bytes have been sent : success > 0
+  number of bytes have been sent : success > 0
+
+  See Also:
+  <shunt_prim_send_short>
     
 */
 int shunt_prim_recv_short    (const int sockfd,short int* Short);
@@ -341,13 +352,15 @@ int shunt_prim_recv_short    (const int sockfd,short int* Short);
   send verilog "longint"/C "long int" over TCP/IP 
   
   Parameters:
-   sockfd - socket id
-   Long  - data to send
+  sockfd - socket id
+  Long  - data to send
   
   Returns:
-    number of bytes have been sent : success > 0
+  number of bytes have been sent : success > 0
+  
+  See Also:
+  <shunt_prim_recv_long>
 */
-
 int shunt_prim_send_long    (const int sockfd,const long int* Long);
 
 /*
@@ -360,7 +373,9 @@ int shunt_prim_send_long    (const int sockfd,const long int* Long);
   
   Returns: 
  number of bytes have been sent : success > 0
-    
+ 
+ See Also:
+  <shunt_prim_send_long>  
 */
 int shunt_prim_recv_long    (const int sockfd,long int* Long);
 
@@ -374,6 +389,9 @@ int shunt_prim_recv_long    (const int sockfd,long int* Long);
 
   Returns:
    number of bytes have been sent : success > 0
+
+ See Also:
+  <shunt_prim_recv_byte>
 */
 int shunt_prim_send_byte    (const int sockfd,const char* Byte);
 
@@ -387,6 +405,8 @@ int shunt_prim_send_byte    (const int sockfd,const char* Byte);
 
   Returns:
     number of bytes have been received  : success > 0
+ See Also:
+  <shunt_prim_send_byte>
 
 */
 int shunt_prim_recv_byte    (const int sockfd,char* Byte);
@@ -403,7 +423,7 @@ int shunt_prim_recv_byte    (const int sockfd,char* Byte);
    number of bytes have been sent : success > 0
    
    See Also:
-   <shunt_prim_send_int>
+   <shunt_prim_recv_integer>
 
 */
 int shunt_prim_send_integer(const unsigned int sockfd,const svLogicVecVal* Int);
@@ -420,7 +440,7 @@ int shunt_prim_send_integer(const unsigned int sockfd,const svLogicVecVal* Int);
     number of bytes have been received  : success > 0
  
     See Also:
-   <shunt_prim_send_int>
+   <shunt_prim_send_integer>
 
 */
 int shunt_prim_recv_integer (const unsigned int sockfd,svLogicVecVal* Int);
