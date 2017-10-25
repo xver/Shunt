@@ -12,7 +12,5 @@ The **Shunt** is Open Source Client/Server TCP/IP socket based communication lib
 
 Tne **Shunt** is available under a "MIT" License. It can be used without restriction in an open-source or commercial application.
 
-https://github.com/xver/Shunt/tree/master/doc/index.html
-
 !["Copyright (c) 2016 IC Verimeter"](https://github.com/xver/Shunt/blob/master/doc/IcVerimeter_logo.png)
 
