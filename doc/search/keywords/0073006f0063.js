@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("soc",["Section"],[["socket",,[[,"TCP/IP socket Target , Initiator initialization",,"tcp/ip socket target,initiator initialization",0,"File2:shunt_dpi.h:TCP/IP_socket_Target,Initiator_initialization"]]]]);

@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("exa",["Function"],[["Example:",,[[,"Example:&nbsp; target,initiator init",,"example:target,initiator init",0,"File:shunt_primitives.h:Example_target,initiator_init"]]]]);
