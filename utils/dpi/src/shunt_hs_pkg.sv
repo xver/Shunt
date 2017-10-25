@@ -10,20 +10,20 @@
  ============================================================================
 */
 package shunt_hs_pkg;
-
+   
    import shunt_dpi_pkg::*;
-  
+   
    /*
     Function: shunt_hs_send_byteA
     send data to TCP/IP socket
-    byte Array[][] is input veriloig data
+    
     
     Parameters:
     
     sockid - socket id from init sever/client
-    h_trnx - cs_header structure
-    h_data - cs_data_header  structure
-        
+    h_trnx - <cs_header_t> structure
+    h_data - <cs_data_header_t>  structure
+    Array  - data    
     
     Returns:
     number of elements have been received  : success > 0
@@ -41,8 +41,6 @@ package shunt_hs_pkg;
 	 h_trnx_.trnx_id    = h_trnx.trnx_id;
 	 h_trnx_.data_type  = h_data.data_type;
 	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
-	 //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",s_me,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
-	 //$display("%s Array[%0d]=%s ",s_me,i,Array[i]);
 	 Result_=  shunt_dpi_hs_send_byte  (sockid,h_trnx_,Array[i]);
       end
       return (Result_);
@@ -56,10 +54,9 @@ package shunt_hs_pkg;
     Parameters:
     
     sockid - socket id from init sever/client
-    h_trnx - cs_header structure
-    h_data - cs_data_header  structure
-    Array[][] -  Data received
-    
+    h_trnx - <cs_header_t> structure
+    h_data - <cs_data_header_t>  structure
+    Array -  Data
     
     Returns:
     number of elements have been received  : success > 0
@@ -78,23 +75,20 @@ package shunt_hs_pkg;
 	 h_trnx_.data_type  = h_data.data_type;
 	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
 	 Result_= shunt_dpi_hs_recv_byte(sockid,h_trnx_,Array[i]);
-	 //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",s_me,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
-	 //$display("%s Array[%0d]=%s ",s_me,i,Array[i]);
       end
       return (Result_);
    endfunction : shunt_hs_recv_byteA
-  
-     /*
+   
+   /*
     Function: shunt_hs_send_intA
     send data to TCP/IP socket
-    int Array[][] is input veriloig data
     
     Parameters:
     
     sockid - socket id from init sever/client
-    h_trnx - cs_header structure
-    h_data - cs_data_header  structure
-        
+    h_trnx - <cs_header_t> structure
+    h_data - <cs_data_header_t>  structure
+    Array  - data    
     
     Returns:
     number of elements have been received  : success > 0
@@ -112,30 +106,29 @@ package shunt_hs_pkg;
 	 h_trnx_.trnx_id    = h_trnx.trnx_id;
 	 h_trnx_.data_type  = h_data.data_type;
 	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
-	 //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",s_me,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
-	 //$display("%s Array[%0d]=%s ",s_me,i,Array[i]);
 	 Result_=  shunt_dpi_hs_send_int  (sockid,h_trnx_,Array[i]);
       end
       return (Result_);
    endfunction : shunt_hs_send_intA
-  
+   
    /*
     Function: shunt_hs_recv_intA
     fetch data from TCP/IP socket
-    int Array[][] is output veriloig data
+    
     
     Parameters:
     
     sockid - socket id from init sever/client
-    h_trnx - cs_header structure
-    h_data - cs_data_header  structure
-    Array[][] -  Data received
+    h_trnx - <cs_header_t> structure
+    h_data - <cs_data_header_t>  structure
+    Array -  data 
     
     
     Returns:
     number of elements have been received  : success > 0
     
     */
+   
    function int shunt_hs_recv_intA  (input int sockid,input cs_header_t h_trnx,input cs_data_header_t h_data,inout int Array[][]);
       cs_header_t h_trnx_;
       int Result_;
@@ -149,23 +142,21 @@ package shunt_hs_pkg;
 	 h_trnx_.data_type  = h_data.data_type;
 	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
 	 Result_= shunt_dpi_hs_recv_int(sockid,h_trnx_,Array[i]);
-	 //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",s_me,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
-	 //$display("%s Array[%0d]=%s ",s_me,i,Array[i]);
       end
       return (Result_);
    endfunction : shunt_hs_recv_intA
   
-  /*
+   /*
     Function: shunt_hs_send_realA
     send data to TCP/IP socket
-    real Array[][] is input veriloig data
+    
     
     Parameters:
     
     sockid - socket id from init sever/client
-    h_trnx - cs_header structure
-    h_data - cs_data_header  structure
-        
+    h_trnx - <cs_header_t> structure
+    h_data - <cs_data_header_t>  structure
+    Array  - data    
     
     Returns:
     number of elements have been received  : success > 0
@@ -183,24 +174,21 @@ package shunt_hs_pkg;
 	 h_trnx_.trnx_id    = h_trnx.trnx_id;
 	 h_trnx_.data_type  = h_data.data_type;
 	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
-	 //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",s_me,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
-	 //$display("%s Array[%0d]=%s ",s_me,i,Array[i]);
 	 Result_=  shunt_dpi_hs_send_real  (sockid,h_trnx_,Array[i]);
       end
       return (Result_);
    endfunction : shunt_hs_send_realA
    
- /*
+   /*
     Function: shunt_hs_recv_realA
     fetch data from TCP/IP socket
-    real Array[][] is output veriloig data
     
     Parameters:
     
     sockid - socket id from init sever/client
-    h_trnx - cs_header structure
-    h_data - cs_data_header  structure
-    Array[][] -  Data received
+    h_trnx - <cs_header_t> structure
+    h_data - <cs_data_header_t>  structure
+    Array  - data
     
     
     Returns:
@@ -220,49 +208,24 @@ package shunt_hs_pkg;
 	 h_trnx_.data_type  = h_data.data_type;
 	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
 	 Result_= shunt_dpi_hs_recv_real(sockid,h_trnx_,Array[i]);
-	 //$display("\n%s h_trnx.trnx_type=%0f,h_trnx.trnx_id=%0f;h_trnx.data_type=%0f;h_trnx.n_payloads=%0d",s_me,h_trnx.trnx_type,h_trnx.trnx_id,h_trnx.data_type,h_trnx.n_payloads);
-	 //$display("%s Array[%0d]=%s ",s_me,i,Array[i]);
       end
       return (Result_);
    endfunction : shunt_hs_recv_realA   
-
+   
      
    /*
-    Function: shunt_dpi_4state_send_byte
-    send 4-state verilog "byte" over TCP/IP
+    Function: shunt_send_realtime
+    send verilog realtime
     
     Parameters:
     sockid - socket id
-    
-    Byte  - data to send
-    
-    Returns:
-    number of 4 state variable byte size have been sent : success =1
-    
-    see (shunt_prim_send_byte)
-    */
-   
-/* -----\/----- EXCLUDED -----\/-----
-   function int shunt_hs_send_byte4s (input int sockid,input reg[7:0] Byte[]);
-      int Result_;
-      Result_ = 1; 
-      foreach(Byte[i]) if(!shunt_dpi_send_byte4s(sockid,Byte[i])) Result_ =0;
-      return Result_;
-   endfunction : shunt_hs_send_byte4s
- -----/\----- EXCLUDED -----/\----- */
-  
-   /*
-    Function: shunt_dpi_4state_recv_byte
-    recv 4-state verilog "byte" over TCP/IP
-    
-    Parameters:
-    sockid - socket id
-    Byte  - data to recv
+    Real  - data
     
     Returns:
-    number of 4 state variable byte size have been sent : success =1
+    number of bytes have been sent : success > 0
     
-    see (shunt_prim_recv_byte)
+    See Also:
+    <shunt_dpi_send_real>
     */
 
    function int shunt_send_realtime  (input int sockfd,input  realtime Real);
@@ -273,6 +236,20 @@ package shunt_hs_pkg;
       return  Result_;
    endfunction : shunt_send_realtime
    
+   /*
+    Function: shunt_recv_realtime
+    recv verilog realtime
+    
+    Parameters:
+    sockid - socket id
+    Real  - data
+    
+    Returns:
+    number of bytes have been receved : success > 0
+    
+    See Also:
+    <shunt_dpi_recv_real>
+    */
    function int shunt_recv_realtime  (input int sockfd,output realtime Real);
       real Real_; 
       int  Result_;
@@ -281,7 +258,6 @@ package shunt_hs_pkg;
       return  Result_;
    endfunction : shunt_recv_realtime
    
-  
 endpackage : shunt_hs_pkg
    
    
