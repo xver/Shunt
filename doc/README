@@ -9,39 +9,7 @@
                See LICENSE file in the project root for full license information.  
  Description : System Verilog client server handshake (SVCS)
 ============================================================================= 
-TITLE: System Verilog client server handshake 
-(SVCS)
-******************************************************
-Data Types:  
-elements:         integer,  double, char
-vectors:          integers, doubles , string
-array/composite:  integer vectors , double vectors, messages , structure
--------------------------------------------------------
-trnx -> header  ->  trnx_atribute  - hash/random double    
-                    trnx_type      - hash double 
-                    trnx_id        - random double 
-                          
-        payload -> size - int , >0   
-                   data
--------------------------------------------------------
-vector
-element -> header ->   trnx_atribute - hash/random double     
-                       trnx_type     - hash ("SVCS_V_INT","SVCS_V_DOUBLE","SVCS_V_STRING") 
-                       trnx_id       - random double 
-                       
-           payload ->  size - if vector >1, if element = 1;    
-                       data element;
----------------------------------------------------------------
-array
-composite -> header ->     trnx_atribute - hash/random double    
-                           trnx_type     - hash ("SVCS_A_STRUCTURE") 
-                           trnx_id       - random double 
-                           
-             payload->     size - int , > 1   
-                           data - vector  
----------------------------------------------------------------
-nd command :  naturaldocs -p ./doc -i . -o FramedHTML ./doc
-see SVCS doc: http://htmlpreview.github.io/?https://github.com/xver/SVCS/blob/master/doc/menu.html
+
 
 Chris Spear SystemVerilog for Verification
 
