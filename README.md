@@ -1,4 +1,4 @@
-Welcome to the **Shunt**!
+Welcome to the **SystemVerilog TCP/IP "IC Shunt"**!
 
 ![](https://github.com/xver/Shunt/blob/master/doc/shut_log_min.png)
 
