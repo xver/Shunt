@@ -1,4 +1,4 @@
-Welcome to the **SystemVerilog TCP/IP "IC Shunt"**!
+Welcome to the **SystemVerilog "TCP/IP Shunt"**!
 
 ![](https://github.com/xver/Shunt/blob/master/doc/shut_log_min.png)
 
@@ -12,7 +12,7 @@ The **Shunt** is Open Source Client/Server TCP/IP socket based communication lib
 
 Tne **Shunt** is available under a "MIT" License. It can be used without restriction in an open-source or commercial application.
 
-Source doc: https://rawgit.com/xver/Shunt/master/doc/index.html
+Source Documentation: https://rawgit.com/xver/Shunt/master/doc/index.html
 
 If you have any questions please contact us at icshunt.help@gmail.com
 
