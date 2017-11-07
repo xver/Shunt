@@ -12,8 +12,8 @@ The **Shunt** is Open Source Client/Server TCP/IP socket based communication lib
 
 The **Shunt** is available under a "MIT" License. It can be used without restriction in an open-source or commercial application.
 
-*  ![Shunt Introduction](https://cdn.rawgit.com/xver/Shunt/4fa28a81/doc/Shunt_Introduction.html)
-*  ![API specification](https://rawgit.com/xver/Shunt/master/doc/index.html)
+*  Shunt Introduction -- https://cdn.rawgit.com/xver/Shunt/4fa28a81/doc/Shunt_Introduction.html
+*  API specification  -- https://rawgit.com/xver/Shunt/master/doc/index.html
 
 If you have any questions please contact us at icshunt.help@gmail.com
 
