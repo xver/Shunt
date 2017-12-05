@@ -9,6 +9,9 @@
                All Types SystemVerilog examle  -Target(client)  
  ============================================================================
 */
+
+/* verilator lint_off UNUSED */
+/* verilator lint_off UNDRIVEN */
 `include "../../includes/cs_common.svh"
 
 module automatic Target;
@@ -18,7 +21,10 @@ module automatic Target;
    string String;
    int 	 Socket; 
    cs_header_t      h_trnx;
+   `ifndef NO_CS_DATA_HEADER_T
    cs_data_header_t h_data;
+   `endif
+
    
    initial
      begin
@@ -28,7 +34,7 @@ module automatic Target;
 	Socket=0;
 	Result=0;
 	
-        #1000ns;
+        //#1000ns;
 	
         //
 	//String.toupper();	
@@ -56,7 +62,7 @@ module automatic Target;
 	realV_loopback_test(Socket);
 	shortrealV_loopback_test(Socket);
 	integerV_loopback_test(Socket);
-		
+	$finish;	
        $display("\nTarget: END");
 	
      end // initial begin
@@ -74,7 +80,8 @@ module automatic Target;
    function void short_loopback_test(int socket_id);
       shortint   Short;
       string Test_name;
-      
+
+      `ifndef NO_SHUNT_DPI_RECV_SHORT 
       Short ='hdead;
       
       Test_name = "\ntarget short_loopback_test recv";
@@ -84,13 +91,14 @@ module automatic Target;
       //send
       Test_name = "target short_loopback_test send";
       if (shunt_dpi_send_short(socket_id,Short)<= 0) $display("%s TEST FAIL",Test_name);
-      
+      `endif
    endfunction : short_loopback_test
 
    function void int_loopback_test(int socket_id);
       int   Int;
       string Test_name;
-      
+
+      `ifndef NO_SHUNT_DPI_RECV_INT 
       Int ='hdead;
       
       Test_name = "\ntarget int_loopback_test recv";
@@ -100,13 +108,14 @@ module automatic Target;
       //send
       Test_name = "target int_loopback_test send";
       if (shunt_dpi_send_int(socket_id,Int)<= 0) $display("%s TEST FAIL",Test_name);
-      
+      `endif
    endfunction : int_loopback_test
 
    function void long_loopback_test(int socket_id);
       longint   Long;
       string Test_name;
-      
+
+      `ifndef NO_SHUNT_DPI_RECV_LONG 
       Long ='hdead;
       
       Test_name = "\ntarget long_loopback_test recv";
@@ -116,14 +125,16 @@ module automatic Target;
       //send
       Test_name = "target long_loopback_test send";
       if (shunt_dpi_send_long(socket_id,Long)<= 0) $display("%s TEST FAIL",Test_name);
-      
+      `endif
    endfunction : long_loopback_test
 
    function void byte_loopback_test(int socket_id);
       byte   Byte;
       string Test_name;
+
+      `ifndef NO_SHUNT_DPI_RECV_BYTE
       
-      Byte ='hdead;
+      Byte ='hde;
       
       Test_name = "\ntarget byte_loopback_test recv";
       //recv
@@ -132,13 +143,14 @@ module automatic Target;
       //send
       Test_name = "target byte_loopback_test send";
       if (shunt_dpi_send_byte(socket_id,Byte)<= 0) $display("%s TEST FAIL",Test_name);
-      
+      `endif
    endfunction : byte_loopback_test
 
    function void integer_loopback_test(int socket_id);
       integer Integer;
       string  Test_name;
-      
+
+      `ifndef NO_SHUNT_DPI_RECV_INTEGER 
       Test_name = "target integer_loopback_test recv";
       //recv
       if (shunt_dpi_recv_integer (socket_id,Integer)<= 0) $display("%s TEST FAIL",Test_name);
@@ -146,13 +158,14 @@ module automatic Target;
       //send
       Test_name = "target integer_loopback_test send";
       if (shunt_dpi_send_integer(socket_id,Integer)<= 0) $display("%s TEST FAIL",Test_name);
-      
+      `endif
    endfunction : integer_loopback_test
 
    function void time_loopback_test(int socket_id);
       time Time;
       string  Test_name;
-      
+
+      `ifndef NO_SHUNT_DPI_RECV_TIME 
       Test_name = "target time_loopback_test recv";
       //recv
       if (shunt_dpi_recv_time (socket_id,Time)<= 0) $display("%s TEST FAIL",Test_name);
@@ -160,13 +173,14 @@ module automatic Target;
       //send
       Test_name = "target time_loopback_test send";
       if (shunt_dpi_send_time(socket_id,Time)<= 0) $display("%s TEST FAIL",Test_name);
-      
+      `endif
    endfunction : time_loopback_test
  
    function void bit_loopback_test(int socket_id);
       bit Bit;
       string  Test_name;
-      
+
+      `ifndef NO_SHUNT_DPI_RECV_BIT 
       Test_name = "target bit_loopback_test recv";
       //recv
       if (shunt_dpi_recv_bit (socket_id,Bit)<= 0) $display("%s TEST FAIL",Test_name);
@@ -174,13 +188,14 @@ module automatic Target;
       //send
       Test_name = "target bit_loopback_test send";
       if (shunt_dpi_send_bit(socket_id,Bit)<= 0) $display("%s TEST FAIL",Test_name);
-      
+      `endif
    endfunction : bit_loopback_test
 
    function void reg_loopback_test(int socket_id);
       reg Reg;
       string  Test_name;
-      
+
+      `ifndef NO_SHUNT_DPI_RECV_REG 
       Test_name = "target reg_loopback_test recv";
       //recv
       if (shunt_dpi_recv_reg (socket_id,Reg)<= 0) $display("%s TEST FAIL",Test_name);
@@ -188,13 +203,14 @@ module automatic Target;
       //send
       Test_name = "target reg_loopback_test send";
       if (shunt_dpi_send_reg(socket_id,Reg)<= 0) $display("%s TEST FAIL",Test_name);
-      
+     `endif 
    endfunction : reg_loopback_test
    
    function void logic_loopback_test(int socket_id);
       logic Logic;
       string  Test_name;
-      
+
+      `ifndef NO_SHUNT_DPI_RECV_LOGIC 
       Test_name = "target logic_loopback_test recv";
       //recv
       if (shunt_dpi_recv_logic (socket_id,Logic)<= 0) $display("%s TEST FAIL",Test_name);
@@ -202,13 +218,14 @@ module automatic Target;
       //send
       Test_name = "target logic_loopback_test send";
       if (shunt_dpi_send_logic(socket_id,Logic)<= 0) $display("%s TEST FAIL",Test_name);
-      
+      `endif
    endfunction : logic_loopback_test
 
    function void bitN_loopback_test(int socket_id);
       bit [1024:0] BitN;
       string 	   Test_name;
-      
+
+      `ifndef NO_SHUNT_DPI_HS_RECV_BITN
       Test_name = "target bitN_loopback_test recv";
       //recv     
       BitN = 'hz;
@@ -219,12 +236,14 @@ module automatic Target;
       Test_name = "target bitN_loopback_test send";
       if (shunt_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
       if (shunt_dpi_hs_send_bitN(socket_id,h_trnx,BitN)<= 0)   $display("%s TEST FAIL",Test_name);
+      `endif
    endfunction : bitN_loopback_test
 
    function void regN_loopback_test(int socket_id);
       reg [1024:0] RegN;
       string 	   Test_name;
-      
+
+      `ifndef NO_SHUNT_DPI_HS_RECV_REGN
       Test_name = "target regN_loopback_test recv";
       //recv     
       RegN = 'hz;
@@ -235,12 +254,14 @@ module automatic Target;
       Test_name = "target regN_loopback_test send";
       if (shunt_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
       if (shunt_dpi_hs_send_regN(socket_id,h_trnx,RegN)<= 0)   $display("%s TEST FAIL",Test_name);
+      `endif
    endfunction : regN_loopback_test
 
    function void logicN_loopback_test(int socket_id);
       logic [1024:0] LogicN;
       string 	   Test_name;
-      
+
+      `ifndef NO_SHUNT_DPI_HS_RECV_LOGICN
       Test_name = "target logicN_loopback_test recv";
       //recv     
       LogicN = 'hz;
@@ -251,28 +272,36 @@ module automatic Target;
       Test_name = "target logicN_loopback_test send";
       if (shunt_dpi_send_header(socket_id,h_trnx)  <= 0) $display("%s TEST FAIL",Test_name);
       if (shunt_dpi_hs_send_logicN(socket_id,h_trnx,LogicN)<= 0)   $display("%s TEST FAIL",Test_name);
+      `endif
    endfunction : logicN_loopback_test
 
    function void real_loopback_test(int socket_id);
       real   Real;
       string Test_name;
-      
+
+      `ifndef NO_SHUNT_DPI_RECV_REAL
       Test_name = "target real_loopback_test recv";
+      /* verilator lint_off WIDTH */
       if (!shunt_dpi_recv_real(socket_id,Real)) $display("%s TEST FAIL",Test_name);
+     
       $display("\n %s Real=%h(%f)",Test_name,Real,Real);
       Test_name = "target real_loopback_test send";
       if (!shunt_dpi_send_real(socket_id,Real)) $display("%s TEST FAIL",Test_name);
+      /* verilator lint_on WIDTH */
+      `endif
    endfunction : real_loopback_test
    
    function void shortreal_loopback_test(int socket_id);
-      shortreal   Shortreal;
+      `ifndef NO_SHUNT_DPI_RECV_SHORTREAL 
+      shortreal Shortreal;
       string Test_name;
-      
+
       Test_name = "target shortreal_loopback_test recv";
       if (!shunt_dpi_recv_shortreal(socket_id,Shortreal)) $display("%s TEST FAIL",Test_name);
       $display("\n %s Shortreal=%h(%f)",Test_name,Shortreal,Shortreal);
       Test_name = "target shortreal_loopback_test send";
       if (!shunt_dpi_send_shortreal(socket_id,Shortreal)) $display("%s TEST FAIL",Test_name);
+      `endif
    endfunction : shortreal_loopback_test
 
    function void string_loopback_test(int socket_id);
@@ -280,7 +309,8 @@ module automatic Target;
       string Test_name;
       int    size;
       int    Result_;
-      
+
+      `ifndef NO_SHUNT_DPI_RECV_STRING
       String = `STRING_MESSAGE1;
       Test_name = "target string_loopback_test recv";
       
@@ -288,7 +318,7 @@ module automatic Target;
       $display("\n %s String = %s",Test_name,String);
       Test_name = "target string_loopback_test send";
       if (shunt_dpi_send_string(socket_id,String.len(),String)<=0) $display("%s TEST FAIL",Test_name);
-      
+      `endif
    endfunction : string_loopback_test
 
    function void shortV_loopback_test(int socket_id);
@@ -296,12 +326,14 @@ module automatic Target;
 	 string Test_name;
 	 int i;
          shortint ShortV[`V_SIZE];
+
+	 `ifndef NO_SHUNT_DPI_RECV_SHORTV
 	 Test_name = "target shortV_loopback_test";	 
 	 
 	 if(shunt_dpi_recv_shortV(socket_id,`V_SIZE,ShortV)<=0) $display("%s TEST FAIL",Test_name);
 	 foreach (ShortV[i])$display("\n %s  ShortV[%0d] = %d",Test_name,i,ShortV[i]);
 	 if(shunt_dpi_send_shortV(socket_id,`V_SIZE,ShortV)<=0) $display("%s TEST FAIL",Test_name);
-	 
+	 `endif
       end
    endfunction : shortV_loopback_test
    
@@ -309,42 +341,54 @@ module automatic Target;
       begin
 	 string Test_name;
 	 longint LongV[`V_SIZE];
+
+	 `ifndef NO_SHUNT_DPI_RECV_LONGV
 	 Test_name = "target longV_loopback_test";	 
 	 
 	 if(shunt_dpi_recv_longV(socket_id,`V_SIZE,LongV)<=0) $display("%s TEST FAIL",Test_name);
 	 foreach (LongV[i])$display("\n %s  LongV[%0d] = %d",Test_name,i,LongV[i]);
 	 if(shunt_dpi_send_longV(socket_id,`V_SIZE,LongV)<=0) $display("%s TEST FAIL",Test_name);
+	 `endif
       end
    endfunction : longV_loopback_test
 
    function void realV_loopback_test(int socket_id);
       real  RealV[`V_SIZE];
       string Test_name;
+
+      `ifndef NO_SHUNT_DPI_RECV_REALV 
       Test_name = "target realV_loopback_test";
       
       if (shunt_dpi_recv_realV (socket_id,`V_SIZE,RealV)<= 0) $display("%s TEST FAIL",Test_name);
       foreach (RealV[i])$display("\n %s  RealV[%0d] = %f",Test_name,i,RealV[i]);
-      if (shunt_dpi_send_realV(socket_id,`V_SIZE,RealV)<= 0) $display("%s TEST FAIL",Test_name); 
+      if (shunt_dpi_send_realV(socket_id,`V_SIZE,RealV)<= 0) $display("%s TEST FAIL",Test_name);
+      `endif
    endfunction : realV_loopback_test
    
    function void shortrealV_loopback_test(int socket_id);
+      `ifndef NO_SHUNT_DPI_RECV_SHORTREALV  
       shortreal  ShortrealV[`V_SIZE];
       string Test_name;
+
       Test_name = "target shortrealV_loopback_test";
       
       if (shunt_dpi_recv_shortrealV (socket_id,`V_SIZE,ShortrealV)<= 0) $display("%s TEST FAIL",Test_name);
       foreach (ShortrealV[i])$display("\n %s  ShortrealV[%0d] = %f",Test_name,i,ShortrealV[i]);
-      if (shunt_dpi_send_shortrealV(socket_id,`V_SIZE,ShortrealV)<= 0) $display("%s TEST FAIL",Test_name); 
+      if (shunt_dpi_send_shortrealV(socket_id,`V_SIZE,ShortrealV)<= 0) $display("%s TEST FAIL",Test_name);
+      `endif
    endfunction : shortrealV_loopback_test
 
    function void integerV_loopback_test(int socket_id);
       integer  IntegerV[`V_SIZE];
       string Test_name;
+
+      `ifndef NO_SHUNT_DPI_RECV_INTEGERV 
       Test_name = "target integerV_loopback_test";
       
       if (shunt_dpi_recv_integerV (socket_id,`V_SIZE,IntegerV)<= 0) $display("%s TEST FAIL",Test_name);
       foreach (IntegerV[i])$display("\n %s  IntegerV[%0d] = %h",Test_name,i,IntegerV[i]);
-      if (shunt_dpi_send_integerV(socket_id,`V_SIZE,IntegerV)<= 0) $display("%s TEST FAIL",Test_name); 
+      if (shunt_dpi_send_integerV(socket_id,`V_SIZE,IntegerV)<= 0) $display("%s TEST FAIL",Test_name);
+      `endif
    endfunction : integerV_loopback_test
  
    
