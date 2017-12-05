@@ -1,3 +1,4 @@
+
 build_c:
 	cd ${SHUNT_HOME}/utils/makedir &&  $(MAKE) clean && $(MAKE) all
 
@@ -19,3 +20,4 @@ clean:
 	cd ../initiator/makedir &&  $(MAKE) clean
 	cd ../target/makedir    &&  $(MAKE) clean
 all: clean build_c build_sv 
+
