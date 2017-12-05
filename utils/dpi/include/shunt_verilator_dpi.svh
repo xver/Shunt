@@ -1,11 +1,11 @@
 /*
  =========================================================
  File        : shunt_verilator_dpi.h
- Version     : 1.0.0
+ Version     : 1.0.1
  Copyright (c) 2016-2017 IC Verimeter. All rights reserved.
  Licensed under the MIT License.
  See LICENSE file in the project root for full license information.
- Description : shunt verilator integration:  desable SV DPI tasks   
+ Description : shunt verilator integration:  disable SV DPI tasks   
  System Verilog target initiator handshake (TCP/IP SystemVerilog SHUNT)
  ******************************************************
 */
