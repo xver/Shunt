@@ -9,7 +9,8 @@
                All Types SystemVerilog examle  -Initiator(server)  
  ============================================================================
 */
-
+/* verilator lint_off UNUSED */
+/* verilator lint_off UNDRIVEN */
 `include "../../includes/cs_common.svh"
 
 module automatic Initiator;
@@ -17,16 +18,17 @@ module automatic Initiator;
    import shunt_dpi_pkg::*;
    
    int Socket;
+   int Pass;
+   
    cs_header_t      h_trnx_exp;
-   cs_data_header_t h_data_exp;
    cs_header_t      h_trnx_act;
+`ifndef NO_CS_DATA_HEADER_T
+   cs_data_header_t h_data_exp;
    cs_data_header_t h_data_act;
-   
-   
-   
+`endif
+      
    initial
      begin
-	int Pass;
 	string Status;
 	string Test_name;
 	
@@ -37,92 +39,121 @@ module automatic Initiator;
 	
 	Test_name = "\tinit_initiator";
 	Socket = init_initiator(`MY_PORT);
+	/* verilator lint_off WIDTH */
 	if (!Socket) Pass=0;
+	/* verilator lint_on WIDTH */
 	$display("\tInitiator: socket=%0d",Socket);
 	print_status(Test_name,Pass);
 	
+`ifndef NO_SHUNT_DPI_SEND_SHORT
 	Test_name = "\tshort loopback";
 	Pass=short_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+`endif
+`ifndef NO_SHUNT_DPI_SEND_LONG  
 	Test_name = "\tint loopback";
 	Pass=int_loopback_test(Socket);
 	print_status(Test_name,Pass);
-	
+`endif	
+ `ifndef NO_SHUNT_DPI_SEND_LONG  
 	Test_name = "\tlong loopback";
 	Pass=long_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+ `endif
+`ifndef NO_SHUNT_DPI_SEND_BYTE  
 	Test_name = "\tbyte loopback";
 	Pass=byte_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+`endif
+`ifndef NO_SHUNT_DPI_SEND_INTEGER 	
 	Test_name = "\tinteger loopback";
 	Pass=integer_loopback_test(Socket);
 	print_status(Test_name,Pass);
- 
+`endif
+	
+ `ifndef NO_SHUNT_DPI_SEND_TIME 	
 	Test_name = "\ttime loopback";
 	Pass=time_loopback_test(Socket);
 	print_status(Test_name,Pass);
+ `endif
 
+ `ifndef NO_SHUNT_DPI_SEND_BIT 	
 	Test_name = "\tbit_loopback";
 	Pass=bit_loopback_test(Socket);
 	print_status(Test_name,Pass);
+ `endif
 
+ `ifndef NO_SHUNT_DPI_SEND_REG 	
 	Test_name = "\treg_loopback";
 	Pass=reg_loopback_test(Socket);
 	print_status(Test_name,Pass);
+ `endif
 
+ `ifndef NO_SHUNT_DPI_SEND_LOGIC 	
 	Test_name = "\tlogic_loopback";
 	Pass=logic_loopback_test(Socket);
 	print_status(Test_name,Pass);
+ `endif
 
+ `ifndef NO_SHUNT_DPI_HS_SEND_BITN	
 	Test_name = "\tbitN_loopback";
 	Pass=bitN_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+ `endif
+ `ifndef NO_SHUNT_DPI_HS_SEND_REGN	
 	Test_name = "\tregN_loopback";
 	Pass=regN_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+ `endif
+ `ifndef NO_SHUNT_DPI_HS_SEND_LOGICN	
 	Test_name = "\tlogicN_loopback";
 	Pass=logicN_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+ `endif
+ `ifndef NO_SHUNT_DPI_SEND_REAL	
 	Test_name = "\treal_loopback";
 	Pass=real_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+ `endif
+ `ifndef NO_SHUNT_DPI_SEND_SHORTREAL
 	Test_name = "\tshortreal_loopback";
 	Pass=shortreal_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+ `endif //  `ifndef NO_SHUNT_DPI_SEND_SHORTREAL
+ `ifndef NO_SHUNT_DPI_SEND_STRING	
 	Test_name = "\tstring_loopback";
 	Pass=string_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+ `endif
+ `ifndef NO_SHUNT_DPI_SEND_SHORTV
 	Test_name = "\tshortV loopback";
 	Pass=shortV_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+ `endif
+ `ifndef NO_SHUNT_DPI_SEND_LONGV	
 	Test_name = "\tlongV loopback";
 	Pass=longV_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+ `endif
+`ifndef NO_SHUNT_DPI_SEND_REALV  	
 	Test_name = "\trealV loopback";
 	Pass=realV_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+ `endif
+ `ifndef NO_SHUNT_DPI_SEND_SHORTREALV 
 	Test_name = "\tshortrealV loopback";
 	Pass=shortrealV_loopback_test(Socket);
 	print_status(Test_name,Pass);
-
+ `endif //  `ifndef NO_SHUNT_DPI_SEND_SHORTREALV
+	
+ `ifndef NO_SHUNT_DPI_SEND_INTEGERV  	
 	Test_name = "\tintegerV loopback";
 	Pass=integerV_loopback_test(Socket);
 	print_status(Test_name,Pass);
-	
-	Test_name = "Initiator";
+ `endif	
+ 	Test_name = "Initiator";
 	print_status(Test_name,Pass);
+	$finish;
      end
 
    //Functions:
@@ -139,14 +170,16 @@ module automatic Initiator;
    
    function int short_loopback_test(int socket_id);
       begin
+	 `ifndef NO_SHUNT_DPI_SEND_SHORT
 	 int success;
          shortint Short_exp;
 	 shortint Short_act;
          string Test_name = "initiator short_loopback_test";
 	 
 	 success = 1;
-	 Short_exp = $urandom();
-	 
+	 /* verilator lint_off WIDTH */
+	 Short_exp = $random();
+	 /* verilator lint_on WIDTH */
 	 //send
 	 if (shunt_dpi_send_short (socket_id,Short_exp)<= 0) success = 0;
 	 if (success == 0 )  $display("\ninitiator: fail send data");
@@ -155,19 +188,22 @@ module automatic Initiator;
 	 if (success == 0 )  $display("\nShort loopback fail recv");
 	 
 	 if (Short_exp !== Short_act)success=0;
+	 `endif //  `ifndef NO_SHUNT_DPI_SEND_SHORT
 	 return  success;
+	 
       end
    endfunction : short_loopback_test
 
    function int int_loopback_test(int socket_id);
       begin
+	 `ifndef NO_SHUNT_DPI_SEND_INT
 	 int success;
          int Int_exp;
 	 int Int_act;
          string Test_name = "initiator int_loopback_test";
 	 
 	 success = 1;
-	 Int_exp = $urandom();
+	 Int_exp = $random();
 	 
 	 //send
 	 if (shunt_dpi_send_int (socket_id,Int_exp)<= 0) success = 0;
@@ -177,19 +213,22 @@ module automatic Initiator;
 	 if (success == 0 )  $display("\nInt loopback fail recv");
 	 
 	 if (Int_exp !== Int_act)success=0;
+	 `endif
 	 return  success;
+	 
       end
    endfunction : int_loopback_test
 
    function int long_loopback_test(int socket_id);
       begin
+	 `ifndef NO_SHUNT_DPI_SEND_LONG  
 	 int success;
          longint Long_exp;
 	 longint Long_act;
          string Test_name = "initiator long_loopback_test";
 	 
 	 success = 1;
-	 Long_exp = {$urandom(),$urandom()};
+	 Long_exp = {$random(),$random()};
 	 
 	 //send
 	 if (shunt_dpi_send_long (socket_id,Long_exp)<= 0) success = 0;
@@ -199,20 +238,24 @@ module automatic Initiator;
 	 if (success == 0 )  $display("\nLong loopback fail recv");
 	 
 	 if (Long_exp !== Long_act)success=0;
+	 `endif
 	 return  success;
       end
+      
    endfunction : long_loopback_test
 
    function int byte_loopback_test(int socket_id);
       begin
+	 `ifndef NO_SHUNT_DPI_SEND_BYTE  
 	 int success;
          byte Byte_exp;
 	 byte Byte_act;
          string Test_name = "initiator byte_loopback_test";
 	 
 	 success = 1;
-	 Byte_exp = $urandom();
-	 
+	 /* verilator lint_off WIDTH */
+	 Byte_exp = $random();
+	/* verilator lint_on WIDTH */ 
 	 //send
 	 if (shunt_dpi_send_byte (socket_id,Byte_exp)<= 0) success = 0;
 	 if (success == 0 )  $display("\ninitiator: fail send data");
@@ -222,12 +265,15 @@ module automatic Initiator;
 	 
 	 if (Byte_exp !== Byte_act)success=0;
 	 return  success;
+	`endif 
       end
+      
    endfunction : byte_loopback_test
    
    function int   integer_loopback_test(int socket_id);
-      
       int 	success;
+      `ifndef NO_SHUNT_DPI_SEND_INTEGER 
+      
       integer   Integer_exp;
       integer   Integer_act;
       
@@ -244,13 +290,15 @@ module automatic Initiator;
       //comp
       if(Integer_act !== Integer_exp) success = 0;  
       if (success == 0 )  $display("\ninitiator: fail comp data");
-      
+      `endif
       return  success;
+      
    endfunction :integer_loopback_test
 
    function int   time_loopback_test(int socket_id);
-      
       int 	success;
+      `ifndef NO_SHUNT_DPI_SEND_TIME 
+      
       time   Time_exp;
       time   Time_act;
       
@@ -270,14 +318,16 @@ module automatic Initiator;
       if(Time_act !== Time_exp) success = 0;  
       if (success == 0 )  $display("\ninitiator: fail comp data");
       
-   
+   `endif
       return  success;
+      
    endfunction :time_loopback_test
 
    function int   bit_loopback_test(int socket_id);
-      
       int 	success;
-      bit   Bit_exp;
+      
+   `ifndef NO_SHUNT_DPI_SEND_BIT 
+      bit 	Bit_exp;
       bit   Bit_act;
       
       string 	Test_name = "initiator bit_loopback_test";
@@ -295,13 +345,15 @@ module automatic Initiator;
       //comp
       if(Bit_act !== Bit_exp) success = 0;  
       if (success == 0 )  $display("\ninitiator: fail comp data");
-         
+      `endif   
       return  success;
+      
    endfunction :bit_loopback_test
    
    function int   reg_loopback_test(int socket_id);
-      
       int 	success;
+      `ifndef NO_SHUNT_DPI_SEND_REG 
+      
       reg   Reg_exp;
       reg   Reg_act;
       
@@ -320,13 +372,15 @@ module automatic Initiator;
       //comp
       if(Reg_act !== Reg_exp) success = 0;  
       if (success == 0 )  $display("\ninitiator: fail comp data");
-         
+       `endif   
       return  success;
+      
    endfunction :reg_loopback_test
 
    function int   logic_loopback_test(int socket_id);
-      
       int 	success;
+      `ifndef NO_SHUNT_DPI_SEND_LOGIC 
+    
       logic   Logic_exp;
       logic   Logic_act;
       
@@ -345,15 +399,17 @@ module automatic Initiator;
       //comp
       if(Logic_act !== Logic_exp) success = 0;  
       if (success == 0 )  $display("\ninitiator: fail comp data");
-         
+      `endif   
       return  success;
+      
    endfunction :logic_loopback_test
 
    function int bitN_loopback_test(int socket_id,int n_payloads=1);
       begin
-	 localparam N = 133;//N 4*32 bit max
-	 
 	 int success;
+	 `ifndef NO_SHUNT_DPI_HS_SEND_BITN
+	 localparam N = 133;//N 4*32 bit max
+	
 	 int i;
 	 bit [N-1:0] BitN_exp;
 	 bit [N-1:0] BitN_act;
@@ -361,12 +417,12 @@ module automatic Initiator;
 	 success =1;
 	 
 	 //data set
-	 BitN_exp =  {$urandom(),$urandom(),$urandom(),$urandom()};
+	 BitN_exp =  {$random(),$random(),$random(),$random()};
 	 
 	 
 	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
+	 h_trnx_exp.trnx_type = $random;
+	 h_trnx_exp.trnx_id   = $random;
 	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_BIT");
 	 h_trnx_exp.n_payloads = N;
 	 
@@ -379,17 +435,19 @@ module automatic Initiator;
 	 if(!shunt_dpi_hs_recv_bitN(socket_id,h_trnx_act,BitN_act))  success =0;
 	 //
 	 if(BitN_act !== BitN_exp) success =0;
-	 
+	 `endif //  `ifndef NO_SHUNT_DPI_HS_SEND_BITN
 	 return  success;
+	
       end
    endfunction : bitN_loopback_test
 
 
    function int regN_loopback_test(int socket_id,int n_payloads=1);
-      begin
+      begin 
+	 int success;
+	 `ifndef NO_SHUNT_DPI_HS_SEND_REGN
 	 localparam N = 133;//N 4*32 bit max
 	 
-	 int success;
 	 int i;
 	 reg [N-1:0] XRegNV_exp;
          reg [N-1:0] RegNV_exp;
@@ -399,12 +457,12 @@ module automatic Initiator;
 	 
 	 //data set
 	 XRegNV_exp = 'hx;
-	 RegNV_exp =  {$urandom(),$urandom(),$urandom(),$urandom()}& XRegNV_exp;
-	 RegNV_exp =   RegNV_exp | {$urandom(),$urandom(),$urandom(),$urandom()};
+	 RegNV_exp =  {$random(),$random(),$random(),$random()}& XRegNV_exp;
+	 RegNV_exp =   RegNV_exp | {$random(),$random(),$random(),$random()};
 	 
 	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
+	 h_trnx_exp.trnx_type = $random;
+	 h_trnx_exp.trnx_id   = $random;
 	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_REG4S");
 	 h_trnx_exp.n_payloads = N;
 	 
@@ -417,16 +475,19 @@ module automatic Initiator;
 	 if(!shunt_dpi_hs_recv_regN(socket_id,h_trnx_act,RegNV_act))  success =0;
 	 //
 	 if(RegNV_act !== RegNV_exp) success =0;
+	 `endif //  `ifndef NO_SHUNT_DPI_HS_SEND_REGN
 	 
 	 return  success;
+	 
       end
    endfunction : regN_loopback_test
    
    function int logicN_loopback_test(int socket_id,int n_payloads=1);
       begin
+	 int success;
+	 `ifndef NO_SHUNT_DPI_HS_SEND_LOGICN
 	 localparam N = 133;//N 4*32 bit max
 	 
-	 int success;
 	 int i;
 	 logic [N-1:0] XLogicN_exp;
          logic [N-1:0] LogicN_exp;
@@ -436,12 +497,12 @@ module automatic Initiator;
 	 
 	 //data set
 	 XLogicN_exp = 'hx;
-	 LogicN_exp =  {$urandom(),$urandom(),$urandom(),$urandom()}& XLogicN_exp;
-	 LogicN_exp =   LogicN_exp | {$urandom(),$urandom(),$urandom(),$urandom()};
+	 LogicN_exp =  {$random(),$random(),$random(),$random()}& XLogicN_exp;
+	 LogicN_exp =   LogicN_exp | {$random(),$random(),$random(),$random()};
 	 
 	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
+	 h_trnx_exp.trnx_type = $random;
+	 h_trnx_exp.trnx_id   = $random;
 	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_REG4S");
 	 h_trnx_exp.n_payloads = N;
 	 
@@ -454,24 +515,30 @@ module automatic Initiator;
 	 if(!shunt_dpi_hs_recv_logicN(socket_id,h_trnx_act,LogicN_act))  success =0;
 	 //
 	 if(LogicN_act !== LogicN_exp) success =0;
+	 `endif //  `ifndef NO_SHUNT_DPI_HS_SEND_LOGICN
 	 
 	 return  success;
       end
+      
    endfunction : logicN_loopback_test
 
    function int real_loopback_test(int socket_id);
       begin
 	 int success;
-         real Real_exp;
+	 `ifndef NO_SHUNT_DPI_SEND_REAL
+	 real Real_exp;
 	 real Real_act;
 	 string s_me = "real_loopback_test";
 	 success =1;
-	 Real_exp = $urandom()/7.5;
+	 Real_exp = $random()/7.5;
+	 /* verilator lint_off WIDTH */
 	 if(!shunt_dpi_send_real(socket_id,Real_exp)) success=0;
 	 if(!shunt_dpi_recv_real(socket_id,Real_act)) success=0;
+	 /* verilator lint_on WIDTH */
 	 if (Real_exp != Real_act)success=0;
-	 
+	 `endif //  `ifndef NO_SHUNT_DPI_SEND_REAL
 	 return  success;
+	 
       end
    endfunction : real_loopback_test
  
@@ -480,7 +547,8 @@ module automatic Initiator;
    function int shortreal_loopback_test(int socket_id);
       begin
 	 int success;
-         shortreal Shortreal_exp;
+         `ifndef NO_SHUNT_DPI_SEND_SHORTREAL
+	 shortreal Shortreal_exp;
 	 shortreal Shortreal_act;
 	 string s_me = "shortreal_loopback_test";
 	 success =1;
@@ -490,14 +558,15 @@ module automatic Initiator;
 	 if(!shunt_dpi_send_shortreal(socket_id,Shortreal_exp)) success=0;
 	 if(!shunt_dpi_recv_shortreal(socket_id,Shortreal_act)) success=0;
 	 if (Shortreal_exp != Shortreal_act) success=0;
-	 
+	 `endif //  `ifndef NO_SHUNT_DPI_SEND_SHORTREAL
 	 return  success;
       end
    endfunction : shortreal_loopback_test
 
-     function int string_loopback_test(int socket_id);
+   function int string_loopback_test(int socket_id);
       begin
 	 int success;
+	 `ifndef NO_SHUNT_DPI_SEND_STRING
 	 int i;
          string String_exp;
 	 string String_act;
@@ -508,14 +577,15 @@ module automatic Initiator;
 	 if(!shunt_dpi_send_string(socket_id,String_exp.len(),String_exp))  success =0;
 	 if(!shunt_dpi_recv_string(socket_id,String_exp.len(),String_act))  success =0;
 	 if(String_act != String_exp) success =0;
-	 
+	 `endif
 	 return  success;
       end
      endfunction : string_loopback_test
    
    function int shortV_loopback_test(int socket_id);
-      begin
+      begin	 
 	 int success;
+	 `ifndef NO_SHUNT_DPI_SEND_SHORTV
 	 int i;
          shortint ShortV_exp[`V_SIZE];
 	 shortint ShortV_act[`V_SIZE];
@@ -527,6 +597,7 @@ module automatic Initiator;
 	 if(!shunt_dpi_send_shortV(socket_id,`V_SIZE,ShortV_exp)) success =0;
 	 if(!shunt_dpi_recv_shortV(socket_id,`V_SIZE,ShortV_act)) success =0;
 	 foreach(ShortV_exp[i]) if(ShortV_act[i] != ShortV_exp[i]) success =0;
+	 `endif
 	 return  success;
       end
    endfunction : shortV_loopback_test
@@ -534,6 +605,7 @@ module automatic Initiator;
    function int longV_loopback_test(int socket_id);
       begin
 	 int success;
+	 `ifndef NO_SHUNT_DPI_SEND_LONGV
 	 int i;
          longint LongV_exp[`V_SIZE];
 	 longint LongV_act[`V_SIZE];
@@ -547,7 +619,7 @@ module automatic Initiator;
 	 if(!shunt_dpi_recv_longV(socket_id,`V_SIZE,LongV_act)) success =0;
 	 if (success == 0 )  $display("\ninitiator: fail recv data");
 	 foreach(LongV_exp[i]) if(LongV_act[i] != LongV_exp[i]) success =0;
-	 
+	 `endif
 	 return  success;
       end
    endfunction : longV_loopback_test
@@ -555,6 +627,7 @@ module automatic Initiator;
    function int realV_loopback_test(int socket_id,int n_payloads=1);
       begin
 	 int success;
+	 `ifndef NO_SHUNT_DPI_SEND_REALV  
 	 int i;
          real RealV_exp[`V_SIZE];
 	 real RealV_act[`V_SIZE];
@@ -570,6 +643,7 @@ module automatic Initiator;
 	 if (success == 0 )  $display("\ninitiator: fail recv data");
 	 
 	 foreach (RealV_exp[i])if (RealV_exp[i] != RealV_act[i])success=0;
+	 `endif
          return  success;	 
       end
    endfunction : realV_loopback_test
@@ -577,6 +651,8 @@ module automatic Initiator;
    function int shortrealV_loopback_test(int socket_id,int n_payloads=1);
       begin
 	 int success;
+	 `ifndef NO_SHUNT_DPI_SEND_SHORTREALV 
+	
 	 int i;
          shortreal ShortrealV_exp[`V_SIZE];
 	 shortreal ShortrealV_act[`V_SIZE];
@@ -596,6 +672,7 @@ module automatic Initiator;
 	    if (zero_ > 0.0001) success=0;
 	 end
 	 if (success == 0 )  $display("\ninitiator: fail comp data");
+	 `endif //  `ifndef NO_SHUNT_DPI_SEND_SHORTREALV
          return  success;	 
       end
    endfunction : shortrealV_loopback_test
@@ -603,6 +680,7 @@ module automatic Initiator;
    function int integerV_loopback_test(int socket_id,int n_payloads=1);
       begin
 	 int success;
+	 `ifndef NO_SHUNT_DPI_SEND_INTEGERV  
 	 int i;
          integer IntegerV_exp[`V_SIZE];
 	 integer IntegerV_act[`V_SIZE];
@@ -618,6 +696,7 @@ module automatic Initiator;
 	 
 	 foreach (IntegerV_exp[i]) if(IntegerV_act[i] !== IntegerV_exp[i])  success = 0;
 	 if (success == 0 )  $display("\ninitiator: fail comp data");
+	 `endif
          return  success;	 
       end
    endfunction : integerV_loopback_test
@@ -626,7 +705,9 @@ module automatic Initiator;
    function void print_status(string Test_name,int Status_int);
       begin
 	 string Status;
+	 /* verilator lint_off WIDTH */
 	 if (!Status_int) Status = "FAIL";
+	 /* verilator lint_on WIDTH */
 	 else  Status = "PASS";
 	 $display("%s TEST %s",Test_name,Status);
       end
