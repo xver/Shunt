@@ -1,17 +1,26 @@
+include ./Sim.mk
+
+export SHUNT_VERILATOR_FLAGS
+
 build_c:
 	cd ${SHUNT_HOME}/utils/makedir &&  $(MAKE) clean && $(MAKE) all
-
 build_sv:
-	cd ../initiator/makedir &&  $(MAKE) clean && $(MAKE) all
-	cd ../target/makedir    &&  $(MAKE) clean && $(MAKE) all
+ifeq ($(SIM),verilator)	
+	cd ${SHUNT_HOME}/utils/makedir &&  $(MAKE) clean && $(MAKE) all
+	cd ../initiator/makedir &&  $(MAKE) clean && $(MAKE) compile_$(SIM)_sv
+	cd ../target/makedir    &&  $(MAKE) clean && $(MAKE) compile_$(SIM)_sv
+else
+	cd ../initiator/makedir &&  $(MAKE) clean && $(MAKE) $(SIM)
+	cd ../target/makedir    &&  $(MAKE) clean && $(MAKE) $(SIM)
+endif
 
 .PHONY: run_initiator
 run_initiator: 
-	cd ../initiator/makedir && ./run
+	cd ../initiator/makedir && ./$(SIM)_run
 
 .PHONY: run_target
 run_target:
-	cd ../target/makedir  && ./run	
+	cd ../target/makedir  && ./$(SIM)_run	
 
 .PHONY: clean
 clean:
