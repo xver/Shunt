@@ -6,7 +6,10 @@
                Licensed under the MIT License.
                See LICENSE file in the project root for full license information.
  Description : shunt dpi bridge
-               System Verilog target initiator handshake (TCP/IP SystemVerilog SHUNT) 
+               System Verilog target initiator handshake (TCP/IP SystemVerilog SHUNT)
+ History:
+ 1.0.0 - initial release
+ 1.0.1 - shunt-verilator integration 
   ============================================================================
 */
 package shunt_dpi_pkg; 
@@ -39,6 +42,7 @@ package shunt_dpi_pkg;
     
     (end)
     
+    Note: to disable function `define  NO_SHUNT_DPI_INITIATOR_INIT 
     */
 `ifndef NO_SHUNT_DPI_INITIATOR_INIT 
    import "DPI-C" function int shunt_dpi_initiator_init (input int portno);
@@ -68,6 +72,7 @@ package shunt_dpi_pkg;
     shunt_prim_init_tcptarget(port,hostname);
     (end)
     
+    Note: to disable function `define  NO_SHUNT_DPI_TARGET_INIT 
     */
 `ifndef NO_SHUNT_DPI_TARGET_INIT 
    import "DPI-C" function int shunt_dpi_target_init (input int portno,input string hostname);
@@ -87,6 +92,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_SHORT  
     */
 `ifndef NO_SHUNT_DPI_SEND_SHORT  
    import "DPI-C" function int shunt_dpi_send_short  (input int sockid,input  shortint Short);
@@ -103,6 +109,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_SHORT  
     */
 `ifndef NO_SHUNT_DPI_RECV_SHORT  
    import "DPI-C" function int shunt_dpi_recv_short  (input int sockid,output shortint Short);
@@ -119,6 +126,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_INT    
     */
 `ifndef NO_SHUNT_DPI_SEND_INT    
    import "DPI-C" function int shunt_dpi_send_int    (input int sockid,input  int Int);
@@ -135,6 +143,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_INT    
     */
 `ifndef NO_SHUNT_DPI_RECV_INT    
    import "DPI-C" function int shunt_dpi_recv_int    (input int sockid,output int Int);
@@ -151,6 +160,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_LONG  
     */
 `ifndef NO_SHUNT_DPI_SEND_LONG  
    import "DPI-C" function int shunt_dpi_send_long  (input int sockid,input  longint Long);
@@ -167,6 +177,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_LONG  
     */
 `ifndef NO_SHUNT_DPI_RECV_LONG  
    import "DPI-C" function int shunt_dpi_recv_long  (input int sockid,output longint Long);
@@ -183,6 +194,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_BYTE   
     */
 `ifndef NO_SHUNT_DPI_SEND_BYTE   
    import "DPI-C" function int shunt_dpi_send_byte   (input int sockid,input  byte Byte);
@@ -199,6 +211,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_BYTE   
     */
 `ifndef NO_SHUNT_DPI_RECV_BYTE   
    import "DPI-C" function int shunt_dpi_recv_byte   (input int sockid,output byte Byte);
@@ -215,6 +228,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_INTEGER 
     */
 `ifndef NO_SHUNT_DPI_SEND_INTEGER 
    import "DPI-C" function int shunt_dpi_send_integer (input int sockid,input integer Integer);
@@ -232,6 +246,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_INTEGER 
     */
    
 `ifndef NO_SHUNT_DPI_RECV_INTEGER 
@@ -250,6 +265,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_TIME 
     */
 `ifndef NO_SHUNT_DPI_SEND_TIME 
    import "DPI-C" function int shunt_dpi_send_time (input int sockid,input time Time);
@@ -266,6 +282,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_TIME 
     */
 `ifndef NO_SHUNT_DPI_RECV_TIME 
    import "DPI-C" function int shunt_dpi_recv_time (input int sockid,inout time Time);
@@ -282,6 +299,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_BIT 
     */
 `ifndef NO_SHUNT_DPI_SEND_BIT 
    import "DPI-C" function int shunt_dpi_send_bit (input int sockid,input bit Bit);
@@ -298,6 +316,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_BIT 
     */
 `ifndef NO_SHUNT_DPI_RECV_BIT 
    import "DPI-C" function int shunt_dpi_recv_bit (input int sockid,inout bit Bit);
@@ -316,7 +335,8 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
-    */
+ Note: to disable function `define  NO_SHUNT_DPI_SEND_REG      
+ */
 `ifndef NO_SHUNT_DPI_SEND_REG   
    import "DPI-C" function int shunt_dpi_send_reg   (input int sockid,input reg Reg);
 `endif
@@ -332,6 +352,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_REG   
     */
 `ifndef NO_SHUNT_DPI_RECV_REG   
    import "DPI-C" function int shunt_dpi_recv_reg   (input int sockid,inout reg Reg);
@@ -348,6 +369,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_LOGIC 
     */
 `ifndef NO_SHUNT_DPI_SEND_LOGIC 
    import "DPI-C" function int shunt_dpi_send_logic (input int sockid,input logic Logic);
@@ -365,6 +387,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_LOGIC 
     */
 `ifndef NO_SHUNT_DPI_RECV_LOGIC 
    import "DPI-C" function int shunt_dpi_recv_logic (input int sockid,inout logic Logic);
@@ -384,6 +407,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_REAL      
     */ 
 `ifndef NO_SHUNT_DPI_SEND_REAL      
    import "DPI-C" function int shunt_dpi_send_real      (input int sockid,input  real Real);
@@ -400,7 +424,8 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
-    */
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_REAL      
+     */
 `ifndef NO_SHUNT_DPI_RECV_REAL      
    import "DPI-C" function int shunt_dpi_recv_real      (input int sockid,output real Real);
 `endif
@@ -416,6 +441,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_SHORTREAL 
     */ 
 `ifndef NO_SHUNT_DPI_SEND_SHORTREAL 
    import "DPI-C" function int shunt_dpi_send_shortreal (input int sockid,input  shortreal Real);
@@ -432,6 +458,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_SHORTREAL 
     */
 `ifndef NO_SHUNT_DPI_RECV_SHORTREAL 
    import "DPI-C" function int shunt_dpi_recv_shortreal (input int sockid,output shortreal Real);
@@ -457,6 +484,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_BITN
     */
 `ifndef NO_SHUNT_DPI_SEND_BITN
    import "DPI-C" function int shunt_dpi_send_bitN(input int sockid,input int size,input bit[] bitN);
@@ -474,6 +502,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_BITN  
     */
   
 `ifndef NO_SHUNT_DPI_RECV_BITN  
@@ -490,6 +519,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_STRING 
     */ 
 `ifndef NO_SHUNT_DPI_SEND_STRING 
    import "DPI-C" function int shunt_dpi_send_string (input int sockid,input int size,input  string String);
@@ -506,6 +536,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_STRING 
     */
 `ifndef NO_SHUNT_DPI_RECV_STRING 
    import "DPI-C" function int shunt_dpi_recv_string (input int sockid,input int size,inout  string String);
@@ -525,6 +556,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_INTV   
     */
 `ifndef NO_SHUNT_DPI_SEND_INTV   
    import "DPI-C" function int shunt_dpi_send_intV   (input int sockid,input int size,input  int Int[]);
@@ -542,6 +574,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_INTV   
     */
 `ifndef NO_SHUNT_DPI_RECV_INTV   
    import "DPI-C" function int shunt_dpi_recv_intV   (input int sockid,input int size,output int Int[]);
@@ -560,6 +593,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_SHORTV 
     */
 `ifndef NO_SHUNT_DPI_SEND_SHORTV 
    import "DPI-C" function int shunt_dpi_send_shortV (input int sockid,input int size,input  shortint Int[]);
@@ -577,6 +611,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_SHORTV 
     */
 `ifndef NO_SHUNT_DPI_RECV_SHORTV 
    import "DPI-C" function int shunt_dpi_recv_shortV (input int sockid,input int size,output shortint Int[]);
@@ -594,6 +629,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_LONGV 
     */
 `ifndef NO_SHUNT_DPI_SEND_LONGV 
    import "DPI-C" function int shunt_dpi_send_longV (input int sockid,input int size,input  longint Int[]);
@@ -611,6 +647,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_LONGV 
     */
 `ifndef NO_SHUNT_DPI_RECV_LONGV 
    import "DPI-C" function int shunt_dpi_recv_longV (input int sockid,input int size,output longint Int[]);
@@ -629,7 +666,8 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
-    */  
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_REALV  
+     */  
 `ifndef NO_SHUNT_DPI_SEND_REALV  
    import "DPI-C" function int shunt_dpi_send_realV  (input int sockid,input int size,input  real Real[]);
 `endif
@@ -645,6 +683,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_REALV  
     */
 `ifndef NO_SHUNT_DPI_RECV_REALV  
    import "DPI-C" function int shunt_dpi_recv_realV  (input int sockid,input int size,output real Real[]);
@@ -662,7 +701,8 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
-    */  
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_SHORTREALV
+     */  
 `ifndef NO_SHUNT_DPI_SEND_SHORTREALV
    import "DPI-C" function int shunt_dpi_send_shortrealV  (input int sockid,input int size,input  shortreal Shortreal[]);
 `endif
@@ -678,6 +718,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_SHORTREALV
     */
 `ifndef NO_SHUNT_DPI_RECV_SHORTREALV
    import "DPI-C" function int shunt_dpi_recv_shortrealV  (input int sockid,input int size,output shortreal Shortreal[]);
@@ -696,7 +737,8 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
-    */  
+   Note: to disable function `define  NO_SHUNT_DPI_SEND_INTEGERV 
+   */  
 
 `ifndef NO_SHUNT_DPI_SEND_INTEGERV
    import "DPI-C"  function int shunt_dpi_send_integerV (input int sockid,input int size,input integer IntegerV[]);
@@ -714,6 +756,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_INTEGERV
     */
 `ifndef NO_SHUNT_DPI_RECV_INTEGERV
    import "DPI-C"  function int shunt_dpi_recv_integerV (input  int sockid,input int size,output integer IntegerV[]);
@@ -735,7 +778,9 @@ package shunt_dpi_pkg;
    // Variable: cs_data_header_t
    // See Also:
    // <Data exchange structures and utilities>      
-
+/*
+ Note: to disable structure `define   NO_CS_DATA_HEADER_T  
+ */
 `ifndef  NO_CS_DATA_HEADER_T  
    typedef struct{
       real 	 data_type;      real 	 data_type;
@@ -755,6 +800,7 @@ package shunt_dpi_pkg;
      
     See Also:
     <shunt_prim_hash>
+    Note: to disable function `define  NO_SHUNT_DPI_HASH
     */
 `ifndef NO_SHUNT_DPI_HASH
    import "DPI-C" function real shunt_dpi_hash(input string str);
@@ -775,6 +821,7 @@ package shunt_dpi_pkg;
     
     Returns:
     number of elements have been sent  : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_HEADER
     */ 
 `ifndef NO_SHUNT_DPI_SEND_HEADER
    import "DPI-C" function int shunt_dpi_send_header(input int sockid,input cs_header_t h);
@@ -794,6 +841,7 @@ package shunt_dpi_pkg;
     
     Returns:
     number of elements have been sent  : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_HEADER
     */ 
 `ifndef NO_SHUNT_DPI_RECV_HEADER
    import "DPI-C" function int shunt_dpi_recv_header(input int sockid,output cs_header_t h);
@@ -816,6 +864,7 @@ package shunt_dpi_pkg;
      
     See Also:
     <Data exchange structures and utilities>
+    Note: to disable function `define  NO_SHUNT_DPI_SEND_DATA_HEADER
     */
 `ifndef NO_SHUNT_DPI_SEND_DATA_HEADER
    import "DPI-C" function int shunt_dpi_send_data_header(input int sockid,input cs_header_t h,input real data_type,input int trnx_payload_sizes[]);
@@ -837,6 +886,7 @@ package shunt_dpi_pkg;
      
     See Also:
     <Data exchange structures and utilities>
+    Note: to disable function `define  NO_SHUNT_DPI_RECV_DATA_HEADER
     */ 
 `ifndef NO_SHUNT_DPI_RECV_DATA_HEADER
    import "DPI-C" function int shunt_dpi_recv_data_header(input int sockid,input cs_header_t h,inout real data_type,inout int  trnx_payload_sizes[]);
@@ -855,6 +905,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_SEND_SHORT
     */
 `ifndef NO_SHUNT_DPI_HS_SEND_SHORT
    import "DPI-C" function int shunt_dpi_hs_send_short     (input int sockid,input cs_header_t h_trnx,input shortint Array[]);
@@ -872,6 +923,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_RECV_SHORT
     */ 
 `ifndef NO_SHUNT_DPI_HS_RECV_SHORT
    import "DPI-C" function int shunt_dpi_hs_recv_short     (input int sockid,input cs_header_t h_trnx,inout shortint Array[]); 
@@ -889,6 +941,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_SEND_INT
     */
 `ifndef NO_SHUNT_DPI_HS_SEND_INT
    import "DPI-C" function int shunt_dpi_hs_send_int       (input int sockid,input cs_header_t h_trnx,input int  Array[]);
@@ -906,6 +959,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_RECV_INT
     */
 `ifndef NO_SHUNT_DPI_HS_RECV_INT
    import "DPI-C" function int shunt_dpi_hs_recv_int       (input int sockid,input cs_header_t h_trnx,inout int  Array[]);
@@ -923,7 +977,8 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
-    */
+    Note: to disable function `define  NO_SHUNT_DPI_HS_SEND_LONG
+     */
 `ifndef NO_SHUNT_DPI_HS_SEND_LONG
    import "DPI-C" function int shunt_dpi_hs_send_long      (input int sockid,input cs_header_t h_trnx,input longint Array[]);
 `endif
@@ -940,6 +995,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_RECV_LONG
     */
 `ifndef NO_SHUNT_DPI_HS_RECV_LONG
    import "DPI-C" function int shunt_dpi_hs_recv_long      (input int sockid,input cs_header_t h_trnx,inout longint Array[]);
@@ -956,6 +1012,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_SEND_BYTE
     */
 `ifndef NO_SHUNT_DPI_HS_SEND_BYTE
    import "DPI-C" function int shunt_dpi_hs_send_byte      (input int sockid,input cs_header_t h_trnx,input byte Array[]);
@@ -972,6 +1029,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_RECV_BYTE
     */
 `ifndef NO_SHUNT_DPI_HS_RECV_BYTE
    import "DPI-C" function int shunt_dpi_hs_recv_byte      (input int sockid,input cs_header_t h_trnx,inout byte Array[]);
@@ -991,6 +1049,7 @@ package shunt_dpi_pkg;
     
     See Also: 
     <shunt_dpi_send_string>
+    Note: to disable function `define  NO_SHUNT_DPI_HS_SEND_STRING    
     */ 
 `ifndef NO_SHUNT_DPI_HS_SEND_STRING    
    import "DPI-C" function int shunt_dpi_hs_send_string    (input int sockid,input cs_header_t h_trnx,input string String);
@@ -1010,6 +1069,7 @@ package shunt_dpi_pkg;
     
     See Also:
     <shunt_dpi_recv_string>
+    Note: to disable function `define  NO_SHUNT_DPI_HS_RECV_STRING    
     */
 `ifndef NO_SHUNT_DPI_HS_RECV_STRING    
    import "DPI-C" function int shunt_dpi_hs_recv_string    (input int sockid,input cs_header_t h_trnx,inout string String);
@@ -1027,6 +1087,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_SEND_INTEGER
     */  
 `ifndef NO_SHUNT_DPI_HS_SEND_INTEGER
    import "DPI-C" function int shunt_dpi_hs_send_integer   (input int sockid,input cs_header_t h_trnx,input integer Array[]);
@@ -1044,6 +1105,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_RECV_INTEGER
     */
 `ifndef NO_SHUNT_DPI_HS_RECV_INTEGER
    import "DPI-C" function int shunt_dpi_hs_recv_integer   (input int sockid,input cs_header_t h_trnx,inout integer Array[]);
@@ -1061,6 +1123,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_SEND_REAL
     */  
 `ifndef NO_SHUNT_DPI_HS_SEND_REAL
    import "DPI-C" function int shunt_dpi_hs_send_real      (input int sockid,input cs_header_t h_trnx,input real Array[]);
@@ -1077,6 +1140,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_RECV_REAL
     */
 `ifndef NO_SHUNT_DPI_HS_RECV_REAL
    import "DPI-C" function int shunt_dpi_hs_recv_real      (input int sockid,input cs_header_t h_trnx,inout real Array[]);
@@ -1094,6 +1158,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_SEND_SHORTREAL
     */  
 `ifndef NO_SHUNT_DPI_HS_SEND_SHORTREAL
    import "DPI-C" function int shunt_dpi_hs_send_shortreal (input int sockid,input cs_header_t h_trnx,input shortreal Array[]);
@@ -1113,6 +1178,7 @@ package shunt_dpi_pkg;
     Returns: 
     
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_RECV_SHORTREAL
     */
 `ifndef NO_SHUNT_DPI_HS_RECV_SHORTREAL
    import "DPI-C" function int shunt_dpi_hs_recv_shortreal (input int sockid,input cs_header_t h_trnx,inout shortreal Array[]);
@@ -1133,6 +1199,7 @@ package shunt_dpi_pkg;
     
     number of bytes have been sent : success > 0
    
+    Note: to disable function `define  NO_SHUNT_DPI_HS_SEND_BITN
     */
 `ifndef NO_SHUNT_DPI_HS_SEND_BITN
    import "DPI-C" function int shunt_dpi_hs_send_bitN (input int sockid,input cs_header_t h_trnx,input bit[] bitN);
@@ -1154,6 +1221,7 @@ package shunt_dpi_pkg;
     number of bytes have been recv : success > 0
     
     
+    Note: to disable function `define  NO_SHUNT_DPI_HS_RECV_BITN
     */
 `ifndef NO_SHUNT_DPI_HS_RECV_BITN
    import "DPI-C" function int shunt_dpi_hs_recv_bitN    (input int sockid,input cs_header_t h_trnx,inout bit[] bitN);
@@ -1175,6 +1243,7 @@ package shunt_dpi_pkg;
     Returns: 
     
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_SEND_REGN
     */
 `ifndef NO_SHUNT_DPI_HS_SEND_REGN
    import "DPI-C" function int shunt_dpi_hs_send_regN   (input int sockid,input cs_header_t h_trnx,input reg[] Reg);
@@ -1194,6 +1263,7 @@ package shunt_dpi_pkg;
     Returns: 
     
     number of bytes have been sent : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_SEND_LOGICN
     */
 `ifndef NO_SHUNT_DPI_HS_SEND_LOGICN
    import "DPI-C" function int shunt_dpi_hs_send_logicN (input int sockid,input cs_header_t h_trnx,input logic[] Reg);
@@ -1213,7 +1283,8 @@ package shunt_dpi_pkg;
     Returns: 
     
      number of bytes have been recv : success > 0
-    */
+    Note: to disable function `define  NO_SHUNT_DPI_HS_RECV_REGN
+     */
 `ifndef NO_SHUNT_DPI_HS_RECV_REGN
    import "DPI-C" function int shunt_dpi_hs_recv_regN   (input int sockid,input cs_header_t h_trnx,inout reg[] Reg);
 `endif
@@ -1232,6 +1303,7 @@ package shunt_dpi_pkg;
     Returns: 
     
     number of bytes have been recv : success > 0
+    Note: to disable function `define  NO_SHUNT_DPI_HS_RECV_LOGICN
     */
 `ifndef NO_SHUNT_DPI_HS_RECV_LOGICN
    import "DPI-C" function int shunt_dpi_hs_recv_logicN (input int sockid,input cs_header_t h_trnx,inout logic[] Reg);
