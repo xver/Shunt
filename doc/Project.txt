@@ -41,6 +41,18 @@ Copyright: Copyright © 2016-2017 IC Verimeter
 # Source Code
 # ------------------------------------------------------------------------
 
+Source Folder: ../utils/c/include
+   Name: 1. C utils
+
+Source Folder 2: ../utils/dpi/include
+   Name: 2. DPI C utils
+
+Source Folder 3: ../utils/dpi/src
+   Name: 3. DPI SV utils
+
+
+
+
 
 # This is where you specify what files and folders Natural Docs should be
 # scanning.  If you use any of these options on the command line, this entire
@@ -57,15 +69,6 @@ Copyright: Copyright © 2016-2017 IC Verimeter
 #    Specifies a folder which will be searched for source files.  If you have
 #    more than one, add the Name property to set how it will show up in the
 #    menu.
-Source Folder: ../utils/c/include
-   Name: 1. C utils
-
-Source Folder: ../utils/dpi/include
-   Name: 2. DPI C utils
-
-Source Folder: ../utils/dpi/src
-   Name: 3. DPI SV utils
-
 
 
 # Source Filtering

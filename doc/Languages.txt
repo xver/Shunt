@@ -18,6 +18,21 @@
 # Languages
 # ------------------------------------------------------------------------
 
+Language: SystemVerilog
+
+   Extensions: sv svh
+
+   Line Comment: //
+   Block Comment: /* */
+   Member Operator: ::
+   Line Extender: \
+   Enum Values: Global
+
+   Class Prototype Ender: ;
+   Function Prototype Ender: ;
+   Variable Prototype Ender: ;
+
+
 # These settings define the languages Natural Docs knows how to parse.  You
 # can define your own here or override the settings of the existing ones.
 # Note that all lists are space separated so that commas can be used as
@@ -93,16 +108,3 @@
 #    When defined, Natural Docs will attempt to get a prototype from the code
 #    immediately following the comment type.  It stops when it reaches one of
 #    these symbols.  Use \n for line breaks.
-Language: SystemVerilog
-
-   Extensions: sv svh
-
-   Line Comment: //
-   Block Comment: /* */
-   Member Operator: ::
-   Line Extender: \
-   Enum Values: Global
-
-   Class Prototype Ender: ;
-   Function Prototype Ender: ;
-   Variable Prototype Ender: ;
