@@ -20,7 +20,7 @@ Release History:
 
 
 1.0.1 (Current Version) - shunt-verilator integration 
-        Version 1.0.1 : Verilator 3.916 2017-11-25 rev verilator_3_916
+                          Verilator 3.916 2017-11-25 rev verilator_3_916
         
 1.0.0 - initial release
 
