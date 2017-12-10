@@ -1,0 +1,9 @@
+#Verilator
+**/obj_dir/*
+#Compiled Object
+*.so
+*.d
+*.o
+#emacs temp files 
+*.*~
+*~
