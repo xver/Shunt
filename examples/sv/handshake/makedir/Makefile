@@ -1,8 +1,8 @@
-
+-include ../../../../utils/makefile.init
 build_c:
 	cd ${SHUNT_HOME}/utils/makedir &&  $(MAKE) clean && $(MAKE) all
 
-build_sv:
+build_sv: build_c
 	cd ../initiator/makedir &&  $(MAKE) clean && $(MAKE) all
 	cd ../target/makedir    &&  $(MAKE) clean && $(MAKE) all
 
