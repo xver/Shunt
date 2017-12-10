@@ -753,7 +753,7 @@ module automatic Initiator;
    function void print_status(string Test_name,int Status_int);
       string  Status;
       /* verilator lint_off WIDTH */
-      if (Status_int !=0) Status = "FAIL";
+      if (!Status_int) Status = "FAIL";
       /* verilator lint_on WIDTH */
       else  Status = "PASS";
       $display("%s TEST %s",Test_name,Status);
