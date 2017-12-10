@@ -1,0 +1,17 @@
+.PHONY:	check_shunt_home check_dpi_home
+
+all: check_shunt_home check_dpi_home
+
+check_shunt_home: 
+	$(call check_defined,SHUNT_HOME)
+
+check_dpi_home: 
+	$(call check_defined,SHUNT_SVDPI)
+
+check_defined = \
+    $(strip $(foreach 1,$1, \
+        $(call __check_defined,$1,$(strip $(value 2)))))
+__check_defined = \
+    $(if $(value $1),, \
+      $(error Shunt Installation Error: $1 environment variable is not set (see Shunt Introduction) $(if $2, ($2))))
+
