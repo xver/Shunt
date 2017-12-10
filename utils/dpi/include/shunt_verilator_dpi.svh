@@ -80,25 +80,8 @@
  `define NO_SHUNT_DPI_HS_RECV_SHORTREAL
  `define NO_SHUNT_DPI_HS_SEND_SHORTREAL
 
-// Unsupported: DPI argument of type BASICDTYPE 'time
- `define NO_SHUNT_DPI_RECV_TIME
- `define NO_SHUNT_DPI_SEND_TIME
-
-
-// ERROR in shunt_prim_send_int : numbytes < 0 : Bad address
- `define NO_SHUNT_DPI_RECV_INTEGER
- `define NO_SHUNT_DPI_SEND_INTEGER
-
-// internal compiler error:
- `define NO_SHUNT_DPI_RECV_BIT
- `define NO_SHUNT_DPI_SEND_BIT
-
- `define NO_SHUNT_DPI_RECV_REG
- `define NO_SHUNT_DPI_SEND_REG
-
- `define NO_SHUNT_DPI_RECV_LOGIC
- `define NO_SHUNT_DPI_SEND_LOGIC
-
 
 `endif //  `ifndef SHUNT_VERILATOR_DPI_H
+
+
 
