@@ -507,10 +507,10 @@ module automatic Initiator;
       h_trnx_exp.n_payloads = N;
       //send
       if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-      if(!shunt_dpi_hs_send_bitN(socket_id,h_trnx_exp,BitN_exp))  success =0;
+      if(shunt_dpi_hs_send_bitN(socket_id,h_trnx_exp,BitN_exp) != 0)  success =0;
       //recv
       if (shunt_dpi_recv_header(socket_id,h_trnx_act)<= 0) success = 0;
-      if(!shunt_dpi_hs_recv_bitN(socket_id,h_trnx_act,BitN_act))  success =0;
+      if(shunt_dpi_hs_recv_bitN(socket_id,h_trnx_act,BitN_act) != 0)  success =0;
       //
       if(BitN_act !== BitN_exp) success =0;
  `endif //  `ifndef NO_SHUNT_DPI_HS_SEND_BITN
@@ -541,10 +541,10 @@ module automatic Initiator;
       h_trnx_exp.n_payloads = N;
       //send
       if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-      if(!shunt_dpi_hs_send_regN(socket_id,h_trnx_exp,RegNV_exp))  success =0;
+      if(shunt_dpi_hs_send_regN(socket_id,h_trnx_exp,RegNV_exp) != 0)  success =0;
       //recv
       if (shunt_dpi_recv_header(socket_id,h_trnx_act)<= 0) success = 0;
-      if(!shunt_dpi_hs_recv_regN(socket_id,h_trnx_act,RegNV_act))  success =0;
+      if(shunt_dpi_hs_recv_regN(socket_id,h_trnx_act,RegNV_act) != 0)  success =0;
       //
       if(RegNV_act !== RegNV_exp) success =0;
  `endif //  `ifndef NO_SHUNT_DPI_HS_SEND_REGN
@@ -574,10 +574,10 @@ module automatic Initiator;
       h_trnx_exp.n_payloads = N;
       //send
       if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-      if(!shunt_dpi_hs_send_logicN(socket_id,h_trnx_exp,LogicN_exp))  success =0;
+      if(shunt_dpi_hs_send_logicN(socket_id,h_trnx_exp,LogicN_exp) != 0)  success =0;
       //recv
       if (shunt_dpi_recv_header(socket_id,h_trnx_act)<= 0) success = 0;
-      if(!shunt_dpi_hs_recv_logicN(socket_id,h_trnx_act,LogicN_act))  success =0;
+      if(shunt_dpi_hs_recv_logicN(socket_id,h_trnx_act,LogicN_act) != 0)  success =0;
       //
       if(LogicN_act !== LogicN_exp) success =0;
  `endif //  `ifndef NO_SHUNT_DPI_HS_RECV_LOGICN
@@ -596,8 +596,8 @@ module automatic Initiator;
       success =1;
       Real_exp = $random()/7.5;
       /* verilator lint_off WIDTH */
-      if(!shunt_dpi_send_real(socket_id,Real_exp)) success=0;
-      if(!shunt_dpi_recv_real(socket_id,Real_act)) success=0;
+      if(shunt_dpi_send_real(socket_id,Real_exp) != 0) success=0;
+      if(shunt_dpi_recv_real(socket_id,Real_act) != 0) success=0;
       /* verilator lint_on WIDTH */
       if (Real_exp != Real_act)success=0;
  `endif //  `ifndef NO_SHUNT_DPI_RECV_REAL
@@ -614,8 +614,8 @@ module automatic Initiator;
       string 	    s_me = "shortreal_loopback_test";
       success =1;
       Shortreal_exp = 123;
-      if(!shunt_dpi_send_shortreal(socket_id,Shortreal_exp)) success=0;
-      if(!shunt_dpi_recv_shortreal(socket_id,Shortreal_act)) success=0;
+      if(shunt_dpi_send_shortreal(socket_id,Shortreal_exp) != 0) success=0;
+      if(shunt_dpi_recv_shortreal(socket_id,Shortreal_act) != 0) success=0;
       if (Shortreal_exp != Shortreal_act) success=0;
  `endif //  `ifndef NO_SHUNT_DPI_RECV_SHORTREAL
 `endif //  `ifndef NO_SHUNT_DPI_SEND_SHORTREAL
@@ -633,8 +633,8 @@ module automatic Initiator;
       String_exp = `STRING_MESSAGE;
       String_act = `STRING_MESSAGE1;
       success =1;
-      if(!shunt_dpi_send_string(socket_id,String_exp.len(),String_exp))  success =0;
-      if(!shunt_dpi_recv_string(socket_id,String_exp.len(),String_act))  success =0;
+      if(shunt_dpi_send_string(socket_id,String_exp.len(),String_exp) !=0)  success =0;
+      if(shunt_dpi_recv_string(socket_id,String_exp.len(),String_act) !=0)  success =0;
       if(String_act != String_exp) success =0;
  `endif //  `ifndef NO_SHUNT_DPI_RECV_STRING
 `endif //  `ifndef NO_SHUNT_DPI_SEND_STRING
@@ -652,8 +652,8 @@ module automatic Initiator;
       success =1;
       foreach(ShortV_exp[i]) ShortV_exp[i] = 100+(i+1);
       foreach(ShortV_act[i]) ShortV_act[i] = 300+(i+1);
-      if(!shunt_dpi_send_shortV(socket_id,`V_SIZE,ShortV_exp)) success =0;
-      if(!shunt_dpi_recv_shortV(socket_id,`V_SIZE,ShortV_act)) success =0;
+      if(shunt_dpi_send_shortV(socket_id,`V_SIZE,ShortV_exp) != 0) success =0;
+      if(shunt_dpi_recv_shortV(socket_id,`V_SIZE,ShortV_act) != 0) success =0;
       foreach(ShortV_exp[i]) if(ShortV_act[i] != ShortV_exp[i]) success =0;
  `endif //  `ifndef NO_SHUNT_DPI_RECV_SHORTV
 `endif //  `ifndef NO_SHUNT_DPI_SEND_SHORTV
@@ -671,9 +671,9 @@ module automatic Initiator;
       success =1;
       foreach(LongV_exp[i]) LongV_exp[i] = 100+(i+1);
       foreach(LongV_act[i]) LongV_act[i] = 300+(i+1);
-      if(!shunt_dpi_send_longV(socket_id,`V_SIZE,LongV_exp)) success =0;
+      if(shunt_dpi_send_longV(socket_id,`V_SIZE,LongV_exp) != 0) success =0;
       if (success == 0 )  $display("\ninitiator: fail send data");
-      if(!shunt_dpi_recv_longV(socket_id,`V_SIZE,LongV_act)) success =0;
+      if(shunt_dpi_recv_longV(socket_id,`V_SIZE,LongV_act) != 0) success =0;
       if (success == 0 )  $display("\ninitiator: fail recv data");
       foreach(LongV_exp[i]) if(LongV_act[i] != LongV_exp[i]) success =0;
  `endif //  `ifndef NO_SHUNT_DPI_RECV_LONGV
@@ -753,7 +753,7 @@ module automatic Initiator;
    function void print_status(string Test_name,int Status_int);
       string  Status;
       /* verilator lint_off WIDTH */
-      if (!Status_int) Status = "FAIL";
+      if (Status_int !=0) Status = "FAIL";
       /* verilator lint_on WIDTH */
       else  Status = "PASS";
       $display("%s TEST %s",Test_name,Status);
