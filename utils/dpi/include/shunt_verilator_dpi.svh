@@ -80,11 +80,6 @@
  `define NO_SHUNT_DPI_HS_RECV_SHORTREAL
  `define NO_SHUNT_DPI_HS_SEND_SHORTREAL
 
-
-// Unsupported: Member call on non-enum object 'VARREF 'String_exp'' which is a 'BASICDTYPE 'string''
- `define NO_SHUNT_DPI_RECV_STRING
- `define NO_SHUNT_DPI_SEND_STRING
-
 // Unsupported: DPI argument of type BASICDTYPE 'time
  `define NO_SHUNT_DPI_RECV_TIME
  `define NO_SHUNT_DPI_SEND_TIME
