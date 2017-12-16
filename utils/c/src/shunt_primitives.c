@@ -121,9 +121,9 @@ int shunt_prim_init_initiator(const unsigned int portno) {
     shunt_prim_error("shunt_prim_init_initiator on inet_ntoa\n");
     return -1;
   }
-  else
+  else {
 	  printf("initiator established connection with %s (%s)\n",
-			  hostp->h_name, hostaddrp);
+		 hostp->h_name, hostaddrp); }
   	  return childfd;
 }
 
