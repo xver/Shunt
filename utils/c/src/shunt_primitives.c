@@ -96,7 +96,7 @@ int shunt_prim_init_initiator(const unsigned int portno) {
     return -1 ;
   }
   /*
-   * main loop: wait for a connection request
+   * wait for a connection request
     */
   targetlen = sizeof(targetaddr);
   childfd = accept(parentfd, (struct sockaddr *) &targetaddr, (socklen_t *)&targetlen);
