@@ -12,8 +12,37 @@ The **Shunt** is Open Source Client/Server TCP/IP socket based communication lib
 
 The **Shunt** is available under a "MIT" License. It can be used without restriction in an open-source or commercial application.
 
-*  Shunt Introduction -- https://rawgit.com/xver/Shunt/master/doc/Shunt_Introduction.htm
+*  Shunt Introduction -- TCP/IP Socket Based Communication for SystemVerilog Simulation (2018 SNUG Boston) --https://www.researchgate.net/publication/325206338_TCPIP_Socket_Based_Communication_for_SystemVerilog_Simulation
 *  API specification  -- https://rawgit.com/xver/Shunt/master/doc/index.html
+
+# Getting Started
+
+# Library Installation
+
+Download Shunt from https://github.com/xver/Shunt
+
+Setup following variables:
+ - **“SHUNT_HOME”**  to the SHUNT home directory.
+ - **“SHUNT_SVDPI”** to the location of svdpi.h file
+
+# Library compilation
+ - Go to “$SHUNT_HOME/utils/makedir/utils/makedir“
+ - Run “make clean;make all”
+Compile result will be placed under ***${SHUNT_HOME}/bin as a “libutils.so”***
+
+# Compile and run C examples
+Go to example makedir root directory. 
+*(Example: $SHUNT_HOME/examples/c/primitives/makedir)*
+To compile the library and launch test run “make all”
+
+# Compile and run SV examples
+The Shunt includes a complete Makefile structure for the C portion of the library, but ONLY Makefile target place holders for SV domain.
+
+ - Edit “Makefile” initiator/target “compile_sv” under initiator/target
+   local makedir(Example: $SHUNT_HOME/examples/sv/sv2c/initiator/makedir)
+ - Edit “run” file placeholder. Setup run command for appropriate
+   source. Go to example makedir root directory run “make all” and ./run
+(Example:  $SHUNT_HOME/examples/sv/sv2cmakedir)
 
 Release History:
 -----------------------
