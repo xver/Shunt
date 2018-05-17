@@ -12,7 +12,8 @@ The **Shunt** is Open Source Client/Server TCP/IP socket based communication lib
 
 The **Shunt** is available under a "MIT" License. It can be used without restriction in an open-source or commercial application.
 
-*  Shunt Introduction -- TCP/IP Socket Based Communication for SystemVerilog Simulation (2018 SNUG Boston) --https://www.researchgate.net/publication/325206338_TCPIP_Socket_Based_Communication_for_SystemVerilog_Simulation
+*  Shunt Introduction 
+-- TCP/IP Socket Based Communication for SystemVerilog Simulation (2018 SNUG Boston) --https://www.researchgate.net/publication/325206338_TCPIP_Socket_Based_Communication_for_SystemVerilog_Simulation
 *  API specification  -- https://rawgit.com/xver/Shunt/master/doc/index.html
 
 # Getting Started
