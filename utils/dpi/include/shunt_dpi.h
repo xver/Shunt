@@ -734,7 +734,7 @@ int shunt_dpi_recv_string   (int sockid,int size,char** string);
   See Also:
   - <shunt_prim_hash>
 */
-double shunt_dpi_hash(const char *str);
+long shunt_dpi_hash(const char *str);
 
 /*
   Function: shunt_dpi_send_header
@@ -789,7 +789,7 @@ int shunt_dpi_recv_header   (int sockid,cs_header* h);
   - <shunt_cs_send_header>
   - <shunt_dpi_recv_data_header>
 */
-int shunt_dpi_send_data_header (int sockid,cs_header* h,double data_type,svOpenArrayHandle trnx_payload_sizes);
+int shunt_dpi_send_data_header (int sockid,cs_header* h,long data_type,svOpenArrayHandle trnx_payload_sizes);
 
 /*
   Function: shunt_dpi_recv_data_header
@@ -806,7 +806,7 @@ int shunt_dpi_send_data_header (int sockid,cs_header* h,double data_type,svOpenA
   - <shunt_cs_recv_data_header>
   - <shunt_dpi_send_data_header>
 */
-int shunt_dpi_recv_data_header   (int sockid,cs_header* h,double* data_type,svOpenArrayHandle**  trnx_payload_sizes);
+int shunt_dpi_recv_data_header   (int sockid,cs_header* h,long* data_type,svOpenArrayHandle**  trnx_payload_sizes);
 
 /*
   Function: shunt_dpi_hs_send
