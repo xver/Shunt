@@ -1,6 +1,5 @@
 #include "Vcs_common.h"
 #include "verilated.h"
-#include "shunt_dpi.h"
 int main(int argc, char **argv, char **env) {
   Verilated::commandArgs(argc, argv);
   Vcs_common* top = new Vcs_common;
