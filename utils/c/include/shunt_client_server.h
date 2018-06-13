@@ -117,9 +117,9 @@ Variable: SHUNT_INSTR_ENUM_NAMES
   
 */
 typedef struct cs_header_t {
-  double   trnx_type;
-  double   trnx_id;
-  double   data_type;
+  long   trnx_type;
+  long   trnx_id;
+  long   data_type;
   int      n_payloads;
 } cs_header;
 
@@ -129,7 +129,7 @@ typedef struct cs_header_t {
   - trnx_payload_sizes   array of payload sizes, number of array elements are equal to n_payloads
 */
 typedef struct cs_data_header_t {
-  double   data_type;          // see SHUNT_INSTR_ENUM
+  long   data_type;          // see SHUNT_INSTR_ENUM
   int     *trnx_payload_sizes; // array of payload sizes, number of array elements are equal to n_payloads
 } cs_data_header;
 
@@ -150,7 +150,7 @@ typedef struct cs_data_header_t {
    <shunt_cs_data_type_hash>
 
 */
-double shunt_cs_data_type_hash(int data_type,char* data_type_names[],int last_enum);
+long shunt_cs_data_type_hash(long data_type,char* data_type_names[],int last_enum);
 
 /*
   Function: shunt_cs_data_type
@@ -170,7 +170,7 @@ double shunt_cs_data_type_hash(int data_type,char* data_type_names[],int last_en
   See Also:
   <shunt_cs_data_type_hash>
 */
-int shunt_cs_data_type(double hash,char* data_type_names[],int last_enum);
+int shunt_cs_data_type(long hash,char* data_type_names[],int last_enum);
 
 /*
   Function: shunt_cs_send_header
