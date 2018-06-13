@@ -18,8 +18,8 @@
 
 //Data exchange utilities (header)
 
-double shunt_cs_data_type_hash(int data_type,char* data_type_names[],int last_enum) {
-  double result_ = -1;
+long shunt_cs_data_type_hash(long data_type,char* data_type_names[],int last_enum) {
+  long result_ = -1;
   
   if ( data_type < last_enum+1 && data_type >= 0 ) {
     result_ = shunt_prim_hash(data_type_names[data_type]);
@@ -27,12 +27,12 @@ double shunt_cs_data_type_hash(int data_type,char* data_type_names[],int last_en
   return result_;
 };
 
-int shunt_cs_data_type(double hash,char* trnx_type_names[],int last_enum) {
+int shunt_cs_data_type(long hash,char* trnx_type_names[],int last_enum) {
   int result_ = -1;
   int i =0;
   
   while (i < last_enum+1 && result_ < 0) {
-    double hash_ = shunt_prim_hash(trnx_type_names[i]);
+    long hash_ = shunt_prim_hash(trnx_type_names[i]);
     if (hash == hash_) result_ = i;
     i++;
   }
@@ -41,14 +41,14 @@ int shunt_cs_data_type(double hash,char* trnx_type_names[],int last_enum) {
 
 void shunt_cs_print_header (cs_header* h,char* data_type_names[],int last_enum,char* msg) {
   
-  printf("\n%s h_trnx->trnx_type\t(%f)",msg,h->trnx_type);
-  printf("\n%s h_trnx->trnx_id\t(%f)",msg,h->trnx_id);
+  printf("\n%s h_trnx->trnx_type\t(%lu)",msg,h->trnx_type);
+  printf("\n%s h_trnx->trnx_id\t(%lu)",msg,h->trnx_id);
   //
   int data_type_ = shunt_cs_data_type(h->data_type,data_type_names,last_enum);
   if (data_type_>=0)
-    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%f",msg,data_type_names[data_type_],data_type_,h->data_type);
+    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lu",msg,data_type_names[data_type_],data_type_,h->data_type);
   else
-    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%f",msg,"N/A",data_type_,h->trnx_type);
+    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lu",msg,"N/A",data_type_,h->trnx_type);
   printf("\n%s h_trnx->n_payloads\t(%0d)",msg,h->n_payloads);
   puts("\n");
   //
@@ -58,9 +58,9 @@ void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_
   
   int data_type_ = shunt_cs_data_type(h_data->data_type,data_type_names,last_enum);
   if (data_type_>=0)
-    printf("\n%s h_data->data_type\t(%s )(%d)\thash=%f",msg,data_type_names[data_type_],data_type_,h_data->data_type);
+    printf("\n%s h_data->data_type\t(%s )(%d)\thash=%lu",msg,data_type_names[data_type_],data_type_,h_data->data_type);
   else
-    printf("\n%s h_data->data_type\t(%s )(%d)\thash=%f",msg,"N/A",data_type_,h_data->data_type);
+    printf("\n%s h_data->data_type\t(%s )(%d)\thash=%lu",msg,"N/A",data_type_,h_data->data_type);
   
   for(int i=0;i<h->n_payloads;i++) {
     printf("\n%s h_data->trnx_payload_sizes[%0d]=%d",msg,i,h_data->trnx_payload_sizes[i]);
@@ -71,16 +71,16 @@ void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_
 int shunt_cs_send_header    (int sockid,cs_header* h) {
   int Result_=1;
   
-  if (shunt_prim_send_double(sockid,&h->trnx_type)==0) Result_=0;
-  if (shunt_prim_send_double(sockid,&h->trnx_id)==0)   Result_=0;
-  if (shunt_prim_send_double(sockid,&h->data_type)==0) Result_=0;
+  if (shunt_prim_send_long(sockid,&h->trnx_type)==0) Result_=0;
+  if (shunt_prim_send_long(sockid,&h->trnx_id)==0)   Result_=0;
+  if (shunt_prim_send_long(sockid,&h->data_type)==0) Result_=0;
   if (shunt_prim_send_int(sockid,&h->n_payloads)==0) Result_=0;
   return Result_;
 }
 
 int shunt_cs_send_data_header(int sockid,int n_payloads,cs_data_header* h) {
   int Result_=1;
-  if (shunt_prim_send_double(sockid,&h->data_type)==0) Result_=0;
+  if (shunt_prim_send_long(sockid,&h->data_type)==0) Result_=0;
   for(int i=0;i<n_payloads;i++) {
     if (shunt_prim_send_int(sockid,&h->trnx_payload_sizes[i])==0) Result_=0;
   }
@@ -90,9 +90,9 @@ int shunt_cs_send_data_header(int sockid,int n_payloads,cs_data_header* h) {
 int shunt_cs_recv_header   (int sockid,cs_header* h) {
   int Result_=1;
   
-  if (shunt_prim_recv_double(sockid,&h->trnx_type)==0) Result_=0;
-  if (shunt_prim_recv_double(sockid,&h->trnx_id)==0)   Result_=0;
-  if (shunt_prim_recv_double(sockid,&h->data_type)==0) Result_=0;
+  if (shunt_prim_recv_long(sockid,&h->trnx_type)==0) Result_=0;
+  if (shunt_prim_recv_long(sockid,&h->trnx_id)==0)   Result_=0;
+  if (shunt_prim_recv_long(sockid,&h->data_type)==0) Result_=0;
   if (shunt_prim_recv_int(sockid,&h->n_payloads)==0) Result_=0;
   
   return Result_;
@@ -102,7 +102,7 @@ int shunt_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h) {
   
   int Result_=1;
   
-  shunt_prim_recv_double(sockid,&h->data_type);
+  shunt_prim_recv_long(sockid,&h->data_type);
   
   for(int i=0;i<n_payloads;i++) {
     if (shunt_prim_recv_int(sockid,&h->trnx_payload_sizes[i])==0) Result_=0;
