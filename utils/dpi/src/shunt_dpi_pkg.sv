@@ -806,9 +806,9 @@ package shunt_dpi_pkg;
    
  /* verilator lint_off UNPACKED */  
    typedef struct{		
-      real 	 trnx_type;
-      real 	 trnx_id;
-      real 	 data_type;
+      longint 	 trnx_type;
+      longint 	 trnx_id;
+      longint 	 data_type;
       int 	 n_payloads;
    } cs_header_t;
 /* verilator lint_on UNPACKED */   
@@ -822,7 +822,7 @@ package shunt_dpi_pkg;
  */
 `ifndef  NO_CS_DATA_HEADER_T  
    typedef struct{
-      real 	 data_type;      real 	 data_type;
+      longint 	 data_type;      real 	 data_type;
       int 	 trnx_payload_sizes[];
    }cs_data_header_t;
 `endif
@@ -843,7 +843,7 @@ package shunt_dpi_pkg;
     Disable function `define:  NO_SHUNT_DPI_HASH
     */
 `ifndef NO_SHUNT_DPI_HASH
-   import "DPI-C" function real shunt_dpi_hash(input string str);
+   import "DPI-C" function longint shunt_dpi_hash(input string str);
 `endif
    
  
