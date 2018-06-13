@@ -344,8 +344,8 @@ int shunt_dpi_recv_string(int sockid,int size,char** string) {
 //--------------------
 // HandShake(hs) send/recv
 //--------------------
-double shunt_dpi_hash(const char *str) {
-  double Result_;
+long shunt_dpi_hash(const char *str) {
+  long Result_;
   Result_ = shunt_prim_hash(str);
   return Result_;
 }
@@ -356,7 +356,7 @@ int shunt_dpi_send_header         (int sockid,cs_header* h){
  return Result_;
 }
 
-int shunt_dpi_send_data_header (int sockid,cs_header* h,double data_type,svOpenArrayHandle trnx_payload_sizes) {
+int shunt_dpi_send_data_header (int sockid,cs_header* h,long data_type,svOpenArrayHandle trnx_payload_sizes) {
   cs_data_header h_data_;
   int Result_ =0;
   
@@ -374,7 +374,7 @@ int shunt_dpi_recv_header         (int sockid,cs_header* h){
  return Result_;
 }
 
-int shunt_dpi_recv_data_header   (int sockid,cs_header* h,double* data_type,svOpenArrayHandle**  trnx_payload_sizes) {
+int shunt_dpi_recv_data_header   (int sockid,cs_header* h,long* data_type,svOpenArrayHandle**  trnx_payload_sizes) {
   int Result_;
   cs_data_header h_data;
   int n_payloads;
