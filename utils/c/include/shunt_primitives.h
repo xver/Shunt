@@ -117,7 +117,7 @@ typedef s_vpi_vecval svLogicVecVal;
   Returns: 
   hash value
 */
-double shunt_prim_hash(const char *str);
+long shunt_prim_hash(const char *str);
 
 /*
   Function: shunt_prim_error 
