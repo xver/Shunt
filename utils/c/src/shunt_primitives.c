@@ -20,7 +20,7 @@
 //Common Functions 
 ////////////////////////////////////
 
-double shunt_prim_hash(const char *str) {
+long shunt_prim_hash(const char *str) {
   long hash = 5381;
   int c;
   
