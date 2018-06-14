@@ -48,8 +48,10 @@ The Shunt includes a complete Makefile structure for the C portion of the librar
 Release History:
 -----------------------
 
-
-1.0.1 (Current Version) - shunt-verilator integration 
+1.0.2 (Current Version) - shunt-verilator integration update: 
+                          long(longint) header & hash data type 
+                          was: real,double is: long,longint
+1.0.1  - shunt-verilator integration 
                           Verilator 3.916 2017-11-25 rev verilator_3_916
         
 1.0.0 - initial release
