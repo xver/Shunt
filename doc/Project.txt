@@ -1,4 +1,4 @@
-﻿Format: 2.0.1
+﻿Format: 2.0.2
 
 # This is the file you use to provide information about your project.  It can
 # also be used to specify input and output settings so you don't have to
@@ -41,13 +41,13 @@ Copyright: Copyright © 2016-2017 IC Verimeter
 # Source Code
 # ------------------------------------------------------------------------
 
-Source Folder: ../utils/c/include
+Source Folder: ..\utils\c\include
    Name: 1. C utils
 
-Source Folder 2: ../utils/dpi/include
+Source Folder 2: ..\utils\dpi\include
    Name: 2. DPI C utils
 
-Source Folder 3: ../utils/dpi/src
+Source Folder 3: ..\utils\dpi\src
    Name: 3. DPI SV utils
 
 
