@@ -1,1 +1,1 @@
-NDMenu.OnSectionLoaded("files.js",[[2,"1. C utils","File:",[[1,"shunt_primitives.h"],[1,"shunt_client_server.h"],[1,"shunt_user_api.h"]]],[2,"2. DPI C utils","File2:",[[1,"shunt_dpi.h"]]],[2,"3. DPI SV utils","File3:",[[1,"shunt_dpi_pkg.sv"],[1,"shunt_hs_pkg.sv"]]]]);
+NDMenu.OnSectionLoaded("files.js",[[2,"1. C utils","File:",[[1,"shunt_client_server.h"],[1,"shunt_primitives.h"],[1,"shunt_user_api.h"]]],[2,"2. DPI C utils","File2:",[[1,"shunt_dpi.h"]]],[2,"3. DPI SV utils","File3:",[[1,"shunt_dpi_pkg.sv"],[1,"shunt_hs_pkg.sv"]]]]);
