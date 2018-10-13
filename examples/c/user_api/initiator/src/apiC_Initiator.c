@@ -14,7 +14,7 @@
 
 int main(void) {
   puts("\napiC_Initiator start");
-  int  socket=0;
+  prim_socketid_struct  socket;
   int  port;
   int success = 1;
   const int n=17;
@@ -27,12 +27,12 @@ int main(void) {
   
   socket= shunt_prim_init_initiator(port);
 
-  if (socket<0) {
+  if (socket.childfd<0) {
     printf("apiC_Initiator::FATAL ERROR");
     success = 0;
   }
   
-  printf("\napiC_Initiator::socket=%d", socket);
+  printf("\napiC_Initiator::socket.childfd=%d", socket.childfd);
   
   if (success>0) {
     puts("\napiC_Initiator start: Echo loopback initiator test start");
@@ -66,15 +66,15 @@ int main(void) {
     h_trnx_exp.n_payloads = n;
     
     //send
-    if (shunt_cs_send_header(socket,&h_trnx_exp)<= 0) success = 0;
+    if (shunt_cs_send_header(socket.childfd,&h_trnx_exp)<= 0) success = 0;
     if (success == 0 )  printf("\ninitiator: fail send header ");
-    if (shunt_api_send  (socket,&h_trnx_exp,IntVexp)<= 0) success = 0;
+    if (shunt_api_send  (socket.childfd,&h_trnx_exp,IntVexp)<= 0) success = 0;
     if (success == 0 )  printf("\ninitiator: fail send data");
     
     //recv
-    if (shunt_cs_recv_header (socket,&h_trnx_act)<= 0) success = 0;
+    if (shunt_cs_recv_header (socket.childfd,&h_trnx_act)<= 0) success = 0;
     IntVact = malloc(sizeof(int)*h_trnx_act.n_payloads);
-    if (shunt_api_recv  (socket,&h_trnx_exp,IntVact)<= 0) success = 0;
+    if (shunt_api_recv  (socket.childfd,&h_trnx_exp,IntVact)<= 0) success = 0;
     if (success == 0 )  printf("\nIntV loopback fail recv");
     
     //compare
@@ -120,15 +120,15 @@ int main(void) {
     h_trnx_exp.n_payloads = n;
     
     //send
-    if (shunt_cs_send_header(socket,&h_trnx_exp)<= 0) success = 0;
+    if (shunt_cs_send_header(socket.childfd,&h_trnx_exp)<= 0) success = 0;
     if (success == 0 )  printf("\ninitiator: fail send header ");
-    if (shunt_api_send  (socket,&h_trnx_exp,DoubleVexp)<= 0) success = 0;
+    if (shunt_api_send  (socket.childfd,&h_trnx_exp,DoubleVexp)<= 0) success = 0;
     if (success == 0 )  printf("\ninitiator: fail send data");
     
     //recv
-    if (shunt_cs_recv_header (socket,&h_trnx_act)<= 0) success = 0;
+    if (shunt_cs_recv_header (socket.childfd,&h_trnx_act)<= 0) success = 0;
     DoubleVact = malloc(sizeof(double)*h_trnx_act.n_payloads);
-    if (shunt_api_recv  (socket,&h_trnx_exp,DoubleVact)<= 0) success = 0;
+    if (shunt_api_recv  (socket.childfd,&h_trnx_exp,DoubleVact)<= 0) success = 0;
     if (success == 0 )  printf("\nDoubleV loopback fail recv");
     
     //compare
@@ -169,15 +169,15 @@ int main(void) {
     h_trnx_exp.n_payloads = n;
     
     //send
-    if (shunt_cs_send_header(socket,&h_trnx_exp)<= 0) success = 0;
+    if (shunt_cs_send_header(socket.childfd,&h_trnx_exp)<= 0) success = 0;
     if (success == 0 )  printf("\ninitiator: fail send header ");
-    if (shunt_api_send  (socket,&h_trnx_exp,String_exp)<= 0) success = 0;
+    if (shunt_api_send  (socket.childfd,&h_trnx_exp,String_exp)<= 0) success = 0;
     if (success == 0 )  printf("\ninitiator: fail send data");
     
     //recv
-    if (shunt_cs_recv_header (socket,&h_trnx_act)<= 0) success = 0;
+    if (shunt_cs_recv_header (socket.childfd,&h_trnx_act)<= 0) success = 0;
     String_act = malloc(sizeof(char)*h_trnx_act.n_payloads);
-    if (shunt_api_recv  (socket,&h_trnx_exp,String_act)<= 0) success = 0;
+    if (shunt_api_recv  (socket.childfd,&h_trnx_exp,String_act)<= 0) success = 0;
     if (success == 0 )  printf("\nString loopback fail recv");
     
     //compare
