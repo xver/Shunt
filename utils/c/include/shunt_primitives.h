@@ -165,6 +165,12 @@ struct hostent {
   char    **h_addr_list;  /* list of addresses */
 }
 #endif
+
+typedef struct prim_socketid {
+  int parentfd;  /* initiator parent socket */
+  int childfd;   /* initiator child socket */
+} prim_socketid_struct;
+
 /*
  Function: shunt_prim_init_initiator
  TCP/IP initiator initialization
@@ -176,7 +182,20 @@ struct hostent {
  socket id
    
 */
-int shunt_prim_init_initiator(const unsigned int portno);
+prim_socketid_struct shunt_prim_init_initiator(const unsigned int portno);
+
+/*
+ Function: shunt_prim_tcp_connect_initiator
+ establish TCP/IP  initiator-target connection
+
+ Parameters: 
+ portno - socket port
+  
+ Returns:  
+ socket id
+   
+*/
+int shunt_prim_tcp_connect_initiator(const unsigned int parentfd);
 
 /*
  Function: shunt_prim_init_target
@@ -184,7 +203,7 @@ int shunt_prim_init_initiator(const unsigned int portno);
  
  Parameters:
  
- portno - socket port
+ parentfd - parent socket
  hostname - initiator name
  
  Returns: 
