@@ -48,7 +48,7 @@ unsigned int shunt_dpi_target_init(const unsigned int portno,const char *hostnam
 
 /*
   Function: shunt_dpi_initiator_init 
-  TCP/IP initiator initialization
+  TCP/IP  "one server" - "one target" poit-to-point initiator  initialization
   
   Parameters: 
   portno - socket port
