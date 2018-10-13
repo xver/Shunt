@@ -27,9 +27,9 @@ unsigned int shunt_dpi_target_init(const unsigned int portno, const char *hostna
 
 
 unsigned int shunt_dpi_initiator_init(const unsigned int portno) {
-  int Result_ =0;
+  prim_socketid_struct Result_;
   Result_ =  shunt_prim_init_initiator(portno);
-  return Result_;
+  return Result_.childfd;
 }
 
 //--------------------
