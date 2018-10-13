@@ -150,7 +150,7 @@ int shunt_prim_tcp_connect_initiator(const unsigned int parentfd ) {
   childfd = accept(parentfd, (struct sockaddr *) &targetaddr, (socklen_t *)&targetlen);
   
   if (childfd < 0) {
-    shunt_prim_error("shunt_prim_init_initiator on accept");
+    shunt_prim_error("shunt_prim_tcp_connect_initiator on accept");
     return childfd;
   }
   
@@ -160,13 +160,13 @@ int shunt_prim_tcp_connect_initiator(const unsigned int parentfd ) {
   hostp = gethostbyaddr((const char *)&targetaddr.sin_addr.s_addr,
                         sizeof(targetaddr.sin_addr.s_addr), AF_INET);
   if (hostp == NULL) {
-    shunt_prim_error("shunt_prim_init_initiator on gethostbyaddr");
+    shunt_prim_error("shunt_prim_tcp_connect_initiator on gethostbyaddr");
     return -1;
   }
 
   hostaddrp = inet_ntoa(targetaddr.sin_addr);
   if (hostaddrp == NULL) {
-    shunt_prim_error("shunt_prim_init_initiator on inet_ntoa\n");
+    shunt_prim_error("shunt_prim_tcp_connect_initiator on inet_ntoa\n");
     return -1;
   }
   else {
@@ -205,6 +205,28 @@ unsigned int shunt_prim_init_target(const unsigned int portno,const char *hostna
     return -1;
   }
   return sockfd;
+}
+
+//ref to https://stackoverflow.com/questions/12730477/close-is-not-closing-socket-properly
+int shunt_prim_get_socket_error(int fd) {
+   int err = 1;
+   socklen_t len = sizeof err;
+   if (-1 == getsockopt(fd, SOL_SOCKET, SO_ERROR, (char *)&err, &len))
+      shunt_prim_error("shunt_prim_get_socket_error");
+   if (err)
+      errno = err;              // set errno to the socket SO_ERROR
+   return err;
+}
+
+void shunt_prim_close_socket(int fd) {  
+   if (fd >= 0) {
+      shunt_prim_get_socket_error(fd); // first clear any errors, which can cause close to fail
+      if (shutdown(fd, SHUT_RDWR) < 0) // secondly, terminate the 'reliable' delivery
+         if (errno != ENOTCONN && errno != EINVAL) // SGI causes EINVAL
+           shunt_prim_error("shutdown");
+      if (close(fd) < 0) // finally call close()
+        shunt_prim_error("close");
+   }
 }
 
 //////////////////////////////////
