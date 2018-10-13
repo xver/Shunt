@@ -192,7 +192,14 @@ prim_socketid_struct shunt_prim_init_initiator(const unsigned int portno);
  portno - socket port
   
  Returns:  
- socket id
+ socket id structure :
+ 
+ (start code)
+   typedef struct prim_socketid {
+   int parentfd;  - initiator parent socket
+   int childfd;   - initiator child socket
+  } prim_socketid_struct;
+ (end code)
    
 */
 int shunt_prim_tcp_connect_initiator(const unsigned int parentfd);
@@ -213,6 +220,35 @@ int shunt_prim_tcp_connect_initiator(const unsigned int parentfd);
 unsigned int shunt_prim_init_target(const unsigned int portno,const char *hostname);
 
 /*
+ Function: shunt_prim_get_socket_error
+ An auxiliary function: to clear any errors, which can cause close(fd) to fail
+ ref to https://stackoverflow.com/questions/12730477/close-is-not-closing-socket-properly
+ 
+Parameters:
+ 
+ fd - socket
+ 
+ Returns: 
+ err - error if err<0
+   
+*/
+
+int shunt_prim_get_socket_error(int fd);
+/*
+ Function: shunt_prim_close_socket(int fd)
+ Gracefully terminating TCP socket
+ 
+ Parameters:
+ 
+  fd - socket
+  
+ Returns: 
+ N/A
+   
+*/
+void shunt_prim_close_socket(int fd);
+
+/*
 Function: Example:  target,initiator init
 
 (start code)    
@@ -227,7 +263,6 @@ Function: Example:  target,initiator init
  shunt_prim_init_target(port,hostname);
 (end)
  */
-
 
 //Section: Data exchange primitives
 
