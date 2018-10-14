@@ -66,6 +66,7 @@ module automatic Target;
 	realV_loopback_test(Socket);
 	shortrealV_loopback_test(Socket);
 	integerV_loopback_test(Socket);
+	shunt_dpi_close_socket(Socket);
 	$finish;	
 	$display("\nTarget: END");
 	
