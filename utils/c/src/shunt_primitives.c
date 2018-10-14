@@ -42,31 +42,38 @@ void shunt_prim_error(char *msg) {
 //TCP/IP Functions
 //////////////////////////////////
 
-
-prim_socketid_struct shunt_prim_init_initiator(const unsigned int portno) {
-  int parentfd; /* parent socket */
-  int childfd; /* child socket */
-  int targetlen; /* byte size of target's address */
-  struct sockaddr_in initiatoraddr; /* initiator's addr */
-  struct sockaddr_in targetaddr; /* target addr */
-  struct hostent *hostp; /* target host info */
-  char *hostaddrp; /* dotted decimal host addr string */
-  int optval; /* flag value for setsockopt */
-  prim_socketid_struct socketid;
+unsigned int  shunt_prim_init_initiator(const unsigned int portno) {
   
   //portno = MY_PORT;
-  socketid.parentfd = -1;
-  socketid.childfd  = -1;
+  unsigned int parentfd = -1;
+  unsigned int childfd  = -1;
+  //
+  parentfd = shunt_prim_tcp_parent_init_initiator(portno);
+  childfd  = shunt_prim_tcp_child_init_initiator(parentfd);
+  //  
+  return  childfd;
+}
+ 
+
+unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno){
+  int parentfd; /* parent socket */
+  struct sockaddr_in initiatoraddr; /* initiator's addr */
+  int optval; /* flag value for setsockopt */
+  
+  
+  //portno = MY_PORT;
+  parentfd = -1;
+  
   /*
    * socket: create the parent socket
    */
 
    //
   parentfd = socket(AF_INET, SOCK_STREAM, 0);
-  socketid.parentfd =  parentfd;
+  
   if (parentfd < 0) {
-	  shunt_prim_error("shunt_prim_init_initiator opening socket<0");
-	  return socketid ;
+	  shunt_prim_error("shunt_prim_tcp_parent_init_initiator opening socket<0");
+	  return parentfd ;
   }
 
   /* Eliminates "ERROR on binding: Address already in use" error.
@@ -91,51 +98,19 @@ prim_socketid_struct shunt_prim_init_initiator(const unsigned int portno) {
   /*
    * bind: associate the parent socket with a port
    */
-  if (bind(parentfd, (struct sockaddr *) &initiatoraddr, sizeof(initiatoraddr)) < 0) shunt_prim_error("shunt_prim_init_initiator on binding");
+  if (bind(parentfd, (struct sockaddr *) &initiatoraddr, sizeof(initiatoraddr)) < 0) shunt_prim_error("shunt_prim_tcp_parent_init_initiator on binding");
   //int getsockname(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 
   /*
    * listen: make this socket ready to accept connection requests
    */
   if (listen(parentfd, 5) < 0) /* allow 5 requests to queue up */ {
-    shunt_prim_error("shunt_prim_init_initiator on listen");
-    return socketid ;
+    shunt_prim_error("shunt_prim_tcp_parent_init_initiator on listen");
   }
-  /*
-   * wait for a connection request
-    */
-  targetlen = sizeof(targetaddr);
-  childfd = accept(parentfd, (struct sockaddr *) &targetaddr, (socklen_t *)&targetlen);
-  socketid.childfd = childfd;
-  if (childfd < 0) {
-    shunt_prim_error("shunt_prim_init_initiator on accept");
-    
-    return socketid;
-  }
-  
-  /*
-   * gethostbyaddr: determine who sent the message
-   */
-  hostp = gethostbyaddr((const char *)&targetaddr.sin_addr.s_addr,
-                        sizeof(targetaddr.sin_addr.s_addr), AF_INET);
-  if (hostp == NULL) {
-    shunt_prim_error("shunt_prim_init_initiator on gethostbyaddr");
-    return socketid;
-  }
-
-  hostaddrp = inet_ntoa(targetaddr.sin_addr);
-  if (hostaddrp == NULL) {
-    shunt_prim_error("shunt_prim_init_initiator on inet_ntoa\n");
-    return socketid ;
-  }
-  else {
-	  printf("initiator established connection with %s (%s)\n",
-		 hostp->h_name, hostaddrp); }
-  	  return socketid;
+  return parentfd ;
 }
 
-
-int shunt_prim_tcp_connect_initiator(const unsigned int parentfd ) {
+unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd ) {
   int childfd; /* child socket */
   int targetlen; /* byte size of target's address */
   struct sockaddr_in targetaddr; /* target addr */
@@ -150,7 +125,7 @@ int shunt_prim_tcp_connect_initiator(const unsigned int parentfd ) {
   childfd = accept(parentfd, (struct sockaddr *) &targetaddr, (socklen_t *)&targetlen);
   
   if (childfd < 0) {
-    shunt_prim_error("shunt_prim_tcp_connect_initiator on accept");
+    shunt_prim_error("shunt_prim_tcp_child_init_initiator on accept");
     return childfd;
   }
   
@@ -160,13 +135,13 @@ int shunt_prim_tcp_connect_initiator(const unsigned int parentfd ) {
   hostp = gethostbyaddr((const char *)&targetaddr.sin_addr.s_addr,
                         sizeof(targetaddr.sin_addr.s_addr), AF_INET);
   if (hostp == NULL) {
-    shunt_prim_error("shunt_prim_tcp_connect_initiator on gethostbyaddr");
+    shunt_prim_error("shunt_prim_tcp_child_init_initiator on gethostbyaddr");
     return -1;
   }
 
   hostaddrp = inet_ntoa(targetaddr.sin_addr);
   if (hostaddrp == NULL) {
-    shunt_prim_error("shunt_prim_tcp_connect_initiator on inet_ntoa\n");
+    shunt_prim_error("shunt_prim_tcp_child_init_initiator on inet_ntoa\n");
     return -1;
   }
   else {
