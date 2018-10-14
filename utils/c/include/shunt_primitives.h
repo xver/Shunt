@@ -185,7 +185,8 @@ unsigned int shunt_prim_init_initiator(const unsigned int portno);
 
 /*
   Function: shunt_prim_tcp_parent_init_initiator
-  Multi-Slave TCP IP initialisation, create TCP/IP a parent(listener) and start listening for client connections
+  Multi-Slave TCP IP initialisation, create TCP/IP a parent/listener and start listening for client connections
+  
   
   Parameters: 
  
@@ -195,6 +196,7 @@ unsigned int shunt_prim_init_initiator(const unsigned int portno);
   Returns:  
 
   socket id - parent socket id
+
 */
 unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno);
 
@@ -275,6 +277,7 @@ Function: Example:  target,initiator init
  shunt_prim_init_initiator(port);
  shunt_prim_init_target(port,hostname);
 (end)
+
  */
 
 //Section: Data exchange primitives
