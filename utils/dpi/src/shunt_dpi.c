@@ -27,11 +27,26 @@ unsigned int shunt_dpi_target_init(const unsigned int portno, const char *hostna
 
 
 unsigned int shunt_dpi_initiator_init(const unsigned int portno) {
-  prim_socketid_struct Result_;
+  unsigned int  Result_;
   Result_ =  shunt_prim_init_initiator(portno);
-  return Result_.childfd;
+  return Result_;
 }
 
+void shunt_dpi_close_socket(int fd) {
+ shunt_prim_close_socket(fd);
+}
+
+unsigned int shunt_dpi_listener_init(const unsigned int portno) {
+  unsigned int  Result_;
+  Result_ =shunt_prim_tcp_parent_init_initiator(portno);  
+  return Result_;
+}
+
+unsigned int shunt_dpi_tcp_connect(const unsigned int parentfd) {
+  unsigned int  Result_;
+  Result_ = shunt_prim_tcp_child_init_initiator(parentfd);
+  return Result_;
+}
 //--------------------
 // Direct send/recv  
 //--------------------
