@@ -54,13 +54,51 @@ unsigned int shunt_dpi_target_init(const unsigned int portno,const char *hostnam
   portno - socket port
   
   Returns:  
-  socket id
+  socket id 
   
   See Also:
   - <shunt_prim_init_initiator>
   
 */
 unsigned int shunt_dpi_initiator_init(const unsigned int portno);
+
+
+/*
+ Function: shunt_dpi_close_socket(int fd)
+ Gracefully terminating TCP socket
+ 
+ Parameters:
+ 
+  fd - socket id
+  
+ Returns: 
+ N/A
+   
+*/
+void shunt_dpi_close_socket(int fd);
+
+
+/*
+  Function: shunt_dpi_listener_init
+  Multi-Slave TCP IP initialisation, create TCP/IP a parent(listener) and start listening for client connections
+  
+  Parameters: parentfd
+  
+  Returns:  
+  socket id - parent socket id
+*/
+unsigned int shunt_dpi_listener_init(const unsigned int portno);
+
+/*
+  Function: shunt_dpi_tcp_connect
+  Multi-Slave TCP IP initialisation, establish TCP/IP  initiator-target connection
+  
+  Parameters: 
+  socket id - parent socket id
+  Returns:  
+   socket id - child socket id
+ */
+unsigned int shunt_dpi_tcp_connect(const unsigned int parentfd);
 
 // Section: Data exchange (prim)
 
