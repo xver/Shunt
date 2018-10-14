@@ -44,7 +44,7 @@ package shunt_dpi_pkg;
     
     Disable function `define:  NO_SHUNT_DPI_INITIATOR_INIT 
     */
-`ifndef NO_SHUNT_DPI_INITIATOR_INIT 
+`ifndef NO_SHUNT_DPI_INITIATOR_INIT
    import "DPI-C" function int shunt_dpi_initiator_init (input int portno);
 `endif
    
@@ -77,8 +77,51 @@ package shunt_dpi_pkg;
 `ifndef NO_SHUNT_DPI_TARGET_INIT 
    import "DPI-C" function int shunt_dpi_target_init (input int portno,input string hostname);
 `endif
-   
-   
+
+   /*
+    Function: shunt_dpi_close_socket(int fd)
+    Gracefully terminating TCP socket
+ 
+    Parameters:
+    
+    fd - socket id
+    
+    Returns: 
+    N/A
+    Disable function `define: NO_SHUNT_DPI_CLOSE_SOCKET
+    */
+ `ifndef NO_SHUNT_DPI_CLOSE_SOCKET  
+   import "DPI-C" function chandle shunt_dpi_close_socket(int fd);
+ `endif 
+
+   /*
+    Function: shunt_dpi_listener_init
+    Multi-Slave TCP IP initialisation, create TCP/IP a parent(listener) and start listening for client connections
+    
+    Parameters: parentfd
+    
+    Returns:  
+    socket id - parent socket id
+    Disable function `define: NO_SHUNT_DPI_LISTENER_INIT
+    */
+ `ifndef NO_SHUNT_DPI_LISTENER_INIT
+   import "DPI-C" function int shunt_dpi_listener_init(int portno);
+ `endif   
+
+   /*
+    Function: shunt_dpi_tcp_connect
+    Multi-Slave TCP IP initialisation, establish TCP/IP  initiator-target connection
+    
+    Parameters: 
+    socket id - parent socket id
+    Returns:  
+    socket id - child socket id
+    Disable function `define: NO_SHUNT_DPI_TCP_CONNECT
+    */
+ `ifndef NO_SHUNT_DPI_TCP_CONNECT
+   import "DPI-C" function int shunt_dpi_tcp_connect(int parentfd);
+ `endif
+     
    //Section: Integer types 
    
    /*
