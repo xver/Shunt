@@ -217,6 +217,7 @@ module automatic Initiator;
 	
  	Test_name = "Initiator";
 	print_status(Test_name,Pass);
+	shunt_dpi_close_socket(Socket);
 	$finish;
      end
    
