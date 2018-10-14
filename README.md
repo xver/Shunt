@@ -48,7 +48,9 @@ The Shunt includes a complete Makefile structure for the C portion of the librar
 Release History:
 -----------------------
 1.1.0 (Current Version) - TCP/IP socket manipulation: new Multi-Slave support and close socket functions
+
 1.0.3 - API docs update  
+
 1.0.2  - shunt-verilator integration update: 
                           long(longint) header & hash data type 
                           was: real,double is: long,longint
