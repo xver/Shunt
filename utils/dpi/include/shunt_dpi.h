@@ -51,9 +51,11 @@ unsigned int shunt_dpi_target_init(const unsigned int portno,const char *hostnam
   TCP/IP  "one server" - "one target" poit-to-point initiator  initialization
   
   Parameters: 
+  
   portno - socket port
   
   Returns:  
+  
   socket id 
   
   See Also:
@@ -82,10 +84,13 @@ void shunt_dpi_close_socket(int fd);
   Function: shunt_dpi_listener_init
   Multi-Slave TCP IP initialisation, create TCP/IP a parent(listener) and start listening for client connections
   
-  Parameters: parentfd
+  Parameters: 
+
+  portno - socket port
   
   Returns:  
-  socket id - parent socket id
+  
+  socket id -  parent socket id
 */
 unsigned int shunt_dpi_listener_init(const unsigned int portno);
 
