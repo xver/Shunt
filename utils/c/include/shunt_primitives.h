@@ -173,9 +173,11 @@ struct hostent {
  TCP/IP initiator initialization
  
  Parameters: 
+ 
  portno - socket port
   
  Returns:  
+
  socket id
    
 */
@@ -185,9 +187,13 @@ unsigned int shunt_prim_init_initiator(const unsigned int portno);
   Function: shunt_prim_tcp_parent_init_initiator
   Multi-Slave TCP IP initialisation, create TCP/IP a parent(listener) and start listening for client connections
   
-  Parameters: parentfd
+  Parameters: 
+ 
+  portno - socket port
+  
   
   Returns:  
+
   socket id - parent socket id
 */
 unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno);
@@ -196,9 +202,12 @@ unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno);
   Function: shunt_prim_tcp_child_init_initiator
   Multi-Slave TCP IP initialisation, establish TCP/IP  initiator-target connection 
   
-  Parameters: 
+  Parameters:
+ 
   socket id - parent socket id
-  Returns:  
+  
+  Returns:
+  
   child socket id
  */
 unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd);
@@ -210,9 +219,11 @@ unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd);
  Parameters:
  
  parentfd - parent socket
+
  hostname - initiator name
  
- Returns: 
+ Returns:
+ 
  socket id 
    
 */
@@ -228,6 +239,7 @@ Parameters:
  fd - socket
  
  Returns: 
+
  err - error if err<0
    
 */
@@ -243,6 +255,7 @@ int shunt_prim_get_socket_error(int fd);
   fd - socket
   
  Returns: 
+
  N/A
    
 */
