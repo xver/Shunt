@@ -32,6 +32,24 @@
  <div class="CBody"><p>TCP/IP target initialization</p><table class="CDefinitionList"><tr><td class="CDLEntry">portno</td><td class="CDLDefinition"><p>socket port</p></td></tr><tr><td class="CDLEntry">hostname</td><td class="CDLDefinition"><p>initiator name</p></td></tr></table><div class="CHeading">Returns</div><p>socket id ( see&nbsp; shunt_prim_init_tcptarget)</p><pre><span class="SHComment">//Example:</span><br />#define MY_HOST <span class="SHString">&quot;localhost&quot;</span><br />#define MY_PORT  <span class="SHNumber">3450</span><br /><br /><span class="SHKeyword">char</span>* hostname;<br /><span class="SHKeyword">int</span> port;<br />port = MY_PORT;<br />hostname =   MY_HOST;<br /><br />shunt_prim_init_tcptarget(port,hostname);</pre><p>Disable function `define:&nbsp; NO_SHUNT_DPI_TARGET_INIT</p></div>
 </div>
 
+<a name="shunt_dpi_close_socket"></a><a name="Topic237"></a><div class="CTopic TFunction LSystemVerilog">
+ <div class="CTitle">shunt_dpi_close_socket(int fd)</div>
+ <div id="NDPrototype237" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters">`ifndef NO_SHUNT_DPI_CLOSE_SOCKET <span class="SHKeyword">import</span> <span class="SHString">&quot;DPI-C&quot;</span> <span class="SHKeyword">function</span> chandle shunt_dpi_close_socket(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PType first"><span class="SHKeyword">int</span>&nbsp;</td><td class="PName last">fd</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>Gracefully terminating TCP socket</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">fd<div class="CDLParameterType"><span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket id</p></td></tr></table><div class="CHeading">Returns</div><p>N/A Disable function `define: NO_SHUNT_DPI_CLOSE_SOCKET</p></div>
+</div>
+
+<a name="shunt_dpi_listener_init"></a><a name="Topic238"></a><div class="CTopic TFunction LSystemVerilog">
+ <div class="CTitle">shunt_dpi_listener_init</div>
+ <div id="NDPrototype238" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters">`ifndef NO_SHUNT_DPI_LISTENER_INIT <span class="SHKeyword">import</span> <span class="SHString">&quot;DPI-C&quot;</span> <span class="SHKeyword">function</span> <span class="SHKeyword">int</span> shunt_dpi_listener_init(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PType first"><span class="SHKeyword">int</span>&nbsp;</td><td class="PName last">portno</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>Multi-Slave TCP IP initialisation, create TCP/IP a parent(listener) and start listening for client connections</p><p>Parameters: parentfd</p><div class="CHeading">Returns</div><table class="CDefinitionList"><tr><td class="CDLEntry">socket id</td><td class="CDLDefinition"><p>parent socket id Disable function `define: NO_SHUNT_DPI_LISTENER_INIT</p></td></tr></table></div>
+</div>
+
+<a name="shunt_dpi_tcp_connect"></a><a name="Topic239"></a><div class="CTopic TFunction LSystemVerilog">
+ <div class="CTitle">shunt_dpi_tcp_connect</div>
+ <div id="NDPrototype239" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters">`ifndef NO_SHUNT_DPI_TCP_CONNECT <span class="SHKeyword">import</span> <span class="SHString">&quot;DPI-C&quot;</span> <span class="SHKeyword">function</span> <span class="SHKeyword">int</span> shunt_dpi_tcp_connect(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PType first"><span class="SHKeyword">int</span>&nbsp;</td><td class="PName last">parentfd</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>Multi-Slave TCP IP initialisation, establish TCP/IP&nbsp; initiator-target connection</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">socket id</td><td class="CDLDefinition"><p>parent socket id Returns:</p></td></tr><tr><td class="CDLEntry">socket id</td><td class="CDLDefinition"><p>child socket id Disable function `define: NO_SHUNT_DPI_TCP_CONNECT</p></td></tr></table></div>
+</div>
+
 <a name="Integer_types"></a><a name="Topic91"></a><div class="CTopic TSection LSystemVerilog">
  <div class="CTitle">Integer types</div>
 </div>
