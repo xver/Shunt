@@ -166,10 +166,7 @@ struct hostent {
 }
 #endif
 
-typedef struct prim_socketid {
-  int parentfd;  /* initiator parent socket */
-  int childfd;   /* initiator child socket */
-} prim_socketid_struct;
+
 
 /*
  Function: shunt_prim_init_initiator
@@ -182,27 +179,29 @@ typedef struct prim_socketid {
  socket id
    
 */
-prim_socketid_struct shunt_prim_init_initiator(const unsigned int portno);
+unsigned int shunt_prim_init_initiator(const unsigned int portno);
 
 /*
- Function: shunt_prim_tcp_connect_initiator
- establish TCP/IP  initiator-target connection
-
- Parameters: 
- portno - socket port
+  Function: shunt_prim_tcp_parent_init_initiator
+  Multi-Slave TCP IP initialisation, create TCP/IP a parent(listener) and start listening for client connections
   
- Returns:  
- socket id structure :
- 
- (start code)
-   typedef struct prim_socketid {
-   int parentfd;  - initiator parent socket
-   int childfd;   - initiator child socket
-  } prim_socketid_struct;
- (end code)
-   
+  Parameters: parentfd
+  
+  Returns:  
+  socket id - parent socket id
 */
-int shunt_prim_tcp_connect_initiator(const unsigned int parentfd);
+unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno);
+
+/*
+  Function: shunt_prim_tcp_child_init_initiator
+  Multi-Slave TCP IP initialisation, establish TCP/IP  initiator-target connection 
+  
+  Parameters: 
+  socket id - parent socket id
+  Returns:  
+  child socket id
+ */
+unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd);
 
 /*
  Function: shunt_prim_init_target
@@ -234,6 +233,7 @@ Parameters:
 */
 
 int shunt_prim_get_socket_error(int fd);
+
 /*
  Function: shunt_prim_close_socket(int fd)
  Gracefully terminating TCP socket
