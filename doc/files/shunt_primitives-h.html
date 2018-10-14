@@ -49,16 +49,40 @@
  <div class="CTitle">Functions</div>
 </div>
 
-<a name="shunt_prim_init_initiator"></a><a name="Topic218"></a><div class="CTopic TFunction LC">
+<a name="shunt_prim_init_initiator"></a><a name="Topic32"></a><div class="CTopic TFunction LC">
  <div class="CTitle">shunt_prim_init_initiator</div>
- <div id="NDPrototype218" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">int</span> shunt_prim_init_initiator(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const unsigned</span>&nbsp;</td><td class="PType"><span class="SHKeyword">int</span>&nbsp;</td><td class="PName last">portno</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div id="NDPrototype32" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">unsigned</span> <span class="SHKeyword">int</span> shunt_prim_init_initiator(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const unsigned</span>&nbsp;</td><td class="PType"><span class="SHKeyword">int</span>&nbsp;</td><td class="PName last">portno</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
  <div class="CBody"><p>TCP/IP initiator initialization</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">portno<div class="CDLParameterType"><span class="SHKeyword">const unsigned</span> <span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket port</p></td></tr></table><div class="CHeading">Returns</div><p>socket id</p></div>
 </div>
 
-<a name="shunt_prim_init_target"></a><a name="Topic219"></a><div class="CTopic TFunction LC">
+<a name="shunt_prim_tcp_parent_init_initiator"></a><a name="Topic244"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">shunt_prim_tcp_parent_init_initiator</div>
+ <div id="NDPrototype244" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">unsigned</span> <span class="SHKeyword">int</span> shunt_prim_tcp_parent_init_initiator(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const unsigned</span>&nbsp;</td><td class="PType"><span class="SHKeyword">int</span>&nbsp;</td><td class="PName last">portno</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>Multi-Slave TCP IP initialisation, create TCP/IP a parent(listener) and start listening for client connections</p><p>Parameters: parentfd</p><div class="CHeading">Returns</div><table class="CDefinitionList"><tr><td class="CDLEntry">socket id</td><td class="CDLDefinition"><p>parent socket id</p></td></tr></table></div>
+</div>
+
+<a name="shunt_prim_tcp_child_init_initiator"></a><a name="Topic245"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">shunt_prim_tcp_child_init_initiator</div>
+ <div id="NDPrototype245" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">unsigned</span> <span class="SHKeyword">int</span> shunt_prim_tcp_child_init_initiator(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const unsigned</span>&nbsp;</td><td class="PType"><span class="SHKeyword">int</span>&nbsp;</td><td class="PName last">parentfd</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>Multi-Slave TCP IP initialisation, establish TCP/IP&nbsp; initiator-target connection</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">socket id</td><td class="CDLDefinition"><p>parent socket id Returns: child socket id</p></td></tr></table></div>
+</div>
+
+<a name="shunt_prim_init_target"></a><a name="Topic246"></a><div class="CTopic TFunction LC">
  <div class="CTitle">shunt_prim_init_target</div>
- <div id="NDPrototype219" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">unsigned</span> <span class="SHKeyword">int</span> shunt_prim_init_target(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const unsigned</span>&nbsp;</td><td class="PType"><span class="SHKeyword">int</span>&nbsp;</td><td></td><td class="PName last">portno,</td></tr><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span>&nbsp;</td><td class="PType"><span class="SHKeyword">char</span>&nbsp;</td><td class="PNamePrefix">*</td><td class="PName last">hostname</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
- <div class="CBody"><p>TCP/IP target initialization</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">portno<div class="CDLParameterType"><span class="SHKeyword">const unsigned</span> <span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket port</p></td></tr><tr><td class="CDLEntry">hostname<div class="CDLParameterType"><span class="SHKeyword">const</span> <span class="SHKeyword">char</span>*</div></td><td class="CDLDefinition"><p>initiator name</p></td></tr></table><div class="CHeading">Returns</div><p>socket id</p></div>
+ <div id="NDPrototype246" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">unsigned</span> <span class="SHKeyword">int</span> shunt_prim_init_target(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const unsigned</span>&nbsp;</td><td class="PType"><span class="SHKeyword">int</span>&nbsp;</td><td></td><td class="PName last">portno,</td></tr><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span>&nbsp;</td><td class="PType"><span class="SHKeyword">char</span>&nbsp;</td><td class="PNamePrefix">*</td><td class="PName last">hostname</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>TCP/IP target initialization</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">parentfd</td><td class="CDLDefinition"><p>parent socket</p></td></tr><tr><td class="CDLEntry">hostname<div class="CDLParameterType"><span class="SHKeyword">const</span> <span class="SHKeyword">char</span>*</div></td><td class="CDLDefinition"><p>initiator name</p></td></tr></table><div class="CHeading">Returns</div><p>socket id</p></div>
+</div>
+
+<a name="shunt_prim_get_socket_error"></a><a name="Topic247"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">shunt_prim_get_socket_error</div>
+ <div id="NDPrototype247" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">int</span> shunt_prim_get_socket_error(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PType first"><span class="SHKeyword">int</span>&nbsp;</td><td class="PName last">fd</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>An auxiliary function: to clear any errors, which can cause close(fd) to fail ref to <a href="https://stackoverflow.com/questions/12730477/close-is-not-closing-socket-properly" target="_top">https://&#8203;stackoverflow&#8203;.com&#8203;/questions&#8203;/12730477&#8203;/close-is-not-closing-socket-properl&#8203;y</a></p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">fd<div class="CDLParameterType"><span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket</p></td></tr></table><div class="CHeading">Returns</div><table class="CDefinitionList"><tr><td class="CDLEntry">err</td><td class="CDLDefinition"><p>error if err&lt;0</p></td></tr></table></div>
+</div>
+
+<a name="shunt_prim_close_socket"></a><a name="Topic248"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">shunt_prim_close_socket(int fd)</div>
+ <div id="NDPrototype248" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> shunt_prim_close_socket(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PType first"><span class="SHKeyword">int</span>&nbsp;</td><td class="PName last">fd</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>Gracefully terminating TCP socket</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">fd<div class="CDLParameterType"><span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket</p></td></tr></table><div class="CHeading">Returns</div><p>N/A</p></div>
 </div>
 
 <a name="Example_target,initiator_init"></a><a name="Topic220"></a><div class="CTopic TFunction LC">
