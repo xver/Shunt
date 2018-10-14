@@ -88,6 +88,7 @@ package shunt_dpi_pkg;
     
     Returns: 
     N/A
+    
     Disable function `define: NO_SHUNT_DPI_CLOSE_SOCKET
     */
  `ifndef NO_SHUNT_DPI_CLOSE_SOCKET  
@@ -98,10 +99,12 @@ package shunt_dpi_pkg;
     Function: shunt_dpi_listener_init
     Multi-Slave TCP IP initialisation, create TCP/IP a parent(listener) and start listening for client connections
     
-    Parameters: parentfd
+    Parameters: 
+    portno - socket port
     
     Returns:  
     socket id - parent socket id
+    
     Disable function `define: NO_SHUNT_DPI_LISTENER_INIT
     */
  `ifndef NO_SHUNT_DPI_LISTENER_INIT
@@ -114,8 +117,10 @@ package shunt_dpi_pkg;
     
     Parameters: 
     socket id - parent socket id
+    
     Returns:  
     socket id - child socket id
+   
     Disable function `define: NO_SHUNT_DPI_TCP_CONNECT
     */
  `ifndef NO_SHUNT_DPI_TCP_CONNECT
