@@ -34,6 +34,23 @@ unsigned int shunt_dpi_initiator_init(const unsigned int portno) {
 
 void shunt_dpi_close_socket(int fd) {
  shunt_prim_close_socket(fd);
+ return;
+}
+
+void shunt_dpi_unblock_socket(int flag ,int fd) {
+  shunt_prim_unblock_socket(flag,fd);
+  return;
+}
+
+int shunt_dpi_get_status_socket(int fd,int event) {
+  int Result_;
+  Result_ = shunt_prim_get_status_socket(fd,event);
+  return Result_; 
+}
+
+void shunt_dpi_tcp_nodelay_socket(int flag, int sockfd) {
+  shunt_prim_tcp_nodelay_socket(flag,sockfd);
+  return;
 }
 
 unsigned int shunt_dpi_listener_init(const unsigned int portno) {
