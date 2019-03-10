@@ -79,8 +79,8 @@ package shunt_dpi_pkg;
 `endif
 
    /*
-    Function: shunt_dpi_close_socket(int fd)
-    Gracefully terminating TCP socket
+    Function: shunt_dpi_close_socket
+    terminaties TCP socket
  
     Parameters:
     
@@ -93,8 +93,76 @@ package shunt_dpi_pkg;
     */
  `ifndef NO_SHUNT_DPI_CLOSE_SOCKET  
    import "DPI-C" function chandle shunt_dpi_close_socket(int fd);
+ `endif
+   
+ 
+/*
+    Function: shunt_dpi_unblock_socket
+    sets TCP socket unblocked mode
+ 
+    Parameters:
+    flag -  1/0- unblocked(deafult)/blocked 
+    fd - socket id
+    
+    Returns: 
+    N/A
+    
+    Disable function `define: NO_SHUNT_DPI_UNBLOCK_SOCKET
+    */
+ `ifndef NO_SHUNT_DPI_UNBLOCK_SOCKET
+   import "DPI-C" function chandle shunt_dpi_unblock_socket(int flag, int fd);
  `endif 
 
+
+   /*
+    Function: shunt_dpi_get_status_socket
+    returns status for TCP socket <event> on a fd <soket>
+    
+    Parameters:
+    sockfd - socket
+    short event-  the <evnt> mask is specifying following 
+
+  - 0- is equal equal POLLIN, data is ready to recv(),
+
+  - 1- is equal to POLLOUT, socket can send() data to this socket without blocking
+
+  - else is equal to POLLNVAL, function returns "process failed" status;
+ 
+  Returns: 
+  socket even status 
+
+  -  "0"- No <evnt>
+  
+  -  "-1"- <evnt> process has failed 
+  
+  -  "1"- <evnt> occurs
+    
+     Disable function `define: NO_SHUNT_DPI_GET_STATUS_SOCKET
+    */
+ 
+ `ifndef NO_SHUNT_DPI_GET_STATUS_SOCKET
+   import "DPI-C" function  int shunt_dpi_get_status_socket(int fd,int evnt);
+ `endif 
+   
+   /*
+ 
+    Function: shunt_dpi_tcp_nodelay_socket
+    
+    enable/disable Nagle algorithm (TCP_NODELAY)
+    
+    Parameters:
+    
+    sockfd - socket
+    flag -  1/0- enable/disable Nagle algorithm (TCP_NODELAY)
+    Returns: 
+    N/A
+    
+    Disable function `define: NO_SHUNT_DPI_TCP_NODELAY_SOCKET
+    */
+ `ifndef  NO_SHUNT_DPI_TCP_NODELAY_SOCKET
+   import "DPI-C" function chandle  shunt_dpi_tcp_nodelay_socket(int flag, int sockfd);
+ `endif
+   
    /*
     Function: shunt_dpi_listener_init
     Multi-Slave TCP IP initialisation, create TCP/IP a parent(listener) and start listening for client connections
