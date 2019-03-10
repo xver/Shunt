@@ -66,8 +66,8 @@ unsigned int shunt_dpi_initiator_init(const unsigned int portno);
 
 
 /*
- Function: shunt_dpi_close_socket(int fd)
- Gracefully terminating TCP socket
+ Function: shunt_dpi_close_socket
+ terminates TCP socket
  
  Parameters:
  
@@ -78,6 +78,66 @@ unsigned int shunt_dpi_initiator_init(const unsigned int portno);
    
 */
 void shunt_dpi_close_socket(int fd);
+
+/*
+ Function: shunt_dpi_unblock_socket
+ sets TCP socket unblocked mode
+ 
+ Parameters:
+  flag -  1/0- unblocked(deafult)/blocked 
+  fd - socket id
+  
+ Returns: 
+
+ N/A
+   
+*/
+void shunt_dpi_unblock_socket(int flag,int fd);
+
+
+
+/*
+  Function: shunt_dpi_tcp_nodelay_socket
+
+  enable/disable Nagle algorithm (TCP_NODELAY)
+ 
+  Parameters:
+ 
+  sockfd - socket
+  flag -  1/0- enable/disable Nagle algorithm (TCP_NODELAY)
+  
+  Returns: 
+  N/A
+   
+*/
+void shunt_dpi_tcp_nodelay_socket(int flag, int sockfd);
+
+/*
+  Function: shunt_dpi_get_status_socket
+  returns status for <fd> TCP socket <event>
+  
+  Parameters:
+  sockfd - socket
+  short event-  the <event> mask is specifying following 
+
+  - 0- is equal equal POLLIN, data is ready to recv(),
+
+  - 1- is equal to POLLOUT, socket can send() data to this socket without blocking
+
+  - else is equal to POLLNVAL, function returns "process failed" status;
+ 
+  Returns: 
+  socket even status 
+
+  -  "0"- No <event>
+  
+  -  "-1"- <event> process has failed 
+  
+  -  "1"- <event> occurs
+     
+*/
+
+int shunt_dpi_get_status_socket(int fd,int event);
 
 
 /*
