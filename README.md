@@ -14,7 +14,7 @@ The **Shunt** is available under a "MIT" License. It can be used without restric
 
 *  Shunt Introduction (TCP/IP Socket Based Communication for SystemVerilog Simulation SNUG, Boston 2018 ): 
 https://www.researchgate.net/publication/325206338_TCPIP_Socket_Based_Communication_for_SystemVerilog_Simulation
-*  API specification  -- https://rawgit.com/xver/Shunt/master/doc/index.html
+*  API specification  -- https://raw.githack.com/xver/Shunt/master/doc/index.html
 
 # Getting Started
 
@@ -47,8 +47,10 @@ The Shunt includes a complete Makefile structure for the C portion of the librar
 
 Release History:
 -----------------------
-1.0.3 (Current Version) - API docs update
-                          
+1.1.0 (Current Version) - TCP/IP socket manipulation: new Multi-Slave support and close socket functions
+
+1.0.3 - API docs update  
+
 1.0.2  - shunt-verilator integration update: 
                           long(longint) header & hash data type 
                           was: real,double is: long,longint
