@@ -27,6 +27,9 @@
 #include <time.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <fcntl.h>
+#include <netinet/tcp.h>
+#include <poll.h>
 
 #ifdef SHUNT_SVDPI
 #include "svdpi.h"
@@ -249,8 +252,8 @@ Parameters:
 int shunt_prim_get_socket_error(int fd);
 
 /*
- Function: shunt_prim_close_socket(int fd)
- Gracefully terminating TCP socket
+ Function: shunt_prim_close_socket
+ terminates TCP socket 
  
  Parameters:
  
@@ -262,6 +265,68 @@ int shunt_prim_get_socket_error(int fd);
    
 */
 void shunt_prim_close_socket(int fd);
+
+/*
+ Function: shunt_prim_unblock_socket
+ sets TCP socket unblocked mode 
+ 
+ Parameters:
+ flag -  1/0- unblocked(deafult)/blocked
+ fd - socket
+  
+ Returns: 
+
+ N/A
+   
+*/
+void shunt_prim_unblock_socket(int flag , int sockfd);
+
+
+
+/*
+  Function: shunt_prim_tcp_nodelay_socket
+
+  enable/disable Nagle algorithm (TCP_NODELAY)
+ 
+  Parameters:
+ 
+  sockfd - socket
+  flag -  1/0- enable/disable Nagle algorithm (TCP_NODELAY)
+
+  Returns: 
+  
+  N/A
+   
+*/
+void shunt_prim_tcp_nodelay_socket(int flag, int sockfd);
+
+/*
+  Function: shunt_prim_get_status_socket
+  returns status for TCP socket <event> on a fd <soket>
+   Parameters:
+  sockfd - socket
+  short event-  the <event> mask is specifying following 
+
+  - 0- is equal equal POLLIN, data is ready to recv(),
+
+  - 1- is equal to POLLOUT, socket can send() data to this socket without blocking
+
+  - else is equal to POLLNVAL, function returns "process failed" status;
+ 
+  Returns: 
+  socket even status 
+
+  -  "0"- No <event>
+  
+  -  "-1"- <event> process has failed 
+  
+  -  "1"- <event> occurs
+ 
+     
+*/
+
+int shunt_prim_get_status_socket(int fd,int event);
+
 
 /*
 Function: Example:  target,initiator init
