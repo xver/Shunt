@@ -52,6 +52,7 @@ void shunt_cs_print_header (cs_header* h,char* data_type_names[],int last_enum,c
   printf("\n%s h_trnx->n_payloads\t(%0d)",msg,h->n_payloads);
   puts("\n");
   //
+  return;
 }
 
 void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_type_names[],int last_enum,char* msg) {
@@ -66,6 +67,7 @@ void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_
     printf("\n%s h_data->trnx_payload_sizes[%0d]=%d",msg,i,h_data->trnx_payload_sizes[i]);
   }
   puts("\n");
+  return;
 }
 
 int shunt_cs_send_header    (int sockid,cs_header* h) {
