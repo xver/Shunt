@@ -15,7 +15,7 @@
 #define  SHUNT_PRIMITIVES_C
 
 #include "shunt_primitives.h"
-
+#define on_error(...) { fprintf(stderr, __VA_ARGS__); fflush(stderr); exit(1); }
 ////////////////////////////////////
 //Common Functions 
 ////////////////////////////////////
@@ -100,7 +100,7 @@ unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno){
    */
   if (bind(parentfd, (struct sockaddr *) &initiatoraddr, sizeof(initiatoraddr)) < 0) shunt_prim_error("shunt_prim_tcp_parent_init_initiator on binding");
   //int getsockname(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
-
+  
   /*
    * listen: make this socket ready to accept connection requests
    */
@@ -117,16 +117,17 @@ unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd ) {
   struct hostent *hostp; /* target host info */
   char *hostaddrp; /* dotted decimal host addr string */
     
-  
   /*
    * wait for a connection request
    */
   targetlen = sizeof(targetaddr);
-  childfd = accept(parentfd, (struct sockaddr *) &targetaddr, (socklen_t *)&targetlen);
   
+  childfd = -1;
+  
+  childfd = accept(parentfd, (struct sockaddr *) &targetaddr, (socklen_t *)&targetlen);
   if (childfd < 0) {
     shunt_prim_error("shunt_prim_tcp_child_init_initiator on accept");
-    return childfd;
+    //return childfd;
   }
   
   /*
@@ -147,7 +148,9 @@ unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd ) {
   else {
 	  printf("initiator established connection with %s (%s)\n",
 		 hostp->h_name, hostaddrp); }
-  	  return childfd;
+
+
+  return childfd;
 }
 
 unsigned int shunt_prim_init_target(const unsigned int portno,const char *hostname) {
@@ -155,6 +158,7 @@ unsigned int shunt_prim_init_target(const unsigned int portno,const char *hostna
   struct sockaddr_in initiatoraddr;
   struct hostent *initiator;
   
+
   /* socket: create the socket */
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if (sockfd < 0) {
@@ -179,8 +183,56 @@ unsigned int shunt_prim_init_target(const unsigned int portno,const char *hostna
     shunt_prim_error("shunt_prim_init_target connecting");
     return -1;
   }
+  
   return sockfd;
 }
+
+
+int shunt_prim_get_status_socket(int fd,int event) {
+  struct pollfd fds_;
+  int time_;
+  int Result_;
+  
+  Result_=-1;
+  
+  time_=0;
+  fds_.events = POLLNVAL;
+  
+  fds_.fd    = fd;
+  if (event==0)fds_.events =  POLLIN; 
+  if (event==1)fds_.events =  POLLOUT;
+  
+  if(fds_.events != POLLNVAL) { 
+    Result_ = poll(&fds_,1,time_);
+  }
+  
+  return Result_;
+}
+
+
+void shunt_prim_unblock_socket(int flag, int sockfd) {
+  int flags_in;
+  int flags_out;
+  
+  flags_in = fcntl(sockfd, F_GETFL, 0);
+  if (flags_in < 0) on_error("shunt_prim_unblock_socket() Could not get server socket flags: %s\n", strerror(errno))
+  if (flag >  0)  flags_out =  flags_in |  O_NONBLOCK;
+  if (flag == 0)  flags_out =  flags_in | ~O_NONBLOCK;
+  if (fcntl(sockfd, F_SETFL, flags_out)<0)  on_error("shunt_prim_unblock_socket() Could set server socket: %s\n", strerror(errno));
+
+  return;
+}
+
+
+void shunt_prim_tcp_nodelay_socket(int flag, int sockfd) {
+  int err= setsockopt(sockfd, IPPROTO_TCP, TCP_NODELAY, (const char *)&flag, sizeof(int)); 
+    if( err == -1){ 
+       perror("setsockopt"); 
+       exit(1);
+     } 
+  return;
+}
+
 
 //ref to https://stackoverflow.com/questions/12730477/close-is-not-closing-socket-properly
 int shunt_prim_get_socket_error(int fd) {
@@ -202,6 +254,7 @@ void shunt_prim_close_socket(int fd) {
       if (close(fd) < 0) // finally call close()
         shunt_prim_error("close");
    }
+   return;
 }
 
 //////////////////////////////////
