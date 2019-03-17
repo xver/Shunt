@@ -17,6 +17,37 @@ package shunt_dpi_pkg;
 `define SHUNT_MAX_SIZE = 4096;
    //Title: Utilites: System Verilog to C dpi bridge
    
+   //Section: Data exchange structures and utilities
+   /*
+    Variable: shunt_signal_type_e
+    
+    *Integer 2 states:*
+    
+    SHUNT_INT         - int
+    SHUNT_SHORTINT    - shortint
+    SHUNT_LONGINT     - longint
+    SHUNT_BYTE        - byte
+    SHUNT_BIT         - bit
+    
+    *Integer 4 states:*
+    
+    SHUNT_INTEGER     - integer,time
+    SHUNT_REG         - reg,logic
+    
+    *Non integer types IEEE 754:*
+    
+    SHUNT_REAL        - real,realtime
+  SHUNT_SHORTREAL   - shortreal
+    SHUNT_STRING      - string
+    
+    SHUNT_A_STRUCTURE - complex data types/user defined data types : arrays/struct,union,enums 
+    SHUNT_HEADER_ONLY - cs_header_t header only.
+    
+    */
+   /* verilator lint_off UNDRIVEN */
+   typedef enum {SHUNT_NA,SHUNT_INT,SHUNT_REAL,SHUNT_SHORTREAL,SHUNT_STRING,SHUNT_A_STRUCTURE,SHUNT_INTEGER,SHUNT_BYTE,SHUNT_REG,SHUNT_LOGIC,SHUNT_BIT,SHUNT_SHORTINT,SHUNT_LONGINT,SHUNT_HEADER_ONLY} shunt_signal_type_e;
+   /* verilator lint_on UNDRIVEN */
+   
    //Section: TCP/IP target/initiator init 
    
    /*
