@@ -72,7 +72,9 @@ void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_
 
 int shunt_cs_send_header    (int sockid,cs_header* h) {
   int Result_=1;
-  
+  long leader_;  
+  leader_ = shunt_prim_hash("shunt_cs_header_leader");
+  if (shunt_prim_send_long(sockid,&leader_)==0)      Result_=0;
   if (shunt_prim_send_long(sockid,&h->trnx_type)==0) Result_=0;
   if (shunt_prim_send_long(sockid,&h->trnx_id)==0)   Result_=0;
   if (shunt_prim_send_long(sockid,&h->data_type)==0) Result_=0;
@@ -90,13 +92,23 @@ int shunt_cs_send_data_header(int sockid,int n_payloads,cs_data_header* h) {
 }
 
 int shunt_cs_recv_header   (int sockid,cs_header* h) {
-  int Result_=1;
+  int  Result_=1;
+  long leader_in;
+  long leader_ref; 
   
-  if (shunt_prim_recv_long(sockid,&h->trnx_type)==0) Result_=0;
-  if (shunt_prim_recv_long(sockid,&h->trnx_id)==0)   Result_=0;
-  if (shunt_prim_recv_long(sockid,&h->data_type)==0) Result_=0;
-  if (shunt_prim_recv_int(sockid,&h->n_payloads)==0) Result_=0;
-  
+  leader_ref = shunt_prim_hash("shunt_cs_header_leader");
+  if (shunt_prim_recv_long(sockid,&leader_in)==0) Result_=0;
+  if ( Result_ > 0 && (leader_in == leader_ref)) {
+    //printf("shunt_cs_recv_header() get a header=%0ld\n", leader_ref);
+    if (shunt_prim_recv_long(sockid,&h->trnx_type)==0) Result_=0;
+    if (shunt_prim_recv_long(sockid,&h->trnx_id)==0)   Result_=0;
+    if (shunt_prim_recv_long(sockid,&h->data_type)==0) Result_=0;
+    if (shunt_prim_recv_int(sockid,&h->n_payloads)==0) Result_=0;
+  }
+  else { 
+    Result_ =-1;
+    printf("shunt_cs_recv_header() get bad  header=%0ld\n", leader_in);
+  }
   return Result_;
 }
 

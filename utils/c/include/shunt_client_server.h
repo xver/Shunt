@@ -120,7 +120,7 @@ typedef struct cs_header_t {
   long   trnx_type;
   long   trnx_id;
   long   data_type;
-  int      n_payloads;
+  int    n_payloads;
 } cs_header;
 
 /*
