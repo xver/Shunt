@@ -128,7 +128,7 @@ package shunt_dpi_pkg;
     Disable function `define: NO_SHUNT_DPI_CLOSE_SOCKET
     */
  `ifndef NO_SHUNT_DPI_CLOSE_SOCKET  
-   import "DPI-C" function chandle shunt_dpi_close_socket(int fd);
+   import "DPI-C" function void shunt_dpi_close_socket(int fd);
  `endif
    
  
@@ -146,7 +146,7 @@ package shunt_dpi_pkg;
     Disable function `define: NO_SHUNT_DPI_UNBLOCK_SOCKET
     */
  `ifndef NO_SHUNT_DPI_UNBLOCK_SOCKET
-   import "DPI-C" function chandle shunt_dpi_unblock_socket(int flag, int fd);
+   import "DPI-C" function void shunt_dpi_unblock_socket(int flag, int fd);
  `endif 
 
 
@@ -196,7 +196,7 @@ package shunt_dpi_pkg;
     Disable function `define: NO_SHUNT_DPI_TCP_NODELAY_SOCKET
     */
  `ifndef  NO_SHUNT_DPI_TCP_NODELAY_SOCKET
-   import "DPI-C" function chandle  shunt_dpi_tcp_nodelay_socket(int flag, int sockfd);
+   import "DPI-C" function void  shunt_dpi_tcp_nodelay_socket(int flag, int sockfd);
  `endif
    
    /*
