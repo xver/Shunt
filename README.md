@@ -27,7 +27,7 @@ Setup following variables:
  - **“SHUNT_SVDPI”** to the location of svdpi.h file
 
 # Library compilation
- - Go to “$SHUNT_HOME/utils/makedir/utils/makedir“
+ - Go to “$SHUNT_HOME/utils/makedir/“
  - Run “make clean;make all”
 Compile result will be placed under ***${SHUNT_HOME}/bin as a “libutils.so”***
 
