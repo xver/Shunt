@@ -68,5 +68,6 @@ Release History:
 
 If you have any questions please contact us at icshunt.help@gmail.com
 
-!["Copyright (c) 2016 IC Verimeter"] (https://github.com/xver/Shunt/blob/master/doc/IcVerimeter_logo.png)
+!["Copyright (c) 2016 IC Verimeter"](https://github.com/xver/Shunt/blob/master/doc/IcVerimeter_logo.png)
 
+"Copyright (c) 2016 IC Verimeter"
