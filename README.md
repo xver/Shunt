@@ -42,12 +42,14 @@ The Shunt includes a complete Makefile structure for the C portion of the librar
  - Edit “Makefile” initiator/target “compile_sv” under initiator/target
    local makedir(Example: $SHUNT_HOME/examples/sv/sv2c/initiator/makedir)
  - Edit “run” file placeholder. Setup run command for appropriate
-   source. Go to example makedir root directory run “make all” and ./run
-(Example:  $SHUNT_HOME/examples/sv/sv2cmakedir)
+   source. Go to example makedir root directory, run “make all” and ./run
+(Example:  $SHUNT_HOME/examples/sv/sv2c/makedir)
 
 Release History:
 -----------------------
-1.1.1 (Current Version) - TCP/IP socket manipulation: block/unblock , tcp delay/nodelay, get socket status
+1.1.2 (Current Version) - various accumulated fixes and verilator 4.20 support  
+
+1.1.1 - TCP/IP socket manipulation: block/unblock , tcp delay/nodelay, get socket status
 
 1.1.0 - TCP/IP socket manipulation: new Multi-Slave support and close socket functions
 
