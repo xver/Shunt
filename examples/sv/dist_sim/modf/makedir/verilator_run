@@ -1,0 +1,1 @@
+cd ../bin;obj_dir/Vshunt_verilator_dpi | tee modf.log

@@ -1,0 +1,8 @@
+rm -r ../anchor/bin/*
+rm -r ../anchor/bin_srv/*
+make -f ../../../../utils/makefile.init 
+make SIM=verilator build_anchor_sv
+make SIM=verilator build_anchor_sv_srv
+cd ../anchor/makedir_srv;./verilator_run& 
+sleep 5
+cd ../makedir;./verilator_run

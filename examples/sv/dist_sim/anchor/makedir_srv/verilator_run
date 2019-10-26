@@ -1,0 +1,1 @@
+cd ../bin_srv;obj_dir/Vshunt_verilator_dpi | tee anchor_srv.log

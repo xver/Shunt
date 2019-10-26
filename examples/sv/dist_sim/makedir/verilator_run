@@ -1,0 +1,17 @@
+rm -r ../target/bin/*
+rm -r ../initiator/bin/*
+make -f ../../../../utils/makefile.init 
+make SIM=verilator build_sv
+make SIM=verilator run_initiator&
+sleep 20
+make SIM=verilator run_target
+egrep '(fringe_put)' ../initiator/bin/initiator.log > initiator_put.log
+egrep '(fringe_get)' ../initiator/bin/initiator.log > initiator_get.log
+egrep '(fringe_put)' ../target/bin/target.log > target_put.log
+egrep '(fringe_get)' ../target/bin/target.log > target_get.log
+cp ../target/bin/target.log       target.log
+cp ../initiator/bin/initiator.log initiator.log
+cp ../initiator/bin/top_sim.vcd initiator_top_sim.vcd
+cp ../target/bin/top_sim.vcd    target_top_sim.vcd
+ps
+

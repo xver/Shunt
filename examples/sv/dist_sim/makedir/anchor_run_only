@@ -1,0 +1,3 @@
+cd ../anchor/makedir_srv;./verilator_run& 
+sleep 5
+cd ../makedir;./verilator_run

@@ -1,0 +1,80 @@
+begin: init_db     
+   Frng_if.frng_success = Frng_if.init_SrcDsts_db(`N_LINK+1);
+   //
+   Frng_if.frng_success = Frng_if.set_SrcDst_db_entry("link_0",8);
+   Frng_if.frng_success = Frng_if.set_SrcDst_db_entry("link_1",8);
+   Frng_if.frng_success = Frng_if.set_SrcDst_db_entry("link_2",8);
+   Frng_if.frng_success = Frng_if.set_SrcDst_db_entry("link_3",8);
+  
+   Frng_if.frng_success = Frng_if.set_SrcDst_db_entry("TOP_SIM",32);//NUMBER OF SIGNALS TODO !!!!!
+   //
+   if(!Frng_if.pnp_init()) $display("ERROR: %s Frng_if.pnp_init()",Frng_if.who_iam());
+   else $display("PASS %s  Frng_if.pnp_init()",Frng_if.who_iam());
+   Frng_if.frng_success = Frng_if.init_signals_db();
+   //
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_0","clk_cnt[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_0","clk_cnt[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_0","id[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_0","id[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_0","token[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_0","token[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_0","wen[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_0","wen[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_1","clk_cnt[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_1","clk_cnt[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_1","id[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_1","id[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_1","token[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_1","token[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_1","wen[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_1","wen[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_2","clk_cnt[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_2","clk_cnt[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_2","id[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_2","id[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_2","token[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_2","token[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_2","wen[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_2","wen[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_3","clk_cnt[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_3","clk_cnt[3]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_3","id[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_3","id[3]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_3","token[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_3","token[3]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_3","wen[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_3","wen[3]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","clk_cnt[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","clk_cnt[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","clk_cnt[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","clk_cnt[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","clk_cnt[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","clk_cnt[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","clk_cnt[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","clk_cnt[3]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","id[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","id[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","id[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","id[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","id[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","id[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","id[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","id[3]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","token[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","token[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","token[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","token[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","token[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","token[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","token[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","token[3]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","wen[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","wen[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","wen[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","wen[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","wen[1]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","wen[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","wen[2]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("TOP_SIM","wen[3]",10,32);
+end // block: init_db
+

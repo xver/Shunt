@@ -1,0 +1,28 @@
+begin: init_db     
+   Frng_if.frng_success = Frng_if.init_SrcDsts_db(`N_LINK+1);
+   //-----\/--- insert
+   Frng_if.frng_success = Frng_if.set_SrcDst_db_entry("link_0",2);
+   Frng_if.frng_success = Frng_if.set_SrcDst_db_entry(`MY_TOP_NAME,2);
+   //-----/\------
+   if(!Frng_if.pnp_init()) $display("ERROR: %s Frng_if.pnp_init()",Frng_if.who_iam());
+   //if(!Frng_if.tcp_connect_n_frng_reg_target(`MY_PORT,`MY_HOST)) $display("ERROR: %s Frng_if.tcp_connect_n_frng_reg_target",Frng_if.who_iam());
+   else $display("PASS %s  Frng_if.pnp_init()",Frng_if.who_iam());
+   
+   //Frng_if.frng_success = Frng_if.print_SrcDsts_db();
+   //Frng_if.frng_success = Frng_if.print_signals_db();
+   //
+   Frng_if.frng_success = Frng_if.init_signals_db();
+   
+   //-----\/--- insert
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_0","wen[0]",10,32);
+   Frng_if.frng_success = Frng_if.set_signal_db_entry("link_0","wen[1]",10,32);
+   
+   //TODO FRNG_PORT_OUTPUT
+   if (Frng_if.who_iam() == `MY_TOP_NAME) Frng_if.frng_success = Frng_if.set_signal_db_entry(`MY_TOP_NAME,"wen[0]",10,32,FRNG_PORT_OUTPUT);
+   if (Frng_if.who_iam() != `MY_TOP_NAME) Frng_if.frng_success = Frng_if.set_signal_db_entry(`MY_TOP_NAME,"wen[0]",10,32);
+    
+   Frng_if.frng_success = Frng_if.set_signal_db_entry(`MY_TOP_NAME,"wen[1]",10,32);
+   //-----/\------
+   //Frng_if.frng_success = Frng_if.print_SrcDsts_db();
+   Frng_if.frng_success = Frng_if.print_signals_db();
+end // block: init_db

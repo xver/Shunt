@@ -1,0 +1,4 @@
+rm -r ../orgn/bin/*
+make -f ../../../../utils/makefile.init 
+make SIM=verilator build_orgn_sv
+cd ../orgn/makedir;./verilator_run
