@@ -51,6 +51,8 @@ typedef s_vpi_vecval svLogicVecVal;
 #endif
 #endif
 
+//compile error struct hostent has no member named h_addr https://github.com/dound/vns/issues/2
+#define h_addr h_addr_list[0] /* for backward compatibility */
 //-------------
 //prototypes
 //-------------
