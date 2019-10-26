@@ -79,7 +79,9 @@
 // Unsupported: SystemVerilog 2005 reserved word not implemented: shortreal
  `define NO_SHUNT_DPI_HS_RECV_SHORTREAL
  `define NO_SHUNT_DPI_HS_SEND_SHORTREAL
-
+ 
+`define NO_SHUNT_DPI_SEND_TIME
+`define NO_SHUNT_DPI_RECV_TIME
 
 `endif //  `ifndef SHUNT_VERILATOR_DPI_H
 
