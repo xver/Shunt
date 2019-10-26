@@ -1,4 +1,0 @@
-rm -r ../modf/bin/*
-make -f ../../../../utils/makefile.init 
-make SIM=verilator build_modf_sv
-cd ../modf/makedir;./verilator_run
