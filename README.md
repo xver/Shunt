@@ -30,6 +30,11 @@ Setup following variables:
  - Go to “$SHUNT_HOME/utils/makedir/“
  - Run “make clean;make all”
 Compile result will be placed under ***${SHUNT_HOME}/bin as a “libutils.so”***
+# Compile and run all SV/C examples
+
+cd *$SHUNT_HOME/examples/makedir*
+
+*./run_examples* 
 
 # Compile and run C examples
 Go to example makedir root directory. 
