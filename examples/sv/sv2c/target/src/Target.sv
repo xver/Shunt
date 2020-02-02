@@ -66,6 +66,7 @@ module automatic Target;
 	realV_loopback_test(Socket);
 	shortrealV_loopback_test(Socket);
 	integerV_loopback_test(Socket);
+	intV_loopback_test(Socket);
 	shunt_dpi_close_socket(Socket);
 	$finish;	
 	$display("\nTarget: END");
@@ -359,20 +360,39 @@ module automatic Target;
    function void shortV_loopback_test(int socket_id);
       begin
 	 string Test_name;
-	 int 	i;
-         shortint ShortV[`V_SIZE];
+	 shortint ShortV[`V_SIZE];
 	 
    `ifndef NO_SHUNT_DPI_RECV_SHORTV
     `ifndef NO_SHUNT_DPI_SEND_SHORTV	 
 	 Test_name = "target shortV_loopback_test";	 
 	 
 	 if(shunt_dpi_recv_shortV(socket_id,`V_SIZE,ShortV)<=0) $display("%s TEST FAIL",Test_name);
-	 foreach (ShortV[i])$display("\n %s  ShortV[%0d] = %d",Test_name,i,ShortV[i]);
+	 foreach (ShortV[shortV_i])$display("\n %s  ShortV[%0d] = %d",Test_name,shortV_i,ShortV[shortV_i]);
 	 if(shunt_dpi_send_shortV(socket_id,`V_SIZE,ShortV)<=0) $display("%s TEST FAIL",Test_name);
     `endif //`ifndef NO_SHUNT_DPI_RECV_SHORTV
    `endif  //`ifndef NO_SHUNT_DPI_SEND_SHORTV
       end
    endfunction : shortV_loopback_test
+
+   
+   function void intV_loopback_test(int socket_id);
+      begin
+	 string Test_name;
+	 int IntV[`V_SIZE];
+	 
+   `ifndef NO_SHUNT_DPI_RECV_INTV
+    `ifndef NO_SHUNT_DPI_SEND_INTV	 
+	 Test_name = "target intV_loopback_test";	 
+	 
+	 if(shunt_dpi_recv_intV(socket_id,`V_SIZE,IntV)<=0) $display("%s TEST FAIL",Test_name);
+	 foreach (IntV[intV_i])$display("\n %s  IntV[%0d] = %d",Test_name,intV_i,IntV[intV_i]);
+	 if(shunt_dpi_send_intV(socket_id,`V_SIZE,IntV)<=0) $display("%s TEST FAIL",Test_name);
+    `endif //`ifndef NO_SHUNT_DPI_RECV_INTV
+   `endif  //`ifndef NO_SHUNT_DPI_SEND_INTV
+      end
+   endfunction : intV_loopback_test
+   
+  
    
    function void  longV_loopback_test(int socket_id);
       begin
@@ -429,10 +449,12 @@ module automatic Target;
    `ifndef NO_SHUNT_DPI_RECV_INTEGERV
     `ifndef NO_SHUNT_DPI_SEND_INTEGERV       
       Test_name = "target integerV_loopback_test";
-      
+      foreach (IntegerV[i])IntegerV[i]=-1;
+      foreach (IntegerV[i])$display("\n %s  IntegerV[%0d] = %h",Test_name,i,IntegerV[i]);
       if (shunt_dpi_recv_integerV (socket_id,`V_SIZE,IntegerV)<= 0) $display("%s TEST FAIL",Test_name);
       foreach (IntegerV[i])$display("\n %s  IntegerV[%0d] = %h",Test_name,i,IntegerV[i]);
       if (shunt_dpi_send_integerV(socket_id,`V_SIZE,IntegerV)<= 0) $display("%s TEST FAIL",Test_name);
+
     `endif //  `ifndef NO_SHUNT_DPI_SEND_INTEGERV
    `endif //  `ifndef NO_SHUNT_DPI_RECV_INTEGERV
    endfunction : integerV_loopback_test

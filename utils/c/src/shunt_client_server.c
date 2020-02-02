@@ -49,7 +49,7 @@ void shunt_cs_print_header (cs_header* h,char* data_type_names[],int last_enum,c
     printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lu",msg,data_type_names[data_type_],data_type_,h->data_type);
   else
     printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lu",msg,"N/A",data_type_,h->trnx_type);
-  printf("\n%s h_trnx->n_payloads\t(%0d)",msg,h->n_payloads);
+  printf("\n%s h_trnx->n_payloads\t(%0ld)",msg,h->n_payloads);
   puts("\n");
   //
   return;
@@ -71,14 +71,20 @@ void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_
 }
 
 int shunt_cs_send_header    (int sockid,cs_header* h) {
-  int Result_=1;
+  int Result_=0;
   long leader_;  
+  long send_arr[5];
+  int numbytes;
   leader_ = shunt_prim_hash("shunt_cs_header_leader");
-  if (shunt_prim_send_long(sockid,&leader_)==0)      Result_=0;
-  if (shunt_prim_send_long(sockid,&h->trnx_type)==0) Result_=0;
-  if (shunt_prim_send_long(sockid,&h->trnx_id)==0)   Result_=0;
-  if (shunt_prim_send_long(sockid,&h->data_type)==0) Result_=0;
-  if (shunt_prim_send_int(sockid,&h->n_payloads)==0) Result_=0;
+  send_arr[0] = leader_;
+  send_arr[1] = h->trnx_type;
+  send_arr[2] = h->trnx_id;
+  send_arr[3] = h->data_type;
+  send_arr[4] = h->n_payloads;
+  numbytes = send(sockid,send_arr, 5*sizeof(long int), 0);
+  if (numbytes <= 0)  shunt_prim_error("\nERROR in  shunt_cs_send_header : numbytes < 0 ");
+  else  Result_=1; 
+
   return Result_;
 }
 
@@ -95,15 +101,19 @@ int shunt_cs_recv_header   (int sockid,cs_header* h) {
   int  Result_=1;
   long leader_in;
   long leader_ref; 
+  long recv_arr[5];
+  int  numbytes;
+
+  numbytes = recv(sockid,recv_arr ,5*sizeof(long int) , 0);
+  if (numbytes<=0)  Result_=0;
   
+  leader_in     = recv_arr[0];
   leader_ref = shunt_prim_hash("shunt_cs_header_leader");
-  if (shunt_prim_recv_long(sockid,&leader_in)==0) Result_=0;
   if ( Result_ > 0 && (leader_in == leader_ref)) {
-    //printf("shunt_cs_recv_header() get a header=%0ld\n", leader_ref);
-    if (shunt_prim_recv_long(sockid,&h->trnx_type)==0) Result_=0;
-    if (shunt_prim_recv_long(sockid,&h->trnx_id)==0)   Result_=0;
-    if (shunt_prim_recv_long(sockid,&h->data_type)==0) Result_=0;
-    if (shunt_prim_recv_int(sockid,&h->n_payloads)==0) Result_=0;
+    h->trnx_type  = recv_arr[1];
+    h->trnx_id    = recv_arr[2];
+    h->data_type  = recv_arr[3];
+    h->n_payloads = recv_arr[4];  
   }
   else { 
     Result_ =-1;
@@ -129,9 +139,7 @@ int shunt_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h) {
 int shunt_cs_send_intV (int sockid,const cs_header* h,const int* Int) {
   int Result_=-1;
   if (h->data_type==  shunt_prim_hash("SHUNT_INT")) {
-    for (int i=0;i< h->n_payloads;i++) {
-      Result_ = shunt_prim_send_int(sockid,&Int[i]);
-    }
+    Result_ = send(sockid,Int, h->n_payloads*sizeof(int), 0);
   }
   return Result_;
 }
@@ -139,9 +147,7 @@ int shunt_cs_send_intV (int sockid,const cs_header* h,const int* Int) {
 int shunt_cs_send_shortV (int sockid,const cs_header* h,const short int * Short) {
   int Result_=-1;
   if (h->data_type==  shunt_prim_hash("SHUNT_SHORTINT")) {
-    for (int i=0;i< h->n_payloads;i++) {
-      Result_ = shunt_prim_send_short(sockid,&Short[i]);
-    }
+    Result_ = send(sockid,Short, h->n_payloads*sizeof(int), 0);
   }
   return Result_;
 }
@@ -149,9 +155,7 @@ int shunt_cs_send_shortV (int sockid,const cs_header* h,const short int * Short)
 int shunt_cs_send_longV (int sockid,const cs_header* h,const long int * Long) {
   int Result_=-1;
   if (h->data_type==  shunt_prim_hash("SHUNT_LONGINT")) {
-    for (int i=0;i< h->n_payloads;i++) {
-      Result_ = shunt_prim_send_long(sockid,&Long[i]);
-    }
+    Result_ = send(sockid,Long, h->n_payloads*sizeof(long int), 0);
   }
   return Result_;
 }
@@ -240,9 +244,7 @@ int shunt_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* BitN) {
 int  shunt_cs_recv_intV    (int sockid,cs_header* h,int* Int) {
   int Result_=-1;
   if (h->data_type == shunt_prim_hash("SHUNT_INT")) {
-    for (int i=0;i< h->n_payloads;i++) {
-      Result_ = shunt_prim_recv_int(sockid,&Int[i]);
-    }
+    Result_ =  recv(sockid,Int , h->n_payloads*sizeof(int) , 0);
   }
   return Result_;
 }
@@ -250,9 +252,7 @@ int  shunt_cs_recv_intV    (int sockid,cs_header* h,int* Int) {
 int  shunt_cs_recv_shortV    (int sockid,cs_header* h,short int* Shortint) {
   int Result_=-1;
   if (h->data_type == shunt_prim_hash("SHUNT_SHORTINT")) {
-    for (int i=0;i< h->n_payloads;i++) {
-      Result_ = shunt_prim_recv_short(sockid,&Shortint[i]);
-    }
+    Result_ =  recv(sockid,Shortint , h->n_payloads*sizeof(int) , 0);
   }
   return Result_;
 }
@@ -260,9 +260,7 @@ int  shunt_cs_recv_shortV    (int sockid,cs_header* h,short int* Shortint) {
 int  shunt_cs_recv_longV    (int sockid,cs_header* h,long int* Longint) {
   int Result_=-1;
   if (h->data_type == shunt_prim_hash("SHUNT_LONGINT")) {
-    for (int i=0;i< h->n_payloads;i++) {
-      Result_ = shunt_prim_recv_long(sockid,&Longint[i]);
-    }
+    Result_ =  recv(sockid,Longint , h->n_payloads*sizeof(long int) , 0);
   }
   return Result_;
 }

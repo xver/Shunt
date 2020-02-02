@@ -1,4 +1,4 @@
-make build_sv
+make build_sv;touch temp;rm temp;
 make run_initiator &
 sleep 15
 make run_target

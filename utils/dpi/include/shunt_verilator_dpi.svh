@@ -19,7 +19,6 @@
   
  `define NO_CS_DATA_HEADER_T
 
-//syntax error, unexpected ']', expecting TYPE-IDENTIFIER
  `define NO_SHUNT_DPI_HS_RECV_BITN
  `define NO_SHUNT_DPI_HS_SEND_BITN
      
@@ -56,23 +55,15 @@
  `define NO_SHUNT_DPI_RECV_INTEGERV
  `define NO_SHUNT_DPI_SEND_INTEGERV
 
- `define NO_SHUNT_DPI_RECV_INTV
- `define NO_SHUNT_DPI_SEND_INTV
-  
- `define NO_SHUNT_DPI_RECV_LONGV
- `define NO_SHUNT_DPI_SEND_LONGV
- 
  `define NO_SHUNT_DPI_RECV_REALV
  `define NO_SHUNT_DPI_SEND_REALV
 
 
+//Unsupported: SystemVerilog 2005 reserved word not implemented: shortreal
+
  `define NO_SHUNT_DPI_RECV_SHORTREALV
  `define NO_SHUNT_DPI_SEND_SHORTREALV
 
- `define NO_SHUNT_DPI_RECV_SHORTV
- `define NO_SHUNT_DPI_SEND_SHORTV
-
-//Unsupported: SystemVerilog 2005 reserved word not implemented: shortreal
  `define NO_SHUNT_DPI_RECV_SHORTREAL
  `define NO_SHUNT_DPI_SEND_SHORTREAL
 

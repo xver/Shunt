@@ -16,6 +16,7 @@
 
 /* verilator lint_off UNUSED */
 /* verilator lint_off UNDRIVEN */
+/* verilator lint_off VARHIDDEN */
 `include "../../includes/cs_common.svh"
 
 module automatic Initiator;
@@ -89,8 +90,8 @@ module automatic Initiator;
 	print_status(Test_name,Pass);
  `endif
 `endif
-	
-	
+
+
 `ifndef NO_SHUNT_DPI_SEND_TIME
  `ifndef NO_SHUNT_DPI_RECV_TIME 		
 	Test_name = "\ttime loopback";
@@ -214,6 +215,17 @@ module automatic Initiator;
 	print_status(Test_name,Pass);
  `endif
 `endif
+
+
+
+`ifndef NO_SHUNT_DPI_SEND_INTV
+ `ifndef NO_SHUNT_DPI_RECV_INTV		
+	Test_name = "\tintV loopback";
+	Pass=intv_loopback_test(Socket);
+	print_status(Test_name,Pass);
+ `endif
+`endif	
+ 
 	
  	Test_name = "Initiator";
 	print_status(Test_name,Pass);
@@ -593,14 +605,16 @@ module automatic Initiator;
  `ifndef NO_SHUNT_DPI_RECV_REAL	 
       real 	    Real_exp;
       real 	    Real_act;
+      int 	    Result;
       string 	    s_me = "real_loopback_test";
       success =1;
       Real_exp = $random()/7.5;
-      /* verilator lint_off WIDTH */
-      if(shunt_dpi_send_real(socket_id,Real_exp) != 0) success=0;
-      if(shunt_dpi_recv_real(socket_id,Real_act) != 0) success=0;
-      /* verilator lint_on WIDTH */
-      if (Real_exp != Real_act)success=0;
+      
+      if(shunt_dpi_send_real(socket_id,Real_exp) == 0) success=0;
+      if(shunt_dpi_recv_real(socket_id,Real_act) == 0) success=0;
+      Result = int'(Real_exp -Real_act);
+      if (Result != 0 | success==0 ) success=0;
+      
  `endif //  `ifndef NO_SHUNT_DPI_RECV_REAL
 `endif //  `ifndef NO_SHUNT_DPI_SEND_REAL
       return  success;
@@ -628,14 +642,21 @@ module automatic Initiator;
 `ifndef NO_SHUNT_DPI_SEND_STRING
  `ifndef NO_SHUNT_DPI_RECV_STRING	 
       int 	    i;
+      string 	    Test_name;
       string 	    String_exp;
       string 	    String_act;
       string 	    s_me = "string_loopback_test";
       String_exp = `STRING_MESSAGE;
-      String_act = `STRING_MESSAGE1;
+      String_act = `STRING_MESSAGE1; 
       success =1;
-      if(shunt_dpi_send_string(socket_id,String_exp.len(),String_exp) !=0)  success =0;
-      if(shunt_dpi_recv_string(socket_id,String_exp.len(),String_act) !=0)  success =0;
+      
+      Test_name = "initiator string_loopback_test send";
+      if(shunt_dpi_send_string(socket_id,String_exp.len(),String_exp) <= 0)  success =0;
+      
+      Test_name = "initiator string_loopback_test recv";
+      if(shunt_dpi_recv_string(socket_id,String_exp.len(),String_act) <= 0)  success =0;
+      $display("\n %s String = %s",Test_name,String_act);
+      
       if(String_act != String_exp) success =0;
  `endif //  `ifndef NO_SHUNT_DPI_RECV_STRING
 `endif //  `ifndef NO_SHUNT_DPI_SEND_STRING
@@ -646,40 +667,64 @@ module automatic Initiator;
       int 	    success;
 `ifndef NO_SHUNT_DPI_SEND_SHORTV
  `ifndef NO_SHUNT_DPI_RECV_SHORTV	 
-      int 	    i;
+      int 	    shortV_i;
       shortint 	    ShortV_exp[`V_SIZE];
       shortint 	    ShortV_act[`V_SIZE];
       string 	    s_me = "shortV_loopback_test";
       success =1;
-      foreach(ShortV_exp[i]) ShortV_exp[i] = 100+(i+1);
-      foreach(ShortV_act[i]) ShortV_act[i] = 300+(i+1);
-      if(shunt_dpi_send_shortV(socket_id,`V_SIZE,ShortV_exp) != 0) success =0;
-      if(shunt_dpi_recv_shortV(socket_id,`V_SIZE,ShortV_act) != 0) success =0;
-      foreach(ShortV_exp[i]) if(ShortV_act[i] != ShortV_exp[i]) success =0;
+      foreach(ShortV_exp[shortV_i]) ShortV_exp[shortV_i] = 100+shortint'(shortV_i+1);
+      foreach(ShortV_act[shortV_i]) ShortV_act[shortV_i] = 300+shortint'(shortV_i+1);
+      if(shunt_dpi_send_shortV(socket_id,`V_SIZE,ShortV_exp) <= 0) success =0;
+      if(shunt_dpi_recv_shortV(socket_id,`V_SIZE,ShortV_act) <= 0) success =0;
+      foreach(ShortV_exp[shortV_i]) if(ShortV_act[shortV_i] != ShortV_exp[shortV_i]) success =0;
  `endif //  `ifndef NO_SHUNT_DPI_RECV_SHORTV
 `endif //  `ifndef NO_SHUNT_DPI_SEND_SHORTV
       return  success;
    endfunction : shortV_loopback_test
+
+     function int intv_loopback_test(int socket_id);
+      int 	    success;
+`ifndef NO_SHUNT_DPI_SEND_INTV
+ `ifndef NO_SHUNT_DPI_RECV_INTV	 
+      int 	    intv_i;
+      int 	    Intv_exp[`V_SIZE];
+      int 	    Intv_act[`V_SIZE];
+      string 	    s_me = "intv_loopback_test";
+      success =1;
+      foreach(Intv_exp[intv_i]) Intv_exp[intv_i] = 200+intv_i;
+      foreach(Intv_act[intv_i]) Intv_act[intv_i] = 400+intv_i+1;
+      if(shunt_dpi_send_intV(socket_id,`V_SIZE,Intv_exp) <= 0) success =0;
+      if(shunt_dpi_recv_intV(socket_id,`V_SIZE,Intv_act) <= 0) success =0;
+      foreach(Intv_exp[intv_i]) if(Intv_act[intv_i] != Intv_exp[intv_i]) success =0;
+ `endif //  `ifndef NO_SHUNT_DPI_RECV_INTV
+`endif //  `ifndef NO_SHUNT_DPI_SEND_INTV
+      return  success;
+   endfunction : intv_loopback_test
+
+   
+
    
    function int longV_loopback_test(int socket_id);
       int 	    success;
 `ifndef NO_SHUNT_DPI_SEND_LONGV
- `ifndef NO_SHUNT_DPI_RECV_LONGV	 
-      int 	    i;
+ `ifndef NO_SHUNT_DPI_RECV_LONGV
+      /* verilator lint_off WIDTH */
+      int 	    i_;
       longint 	    LongV_exp[`V_SIZE];
       longint 	    LongV_act[`V_SIZE];
       string 	    s_me = "longV_loopback_test";
       success =1;
-      foreach(LongV_exp[i]) LongV_exp[i] = 100+(i+1);
-      foreach(LongV_act[i]) LongV_act[i] = 300+(i+1);
-      if(shunt_dpi_send_longV(socket_id,`V_SIZE,LongV_exp) != 0) success =0;
+      foreach(LongV_exp[i_]) LongV_exp[i_] = 100+longint'(i_+1);
+      foreach(LongV_act[i_]) LongV_act[i_] = 300+longint'(i_+1);
+      if(shunt_dpi_send_longV(socket_id,`V_SIZE,LongV_exp) <= 0) success =0;
       if (success == 0 )  $display("\ninitiator: fail send data");
-      if(shunt_dpi_recv_longV(socket_id,`V_SIZE,LongV_act) != 0) success =0;
+      if(shunt_dpi_recv_longV(socket_id,`V_SIZE,LongV_act) <= 0) success =0;
       if (success == 0 )  $display("\ninitiator: fail recv data");
-      foreach(LongV_exp[i]) if(LongV_act[i] != LongV_exp[i]) success =0;
+      foreach(LongV_exp[i_]) if(LongV_act[i_] != LongV_exp[i_]) success =0;
  `endif //  `ifndef NO_SHUNT_DPI_RECV_LONGV
 `endif //  `ifndef NO_SHUNT_DPI_SEND_LONGV
       return  success;
+     /* verilator lint_on WIDTH */ 
    endfunction : longV_loopback_test
    
    function int realV_loopback_test(int socket_id,int n_payloads=1);
@@ -733,17 +778,18 @@ module automatic Initiator;
       int     success;
 `ifndef NO_SHUNT_DPI_SEND_INTEGERV
  `ifndef NO_SHUNT_DPI_RECV_INTEGERV  	 
-      int     i;
+      int     i_;
       integer IntegerV_exp[`V_SIZE];
       integer IntegerV_act[`V_SIZE];
       string  Test_name = "initiator integerV_loopback_test";
       success =1;
-      for(int i=0;i<`V_SIZE;i++) IntegerV_exp[i] = 540+i;
+      for(int i_=0;i_<`V_SIZE;i_++) IntegerV_exp[i_] = 540+i_;
+      foreach (IntegerV_exp[i])$display("\n %s  IntegerV_exp[%0d] = %h",Test_name,i,IntegerV_exp[i]);
       if (shunt_dpi_send_integerV  (socket_id,`V_SIZE,IntegerV_exp)<= 0) success = 0;
       if (success == 0 )  $display("\ninitiator: fail send data");
       if (shunt_dpi_recv_integerV(socket_id,`V_SIZE,IntegerV_act)<= 0) success = 0;
       if (success == 0 )  $display("\ninitiator: fail recv data");
-      foreach (IntegerV_exp[i]) if(IntegerV_act[i] !== IntegerV_exp[i])  success = 0;
+      foreach (IntegerV_exp[i_]) if(IntegerV_act[i_] !== IntegerV_exp[i_])  success = 0;
       if (success == 0 )  $display("\ninitiator: fail comp data");
  `endif //  `ifndef NO_SHUNT_DPI_RECV_INTEGERV
 `endif //  `ifndef NO_SHUNT_DPI_SEND_INTEGERV

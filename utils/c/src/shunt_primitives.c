@@ -204,11 +204,10 @@ int shunt_prim_get_status_socket(int fd,int event) {
   
   if(fds_.events != POLLNVAL) { 
     Result_ = poll(&fds_,1,time_);
+    if( Result_ == POLLERR ) 	printf("POLL_ERR(%0d) Error on poll fd(%0d) ",Result_,fd);
   }
-  
   return Result_;
 }
-
 
 void shunt_prim_unblock_socket(int flag, int sockfd) {
   int flags_in;
@@ -323,7 +322,6 @@ int shunt_prim_send_double    (const int sockfd,const double* Double)
   
   int numbytes;
   numbytes = send(sockfd, Double, sizeof(double), 0);
-  
   if (numbytes < 0) shunt_prim_error("ERROR shunt_cs_send_double: numbytes < 0 ");
   return numbytes;
 }
@@ -333,7 +331,6 @@ int shunt_prim_send_float    (const int sockfd,const float* Float)
 
   int numbytes;
   numbytes = send(sockfd, Float, sizeof(float), 0);
-  
   if (numbytes < 0) shunt_prim_error("ERROR shunt_cs_send_float: numbytes < 0 ");
   return numbytes;
 }

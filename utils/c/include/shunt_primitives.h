@@ -30,6 +30,7 @@
 #include <fcntl.h>
 #include <netinet/tcp.h>
 #include <poll.h>
+#include <signal.h>
 
 #ifdef SHUNT_SVDPI
 #include "svdpi.h"
