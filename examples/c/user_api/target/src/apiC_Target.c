@@ -104,19 +104,10 @@ int main(void) {
     if (shunt_api_send(socket,&h_trnx,String)<=0) success = 0;
     if (success == 0 )  printf("\n target String data fail to send");
     
-    //pkt LongV
-    //header
-    long int* LongV;
-    //data
-    LongV = (long int*)malloc(h_trnx.n_payloads* sizeof(long int));
     
-    success = shunt_api_rcv_pkt_longV (socket,&h_trnx,LongV);
-    if (success == 0 )  printf("\n target Long data fail to recv");
-    //send loopback
-    success=shunt_pkt_send_longV (socket, &h_trnx, LongV);
-    if (success == 0 )  printf("\n target String data fail to send");
+    
     ////////////////////////////////////
-    puts("\napiC_Target end");
+    //puts("\napiC_Target end");
   }
   
   if ( success >0)

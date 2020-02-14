@@ -259,7 +259,7 @@ Function: shunt_cs_send_intV
   Parameters:
   sockid - socket id
   header - cs_header structure
-  IntV - data array
+  Int - data
   
   Returns:
   number of elements have been sent  : success > 0
@@ -329,7 +329,7 @@ Function: shunt_cs_send_longV
   Parameters:
   sockid - socket id
   header - cs_header structure
-  LongV   - data array 
+  Int,Short,Long   - data
   
   Returns:
   number of elements have been sent  : success > 0
