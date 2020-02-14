@@ -108,6 +108,39 @@ int shunt_api_send    (int sockid,cs_header* h_trnx, ...);
 */
 int shunt_api_recv (int sockid,cs_header* h_trnx, ...);
 
+//Section: Data exchange header plus data utilities (API)
+
+
+/*
+  Function: shunt_pkt_send_longV  
+  send fixed size packet ( SHUNT cs_header + "longint" data payload vector) over TCP/IP
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h_trnx - cs_header structure
+  longV - data payload
+  
+  Returns:
+  number of elements have been sent  : success > 0
+*/
+int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long int* Long);
+
+/*
+  Function: shunt_pkt_rcv_longV
+  fetch fixed size packet (SHUNT cs_header + "longint" data payload vector) over TCP/IP
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h_trnx - cs_header structure
+  longV -  data payload
+  
+  Returns:
+  number of elements have been received  : success > 0
+*/
+int shunt_pkt_rcv_longV  (int sockid, cs_header* header,long int* Long);
+
 #endif
 
 

@@ -178,6 +178,58 @@ int shunt_api_recv    (int sockid,cs_header* h_trnx,...) {
   va_end(ap);
   return Result_; 
 }
+
+int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long int* LongV) {  
+  int  Result_     = 0;
+
+  //long int mem/array
+  //pkt size: leader +  cs_header + input array
+  int  size_       = sizeof(long int)+sizeof(*header)+ header->n_payloads*sizeof(long int);
+  int  offset      = 0;
+  
+  //send array init
+  long leader_        = shunt_prim_hash("shunt_cs_header_leader");
+  long int* send_arr_ = malloc(size_); // array to hold the result
+  send_arr_[offset]   = leader_;
+  offset++;
+  
+  //copy/allocate
+  memcpy(&send_arr_[offset], header,sizeof(*header));
+  memcpy(&send_arr_[sizeof(*header)/sizeof(long int)+offset],LongV,header->n_payloads*sizeof(long int));
+    
+  int numbytes_ = send(sockid,send_arr_,size_, 0);
+  if (numbytes_ <= 0)  shunt_prim_error("\nERROR in  shunt_cs_send_header : numbytes < 0 ");
+  else  Result_=numbytes_;
+  
+  free(send_arr_);
+  return Result_;
+}
+
+int shunt_api_rcv_pkt_longV  (int sockid, cs_header* header,long int* LongV) {
+  //
+  //long int mem/array
+  //pkt size: leader +  cs_header + input array
+  int  size_        = sizeof(long int)+sizeof(*header)+ header->n_payloads*sizeof(long int);
+  int  offset       = 0;
+  int  header_size_ = sizeof(*header)/sizeof(long int);
+  int numbytes_     = -1;
+  //recive array init
+  long leader_        = shunt_prim_hash("shunt_cs_header_leader");
+  long int* recv_arr_ = malloc(size_); // array to hold the result
+  
+  //
+  numbytes_ =  recv(sockid,recv_arr_ ,size_ , 0);
+  if (numbytes_ <= 0) shunt_prim_error("\nERROR in shunt_api_rcv_pkt_longV : numbytes < 0 ");
+  if (leader_ == recv_arr_[offset]) {
+    offset= offset+1;  
+    memcpy(header,&recv_arr_[offset],sizeof(*header));
+    offset = offset +header_size_;  
+    memcpy(LongV,&recv_arr_[offset],header->n_payloads*sizeof(long int));
+  }
+  else printf("shunt_api_rcv_pkt_longV() get bad  header=%0ld\n", recv_arr_[0] );
+  free(recv_arr_ );
+  return  numbytes_;
+}
 #endif
 
 

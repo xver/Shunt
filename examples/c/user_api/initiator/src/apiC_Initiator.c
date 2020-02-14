@@ -200,8 +200,44 @@ int main(void) {
     
     success =1;
     
+    //header+LongV test
     
+    long int LongVexp[n];
+    long int* LongVact;
+    msg = "Initiator: Long Int Packet Test ";
+    for (int i = 0; i < n; i++) {
+      LongVexp[i] = rand();
+    }
+    
+    //set up header
+    h_trnx_exp.trnx_type = rand();
+    h_trnx_exp.trnx_id   = rand();
+    h_trnx_exp.data_type = shunt_cs_data_type_hash(SHUNT_LONGINT,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY);
+    h_trnx_exp.n_payloads = n;
+    
+    //send
+    success=shunt_pkt_send_longV (socket, &h_trnx_exp, LongVexp);
+     
+    //recv
+    LongVact = malloc(sizeof(long int)*h_trnx_act.n_payloads);
 
+    if (shunt_api_rcv_pkt_longV(socket,&h_trnx_act,LongVact)<= 0) success = 0;
+    if (success == 0 )  printf("\nLongV loopback fail recv");
+    //compare
+    if (shunt_cs_comp_longV  (&h_trnx_exp,LongVexp,LongVact)<= 0) success = 0;
+    
+    if (success > 0 )  printf("\n\t%s loopback pass",msg);
+    else  {
+      printf("\n %s loopback fail",msg);
+      msg = "initiator: header trnx_exp";
+      shunt_cs_print_header (&h_trnx_exp,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
+      msg = "initiator: header trnx_act";
+      shunt_cs_print_header (&h_trnx_act,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
+      msg = "initiator: data_exp";
+      shunt_cs_print_longV(&h_trnx_exp,LongVexp,msg);
+      msg = "initiator: data_act";
+      shunt_cs_print_longV(&h_trnx_act,LongVact,msg);
+    }
     ////////////////////////////////////////
       
     puts("\n\napiC_Initiator end");
