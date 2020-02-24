@@ -955,16 +955,13 @@ package shunt_dpi_pkg;
    //Section: Integer/Non integer dynamic vectors     
    
    // Variable: cs_header_t
-   
- /* verilator lint_off UNPACKED */  
-   typedef struct{		
-      longint 	 trnx_type;
-      longint 	 trnx_id;
-      longint 	 data_type;
-      int 	 n_payloads;
+   typedef struct packed {		
+      longint 	trnx_type;
+      longint 	trnx_id;
+      longint 	data_type;
+      longint 	n_payloads;
    } cs_header_t;
-/* verilator lint_on UNPACKED */   
-  
+   
    // Variable: cs_data_header_t
    // See Also:
    // <Data exchange structures and utilities>      
@@ -1527,5 +1524,40 @@ package shunt_dpi_pkg;
    import "DPI-C" function int shunt_dpi_hs_recv_logicN (input int sockid,input cs_header_t h_trnx,inout logic[] Reg);
 `endif
    
+   /*
+    Function: shunt_pkt_send_longV  
+    map unpacked "longint" paket (cs_header structure + one-dimensional data payload array)
+  
+    Parameters:
+    
+    sockid - socket id from init sever/client 
+    h - cs_header structure
+    longV - data payload
+    
+    Returns:
+    number of elements have been sent  : success > 0
+    */
+   
+`ifndef NO_SHUNT_DPI_SEND_PKT_LONGV 
+   import "DPI-C" function int shunt_dpi_send_pkt_longV (input int sockid,input cs_header_t h_trnx,input  longint Int[]);
+`endif
+
+   /*
+    Function: shunt_pkt_send_longV  
+    map unpacked "longint" paket (cs_header structure + one-dimensional data payload array)
+    
+    Parameters:
+    
+    sockid - socket id from init sever/client 
+    h - cs_header structure
+    longV - data payload
+    
+    Returns:
+    number of elements have been sent  : success > 0
+    */  
+   
+`ifndef NO_SHUNT_DPI_RECV_PKT_LONGV 
+   import "DPI-C" function int shunt_dpi_recv_pkt_longV (input int sockid,inout cs_header_t h,output longint Int[]);
+`endif  
    
 endpackage : shunt_dpi_pkg
