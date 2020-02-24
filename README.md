@@ -52,7 +52,9 @@ The Shunt includes a complete Makefile structure for the C portion of the librar
 
 Release History:
 -----------------------
-1.1.2 (Current Version) - various accumulated fixes and verilator 4.20 support  
+1.2.0 (Current Version) - TCP/IP optimization ,new fixed size packet communication functions,big/little endian support.examples and doc updates
+
+1.1.2 - various accumulated fixes and verilator 4.20 support  
 
 1.1.1 - TCP/IP socket manipulation: block/unblock , tcp delay/nodelay, get socket status
 
