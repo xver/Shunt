@@ -34,10 +34,8 @@
 
 #ifdef SHUNT_SVDPI
 #include "svdpi.h"
-
 #else
 #ifndef INCLUDED_SVDPI
-
 typedef uint8_t svScalar;
 typedef svScalar svLogic; /* scalar */
 typedef svScalar svBit; /* scalar */
