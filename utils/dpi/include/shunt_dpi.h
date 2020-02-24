@@ -1080,5 +1080,66 @@ int shunt_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBi
 int shunt_dpi_recv_bitN     (const int sockfd,const int size,svBitVecVal* bitN);
 int shunt_dpi_hs_recv_bitN  (const int sockfd,const cs_header* h_trnx,svBitVecVal* bitN);
 
+/*
+    Functions:   shunt_dpi_send_longV 
+    map unpacked "longint" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockid - socket id
+    size - number of vector elements 
+    Int - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+*/
+int shunt_dpi_send_longV(int sockid, const int size,const svOpenArrayHandle Int);
+
+ /*
+    Functions: shunt_dpi_recv_longV
+    map unpacked "longint" one-dimensional array
+    LRM 7.4.2 
+    
+    Parameters:
+    sockid - socket id
+    size - number of vector elements 
+    Int - data
+    
+    Returns: 
+    number of bytes have been recv : success > 0
+    
+ */
+int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int);
+
+
+/*
+  Function: shunt_pkt_send_longV  
+   map unpacked "longint" paket (cs_header structure + one-dimensional data payload array)
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h - cs_header structure
+  longV - data payload
+  
+  Returns:
+  number of elements have been sent  : success > 0
+*/
+int shunt_dpi_send_pkt_longV  (int sockid, const cs_header* h,const  svOpenArrayHandle Long);
+
+/*
+  Function: shunt_pkt_rcv_longV
+  map unpacked "longint" packet (cs_header structure + one-dimensional data payload array)
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h - cs_header structure
+  longV -  data payload
+  
+  Returns:
+  number of elements have been received  : success > 0
+*/
+int shunt_dpi_recv_pkt_longV  (int sockid, cs_header* h, svOpenArrayHandle Long);
 
 #endif /* SHUNT_DPI_H_ */
