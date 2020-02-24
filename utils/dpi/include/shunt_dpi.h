@@ -1113,7 +1113,7 @@ int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int);
 
 
 /*
-  Function: shunt_pkt_send_longV  
+  Function: shunt_dpi_send_pkt_longV
    map unpacked "longint" paket (cs_header structure + one-dimensional data payload array)
   
   Parameters:
@@ -1128,7 +1128,7 @@ int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int);
 int shunt_dpi_send_pkt_longV  (int sockid, const cs_header* h,const  svOpenArrayHandle Long);
 
 /*
-  Function: shunt_pkt_rcv_longV
+  Function:  shunt_dpi_recv_pkt_longV
   map unpacked "longint" packet (cs_header structure + one-dimensional data payload array)
   
   Parameters:

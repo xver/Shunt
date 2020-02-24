@@ -108,8 +108,7 @@ int shunt_api_send    (int sockid,cs_header* h_trnx, ...);
 */
 int shunt_api_recv (int sockid,cs_header* h_trnx, ...);
 
-//Section: Data exchange header plus data utilities (API)
-
+//Section: Fixed size packet communication Data exchange (API)
 
 /*
   Function: shunt_pkt_send_longV  

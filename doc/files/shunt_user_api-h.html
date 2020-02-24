@@ -35,10 +35,29 @@
  <div class="CBody"><p>variadic function,send data over TCP/IP.</p><div class="CHeading">Parameters</div><p><b>Named arguments</b> :</p><table class="CDefinitionList"><tr><td class="CDLEntry">sockid<div class="CDLParameterType"><span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket id from init sever/client</p></td></tr><tr><td class="CDLEntry">h_trnx<div class="CDLParameterType">cs_header*</div></td><td class="CDLDefinition"><p>cs_header structure</p></td></tr></table><p><b>Unnamed arguments</b> :</p><ul><li><p>int*;</p></li><li><p>short int*;</p></li><li><p>long&nbsp; int*;</p></li><li><p>svLogicVecVal* (Integer,Reg);</p></li><li><p>svBitVecVal*&nbsp; (Bit);</p></li><li><p>double*;</p></li><li><p>float*;</p></li><li><p>char*&nbsp; (String);</p></li></ul><div class="CHeading">Returns</div><p>number of elements have been sent&nbsp; : success &gt; 0</p></div>
 </div>
 
-<a name="shunt_api_recv"></a><a name="Topic28"></a><div class="CTopic TFunction LC last">
+<a name="shunt_api_recv"></a><a name="Topic28"></a><div class="CTopic TFunction LC">
  <div class="CTitle">shunt_api_recv</div>
  <div id="NDPrototype28" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">int</span> shunt_api_recv (</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="first"></td><td class="PType"><span class="SHKeyword">int</span>&nbsp;</td><td></td><td class="PName last">sockid,</td></tr><tr><td class="first"></td><td class="PType">cs_header&nbsp;</td><td class="PNamePrefix">*</td><td class="PName last">h_trnx,</td></tr><tr><td class="PModifierQualifier first">...</td><td></td><td></td><td class="last"></td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
  <div class="CBody"><p>variadic function,fetch data from TCP/IP socket</p><div class="CHeading">Parameters</div><p><b>Named arguments</b> :</p><table class="CDefinitionList"><tr><td class="CDLEntry">sockid<div class="CDLParameterType"><span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket id from init sever/client</p></td></tr><tr><td class="CDLEntry">h_trnx<div class="CDLParameterType">cs_header*</div></td><td class="CDLDefinition"><p>cs_header structure</p></td></tr></table><p><b>Unnamed arguments</b> :</p><ul><li><p>int*;</p></li><li><p>short int*;</p></li><li><p>long&nbsp; int*;</p></li><li><p>svLogicVecVal* (Integer,Reg);</p></li><li><p>svBitVecVal*&nbsp; (Bit);</p></li><li><p>double*;</p></li><li><p>float*;</p></li><li><p>char*&nbsp; (String);</p></li></ul><div class="CHeading">Returns</div><p>number of elements have been received&nbsp; : success &gt; 0</p></div>
+</div>
+
+<a name="Fixed_size_packet_communication_Data_exchange"></a><a name="Topic176"></a><div class="CTopic TSection LC">
+ <div class="CTitle">Fixed size packet communication Data exchange (API)</div>
+</div>
+
+<a name="Functions(2)"></a><a name="Topic260"></a><div class="CTopic TGroup LC">
+ <div class="CTitle">Functions</div>
+</div>
+
+<a name="shunt_pkt_send_longV"></a><a name="Topic261"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">shunt_pkt_send_longV</div>
+ <div id="NDPrototype261" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">int</span> shunt_pkt_send_longV (</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="first"></td><td class="PType"><span class="SHKeyword">int</span>&nbsp;</td><td></td><td class="PName last">sockid,</td></tr><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span>&nbsp;</td><td class="PType">cs_header&nbsp;</td><td class="PNamePrefix">*</td><td class="PName last">header,</td></tr><tr><td class="PModifierQualifier first"><span class="SHKeyword">const long</span>&nbsp;</td><td class="PType"><span class="SHKeyword">int</span>&nbsp;</td><td class="PNamePrefix">*</td><td class="PName last">Long</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>send fixed size packet ( SHUNT cs_header + &quot;longint&quot; data payload vector) over TCP/IP</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">sockid<div class="CDLParameterType"><span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket id from init sever/client</p></td></tr><tr><td class="CDLEntry">h_trnx</td><td class="CDLDefinition"><p>cs_header structure</p></td></tr><tr><td class="CDLEntry">longV</td><td class="CDLDefinition"><p>data payload</p></td></tr></table><div class="CHeading">Returns</div><p>number of elements have been sent&nbsp; : success &gt; 0</p></div>
+</div>
+
+<a name="shunt_pkt_rcv_longV"></a><a name="Topic262"></a><div class="CTopic TFunction LC last">
+ <div class="CTitle">shunt_pkt_rcv_longV</div>
+ <div class="CBody"><p>fetch fixed size packet (SHUNT cs_header + &quot;longint&quot; data payload vector) over TCP/IP</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">sockid</td><td class="CDLDefinition"><p>socket id from init sever/client</p></td></tr><tr><td class="CDLEntry">h_trnx</td><td class="CDLDefinition"><p>cs_header structure</p></td></tr><tr><td class="CDLEntry">longV</td><td class="CDLDefinition"><p>data payload</p></td></tr></table><div class="CHeading">Returns</div><p>number of elements have been received&nbsp; : success &gt; 0</p></div>
 </div>
 
 </body></html>
