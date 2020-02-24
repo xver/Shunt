@@ -552,7 +552,6 @@ int shunt_dpi_recv_integerV (const unsigned int sockid,const int size,svLogicVec
   
   return shunt_cs_recv_integerV(sockid,&h_,IntegerV_); 
 }
-//////////////////////
 
 int shunt_dpi_hs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
   svLogicVecVal* Reg_ =  (svLogicVecVal*)svGetArrayPtr((svOpenArrayHandle*)Reg);
@@ -604,4 +603,19 @@ int shunt_dpi_hs_recv_bitN  (const int sockfd,const cs_header* h_trnx,svBitVecVa
     svBitVecVal* bitN_ =  (svBitVecVal*)svGetArrayPtr((svOpenArrayHandle*)bitN);
     return shunt_cs_recv_bitN  (sockfd,h_trnx,bitN_);
 }
+
+int shunt_dpi_send_pkt_longV  (int sockid, const cs_header* h,const  svOpenArrayHandle Long) {
+  int Result_ =0;
+  long int* Long_= (long int *) svGetArrayPtr(Long);
+  Result_ = shunt_pkt_send_longV (sockid,h,Long_);
+  return Result_;
+}
+
+int shunt_dpi_recv_pkt_longV  (int sockid, cs_header* h, svOpenArrayHandle Long){
+  int Result_ =0;
+  long int* Long_ = (long int *) svGetArrayPtr(Long);
+  Result_ = shunt_pkt_recv_longV  (sockid,h,Long_);
+  return Result_;
+}
+
 #endif /* SHUNT_DPI_C_ */
