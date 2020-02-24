@@ -221,7 +221,7 @@ int main(void) {
     //recv
     LongVact = malloc(sizeof(long int)*h_trnx_act.n_payloads);
 
-    if (shunt_api_rcv_pkt_longV(socket,&h_trnx_act,LongVact)<= 0) success = 0;
+    if (shunt_pkt_recv_longV(socket,&h_trnx_act,LongVact)<= 0) success = 0;
     if (success == 0 )  printf("\nLongV loopback fail recv");
     //compare
     if (shunt_cs_comp_longV  (&h_trnx_exp,LongVexp,LongVact)<= 0) success = 0;
