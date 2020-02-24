@@ -2,7 +2,6 @@ rm -f  shunt.log
 #C
 pushd .;cd ../c/primitives/makedir;make > $SHUNT_HOME/examples/makedir/shunt.log ;popd
 pushd .;cd ../c/client_server/makedir;make >> $SHUNT_HOME/examples/makedir/shunt.log ;popd
-pushd .;cd ../c/client_server/makedir;make >> $SHUNT_HOME/examples/makedir/shunt.log ;popd
 pushd .;cd ../c/user_api/makedir/;make >> $SHUNT_HOME/examples/makedir/shunt.log ;popd
 #SV
 command -v verilator >/dev/null 2>&1 || { echo >&2 "Shunt SV tests are required verilator but it's not installed.";}
