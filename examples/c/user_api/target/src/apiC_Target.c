@@ -110,7 +110,7 @@ int main(void) {
     //data
     LongV = (long int*)malloc(h_trnx.n_payloads* sizeof(long int));
     
-    success = shunt_api_rcv_pkt_longV (socket,&h_trnx,LongV);
+    success = shunt_pkt_recv_longV (socket,&h_trnx,LongV);
     if (success == 0 )  printf("\n target Long data fail to recv");
     //send loopback
     success=shunt_pkt_send_longV (socket, &h_trnx, LongV);
