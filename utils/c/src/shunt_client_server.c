@@ -49,7 +49,7 @@ void shunt_cs_print_header (cs_header* h,char* data_type_names[],int last_enum,c
     printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lu",msg,data_type_names[data_type_],data_type_,h->data_type);
   else
     printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lu",msg,"N/A",data_type_,h->trnx_type);
-  printf("\n%s h_trnx->n_payloads\t(%0ld)",msg,h->n_payloads);
+  printf("\n%s h_trnx->n_payloads\t(%0lu)",msg,h->n_payloads);
   puts("\n");
   //
   return;
@@ -72,16 +72,12 @@ void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_
 
 int shunt_cs_send_header    (int sockid,cs_header* h) {
   int Result_=0;
-  long leader_;  
-  long send_arr[5];
+  long send_arr[(sizeof(*h) + sizeof(long int))/sizeof(long int)];
   int numbytes;
-  leader_ = shunt_prim_hash("shunt_cs_header_leader");
-  send_arr[0] = leader_;
-  send_arr[1] = h->trnx_type;
-  send_arr[2] = h->trnx_id;
-  send_arr[3] = h->data_type;
-  send_arr[4] = h->n_payloads;
-  numbytes = send(sockid,send_arr, 5*sizeof(long int), 0);
+      
+  send_arr[0] = shunt_prim_hash("shunt_cs_header_leader");
+  memcpy(&send_arr[1], h,sizeof(*h));
+  numbytes = send(sockid,send_arr,sizeof(*h) + sizeof(long int), 0);
   if (numbytes <= 0)  shunt_prim_error("\nERROR in  shunt_cs_send_header : numbytes < 0 ");
   else  Result_=1; 
 
@@ -99,25 +95,23 @@ int shunt_cs_send_data_header(int sockid,int n_payloads,cs_data_header* h) {
 
 int shunt_cs_recv_header   (int sockid,cs_header* h) {
   int  Result_=1;
-  long leader_in;
-  long leader_ref; 
-  long recv_arr[5];
-  int  numbytes;
+  long int leader_in;
+  long int leader_ref; 
+  long recv_arr[(sizeof(*h) + sizeof(long int))/sizeof(long int)];
+  int  numbytes=0;
 
-  numbytes = recv(sockid,recv_arr ,5*sizeof(long int) , 0);
-  if (numbytes<=0)  Result_=0;
-  
+  numbytes = recv(sockid,recv_arr ,sizeof(*h) + sizeof(long int), 0);
+  if (numbytes<0)   shunt_prim_error("\nERROR in shunt_cs_recv_header : numbytes < 0 ");
+  Result_ = numbytes; 
+
   leader_in     = recv_arr[0];
   leader_ref = shunt_prim_hash("shunt_cs_header_leader");
   if ( Result_ > 0 && (leader_in == leader_ref)) {
-    h->trnx_type  = recv_arr[1];
-    h->trnx_id    = recv_arr[2];
-    h->data_type  = recv_arr[3];
-    h->n_payloads = recv_arr[4];  
+    memcpy(h,&recv_arr[1],sizeof(*h));
   }
   else { 
     Result_ =-1;
-    printf("shunt_cs_recv_header() get bad  header=%0ld\n", leader_in);
+    printf("shunt_cs_recv_header() get bad  header (%0ld)(Ref. to %0ld) numbytes=%0d \n", leader_in,leader_ref,numbytes);
   }
   return Result_;
 }
