@@ -44,11 +44,17 @@ module automatic Initiator;
 	$display("Initiator: START");
 	
 	Test_name = "\tinit_initiator";
+
 	Socket = init_initiator(`MY_PORT);
 	/* verilator lint_off WIDTH */
 	if (!Socket) Pass=0;
 	/* verilator lint_on WIDTH */
 	$display("\tInitiator: socket=%0d",Socket);
+	print_status(Test_name,Pass);
+
+	
+	Test_name = "\theader_loopback loopback";
+	Pass=header_loopback_test(Socket);
 	print_status(Test_name,Pass);
 	
 `ifndef NO_SHUNT_DPI_SEND_SHORT
@@ -225,8 +231,15 @@ module automatic Initiator;
 	print_status(Test_name,Pass);
  `endif
 `endif	
- 
-	
+
+`ifndef NO_SHUNT_DPI_SEND_PKT_LONGV  
+ `ifndef NO_SHUNT_DPI_RECV_PKT_LONGV 
+	Test_name = "\tpkt LongintV loopback";
+	Pass=pkt_longV_loopback_test(Socket);
+	print_status(Test_name,Pass);	
+ `endif
+`endif
+ 	
  	Test_name = "Initiator";
 	print_status(Test_name,Pass);
 	shunt_dpi_close_socket(Socket);
@@ -796,7 +809,66 @@ module automatic Initiator;
       return  success;	 
    endfunction : integerV_loopback_test
    
+   /////
+   function int pkt_longV_loopback_test(int socket_id);
+      int     success;
+`ifndef NO_SHUNT_DPI_SEND_PKT_LONGV
+ `ifndef NO_SHUNT_DPI_RECV_PKT_LONGV
+      /* verilator lint_off WIDTH */
+      int 	    i_;
+      longint 	    Pkt_longv_exp[`V_SIZE];
+      longint 	    Pkt_longv_act[`V_SIZE];
+      string 	    s_me = "initiator pkt_longV_loopback_test";
+      success =1;
+      h_trnx_exp.trnx_type = 'h01;
+      h_trnx_exp.trnx_id   = 'h02;//{$random,$random};
+      h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_LONGINT");
+      h_trnx_exp.n_payloads = `V_SIZE;
+      foreach(Pkt_longv_exp[i_]) Pkt_longv_exp[i_] = 400+longint'(i_+1);
+      foreach(Pkt_longv_act[i_]) Pkt_longv_act[i_] = 600+longint'(i_+1);
+      //
+      if(shunt_dpi_send_pkt_longV(socket_id,h_trnx_exp,Pkt_longv_exp) <= 0) success =0;
+      if (success == 0 )  $display("\ninitiator: fail send data");
+      //
+      h_trnx_act.trnx_type = 300;//{$random,$random};
+      h_trnx_act.trnx_id   = 400;//{$random,$random};
+      h_trnx_act.data_type = shunt_dpi_hash("SHUNT_BIT");
+      h_trnx_act.n_payloads = `V_SIZE;
+      if(shunt_dpi_recv_pkt_longV(socket_id,h_trnx_act,Pkt_longv_act) <= 0) success =0;
+      //compare
+      if (!compare_shunt_header(h_trnx_exp,h_trnx_act))    success = 0;
+      if (success == 0 )  $display("\ninitiator: fail recv data");
+      foreach(Pkt_longv_exp[i_]) if(Pkt_longv_act[i_] != Pkt_longv_exp[i_]) success =0;
+      
+ `endif //  `ifndef NO_SHUNT_DPI_RECV_PKT_LONGV
+`endif //  `ifndef NO_SHUNT_DPI_SEND_PKT_LONGV
+      return  success;
+     /* verilator lint_on WIDTH */ 
+   endfunction : pkt_longV_loopback_test
+   ////
+
+   function int header_loopback_test(int socket_id,int n_payloads=1);
+      string      s_me = "header_loopback_test()";
+      int 	  success =1;
+      
+      //set up header
+      h_trnx_exp.trnx_type =  {$random,$random};
+      h_trnx_exp.trnx_id   =  {$random,$random};
+      h_trnx_exp.data_type =  shunt_dpi_hash("SHUNT_HEADER_ONLY");
+      h_trnx_exp.n_payloads = {$random,$random};
+                  
+      //send
+      if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+      //recv
+      if (shunt_dpi_recv_header(socket_id,h_trnx_act)<= 0) success = 0;
+      if (!compare_shunt_header(h_trnx_exp,h_trnx_act))    success = 0;
+      //
+      return  success;
+   endfunction : header_loopback_test
    
+   ////
+   
+
    function void print_status(string Test_name,int Status_int);
       string  Status;
       /* verilator lint_off WIDTH */
@@ -805,5 +877,35 @@ module automatic Initiator;
       else  Status = "PASS";
       $display("%s TEST %s",Test_name,Status);
    endfunction : print_status  
+
    
-endmodule : Initiator
+   function automatic void print_shunt_header(cs_header_t h_,string name_in="",string i_am);
+      //   typedef struct{		
+      // longint 	 trnx_type;
+      // longint 	 trnx_id;
+      // longint 	 data_type;
+      // int 	 n_payloads;
+      //} cs_header_t;
+      $display("\n%s  %s.trnx_type  = %0h",i_am,name_in, h_.trnx_type);
+      $display("\n%s  %s.trnx_id    = %0h",i_am,name_in, h_.trnx_id);
+      $display("\n%s  %s.data_type  = %0h",i_am,name_in, h_.data_type);
+      $display("\n%s  %s.n_payloads = %0d",i_am,name_in, h_.n_payloads);
+   endfunction : print_shunt_header
+
+   function automatic bit compare_shunt_header(cs_header_t lhs , cs_header_t rls);
+      string  s_me = "compare_shunt_header(lhs,rls)";
+      bit     success =1; 
+      
+      if( lhs.trnx_type  != lhs.trnx_type)  success = 0;
+      if( lhs.trnx_id    != lhs.trnx_id)    success = 0;
+      if( lhs.data_type  != lhs.data_type)  success = 0;
+      if( lhs.n_payloads != lhs.n_payloads) success = 0;
+      if (success == 0) begin
+	 $display("\ninitiator: %s fail",s_me);
+	 print_shunt_header(lhs,"lhs",s_me);
+	 print_shunt_header(lhs,"rhs",s_me);
+      end
+      return success;
+   endfunction : compare_shunt_header
+   
+      endmodule : Initiator
