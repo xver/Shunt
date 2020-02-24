@@ -116,12 +116,25 @@ Variable: SHUNT_INSTR_ENUM_NAMES
   - n_payloads     number of data payloads (for Array number of vectors)
   
 */
+#define IS_BIG_ENDIAN (*(uint16_t *)"\0\xff" < 0x100)
+
+#if __BYTE_ORDER__== __ORDER_BIG_ENDIAN__
 typedef struct cs_header_t {
   long   trnx_type;
   long   trnx_id;
   long   data_type;
   long   n_payloads;
 } cs_header;
+#endif
+
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+typedef struct cs_header_t {
+  long   n_payloads;
+  long   data_type;
+  long   trnx_id;
+  long   trnx_type;
+} cs_header;
+#endif
 
 /*
   Variable: cs_data_header_t
