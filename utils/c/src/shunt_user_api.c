@@ -173,6 +173,7 @@ int shunt_api_recv    (int sockid,cs_header* h_trnx,...) {
   default :
     Result_ = 0;
     printf("Error: %s unknown data type",msg);
+     printf("\n%s h_trnx->data_type(%lu)",msg,h_trnx->data_type);
     break;
   }
   va_end(ap);
@@ -192,33 +193,33 @@ int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long int* L
   long int* send_arr_ = malloc(size_); // array to hold the result
   send_arr_[offset]   = leader_;
   offset++;
-  
   //copy/allocate
   memcpy(&send_arr_[offset], header,sizeof(*header));
   memcpy(&send_arr_[sizeof(*header)/sizeof(long int)+offset],LongV,header->n_payloads*sizeof(long int));
     
   int numbytes_ = send(sockid,send_arr_,size_, 0);
-  if (numbytes_ <= 0)  shunt_prim_error("\nERROR in  shunt_cs_send_header : numbytes < 0 ");
+  if (numbytes_ <= 0)  shunt_prim_error("\nERROR in  shunt_pkt_send_longV()  : numbytes < 0 ");
   else  Result_=numbytes_;
   
   free(send_arr_);
   return Result_;
 }
 
-int shunt_api_rcv_pkt_longV  (int sockid, cs_header* header,long int* LongV) {
+int shunt_pkt_recv_longV  (int sockid, cs_header* header,long int* LongV) {
   //
   //long int mem/array
   //pkt size: leader +  cs_header + input array
-  int  size_        = sizeof(long int)+sizeof(*header)+ header->n_payloads*sizeof(long int);
+  int  size_        = sizeof(long int)+sizeof(*header)+sizeof(long int)*header->n_payloads;
   int  offset       = 0;
   int  header_size_ = sizeof(*header)/sizeof(long int);
   int numbytes_     = -1;
   //recive array init
   long leader_        = shunt_prim_hash("shunt_cs_header_leader");
   long int* recv_arr_ = malloc(size_); // array to hold the result
-  
+ 
   //
   numbytes_ =  recv(sockid,recv_arr_ ,size_ , 0);
+  
   if (numbytes_ <= 0) shunt_prim_error("\nERROR in shunt_api_rcv_pkt_longV : numbytes < 0 ");
   if (leader_ == recv_arr_[offset]) {
     offset= offset+1;  
