@@ -139,7 +139,7 @@ int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long int* L
   Returns:
   number of elements have been received  : success > 0
 */
-int shunt_pkt_rcv_longV  (int sockid, cs_header* header,long int* Long);
+int shunt_pkt_recv_longV  (int sockid, cs_header* header,long int* Long);
 
 #endif
 
