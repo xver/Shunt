@@ -41,14 +41,14 @@ int shunt_cs_data_type(long hash,char* trnx_type_names[],int last_enum) {
 
 void shunt_cs_print_header (cs_header* h,char* data_type_names[],int last_enum,char* msg) {
   
-  printf("\n%s h_trnx->trnx_type\t(%lu)",msg,h->trnx_type);
-  printf("\n%s h_trnx->trnx_id\t(%lu)",msg,h->trnx_id);
+  printf("\n%s h_trnx->trnx_type\t(%lx)",msg,h->trnx_type);
+  printf("\n%s h_trnx->trnx_id\t(%lx)",msg,h->trnx_id);
   //
   int data_type_ = shunt_cs_data_type(h->data_type,data_type_names,last_enum);
   if (data_type_>=0)
-    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lu",msg,data_type_names[data_type_],data_type_,h->data_type);
+    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lx",msg,data_type_names[data_type_],data_type_,h->data_type);
   else
-    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lu",msg,"N/A",data_type_,h->trnx_type);
+    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lx",msg,"N/A",data_type_,h->trnx_type);
   printf("\n%s h_trnx->n_payloads\t(%0lu)",msg,h->n_payloads);
   puts("\n");
   //
@@ -111,7 +111,8 @@ int shunt_cs_recv_header   (int sockid,cs_header* h) {
   }
   else { 
     Result_ =-1;
-    printf("shunt_cs_recv_header() get bad  header (%0ld)(Ref. to %0ld) numbytes=%0d \n", leader_in,leader_ref,numbytes);
+    printf("\nshunt_cs_recv_header() get bad  header (%lx)(Ref. to %lx) numbytes=%0d \n", leader_in,leader_ref,numbytes);
+    for (int i=0;i<(sizeof(*h) + sizeof(long int))/sizeof(long int);i++) printf("error shunt_cs_recv_header() recv_arr[%0d]=(%ld)%lx\n",i,recv_arr[i],recv_arr[i]);
   }
   return Result_;
 }
