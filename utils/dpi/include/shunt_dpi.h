@@ -1142,4 +1142,27 @@ int shunt_dpi_send_pkt_longV  (int sockid, const cs_header* h,const  svOpenArray
 */
 int shunt_dpi_recv_pkt_longV  (int sockid, cs_header* h, svOpenArrayHandle Long);
 
+// Section: System (non TCP) utils
+
+/*
+  Function:  shunt_dpi_gettimeofday_sec
+  maps linux  gettimeofday function ,
+  
+  Parameters:
+  
+  Returns: longint the number of seconds since the Epoch
+  longint a  
+*/
+long int shunt_dpi_gettimeofday_sec();
+
+/*
+  Function:  shunt_dpi_gettimeofday_usec
+  maps linux  gettimeofday function ,
+  
+  Parameters:
+  
+  Returns: longint the number of microsecond since the Epoch
+  longint a  
+*/
+long int shunt_dpi_gettimeofday_usec();
 #endif /* SHUNT_DPI_H_ */

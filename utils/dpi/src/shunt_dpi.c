@@ -618,4 +618,17 @@ int shunt_dpi_recv_pkt_longV  (int sockid, cs_header* h, svOpenArrayHandle Long)
   return Result_;
 }
 
+
+//Linux system utils
+long int shunt_dpi_gettimeofday_sec() {
+  struct timeval currentTime;
+  gettimeofday(&currentTime, NULL);
+  return currentTime.tv_sec;
+}
+
+long int shunt_dpi_gettimeofday_usec() {
+  struct timeval currentTime;
+  gettimeofday(&currentTime, NULL);
+  return currentTime.tv_usec;
+}
 #endif /* SHUNT_DPI_C_ */

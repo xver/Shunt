@@ -1559,5 +1559,34 @@ package shunt_dpi_pkg;
 `ifndef NO_SHUNT_DPI_RECV_PKT_LONGV 
    import "DPI-C" function int shunt_dpi_recv_pkt_longV (input int sockid,inout cs_header_t h,output longint Int[]);
 `endif  
+  
+   // Section: System (non TCP) utils
    
+   
+   /*
+    Function:  shunt_dpi_gettimeofday_sec
+    maps linux  gettimeofday function ,
+    
+    Parameters:
+    
+    Returns: longint the number of seconds since the Epoch
+    longint a  
+    */
+`ifndef NO_SHUNT_DPI_GETTIMEOFDAY_SEC;
+  import "DPI-C" function longint shunt_dpi_gettimeofday_sec();
+`endif  
+
+   /*
+    Function:  shunt_dpi_gettimeofday_usec
+    maps linux  gettimeofday function ,
+    
+    Parameters:
+    
+    Returns: longint the number of microsecond since the Epoch
+    longint a  
+    */
+`ifndef NO_SHUNT_DPI_GETTIMEOFDAY_USEC;
+   import "DPI-C" function longint shunt_dpi_gettimeofday_usec();
+`endif   
+
 endpackage : shunt_dpi_pkg
