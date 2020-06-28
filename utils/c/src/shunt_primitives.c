@@ -116,7 +116,7 @@ unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd ) {
   struct sockaddr_in targetaddr; /* target addr */
   struct hostent *hostp; /* target host info */
   char *hostaddrp; /* dotted decimal host addr string */
-    
+  char *hostname = "N/A";  /* host name */
   /*
    * wait for a connection request
    */
@@ -127,7 +127,6 @@ unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd ) {
   childfd = accept(parentfd, (struct sockaddr *) &targetaddr, (socklen_t *)&targetlen);
   if (childfd < 0) {
     shunt_prim_error("shunt_prim_tcp_child_init_initiator on accept");
-    //return childfd;
   }
   
   /*
@@ -135,9 +134,8 @@ unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd ) {
    */
   hostp = gethostbyaddr((const char *)&targetaddr.sin_addr.s_addr,
                         sizeof(targetaddr.sin_addr.s_addr), AF_INET);
-  if (hostp == NULL) {
-    shunt_prim_error("shunt_prim_tcp_child_init_initiator on gethostbyaddr");
-    return -1;
+  if (hostp != NULL) {
+    hostname = hostp->h_name;
   }
 
   hostaddrp = inet_ntoa(targetaddr.sin_addr);
@@ -146,10 +144,8 @@ unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd ) {
     return -1;
   }
   else {
-	  printf("initiator established connection with %s (%s)\n",
-		 hostp->h_name, hostaddrp); }
-
-
+    printf("initiator established connection with Hostname(%s) IP(%s)\n",
+	   hostname, hostaddrp); }
   return childfd;
 }
 
