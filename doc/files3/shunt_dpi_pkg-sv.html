@@ -530,9 +530,29 @@
  <div class="CBody"><p>map unpacked &quot;longint&quot; paket (cs_header structure + one-dimensional data payload array)</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">sockid</td><td class="CDLDefinition"><p>socket id from init sever/client</p></td></tr><tr><td class="CDLEntry">h</td><td class="CDLDefinition"><p>cs_header structure</p></td></tr><tr><td class="CDLEntry">longV</td><td class="CDLDefinition"><p>data payload</p></td></tr></table><div class="CHeading">Returns</div><p>number of elements have been sent&nbsp; : success &gt; 0</p></div>
 </div>
 
-<a name="shunt_pkt_send_longV(2)"></a><a name="Topic268"></a><div class="CTopic TFunction LSystemVerilog last">
+<a name="shunt_pkt_send_longV(2)"></a><a name="Topic268"></a><div class="CTopic TFunction LSystemVerilog">
  <div class="CTitle">shunt_pkt_send_longV</div>
  <div class="CBody"><p>map unpacked &quot;longint&quot; paket (cs_header structure + one-dimensional data payload array)</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">sockid</td><td class="CDLDefinition"><p>socket id from init sever/client</p></td></tr><tr><td class="CDLEntry">h</td><td class="CDLDefinition"><p>cs_header structure</p></td></tr><tr><td class="CDLEntry">longV</td><td class="CDLDefinition"><p>data payload</p></td></tr></table><div class="CHeading">Returns</div><p>number of elements have been sent&nbsp; : success &gt; 0</p></div>
+</div>
+
+<a name="System(non_TCP)utils"></a><a name="Topic273"></a><div class="CTopic TSection LSystemVerilog">
+ <div class="CTitle">System (non TCP) utils</div>
+</div>
+
+<a name="Functions(7)"></a><a name="Topic274"></a><div class="CTopic TGroup LSystemVerilog">
+ <div class="CTitle">Functions</div>
+</div>
+
+<a name="shunt_dpi_gettimeofday_sec"></a><a name="Topic275"></a><div class="CTopic TFunction LSystemVerilog">
+ <div class="CTitle">shunt_dpi_gettimeofday_sec</div>
+ <div id="NDPrototype275" class="NDPrototype NoParameterForm">`ifndef NO_SHUNT_DPI_GETTIMEOFDAY_SEC</div>
+ <div class="CBody"><p>maps linux&nbsp; gettimeofday function ,</p><div class="CHeading">Parameters</div><p>Returns: longint the number of seconds since the Epoch longint a</p></div>
+</div>
+
+<a name="shunt_dpi_gettimeofday_usec"></a><a name="Topic276"></a><div class="CTopic TFunction LSystemVerilog last">
+ <div class="CTitle">shunt_dpi_gettimeofday_usec</div>
+ <div id="NDPrototype276" class="NDPrototype NoParameterForm">`ifndef NO_SHUNT_DPI_GETTIMEOFDAY_USEC</div>
+ <div class="CBody"><p>maps linux&nbsp; gettimeofday function ,</p><div class="CHeading">Parameters</div><p>Returns: longint the number of microsecond since the Epoch longint a</p></div>
 </div>
 
 </body></html>

@@ -388,10 +388,30 @@
  <div class="CBody"><p>map unpacked &quot;longint&quot; paket (cs_header structure + one-dimensional data payload array)</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">sockid<div class="CDLParameterType"><span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket id from init sever/client</p></td></tr><tr><td class="CDLEntry">h<div class="CDLParameterType"><span class="SHKeyword">const</span> cs_header*</div></td><td class="CDLDefinition"><p>cs_header structure</p></td></tr><tr><td class="CDLEntry">longV</td><td class="CDLDefinition"><p>data payload</p></td></tr></table><div class="CHeading">Returns</div><p>number of elements have been sent&nbsp; : success &gt; 0</p></div>
 </div>
 
-<a name="shunt_dpi_recv_pkt_longV"></a><a name="Topic191"></a><div class="CTopic TFunction LC last">
+<a name="shunt_dpi_recv_pkt_longV"></a><a name="Topic191"></a><div class="CTopic TFunction LC">
  <div class="CTitle">shunt_dpi_recv_pkt_longV</div>
  <div id="NDPrototype191" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">int</span> shunt_dpi_recv_pkt_longV (</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PType first"><span class="SHKeyword">int</span>&nbsp;</td><td></td><td class="PName last">sockid,</td></tr><tr><td class="PType first">cs_header&nbsp;</td><td class="PNamePrefix">*</td><td class="PName last">h,</td></tr><tr><td class="PType first">svOpenArrayHandle&nbsp;</td><td></td><td class="PName last">Long</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
  <div class="CBody"><p>map unpacked &quot;longint&quot; packet (cs_header structure + one-dimensional data payload array)</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">sockid<div class="CDLParameterType"><span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket id from init sever/client</p></td></tr><tr><td class="CDLEntry">h<div class="CDLParameterType">cs_header*</div></td><td class="CDLDefinition"><p>cs_header structure</p></td></tr><tr><td class="CDLEntry">longV</td><td class="CDLDefinition"><p>data payload</p></td></tr></table><div class="CHeading">Returns</div><p>number of elements have been received&nbsp; : success &gt; 0</p></div>
+</div>
+
+<a name="System(non_TCP)utils"></a><a name="Topic238"></a><div class="CTopic TSection LC">
+ <div class="CTitle">System (non TCP) utils</div>
+</div>
+
+<a name="Functions(5)"></a><a name="Topic250"></a><div class="CTopic TGroup LC">
+ <div class="CTitle">Functions</div>
+</div>
+
+<a name="shunt_dpi_gettimeofday_sec"></a><a name="Topic256"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">shunt_dpi_gettimeofday_sec</div>
+ <div id="NDPrototype256" class="NDPrototype NoParameterForm"><span class="SHKeyword">long</span> <span class="SHKeyword">int</span> shunt_dpi_gettimeofday_sec()</div>
+ <div class="CBody"><p>maps linux&nbsp; gettimeofday function ,</p><div class="CHeading">Parameters</div><p>Returns: longint the number of seconds since the Epoch longint a</p></div>
+</div>
+
+<a name="shunt_dpi_gettimeofday_usec"></a><a name="Topic272"></a><div class="CTopic TFunction LC last">
+ <div class="CTitle">shunt_dpi_gettimeofday_usec</div>
+ <div id="NDPrototype272" class="NDPrototype NoParameterForm"><span class="SHKeyword">long</span> <span class="SHKeyword">int</span> shunt_dpi_gettimeofday_usec()</div>
+ <div class="CBody"><p>maps linux&nbsp; gettimeofday function ,</p><div class="CHeading">Parameters</div><p>Returns: longint the number of microsecond since the Epoch longint a</p></div>
 </div>
 
 </body></html>
