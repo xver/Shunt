@@ -10,7 +10,7 @@
 
 Title: SystemVerilog TCP/IP "IC Shunt"
 
-Copyright: Copyright © 2016-2019 IC Verimeter
+Copyright: Copyright © 2016-2020 IC Verimeter
 
 
 # This is where you specify general information about your project.
@@ -49,6 +49,10 @@ Source Folder 2: ..\utils\dpi\include
 
 Source Folder 3: ..\utils\dpi\src
    Name: 3. DPI SV utils
+
+Source Folder 4: ..\utils\sc\src
+   Name: 4. TLM 2.0 SC utils
+
 
 
 
