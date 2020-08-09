@@ -619,4 +619,131 @@ See Also:
 */
 void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_type_names[],int last_enum,char* msg);
 
+//Section: TLM2.0 utils
+/* 
+   Variable:  cs_tlm_generic_payload_header
+   
+   *TLM 2.0 Generic Payload structure* (Ref. to TLM 2.0 Generic Payload attributes)
+   
+   - *option*           Generic payload option : 
+
+   --- Code
+   enum  tlm_gp_option { TLM_MIN_PAYLOAD, TLM_FULL_PAYLOAD, TLM_FULL_PAYLOAD_ACCEPTED }
+   ---
+   
+   - *command*         Transaction type: 
+   
+   --- Code
+   enum  tlm_command { TLM_READ_COMMAND, TLM_WRITE_COMMAND, TLM_IGNORE_COMMAND }
+   ---
+   
+   - *address*          Transaction base start address (bytes)
+   
+   - *length*           Total number of bytes of the transaction.
+   
+   - *byte_enable_length*  Number of elements in the bytes enable array.
+   
+   - *streaming_width*     Number of bytes transferred on each data-beat.    
+   
+   - *dmi_allowed*        DMI allowed/not allowed (bool atribute) 
+   
+   - *response_status*    Transaction status:
+   
+    --- Code
+   enum  tlm_response_status {
+   TLM_OK_RESPONSE = 1, TLM_INCOMPLETE_RESPONSE = 0, TLM_GENERIC_ERROR_RESPONSE = -1, TLM_ADDRESS_ERROR_RESPONSE = -2,
+   TLM_COMMAND_ERROR_RESPONSE = -3, TLM_BURST_ERROR_RESPONSE = -4, TLM_BYTE_ENABLE_ERROR_RESPONSE = -5
+   }
+   ---
+   
+   - *delay*              Shunt tlm header extension equal to b_transport/nb_trasport delay atribute
+   
+   - *tlm_phase*          Shunt tlm header nb_trasport atribute:
+   
+   --- Code
+   enum  tlm_phase_enum {
+   UNINITIALIZED_PHASE =0, BEGIN_REQ =1, END_REQ, BEGIN_RESP,END_RESP
+   }
+   ---
+   
+   - *tlm_sync*         shunt tlm header nb_trasport atribute:
+   
+   --- Code              
+   enum  tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED } 
+   ---
+*/
+
+#if __BYTE_ORDER__== __ORDER_BIG_ENDIAN__
+typedef struct cs_tlm_generic_payload_header_t {
+  long option;
+  long address;
+  long command;
+  long length;
+  long byte_enable_length;
+  long streaming_width;
+  long dmi;
+  long response_status;
+  long delay;
+  long tlm_phase;
+  long tlm_sync;
+} cs_tlm_generic_payload_header;
+#endif
+
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+typedef struct cs_tlm_generic_payload_header_t {
+  long tlm_sync;
+  long tlm_phase;
+  long delay;
+  long response_status;
+  long dmi;
+  long streaming_width;
+  long byte_enable_length;
+  long length;
+  long command;
+  long address;
+  long option;
+} cs_tlm_generic_payload_header;
+#endif
+
+/*
+  Function: shunt_cs_tlm_send_gp  
+  send tlm generic payload  packet ( cs_tlm_generic_payload_header  + byte data vector + byte_enable vector ) 
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h - cs_tlm_generic_payload_header
+  data - data payload byte-vector pointer
+  byte_enable - byte_enable vector pointer 
+ 
+*/
+void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header* h, const unsigned char* data, const unsigned char* byte_enable);
+
+/*
+  Function: shunt_cs_tlm_recv_gp_header  
+  recieve tlm generic payload  header ( cs_tlm_generic_payload_header only)
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h - cs_tlm_generic_payload_header (output) 
+
+  
+*/
+void shunt_cs_tlm_recv_gp_header (int sockid, cs_tlm_generic_payload_header* h);
+
+
+/*
+  Function: shunt_cs_tlm_recv_gp_data  
+  recieve tlm generic payload  packet (byte data vector + byte_enable vector )
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h - cs_tlm_generic_payload_header (input only) should have a valid data length and byte_enable_length
+  data - data payload byte-vector pointer  (output) 
+  byte_enable - byte_enable vector pointer (output)  
+*/
+void  shunt_cs_tlm_recv_gp_data (int sockid, const cs_tlm_generic_payload_header* h,unsigned long* data,unsigned long* byte_enable);
+
 #endif
