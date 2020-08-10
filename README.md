@@ -56,7 +56,7 @@ run "make all"
 
 Release History:
 -----------------------
-2.0.2 - (Current Version) SystemC TLM-2.0 over TCP/IP 
+2.0.0 - (Current Version) SystemC TLM-2.0 over TCP/IP 
 
 1.2.0 - TCP/IP optimization ,new fixed size packet communication functions,big/little endian support.examples and doc updates
 
