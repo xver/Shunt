@@ -1,0 +1,3 @@
+../initiator/bin/LTcs_initiator&
+sleep 5
+../target/bin/LTcs_target 
