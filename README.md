@@ -51,7 +51,7 @@ The Shunt includes a complete Makefile structure for the C portion of the librar
 (Example:  $SHUNT_HOME/examples/sv/sv2c/makedir)
 
 # SystemC TLM-2.0 over TCP/IP example
-cd to Loose Time b_transport over TCP/IP example path: $SHUNT_HOME/examples/sc/LT_simple_cs/makedir 
+cd to "loosely timed model"  b_transport over TCP/IP example path: $SHUNT_HOME/examples/sc/LT_simple_cs/makedir 
 run "make all"
 
 Release History:
