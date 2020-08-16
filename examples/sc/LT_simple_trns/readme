@@ -1,0 +1,38 @@
+//----------------------------------------------------------------------
+//
+//  Copyright (c) 2007-2008 by Doulos Ltd.
+//
+//  MODIFICATIONS copyright (C) 2020 IC Verimeter Inc.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//----------------------------------------------------------------------
+This example was adjusted to demonstrate blocking TLM 2.0 transfer over TCP/IP communication with b_trasport call task modification.
+Modification notes:
+
+The Server side changes (initiator/src/) :
+1. initiator/src/initiator.h Add the "shunt_tlm" library and corresponding "namespace".
+2. initiator/src/top.h       Insert the Shunt Server TCP/IP socket initialization.
+3. initiator/src/initiator.h Change "cout" message.
+4. initiator/src/initiator.h Add TCP/IP socket close and end of simulation shunt task calls.
+5. initiator/src/target.h    Comment out function body
+6. initiator/src/target.h    insert  shunt send/recv b_transport. 
+
+The Client side changes (target/src/) :
+1. target/src/initiator.h  Add "shunt_tlm" library and corresponding "namespace".
+2. target/src/top.h Insert Shunt Client TCP/IP socket initialization.
+3. target/src/initiator.h  Comment out generic payload generation loop and insert "while(!end_sim)".
+4. target/src/target.h     Insert shunt recv/send b_transport. 
+5. target/src/target.h     Close TCP/IP socket and end of simulation shunt task calls.
+
+to run example: cd to makedir and "make all"
+  
