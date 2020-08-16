@@ -1,0 +1,16 @@
+SERVER trans = { R, 20 } , data = aa000029 at time 0 s delay = 10 ns
+SERVER trans = { R, 24 } , data = aa0000cd at time 10 ns delay = 10 ns
+SERVER trans = { R, 28 } , data = aa0000ba at time 20 ns delay = 10 ns
+SERVER trans = { R, 2c } , data = aa0000ab at time 30 ns delay = 10 ns
+SERVER trans = { R, 30 } , data = aa0000f2 at time 40 ns delay = 10 ns
+SERVER trans = { W, 34 } , data = ff000034 at time 50 ns delay = 10 ns
+SERVER trans = { R, 38 } , data = aa0000e3 at time 60 ns delay = 10 ns
+SERVER trans = { R, 3c } , data = aa000046 at time 70 ns delay = 10 ns
+SERVER trans = { R, 40 } , data = aa00007c at time 80 ns delay = 10 ns
+SERVER trans = { R, 44 } , data = aa0000c2 at time 90 ns delay = 10 ns
+SERVER trans = { R, 48 } , data = aa000054 at time 100 ns delay = 10 ns
+SERVER trans = { W, 4c } , data = ff00004c at time 110 ns delay = 10 ns
+SERVER trans = { R, 50 } , data = aa00001b at time 120 ns delay = 10 ns
+SERVER trans = { R, 54 } , data = aa0000e8 at time 130 ns delay = 10 ns
+SERVER trans = { R, 58 } , data = aa0000e7 at time 140 ns delay = 10 ns
+SERVER trans = { R, 5c } , data = aa00008d at time 150 ns delay = 10 ns
