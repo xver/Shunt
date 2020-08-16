@@ -27,7 +27,7 @@ The Server side changes (initiator/src/initiator.h) :
 4. Insert "shunt_send/recv_b_transport" and "cout" message modification.
 5. Add TCP/IP socket close and end of simulation shunt task calls.
 
-The Client side changes (target/initiator.h) :
+The Client side changes (target/src/initiator.h) :
 1. Add "shunt_tlm" library and corresponding "namespace".
 2. Insert Shunt Client TCP/IP socket initialization.
 3. Comment out generic payload generation loop and insert "while(!end_sim)".
