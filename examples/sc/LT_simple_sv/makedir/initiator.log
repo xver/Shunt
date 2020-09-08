@@ -1,0 +1,22 @@
+ SystemC 2.3.3-Accellera --- Jun 13 2020 09:40:18
+        Copyright (c) 1996-2018 by all Contributors,
+        ALL RIGHTS RESERVED
+
+initiator established connection with Hostname(localhost) IP(127.0.0.1)
+SERVER: SHUNT_TLM_START_SIM command=4
+SERVER trans recv = { R, 20 } , data = aa000053 at time 0 s delay = 10 ns response = 0
+SERVER trans recv = { R, 24 } , data = aa0000aa at time 10 ns delay = 10 ns response = 0
+SERVER trans recv = { R, 28 } , data = aa000087 at time 20 ns delay = 10 ns response = 0
+SERVER trans recv = { R, 2c } , data = aa000007 at time 30 ns delay = 10 ns response = 0
+SERVER trans recv = { R, 30 } , data = aa0000d8 at time 40 ns delay = 10 ns response = 0
+SERVER trans recv = { W, 34 } , data = ff000034 at time 50 ns delay = 10 ns response = 0
+SERVER trans recv = { R, 38 } , data = aa00006e at time 60 ns delay = 10 ns response = 0
+SERVER trans recv = { R, 3c } , data = aa0000dd at time 70 ns delay = 10 ns response = 0
+SERVER trans recv = { R, 40 } , data = aa000022 at time 80 ns delay = 10 ns response = 0
+SERVER trans recv = { R, 44 } , data = aa00005f at time 90 ns delay = 10 ns response = 0
+SERVER trans recv = { R, 48 } , data = aa000017 at time 100 ns delay = 10 ns response = 0
+SERVER trans recv = { W, 4c } , data = ff00004c at time 110 ns delay = 10 ns response = 0
+SERVER trans recv = { R, 50 } , data = aa0000bb at time 120 ns delay = 10 ns response = 0
+SERVER trans recv = { R, 54 } , data = aa0000e9 at time 130 ns delay = 10 ns response = 0
+SERVER trans recv = { R, 58 } , data = aa000099 at time 140 ns delay = 10 ns response = 0
+SERVER trans recv = { R, 5c } , data = aa00006e at time 150 ns delay = 10 ns response = 0
