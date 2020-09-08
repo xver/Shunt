@@ -1,0 +1,31 @@
+//----------------------------------------------------------------------
+//
+//  Copyright (c) 2007-2008 by Doulos Ltd.
+//
+//  MODIFICATIONS copyright (C) 2020 IC Verimeter Inc.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//----------------------------------------------------------------------
+This example was adjusted to demonstrate blocking TLM 2.0 transfer over TCP/IP communication
+
+Modification notes:
+
+The Server side changes (initiator/src/initiator.h) :
+1. Add the "shunt_tlm" library and corresponding "namespace".
+2. Insert the Shunt Server TCP/IP socket initialization.
+3. Comment out the "b_transation" call (break TLM 2.0 local initiator target communication).
+4. Insert "shunt_send/recv_b_transport" and "cout" message modification.
+5. Add TCP/IP socket close and end of simulation shunt task calls.
+
+to run example: cd to makedir and "make all"
+  
