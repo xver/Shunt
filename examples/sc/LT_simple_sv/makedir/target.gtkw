@@ -1,0 +1,61 @@
+[*]
+[*] GTKWave Analyzer v3.3.86 (w)1999-2017 BSI
+[*] Mon Sep  7 20:49:33 2020
+[*]
+[dumpfile] "/media/sf_workspace_17/Shunt/examples/sc/LT_simple_sv/makedir/top_sim.vcd"
+[dumpfile_mtime] "Mon Sep  7 20:38:04 2020"
+[dumpfile_size] 20800
+[savefile] "/media/sf_workspace_17/Shunt/examples/sc/LT_simple_sv/makedir/target.gtkw"
+[timestart] 0
+[size] 1369 729
+[pos] -1 -1
+*-4.716502 3 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.Target.
+[sst_width] 298
+[signals_width] 279
+[sst_expanded] 1
+[sst_vpaned_height] 203
+@28
+TOP.Target.clk_i
+TOP.Target.start_sim
+TOP.Target.end_sim
+TOP.Target.trnx_in_progress
+@22
+TOP.Target.clk_cnt[31:0]
+@200
+-top
+@28
+TOP.Target.mem_we
+@22
+TOP.Target.mem_addr[31:0]
+TOP.Target.mem_byte_enable[31:0]
+TOP.Target.mem_data[31:0]
+TOP.Target.mem_q[31:0]
+@200
+-
+@22
++{TOP.Target.data_in(3)[7:0]} TOP.Target.data_in(3)[7:0]
+TOP.Target.data_in(2)[7:0]
+TOP.Target.data_in(1)[7:0]
+TOP.Target.data_in(0)[7:0]
+@23
+TOP.Target.data_out(3)[7:0]
+@22
+TOP.Target.data_out(2)[7:0]
+TOP.Target.data_out(1)[7:0]
+TOP.Target.data_out(0)[7:0]
+@200
+-mem
+@28
+TOP.Target.mem.clk
+@22
+TOP.Target.mem.addr[31:0]
+TOP.Target.mem.addr_reg[31:0]
+@28
+TOP.Target.mem.we
+@22
+TOP.Target.mem.data[31:0]
+TOP.Target.mem.q[31:0]
+[pattern_trace] 1
+[pattern_trace] 0
