@@ -1,12 +1,11 @@
 /*
 =========================================================
  File        : shunt_dpi.h
- Version     : 1.0.0
- Copyright (c) 2016-2017 IC Verimeter. All rights reserved.
+ Copyright (c) 2016-2020 IC Verimeter. All rights reserved.
                Licensed under the MIT License.
                See LICENSE file in the project root for full license information.
  Description : shunt dpi bridge
- System Verilog target initiator handshake (TCP/IP SystemVerilog SHUNT)
+               System Verilog target initiator handshake (TCP/IP SystemVerilog SHUNT)
 ******************************************************
 */
 #ifndef SHUNT_DPI_H_
@@ -824,6 +823,52 @@ int shunt_dpi_send_string   (int sockid,int size,char* string);
 */
 int shunt_dpi_recv_string   (int sockid,int size,char** string);
 
+// Section: Data exchange (cs) TLM
+
+typedef enum {SHUNT_TLM_READ_COMMAND,SHUNT_TLM_WRITE_COMMAND,SHUNT_TLM_IGNORE_COMMAND,SHUNT_TLM_END_SIM,SHUNT_TLM_START_SIM} shunt_dpi_tlm_command_e;
+
+ /*
+    Function: shunt_tlm_send_command
+    send hunt_tlm_command
+    
+    Parameters:
+    socket -  socket id 
+    Com   - <shunt_dpi_tlm_command_e> 
+ */
+void shunt_dpi_tlm_send_command(int socket,const shunt_dpi_tlm_command_e Com);
+
+/*
+  Function: shunt_dpi_tlm_send_gp_transport  
+  send tlm generic payload  packet ( cs_tlm_generic_payload_header  + byte data vector + byte_enable vector ) 
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h - cs_tlm_generic_payload_header
+  data - data payload byte-vector pointer
+  byte_enable - byte_enable vector pointer 
+
+  See Also: 
+  -  <shunt_cs_tlm_send_gp>
+*/
+void shunt_dpi_tlm_send_gp_transport(int sockid, cs_tlm_generic_payload_header* h, svOpenArrayHandle* data, svOpenArrayHandle* byte_enable);
+
+/*
+  Function: shunt_dpi_tlm_recv_gp_transport  
+  recv tlm generic payload  packet ( cs_tlm_generic_payload_header  + byte data vector + byte_enable vector ) 
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h - cs_tlm_generic_payload_header
+  data - data payload byte-vector pointer
+  byte_enable - byte_enable vector pointer 
+
+  See Also: 
+  -  <shunt_cs_tlm_recv_gp_transport>
+*/
+void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header* h,svOpenArrayHandle data,svOpenArrayHandle byte_enable);
+
 // Section: Data exchange (hs)
 /*
   Function: shunt_dpi_hash 
@@ -1165,4 +1210,9 @@ long int shunt_dpi_gettimeofday_sec();
   longint a  
 */
 long int shunt_dpi_gettimeofday_usec();
+
+
+
+
+
 #endif /* SHUNT_DPI_H_ */
