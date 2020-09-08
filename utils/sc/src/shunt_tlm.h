@@ -67,11 +67,12 @@ namespace shunt_tlm
   ---
   */ 
   enum shunt_tlm_command {
-    SHUNT_TLM_END_SIM =tlm_command::TLM_IGNORE_COMMAND+1
+    SHUNT_TLM_END_SIM =tlm_command::TLM_IGNORE_COMMAND+1,
+    SHUNT_TLM_START_SIM
   };
     //Section: Auxiliary
     /*
-      Function: shunt_print_csgp
+      Function: shunt_tlm_print_csgp
       print Client-Server Generic Payload (csgp header) structure 
       
       Parameters:
@@ -81,7 +82,7 @@ namespace shunt_tlm
       prefix - Message prefix
       
     */
-    void shunt_print_csgp (const cs_tlm_generic_payload_header csgp,string prefix="") {
+    void shunt_tlm_print_csgp (const cs_tlm_generic_payload_header csgp,string prefix="") {
       const char *print_string;
       
       switch (csgp.option) {
@@ -100,10 +101,10 @@ namespace shunt_tlm
       default                 : print_string="TLM_UNKNOWN_COMMAND"; break;
       }
       cout<<" command("<< print_string<<")"
-	  <<" addr("<< hex <<(unsigned)csgp.address<<")"
-	  <<" length("<< hex <<(unsigned)csgp.length<<")"
-	  <<" streaming_width("<< hex <<(unsigned)csgp.streaming_width<<")"
-	  <<" byte_enable_length("<< hex <<(unsigned)csgp.byte_enable_length<<")";
+          <<" addr("<< hex <<(unsigned)csgp.address<<")"
+          <<" length("<< hex <<(unsigned)csgp.length<<")"
+          <<" streaming_width("<< hex <<(unsigned)csgp.streaming_width<<")"
+          <<" byte_enable_length("<< hex <<(unsigned)csgp.byte_enable_length<<")";
       switch ( csgp.response_status) {
       case tlm::TLM_OK_RESPONSE            : print_string="TLM_OK_RESPONSE"; break;
       case tlm::TLM_INCOMPLETE_RESPONSE    : print_string="TLM_INCOMPLETE_RESPONSE"; break;
@@ -115,8 +116,8 @@ namespace shunt_tlm
       default                 : print_string="TLM_UNKNOWN_RESPONSE"; break;
       }
       cout<<" response_status("<< print_string<<")"
-	  <<" Shunt tlm header extension["
-        <<" delay("<< hex <<csgp.delay<<")";
+          <<" Shunt tlm header extension["
+          <<" delay("<< hex <<csgp.delay<<")";
       
       switch ( csgp.tlm_phase) {
       case tlm::UNINITIALIZED_PHASE: print_string="UNINITIALIZED_PHASE"; break;
@@ -224,41 +225,43 @@ namespace shunt_tlm
     if(phase_name.compare("END_RESP")==0)            Result_ = tlm::END_RESP;
     return  Result_; 
     }
-  //Section:  TCP/IP Server/Client init
-  /*
-    Function:  shunt_tlm_init_server
-    TCP/IP Server initialization
-    
-    Parameters: 
-    
-    port - socket port
-    
-    Returns:  
-    
-    socket id 
-    
-    See Also:
-    - <shunt_prim_init_initiator>
-    
-  */
-  int  shunt_tlm_init_server(int port=0) {
-    return shunt_prim_init_initiator(port);
-  };
   
-  /*
-    Function:  shunt_tlm_init_client
-    TCP/IP Client initialization
-    
-    Parameters:
+    //Section:  TCP/IP Server/Client init
   
-    port   - socket port
-    hostname - Server name
+    /*
+      Function:  shunt_tlm_init_server
+      TCP/IP Server initialization
     
-    Returns: 
-    socket id 
+      Parameters: 
     
-    See Also:
-    - <shunt_prim_init_target>
+      port - socket port
+    
+      Returns:  
+    
+      socket id 
+    
+      See Also:
+      - <shunt_prim_init_initiator>
+      
+    */
+    int  shunt_tlm_init_server(int port=0) {
+      return shunt_prim_init_initiator(port);
+    };
+  
+    /*
+      Function:  shunt_tlm_init_client
+      TCP/IP Client initialization
+      
+      Parameters:
+      
+      port   - socket port
+      hostname - Server name
+      
+      Returns: 
+      socket id 
+      
+      See Also:
+      - <shunt_prim_init_target>
     
   */
   int   shunt_tlm_init_client(int port,char* host ) {
@@ -291,7 +294,9 @@ namespace shunt_tlm
     shunt_tlmgp2csgp(&csgp,trans);
     csgp.delay =delay.to_default_time_units();
     csgp.tlm_phase = (unsigned long)phase;
-    //print_csgp_header(csgp," shunt_tlm_send_transport() ");
+#ifdef SHUNT_TLM_DEBUG
+    shunt_tlm_print_csgp(csgp," shunt_tlm_send_transport() ");
+#endif
     shunt_cs_tlm_send_gp(socket,&csgp,ptr ,byt);
     };
   
@@ -321,20 +326,21 @@ namespace shunt_tlm
     unsigned char*   byt = trans.get_byte_enable_ptr();
       
     shunt_cs_tlm_recv_gp_header(socket,&csgp);
-    //print_csgp_header(csgp,"shunt_tlm_recv_transport() ");
+#ifdef SHUNT_TLM_DEBUG
+    shunt_tlm_print_csgp(csgp,"shunt_tlm_recv_transport() ");
+#endif
     shunt_csgp2tlmgp (trans,&csgp);
     
-      //
     if (csgp.length>0) {
       size_data_payload = shunt_cs_tlm_data_payload_size(csgp.length);
       size_byte_enable_payload= shunt_cs_tlm_data_payload_size(csgp.byte_enable_length);
       data_tcp = new long unsigned[size_data_payload];
       size_byte_enable_payload = shunt_cs_tlm_data_payload_size(csgp.byte_enable_length);
       if ( size_byte_enable_payload>0) byte_enable_tcp = new long unsigned[size_byte_enable_payload];
-      //
-      // cout<<"shunt_tlm_recv_transport() (pre-shunt_tlm_recv_gp_data) DEBUG: size_data_payload="<<hex<<size_data_payload
-      //    <<" size_byte_enable_payload="<<size_byte_enable_payload<<endl;
-      
+#ifdef SHUNT_TLM_DEBUG
+      cout<<"shunt_tlm_recv_transport() (pre-shunt_tlm_recv_gp_data) DEBUG: size_data_payload="<<hex<<size_data_payload
+          <<" size_byte_enable_payload="<<size_byte_enable_payload<<endl;
+#endif    
       shunt_cs_tlm_recv_gp_data(socket,&csgp,data_tcp,byte_enable_tcp);
       
       
@@ -343,14 +349,14 @@ namespace shunt_tlm
       memcpy(ptr,data_tcp,trans.get_data_length());
       
       if (csgp.byte_enable_length>0) memcpy(&byt,&byte_enable_tcp,trans.get_byte_enable_length());
-
-      //for(int i=0;i<size_data_payload;i++) {
-      //  cout<<"shunt_tlm_recv_transport() (post-shunt_tlm_recv_gp_data) DEBUG: data_tcp"<<"["<<i<<"]"<<"="<<hex<<data_tcp[i]<<endl;
-      //}
-      //for(int i=0;i<size_byte_enable_payload;i++) {
-      //  cout<<"shunt_tlm_recv_transport() (post-shunt_tlm_recv_gp_data)DEBUG: byte_enable_tcp"<<"["<<i<<"]"<<"="<<hex<<byte_enable_tcp[i]<<endl;
-      //}
-      
+#ifdef SHUNT_TLM_DEBUG
+      for(int i=0;i<size_data_payload;i++) {
+        cout<<"shunt_tlm_recv_transport() (post-shunt_tlm_recv_gp_data) DEBUG: data_tcp"<<"["<<i<<"]"<<"="<<hex<<data_tcp[i]<<endl;
+      }
+      for(int i=0;i<size_byte_enable_payload;i++) {
+        cout<<"shunt_tlm_recv_transport() (post-shunt_tlm_recv_gp_data)DEBUG: byte_enable_tcp"<<"["<<i<<"]"<<"="<<hex<<byte_enable_tcp[i]<<endl;
+      }
+#endif      
       delete [] data_tcp;
       delete [] byte_enable_tcp;
       }
@@ -367,10 +373,29 @@ namespace shunt_tlm
   */
   void shunt_tlm_send_command(int socket,shunt_tlm_command Com) {
     cs_tlm_generic_payload_header csgp={0};
-    csgp.command = Com;//SHUNT_TLM_END_SIM;
+    csgp.command = Com;
       shunt_cs_tlm_send_gp(socket,&csgp,0 ,0);
   };
-  
+
+ /*
+    Function: shunt_tlm_recv_command
+    recv hunt_tlm_command
+    
+    Parameters:
+    socket -  socket id 
+    Com   - <shunt_tlm_command> 
+      
+  */
+  void shunt_tlm_recv_command(int socket,shunt_tlm_command* Com) {
+    shunt_tlm_command command_;
+    cs_tlm_generic_payload_header csgp={0};
+    shunt_cs_tlm_recv_gp_header(socket,&csgp);
+    command_ = (shunt_tlm_command)csgp.command;
+    *Com = command_; 
+#ifdef SHUNT_TLM_DEBUG
+    cout<<"shunt_tlm_recv_command()"<<hex<<command_<<"->"<<csgp.command<<endl;
+#endif
+  };
   
   //Section:  Shunt-TLM API (TLM blocking transport)
    
@@ -415,7 +440,9 @@ namespace shunt_tlm
       
       while(shunt_prim_get_status_socket(socket,0) !=1 );
       shunt_tlm_recv_transport( socket,trans,csgp);
-      //print_csgp_header(csgp);
+#ifdef SHUNT_TLM_DEBUG
+      shunt_tlm_print_csgp(csgp);
+#endif
       delay = sc_time(csgp.delay,sc_time_units);
     };
     
@@ -446,14 +473,10 @@ namespace shunt_tlm
       csgp.delay =delay.to_default_time_units();
       phase_enum = shunt_tlm_string2tlm_phase(phase);
       
-      //while(shunt_prim_get_status_socket(socket,1) !=1 );
       shunt_tlm_send_transport(socket,trans,csgp,delay,phase_enum);
-	//print_csgp_header(csgp,"shunt_send_nb_transport_fw send: ");
-      
-	//while(shunt_prim_get_status_socket(socket,0) !=1 );
-        //shunt_tlm_recv_transport(socket,trans_recv,csgp_recv);
-	//print_csgp_header(csgp_recv,"shunt_send_nb_transport_fw recv: ");
-        //return (tlm_sync_enum)csgp_recv.tlm_sync;
+#ifdef SHUNT_TLM_DEBUG
+      shunt_tlm_print_csgp(csgp,"shunt_send_nb_transport_fw send: ");
+#endif
     }
     
     /*
@@ -474,7 +497,9 @@ namespace shunt_tlm
             
       while(shunt_prim_get_status_socket(socket,0) !=1 );
       shunt_cs_tlm_recv_gp_header(socket,&csgp);
-      //print_csgp_header(csgp,"shunt_recv_nb_transport_tlm_sync_resp:");
+#ifdef SHUNT_TLM_DEBUG
+      shunt_tlm_print_csgp(csgp,"shunt_recv_nb_transport_tlm_sync_resp:");
+#endif
       return (tlm_sync_enum)csgp.tlm_sync;
     }; 
     
@@ -503,8 +528,9 @@ namespace shunt_tlm
       while(shunt_prim_get_status_socket(socket,0) !=1 );
       shunt_tlm_recv_transport(socket,trans,csgp);
       delay = sc_time(csgp.delay,sc_time_units);
-      //
-      //print_csgp_header(csgp,"shunt_recv_nb_transport_fw:");
+#ifdef SHUNT_TLM_DEBUG 
+      shunt_tlm_print_csgp(csgp,"shunt_recv_nb_transport_fw:");
+#endif
     }   
     
     /*
@@ -525,7 +551,9 @@ namespace shunt_tlm
       
       while(shunt_prim_get_status_socket(socket,1) !=1 );
       shunt_cs_tlm_send_gp_header(socket,&csgp);
-      //print_csgp_header(csgp,"shunt_send_nb_transport_tlm_sync_resp:");
+#ifdef SHUNT_TLM_DEBUG
+      shunt_tlm_print_csgp(csgp,"shunt_send_nb_transport_tlm_sync_resp:");
+#endif
   }; 
     
 
