@@ -1,19 +1,15 @@
 /*
 ============================================================================
- File        : shunt_dpi_pkg.sv
- Version     : 1.0.1
- Copyright (c) 2016-2017 IC Verimeter. All rights reserved.
+ File    : shunt_dpi_pkg.sv
+ Copyright (c) 2016-2020 IC Verimeter. All rights reserved.
                Licensed under the MIT License.
                See LICENSE file in the project root for full license information.
  Description : shunt dpi bridge
-               System Verilog target initiator handshake (TCP/IP SystemVerilog SHUNT)
- History:
- 1.0.0 - initial release
- 1.0.1 - shunt-verilator integration 
-  ============================================================================
+               System Verilog target/initiator handshake (TCP/IP SystemVerilog SHUNT)
+ ============================================================================
 */
 package shunt_dpi_pkg; 
-
+   
 `define SHUNT_MAX_SIZE = 4096;
    
    //Title: Utilites: System Verilog to C dpi bridge
@@ -25,27 +21,27 @@ package shunt_dpi_pkg;
     (start code)
     *Integer 2 states:*
     
-    SHUNT_INT         - int
+    SHUNT_INT     - int
     SHUNT_SHORTINT    - shortint
     SHUNT_LONGINT     - longint
-    SHUNT_BYTE        - byte
-    SHUNT_BIT         - bit
+    SHUNT_BYTE    - byte
+    SHUNT_BIT     - bit
     
     *Integer 4 states:*
     
     SHUNT_INTEGER     - integer,time
-    SHUNT_REG         - reg,logic
+    SHUNT_REG     - reg,logic
     
     *Non integer types IEEE 754:*
     
-    SHUNT_REAL        - real,realtime
+    SHUNT_REAL    - real,realtime
     SHUNT_SHORTREAL   - shortreal
     SHUNT_STRING      - string
     
     SHUNT_A_STRUCTURE - complex data types/user defined data types : arrays/struct,union,enums 
     SHUNT_HEADER_ONLY - cs_header_t header only.
-     
-     typedef enum {SHUNT_NA,SHUNT_INT,SHUNT_REAL,SHUNT_SHORTREAL,SHUNT_STRING,SHUNT_A_STRUCTURE,SHUNT_INTEGER,SHUNT_BYTE,SHUNT_REG,SHUNT_LOGIC,SHUNT_BIT,SHUNT_SHORTINT,SHUNT_LONGINT,SHUNT_HEADER_ONLY} shunt_signal_type_e;
+    
+    typedef enum {SHUNT_NA,SHUNT_INT,SHUNT_REAL,SHUNT_SHORTREAL,SHUNT_STRING,SHUNT_A_STRUCTURE,SHUNT_INTEGER,SHUNT_BYTE,SHUNT_REG,SHUNT_LOGIC,SHUNT_BIT,SHUNT_SHORTINT,SHUNT_LONGINT,SHUNT_HEADER_ONLY} shunt_signal_type_e;
     (end)
     */
    
@@ -113,7 +109,7 @@ package shunt_dpi_pkg;
 `ifndef NO_SHUNT_DPI_TARGET_INIT 
    import "DPI-C" function int shunt_dpi_target_init (input int portno,input string hostname);
 `endif
-
+   
    /*
     Function: shunt_dpi_close_socket
     terminaties TCP socket
@@ -327,7 +323,7 @@ package shunt_dpi_pkg;
     Functions:  shunt_dpi_recv_long
     map longint 2-state data type,64-bit signed integer
     see SV LRM 6.11 Integer data types longint/long int*
-        
+    
     Parameters:
     sockid - socket id
     Long - data
@@ -363,7 +359,7 @@ package shunt_dpi_pkg;
     Functions:  shunt_dpi_recv_byte
     map byte 2-state data type, 8-bit signed integer or ASCII character  
     LRM 6.11 Integer data types char/char*
-        
+    
     Parameters:
     sockid - socket id
     Byte - data
@@ -400,7 +396,7 @@ package shunt_dpi_pkg;
     Functions:  shunt_dpi_recv_integer
     map integer  4-state data type,32-bit signed integer 
     LRM 6.11 Integer data types
-        
+    
     Parameters:
     sockid - socket id
     Integer - data
@@ -438,7 +434,7 @@ package shunt_dpi_pkg;
     Functions:  shunt_dpi_recv_time
     map time  4-state data type, 64-bit unsigned integer 
     LRM 6.11 
-        
+    
     Parameters:
     sockid - socket id
     Time - data
@@ -456,7 +452,7 @@ package shunt_dpi_pkg;
     Functions:  shunt_dpi_send_bit
     map bit 2-state data type,user-defined vector size unsigned 
     LRM 6.11 
-        
+    
     Parameters:
     sockid - socket id
     Bit - data
@@ -474,7 +470,7 @@ package shunt_dpi_pkg;
     Functions:  shunt_dpi_recv_bit
     mapbit 2-state data type,user-defined vector size unsigned 
     LRM 6.11 
-            
+    
     Parameters:
     sockid - socket id
     Bit - data
@@ -494,7 +490,7 @@ package shunt_dpi_pkg;
     Functions:  shunt_dpi_send_reg
     map reg/logic 4-state data type
     LRM 6.11 
-        
+    
     Parameters:
     sockid - socket id
     Reg - data
@@ -512,7 +508,7 @@ package shunt_dpi_pkg;
     Functions:  shunt_dpi_recv_reg
     map reg/logic 4-state data type
     LRM  6.11 
-            
+    
     Parameters:
     sockid - socket id
     Reg - data
@@ -530,7 +526,7 @@ package shunt_dpi_pkg;
     Functions:  shunt_dpi_send_logic
     map reg/logic 4-state data type
     LRM 6.11 
-        
+    
     Parameters:
     sockid - socket id
     Logic - data
@@ -549,7 +545,7 @@ package shunt_dpi_pkg;
     Functions: shunt_dpi_recv_logic
     map reg/logic 4-state data type
     LRM  6.11 
-            
+    
     Parameters:
     sockid - socket id
     Logic - data
@@ -570,7 +566,7 @@ package shunt_dpi_pkg;
     Functions: shunt_dpi_send_real
     map real data type is the same as a C double 8 byte 
     LRM 6.12
-           
+       
     Parameters:
     sockid - socket id
     Real - data
@@ -650,7 +646,7 @@ package shunt_dpi_pkg;
     
     map bit[N:0]  2-state data type packed array of scalar bit types
     LRM 6.11 
-        
+    
     Parameters:
     sockid - socket id
     bitN - data
@@ -669,7 +665,7 @@ package shunt_dpi_pkg;
     Functions: shunt_dpi_recv_bitN
     map bit[N:0] 2-state data type packed array of scalar bit types
     LRM  6.11 
-            
+    
     Parameters:
     sockid - socket id
     bitN - data
@@ -688,7 +684,7 @@ package shunt_dpi_pkg;
     Functions: shunt_dpi_send_string
     map string string is an ordered collection of characters be indexed as a unpacked array of bytes 
     LRM 6.16
-           
+       
     Parameters:
     sockid - socket id
     String - data
@@ -955,11 +951,11 @@ package shunt_dpi_pkg;
    //Section: Integer/Non integer dynamic vectors     
    
    // Variable: cs_header_t
-   typedef struct packed {		
-      longint 	trnx_type;
-      longint 	trnx_id;
-      longint 	data_type;
-      longint 	n_payloads;
+   typedef struct packed {
+      longint     trnx_type;
+      longint     trnx_id;
+      longint     data_type;
+      longint     n_payloads;
    } cs_header_t;
    
    // Variable: cs_data_header_t
@@ -971,8 +967,8 @@ package shunt_dpi_pkg;
  */
 `ifndef  NO_CS_DATA_HEADER_T  
    typedef struct{
-      longint 	 data_type;      real 	 data_type;
-      int 	 trnx_payload_sizes[];
+      longint    data_type;      
+      int        trnx_payload_sizes[];
    }cs_data_header_t;
 `endif
   
@@ -1042,7 +1038,7 @@ package shunt_dpi_pkg;
    /*
     Function: shunt_dpi_send_data_header
     send SHUNT data header over TCP/IP
-                 
+     
     Parameters:
     sockid - socket id from init initiator/target 
     h      - cs_header structure <cs_data_header_t>
@@ -1065,7 +1061,7 @@ package shunt_dpi_pkg;
    /*
     Function: shunt_dpi_recv_data_header
     fetch SHUNT transaction data header from TCP/IP socket
-                
+    
     Parameters:
     sockid - socket id from init initiator/target <cs_data_header_t>
     h      - cs_header structure <cs_header_t>
@@ -1222,7 +1218,7 @@ package shunt_dpi_pkg;
     Functions:  shunt_dpi_hs_recv_byte
     map  unpacked dynamic "byte" one-dimensional array 
     LRM 6.11 Integer data types char/char*
-        
+    
     Parameters:
     sockid - socket id
     Array - data
@@ -1240,7 +1236,7 @@ package shunt_dpi_pkg;
     Functions: shunt_dpi_hs_send_string
     map string string is an ordered collection of characters be indexed as a unpacked array of bytes 
     LRM 6.16   
-           
+       
     Parameters:
     sockid - socket id
     String - data
@@ -1397,7 +1393,7 @@ package shunt_dpi_pkg;
     Functions:  shunt_dpi_hs_send_bitN 
     map bit[N:0]  2-state data type packed array of scalar bit types
     LRM 6.11 
-        
+    
     Parameters: 
     
     sockid - socket id
@@ -1419,7 +1415,7 @@ package shunt_dpi_pkg;
     Functions: shunt_dpi_hs_recv_bitN 
     map bit[N:0] 2-state data type packed array of scalar bit types
     LRM  6.11 
-            
+    
     Parameters:
     
     sockid - socket id
@@ -1444,7 +1440,7 @@ package shunt_dpi_pkg;
     Functions: shunt_dpi_hs_send_regN
     map reg[N:0] or logic[N:0]  4-state data type,packed array,user-defined vector size, unsigned 
     LRM 6.11 
-        
+    
     Parameters:
     
     sockid - socket id
@@ -1465,7 +1461,7 @@ package shunt_dpi_pkg;
     Functions: shunt_dpi_hs_send_logicN
     map reg[N:0] or logic[N:0]  4-state data type,packed array,user-defined vector size, unsigned 
     LRM 6.11 
-        
+    
     Parameters:
     
     sockid - socket id
@@ -1486,7 +1482,7 @@ package shunt_dpi_pkg;
     Functions: shunt_dpi_hs_recv_regN
     map reg[N:0] or logic[N:0]  4-state data type,packed array,user-defined vector size, unsigned
     LRM  6.11 
-            
+    
     Parameters:
     
      sockid - socket id
@@ -1507,7 +1503,7 @@ package shunt_dpi_pkg;
     Functions: shunt_dpi_hs_recv_logicN
     map reg[N:0] or logic[N:0]  4-state data type,packed array,user-defined vector size, unsigned
     LRM  6.11 
-            
+    
     Parameters:
     
     sockid - socket id
@@ -1588,5 +1584,168 @@ package shunt_dpi_pkg;
 `ifndef NO_SHUNT_DPI_GETTIMEOFDAY_USEC;
    import "DPI-C" function longint shunt_dpi_gettimeofday_usec();
 `endif   
+ 
+   //Section: Data TLM2.0 utils
+   
+   /* 
+    Variable:  cs_tlm_generic_payload_header
+    
+    *TLM 2.0 Generic Payload structure* (Ref. to TLM 2.0 Generic Payload attributes)
+    
+    - *option*       Generic payload option : 
 
+    --- Code
+    enum  tlm_gp_option { TLM_MIN_PAYLOAD, TLM_FULL_PAYLOAD, TLM_FULL_PAYLOAD_ACCEPTED }
+    ---
+    
+    - *command*     Transaction type: 
+    
+    --- Code
+    enum  tlm_command { TLM_READ_COMMAND, TLM_WRITE_COMMAND, TLM_IGNORE_COMMAND }
+    ---
+    
+    - *address*      Transaction base start address (bytes)
+    
+    - *length*       Total number of bytes of the transaction.
+    
+    - *byte_enable_length*  Number of elements in the bytes enable array.
+    
+    - *streaming_width*     Number of bytes transferred on each data-beat.    
+    
+    - *dmi_allowed*    DMI allowed/not allowed (bool atribute) 
+    
+    - *response_status*    Transaction status:
+    
+    --- Code
+    enum  tlm_response_status {
+    TLM_OK_RESPONSE = 1, TLM_INCOMPLETE_RESPONSE = 0, TLM_GENERIC_ERROR_RESPONSE = -1, TLM_ADDRESS_ERROR_RESPONSE = -2,
+    TLM_COMMAND_ERROR_RESPONSE = -3, TLM_BURST_ERROR_RESPONSE = -4, TLM_BYTE_ENABLE_ERROR_RESPONSE = -5
+    }
+    ---
+    
+    - *delay*      Shunt tlm header extension equal to b_transport/nb_trasport delay atribute
+    
+    - *tlm_phase*      Shunt tlm header nb_trasport atribute:
+    
+    --- Code
+    enum  tlm_phase_enum {
+    UNINITIALIZED_PHASE =0, BEGIN_REQ =1, END_REQ, BEGIN_RESP,END_RESP
+    }
+    ---
+    
+    - *tlm_sync*     shunt tlm header nb_trasport atribute:
+    
+    --- Code      
+    enum  tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED } 
+    ---
+    */
+   typedef struct packed {
+      longint       option;
+      longint       address;
+      longint       command;
+      longint       length;
+      longint       byte_enable_length;
+      longint       streaming_width;
+      longint       dmi;
+      longint       response_status;
+      longint       delay;
+      longint       tlm_phase;
+      longint       tlm_sync;
+   } cs_tlm_generic_payload_header_t;
+   
+ typedef enum {SHUNT_TLM_ACCEPTED,SHUNT_TLM_UPDATED,SHUNT_TLM_COMPLETED} shunt_tlm_sync_e;
+   
+ typedef enum {SHUNT_TLM_READ_COMMAND,SHUNT_TLM_WRITE_COMMAND,SHUNT_TLM_IGNORE_COMMAND,SHUNT_TLM_END_SIM,SHUNT_TLM_START_SIM} shunt_tlm_command_e;
+   
+ typedef enum {SHUNT_TLM_OK_RESPONSE=1,SHUNT_TLM_INCOMPLETE_RESPONSE=0,SHUNT_TLM_GENERIC_ERROR_RESPONSE=-1,
+           SHUNT_TLM_ADDRESS_ERROR_RESPONSE=-2,SHUNT_TLM_COMMAND_ERROR_RESPONSE=-3,SHUNT_TLM_BURST_ERROR_RESPONSE=-4,
+           SHUNT_TLM_BYTE_ENABLE_ERROR_RESPONSE=-5} shunt_tlm_response_status_e;
+   
+ typedef enum {SHUNT_TLM_MIN_PAYLOAD,SHUNT_TLM_FULL_PAYLOAD,SHUNT_TLM_FULL_PAYLOAD_ACCEPTED} shunt_tlm_gp_option_e;
+   
+ typedef enum {SHUNT_TLM_UNKNOWN_ENDIAN,SHUNT_TLM_LITTLE_ENDIAN,SHUNT_TLM_BIG_ENDIAN} shunt_tlm_endianness_e;
+   
+ typedef enum {SHUNT_TLM_UNINITIALIZED_PHASE=0,SHUNT_TLM_BEGIN_REQ=1,SHUNT_TLM_END_REQ,SHUNT_TLM_BEGIN_RESP,
+           SHUNT_TLM_END_RESP} shunt_tlm_phase_e;
+ 
+   /*
+    Function: shunt_tlm_send_command
+    send hunt_tlm_command
+    
+    Parameters:
+    socket -  socket id 
+    Com   - <shunt_dpi_tlm_command_e> 
+    */
+`ifndef NO_SHUNT_DPI_TLM_SEND_COMMAND
+   import "DPI-C" function  void shunt_dpi_tlm_send_command(int socket,shunt_tlm_command_e Com);
+`endif      
+ 
+   /*
+    Function: shunt_dpi_tlm_send_gp_transport  
+    send tlm generic payload  packet ( cs_tlm_generic_payload_header  + byte data vector + byte_enable vector ) 
+    
+    Parameters:
+  
+    sockid - socket id from init sever/client 
+    h - cs_tlm_generic_payload_header
+    data - data payload array
+    byte_enable - byte_enable array 
+    
+    See Also: 
+    -  <shunt_cs_tlm_send_gp_transport>
+    */
+   
+`ifndef NO_SHUNT_DPI_TLM_SEND_GP_TRANSPORT 
+   import "DPI-C" function void shunt_dpi_tlm_send_gp_transport(input int sockid, inout cs_tlm_generic_payload_header_t h, inout  byte data[], inout  byte byte_enable[]);
+`endif
+
+ 
+/*
+  Function: shunt_dpi_tlm_recv_gp_transport  
+  recieve tlm generic payload  packet (header + byte data vector + byte_enable vector )
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h - cs_tlm_generic_payload_header (input only) should have a valid data length and byte_enable_length
+  data - data payload byte-vector pointer  (output) 
+  byte_enable - byte_enable vector pointer (output)  
+*/
+`ifndef NO_SHUNT_DPI_TLM_RECV_GP_TRANSPORT
+   import "DPI-C"  function void  shunt_dpi_tlm_recv_gp_transport (input int sockid, inout cs_tlm_generic_payload_header_t h,inout byte data[],inout byte  byte_enable[]);
+`endif
+   
+   /////
+   //axulary function
+   
+   function void shunt_dpi_tlm_gp_header_print (cs_tlm_generic_payload_header_t csgp,string prefix="");
+      /* verilator lint_off UNUSED */
+      shunt_tlm_sync_e            tlm_sync_;
+      shunt_tlm_command_e         command_;
+      shunt_tlm_response_status_e response_status_;
+      shunt_tlm_gp_option_e       option_;
+      shunt_tlm_phase_e           tlm_phase_;
+      
+      tlm_sync_        = shunt_tlm_sync_e'(csgp.tlm_sync);
+      command_         = shunt_tlm_command_e'(csgp.command);
+      response_status_ = shunt_tlm_response_status_e'(csgp.response_status);
+      option_          = shunt_tlm_gp_option_e'(csgp.option);
+      tlm_phase_       = shunt_tlm_phase_e'(csgp.tlm_phase);
+      
+      $write("\n%0s option(%0s)",prefix, option_.name());
+      $write(",address(%h)",csgp.address);
+      $write(",command_(%s)",command_.name());
+      $write(",length(%0d)",csgp.length);
+      $write(",byte_enable_length(%0d)",csgp.byte_enable_length);
+      $write(",streaming_width(%0d)",csgp.streaming_width);
+      $write(",dmi(%0d)",csgp.dmi);
+      $write(",response_status(%0d)",response_status_);
+      $write(",delay(%0d)",csgp.delay);
+      $write(",tlm_phase_(%0s)",tlm_phase_.name());
+      $write(",tlm_sync(%0s)\n",tlm_sync_.name());
+      /* verilator lint_on UNUSED */
+   endfunction : shunt_dpi_tlm_gp_header_print
+   
+   ////
+   
 endpackage : shunt_dpi_pkg
