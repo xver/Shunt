@@ -7,3 +7,10 @@
 #emacs temp files 
 *.*~
 *~
+\#*
+#eclipse
+*.settings.xml
+*.eclipse.cdt.codan.core.prefs
+*.eclipse.cdt.core.prefs
+
+
