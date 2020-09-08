@@ -577,6 +577,9 @@ See Also:
 int shunt_cs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
 
 //Section: Auxiliary tasks 
+
+int shunt_cs_tlm_data_payload_size(const int data_size);
+
 /*
   Function: shunt_cs_print_header
   print out SHUNT header 
@@ -731,6 +734,21 @@ void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header* h, co
   
 */
 void shunt_cs_tlm_recv_gp_header (int sockid, cs_tlm_generic_payload_header* h);
+
+/*
+  Function: shunt_cs_tlm_send_gp_header  
+  recieve tlm generic payload  header ( cs_tlm_generic_payload_header only)
+  
+  Parameters:
+  
+  sockid - socket id from init sever/client 
+  h - cs_tlm_generic_payload_header (output) 
+
+  
+*/
+void shunt_cs_tlm_send_gp_header (int sockid, cs_tlm_generic_payload_header* h);
+
+
 
 
 /*
