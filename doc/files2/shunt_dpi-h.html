@@ -300,13 +300,22 @@
  <div class="CTitle">Data exchange (cs) TLM</div>
 </div>
 
+<a name="Types"></a><a name="Topic254"></a><div class="CTopic TGroup LC">
+ <div class="CTitle">Types</div>
+</div>
+
+<a name="shunt_dpi_tlm_command_e"></a><a name="Topic329"></a><div class="CTopic TEnumeration LC">
+ <div class="CTitle">shunt_dpi_tlm_command_e</div>
+ <div class="CBody"><pre><span class="SHKeyword">typedef enum</span><br />  {<br />    SHUNT_TLM_READ_COMMAND,<br />    SHUNT_TLM_WRITE_COMMAND,<br />    SHUNT_TLM_IGNORE_COMMAND,<br />    <span class="SHComment">//</span><br />    SHUNT_TLM_END_SIM,<br />    SHUNT_TLM_START_SIM<br />  } shunt_dpi_tlm_command_e;</pre></div>
+</div>
+
 <a name="Functions(4)"></a><a name="Topic74"></a><div class="CTopic TGroup LC">
  <div class="CTitle">Functions</div>
 </div>
 
 <a name="shunt_tlm_send_command"></a><a name="Topic312"></a><div class="CTopic TFunction LC">
  <div class="CTitle">shunt_tlm_send_command</div>
- <div class="CBody"><p>send hunt_tlm_command</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">socket</td><td class="CDLDefinition"><p>socket id</p></td></tr><tr><td class="CDLEntry">Com</td><td class="CDLDefinition"><p>&lt;shunt_dpi_tlm_command_e&gt;</p></td></tr></table></div>
+ <div class="CBody"><p>send hunt_tlm_command</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">socket</td><td class="CDLDefinition"><p>socket id</p></td></tr><tr><td class="CDLEntry">Com</td><td class="CDLDefinition"><p><a href="../index.html#File2:shunt_dpi.h:shunt_dpi_tlm_command_e" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,329);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >shunt_dpi_tlm_command_e</a></p></td></tr></table></div>
 </div>
 
 <a name="shunt_dpi_tlm_send_gp_transport"></a><a name="Topic315"></a><div class="CTopic TFunction LC">
@@ -315,10 +324,10 @@
  <div class="CBody"><p>send tlm generic payload&nbsp; packet ( cs_tlm_generic_payload_header&nbsp; + byte data vector + byte_enable vector )</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">sockid<div class="CDLParameterType"><span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket id from init sever/client</p></td></tr><tr><td class="CDLEntry">h<div class="CDLParameterType">cs_tlm_generic_payload_header*</div></td><td class="CDLDefinition"><p>cs_tlm_generic_payload_header</p></td></tr><tr><td class="CDLEntry">data<div class="CDLParameterType">svOpenArrayHandle*</div></td><td class="CDLDefinition"><p>data payload byte-vector pointer</p></td></tr><tr><td class="CDLEntry">byte_enable<div class="CDLParameterType">svOpenArrayHandle*</div></td><td class="CDLDefinition"><p>byte_enable vector pointer</p></td></tr></table><div class="CHeading">See Also</div><ul><li><p><a href="../index.html#File:shunt_client_server.h:shunt_cs_tlm_send_gp" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,289);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >shunt_cs_tlm_send_gp</a></p></li></ul></div>
 </div>
 
-<a name="shunt_dpi_tlm_recv_gp_transport"></a><a name="Topic318"></a><div class="CTopic TFunction LC">
+<a name="shunt_dpi_tlm_recv_gp_transport"></a><a name="Topic282"></a><div class="CTopic TFunction LC">
  <div class="CTitle">shunt_dpi_tlm_recv_gp_transport</div>
- <div id="NDPrototype318" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> shunt_dpi_tlm_recv_gp_transport (</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PType first"><span class="SHKeyword">int</span>&nbsp;</td><td></td><td class="PName last">sockid,</td></tr><tr><td class="PType first">cs_tlm_generic_payload_header&nbsp;</td><td class="PNamePrefix">*</td><td class="PName last">h,</td></tr><tr><td class="PType first">svOpenArrayHandle&nbsp;</td><td></td><td class="PName last">data,</td></tr><tr><td class="PType first">svOpenArrayHandle&nbsp;</td><td></td><td class="PName last">byte_enable</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
- <div class="CBody"><p>recv tlm generic payload&nbsp; packet ( cs_tlm_generic_payload_header&nbsp; + byte data vector + byte_enable vector )</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">sockid<div class="CDLParameterType"><span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket id from init sever/client</p></td></tr><tr><td class="CDLEntry">h<div class="CDLParameterType">cs_tlm_generic_payload_header*</div></td><td class="CDLDefinition"><p>cs_tlm_generic_payload_header</p></td></tr><tr><td class="CDLEntry">data<div class="CDLParameterType">svOpenArrayHandle</div></td><td class="CDLDefinition"><p>data payload byte-vector pointer</p></td></tr><tr><td class="CDLEntry">byte_enable<div class="CDLParameterType">svOpenArrayHandle</div></td><td class="CDLDefinition"><p>byte_enable vector pointer</p></td></tr></table><div class="CHeading">See Also</div><ul><li><p>&lt;shunt_cs_tlm_recv_gp_transport&gt;</p></li></ul></div>
+ <div id="NDPrototype282" class="NDPrototype WideForm CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">void</span> shunt_dpi_tlm_recv_gp_transport (</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PType first"><span class="SHKeyword">int</span>&nbsp;</td><td></td><td class="PName last">sockid,</td></tr><tr><td class="PType first">cs_tlm_generic_payload_header&nbsp;</td><td class="PNamePrefix">*</td><td class="PName last">h,</td></tr><tr><td class="PType first">svOpenArrayHandle&nbsp;</td><td></td><td class="PName last">data,</td></tr><tr><td class="PType first">svOpenArrayHandle&nbsp;</td><td></td><td class="PName last">byte_enable</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div>
+ <div class="CBody"><p>recv tlm generic payload&nbsp; packet ( cs_tlm_generic_payload_header&nbsp; + byte data vector + byte_enable vector )</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">sockid<div class="CDLParameterType"><span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket id from init sever/client</p></td></tr><tr><td class="CDLEntry">h<div class="CDLParameterType">cs_tlm_generic_payload_header*</div></td><td class="CDLDefinition"><p>cs_tlm_generic_payload_header</p></td></tr><tr><td class="CDLEntry">data<div class="CDLParameterType">svOpenArrayHandle</div></td><td class="CDLDefinition"><p>data payload byte-vector pointer</p></td></tr><tr><td class="CDLEntry">byte_enable<div class="CDLParameterType">svOpenArrayHandle</div></td><td class="CDLDefinition"><p>byte_enable vector pointer</p></td></tr></table><div class="CHeading">See Also</div><ul><li><p><a href="../index.html#File:shunt_client_server.h:shunt_cs_tlm_recv_gp_header" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,294);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >shunt_cs_tlm_recv_gp_header</a> and <a href="../index.html#File:shunt_client_server.h:shunt_cs_tlm_recv_gp_data" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,299);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >shunt_cs_tlm_recv_gp_data</a></p></li></ul></div>
 </div>
 
 <a name="Data_exchange(3)"></a><a name="Topic73"></a><div class="CTopic TSection LC">
