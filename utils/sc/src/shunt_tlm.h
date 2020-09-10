@@ -62,8 +62,7 @@ namespace shunt_tlm
   SHUNT_TLM_END_SIM - end of Client simulation, send by Server
   --- Code
   enum shunt_tlm_command {
-  SHUNT_TLM_END_SIM =tlm_command::TLM_IGNORE_COMMAND+1
-  };
+  SHUNT_TLM_END_SIM =tlm_command::TLM_IGNORE_COMMAND+1,SHUNT_TLM_START_SIM};
   ---
   */ 
   enum shunt_tlm_command {
