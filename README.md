@@ -27,19 +27,16 @@ Setup following variables:
  - **“SHUNT_SVDPI”** to the location of svdpi.h file
 
 # Library compilation
- - Go to “$SHUNT_HOME/utils/makedir/“
- - Run “make clean;make all”
+ - cd to “$SHUNT_HOME/utils/makedir/“
+ - run “make clean;make all”
 Compile result will be placed under ***${SHUNT_HOME}/bin as a “libutils.so”***
 # Compile and run all SV/C examples
-
-cd *$SHUNT_HOME/examples/makedir*
-
-*./run_examples* 
+- cd to *$SHUNT_HOME/examples/makedir*
+- run *./run_examples* 
 
 # Compile and run C examples
-Go to example makedir root directory. 
-*(Example: $SHUNT_HOME/examples/c/primitives/makedir)*
-To compile the library and launch test run “make all”
+- cd  to example makedir root directory. *(Example: $SHUNT_HOME/examples/c/primitives/makedir)*
+- To compile the library and launch test run “make all”
 
 # Compile and run SV examples
 The Shunt includes a complete Makefile structure for the C portion of the library, but ONLY Makefile target place holders for SV domain.
@@ -47,16 +44,24 @@ The Shunt includes a complete Makefile structure for the C portion of the librar
  - Edit “Makefile” initiator/target “compile_sv” under initiator/target
    local makedir(Example: $SHUNT_HOME/examples/sv/sv2c/initiator/makedir)
  - Edit “run” file placeholder. Setup run command for appropriate
-   source. Go to example makedir root directory, run “make all” and ./run
+   source. cd to example makedir root directory, run “make all” and ./run
 (Example:  $SHUNT_HOME/examples/sv/sv2c/makedir)
 
-# SystemC TLM-2.0 over TCP/IP example
-cd to "loosely timed model"  b_transport over TCP/IP example path: $SHUNT_HOME/examples/sc/LT_simple_cs/makedir 
-run "make all"
+# SystemC TLM-2.0 over TCP/IP "loosely timed model" example 
 
+SystemC to SystemC  b_transport over TCP/IP :  
+ - cd to $SHUNT_HOME/examples/sc/LT_simple_cs/makedir 
+ - run  "make all"
+
+SystemC to SV  b_transport over TCP/IP :
+ -cd to $SHUNT_HOME/examples/sc/LT_simple_sv/makedir
+ - run  "make all"
+ 
 Release History:
 -----------------------
-2.0.0 - (Current Version) SystemC TLM-2.0 over TCP/IP 
+2.1.0  - Current Version) System Verilog TLM-2.0 generic payload over TCP/IP  
+
+2.0.0 - SystemC TLM-2.0 over TCP/IP 
 
 1.2.0 - TCP/IP optimization ,new fixed size packet communication functions,big/little endian support.examples and doc updates
 
