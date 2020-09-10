@@ -825,7 +825,22 @@ int shunt_dpi_recv_string   (int sockid,int size,char** string);
 
 // Section: Data exchange (cs) TLM
 
+/* Enum: shunt_dpi_tlm_command_e
+ --- Code
+typedef enum 
+  {
+    SHUNT_TLM_READ_COMMAND,
+    SHUNT_TLM_WRITE_COMMAND,
+    SHUNT_TLM_IGNORE_COMMAND,
+    //
+    SHUNT_TLM_END_SIM,
+    SHUNT_TLM_START_SIM
+  } shunt_dpi_tlm_command_e;
+---
+*/ 
+   
 typedef enum {SHUNT_TLM_READ_COMMAND,SHUNT_TLM_WRITE_COMMAND,SHUNT_TLM_IGNORE_COMMAND,SHUNT_TLM_END_SIM,SHUNT_TLM_START_SIM} shunt_dpi_tlm_command_e;
+
 
  /*
     Function: shunt_tlm_send_command
@@ -865,7 +880,7 @@ void shunt_dpi_tlm_send_gp_transport(int sockid, cs_tlm_generic_payload_header* 
   byte_enable - byte_enable vector pointer 
 
   See Also: 
-  -  <shunt_cs_tlm_recv_gp_transport>
+  -  <shunt_cs_tlm_recv_gp_header> and <shunt_cs_tlm_recv_gp_data>
 */
 void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header* h,svOpenArrayHandle data,svOpenArrayHandle byte_enable);
 
