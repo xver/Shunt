@@ -1,16 +1,15 @@
 /*
 ============================================================================
- File        : initiator.sv
- Version     : 1.0.0
+ File        : Target.sv
  Copyright (c) 2016-2020 IC Verimeter. All rights reserved.
                Licensed under the MIT License.
                See LICENSE file in the project root for full license information.
  Description : TCP/IP SystemVerilog SHUNT
-               b_transport SystenC to SystemVerilog examle  -Target(client)  
+               b_transport SystemC to SystemVerilog examle  -Target(client)  
  ============================================================================
 */
-`ifndef INITIATOR_SV
- `define INITIATOR_SV
+`ifndef TARGET_SV
+ `define TARGET_SV
 
 module automatic Target(input reg clk_i); 
    
@@ -145,7 +144,8 @@ module memory
    
 endmodule : memory
 /* verilator lint_on DECLFILENAME */
-`endif //  `ifndef INITIATOR_SV
+
+`endif //  `ifndef TARGET_SV
 
 
 
