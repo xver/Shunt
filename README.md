@@ -54,7 +54,7 @@ SystemC to SystemC  b_transport over TCP/IP :
  - run  "make all"
 
 SystemC to SV  b_transport over TCP/IP :
- -cd to $SHUNT_HOME/examples/sc/LT_simple_sv/makedir
+ - cd to $SHUNT_HOME/examples/sc/LT_simple_sv/makedir
  - run  "make all"
  
 Release History:
