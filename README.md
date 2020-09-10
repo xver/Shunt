@@ -47,7 +47,7 @@ The Shunt includes a complete Makefile structure for the C portion of the librar
    source. cd to example makedir root directory, run “make all” and ./run
 (Example:  $SHUNT_HOME/examples/sv/sv2c/makedir)
 
-# SystemC TLM-2.0 over TCP/IP "loosely timed model" example 
+# TLM-2.0 over TCP/IP "loosely timed model"  SystemC-to-SystemC and SystemC-to-SV examples 
 
 SystemC to SystemC  b_transport over TCP/IP :  
  - cd to $SHUNT_HOME/examples/sc/LT_simple_cs/makedir 
