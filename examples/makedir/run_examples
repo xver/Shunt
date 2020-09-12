@@ -6,5 +6,10 @@ pushd .;cd ../c/user_api/makedir/;make >> $SHUNT_HOME/examples/makedir/shunt.log
 #SV
 command -v verilator >/dev/null 2>&1 || { echo >&2 "Shunt SV tests are required verilator but it's not installed.";}
 pushd .;cd ../sv/sv2c/makedir;./verilator_run  >> $SHUNT_HOME/examples/makedir/shunt.log ;popd      
+#SC
+pushd .; cd ../sc/LT_simple_cs/makedir;make all >> $SHUNT_HOME/examples/makedir/shunt.log;popd
+pushd .;  cd ../sc/LT_simple_trns/makedir;make all >> $SHUNT_HOME/examples/makedir/shunt.log;popd
+pushd .;  cd ../sc/LT_simple_sv/makedir;make all >> $SHUNT_HOME/examples/makedir/shunt.log;popd
 # 
-grep -a "loopback" shunt.log
+egrep -a '(loopback|TEST\ PASS|test\ is\ finished)' shunt.log
+

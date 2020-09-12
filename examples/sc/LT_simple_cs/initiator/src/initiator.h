@@ -71,6 +71,7 @@ struct Initiator: sc_module
     }
     shunt_tlm_send_command(m_socket,SHUNT_TLM_END_SIM);
     shunt_prim_close_socket(m_socket);
+    cout <<"LT_simple_cs test is finished"<<endl;
   }
 
   // Internal data buffer used by initiator with generic payload
