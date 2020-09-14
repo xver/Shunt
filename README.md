@@ -59,7 +59,7 @@ SystemC to SV  b_transport over TCP/IP :
  
 Release History:
 -----------------------
-2.1.0  - Current Version) System Verilog TLM-2.0 generic payload over TCP/IP  
+2.1.0  - (Current Version) System Verilog TLM-2.0 generic payload over TCP/IP  
 
 2.0.0 - SystemC TLM-2.0 over TCP/IP 
 
@@ -88,4 +88,4 @@ If you have any questions please contact us at icshunt.help@gmail.com
 
 !["Copyright (c) 2020 IC Verimeter"](https://github.com/xver/Shunt/blob/master/doc/IcVerimeter_logo.png)
 
-Copyright (c) 2016-2020 IC Verimeter"
+Copyright (c) 2016-2020 IC Verimeter
