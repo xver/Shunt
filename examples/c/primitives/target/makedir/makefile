@@ -29,7 +29,7 @@ all: ${SHUNT_HOME}/bin/primC_Target
 ${SHUNT_HOME}/bin/primC_Target: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc  -o "${SHUNT_HOME}/bin/primC_Target" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc   -Wall -Werror -Wpedantic -Wextra  -o "${SHUNT_HOME}/bin/primC_Target" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
