@@ -643,7 +643,7 @@ void shunt_dpi_tlm_send_command(int socket,const shunt_dpi_tlm_command_e Com) {
   cs_tlm_generic_payload_header csgp={0};
   csgp.command = Com;
   shunt_cs_tlm_send_gp_header (socket,&csgp);
-};
+}
 
 void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header* h,svOpenArrayHandle data,svOpenArrayHandle byte_enable) {
   
