@@ -30,7 +30,7 @@ struct Initiator: sc_module
 
   void thread_process()
   {
-	 int m_socket=0;
+    int m_socket=0;
     // TLM-2 generic payload transaction, reused across calls to b_transport
     m_socket = shunt_tlm_init_server(MY_PORT);
     tlm::tlm_generic_payload* trans = new tlm::tlm_generic_payload;
