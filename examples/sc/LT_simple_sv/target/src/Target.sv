@@ -47,7 +47,7 @@ module automatic Target(input reg clk_i);
    
    initial   begin 
       sockid = shunt_dpi_target_init(`MY_PORT,`MY_HOST);
-      shunt_dpi_tlm_send_command(sockid,shunt_tlm_command_e::SHUNT_TLM_START_SIM);
+      shunt_dpi_tlm_send_command(sockid,SHUNT_TLM_START_SIM);
       start_sim =1;
    end
    
