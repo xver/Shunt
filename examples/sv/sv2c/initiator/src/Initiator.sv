@@ -685,11 +685,13 @@ module automatic Initiator;
       shortint 	    ShortV_act[`V_SIZE];
       string 	    s_me = "shortV_loopback_test";
       success =1;
+      /* verilator lint_off WIDTH */
       foreach(ShortV_exp[shortV_i]) ShortV_exp[shortV_i] = 100+shortint'(shortV_i+1);
       foreach(ShortV_act[shortV_i]) ShortV_act[shortV_i] = 300+shortint'(shortV_i+1);
       if(shunt_dpi_send_shortV(socket_id,`V_SIZE,ShortV_exp) <= 0) success =0;
       if(shunt_dpi_recv_shortV(socket_id,`V_SIZE,ShortV_act) <= 0) success =0;
       foreach(ShortV_exp[shortV_i]) if(ShortV_act[shortV_i] != ShortV_exp[shortV_i]) success =0;
+      /* verilator lint_on WIDTH */
  `endif //  `ifndef NO_SHUNT_DPI_RECV_SHORTV
 `endif //  `ifndef NO_SHUNT_DPI_SEND_SHORTV
       return  success;
