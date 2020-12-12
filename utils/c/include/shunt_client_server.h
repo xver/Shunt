@@ -105,7 +105,7 @@ Variable: SHUNT_INSTR_ENUM_NAMES
 > = {"SHUNT_INT","SHUNT_REAL","SHUNT_SHORTREAL","SHUNT_STRING","SHUNT_A_STRUCTURE","SHUNT_INTEGER","SHUNT_BYTE","SHUNT_REG","SHUNT_BIT","SHUNT_SHORTINT","SHUNT_LONGINT","SHUNT_HEADER_ONLY"}  
 
 */
-#define SHUNT_INSTR_HASH_INDEX_DEFINE char* SHUNT_INSTR_ENUM_NAMES[] = {"SHUNT_INT","SHUNT_REAL","SHUNT_SHORTREAL","SHUNT_STRING","SHUNT_A_STRUCTURE","SHUNT_INTEGER","SHUNT_BYTE","SHUNT_REG","SHUNT_BIT","SHUNT_SHORTINT","SHUNT_LONGINT","SHUNT_HEADER_ONLY"}
+#define SHUNT_INSTR_HASH_INDEX_DEFINE const char* SHUNT_INSTR_ENUM_NAMES[] = {"SHUNT_INT","SHUNT_REAL","SHUNT_SHORTREAL","SHUNT_STRING","SHUNT_A_STRUCTURE","SHUNT_INTEGER","SHUNT_BYTE","SHUNT_REG","SHUNT_BIT","SHUNT_SHORTINT","SHUNT_LONGINT","SHUNT_HEADER_ONLY"}
 
 /*
   Variable: cs_header_t
@@ -163,7 +163,7 @@ typedef struct cs_data_header_t {
    <shunt_cs_data_type_hash>
 
 */
-long shunt_cs_data_type_hash(long data_type,char* data_type_names[],int last_enum);
+long shunt_cs_data_type_hash(long data_type,const char* data_type_names[],int last_enum);
 
 /*
   Function: shunt_cs_data_type
@@ -183,7 +183,7 @@ long shunt_cs_data_type_hash(long data_type,char* data_type_names[],int last_enu
   See Also:
   <shunt_cs_data_type_hash>
 */
-int shunt_cs_data_type(long hash,char* data_type_names[],int last_enum);
+int shunt_cs_data_type(long hash,const char* data_type_names[],int last_enum);
 
 /*
   Function: shunt_cs_send_header
@@ -598,7 +598,7 @@ See Also:
   <cs_header_t>
  
 */
-void shunt_cs_print_header    (cs_header* h,char* data_type_names[],int last_enum,char* msg);
+void shunt_cs_print_header    (cs_header* h,const char* data_type_names[],int last_enum,char* msg);
 
 /*
   Function: shunt_cs_print_data_header
@@ -620,7 +620,7 @@ See Also:
   <cs_data_header_t>
  
 */
-void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_type_names[],int last_enum,char* msg);
+void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,const char* data_type_names[],int last_enum,char* msg);
 
 //Section: TLM2.0 utils
 /* 
