@@ -14,21 +14,16 @@
 #define SHUNT_TLM_H
 
 #include <systemc>
-#include "shunt_tlm.h"
 #include "tlm.h"
 #include "tlm_utils/simple_target_socket.h"
-
 //Title: Shunt-TLM SystemC API (namespace shunt_tlm)
 
 namespace shunt_tlm 
 {
   
   extern "C" {
-#include "shunt_user_api.h"
 #include "shunt_user_api.c"
-#include "shunt_client_server.h"
 #include "shunt_client_server.c"
-#include "shunt_primitives.h"
 #include "shunt_primitives.c"
   }
   
@@ -263,7 +258,7 @@ namespace shunt_tlm
       - <shunt_prim_init_target>
     
   */
-  int   shunt_tlm_init_client(int port,char* host ) {
+  int   shunt_tlm_init_client(int port,const char* host ) {
     return shunt_prim_init_target(port,host);
   };
   
@@ -466,7 +461,7 @@ namespace shunt_tlm
     {
       tlm_phase_enum phase_enum;
       cs_tlm_generic_payload_header csgp={0};
-      cs_tlm_generic_payload_header csgp_recv={0};
+      
       tlm::tlm_generic_payload trans_recv;
       
       csgp.delay =delay.to_default_time_units();
@@ -521,7 +516,6 @@ namespace shunt_tlm
     
     void  shunt_recv_nb_transport(int socket,tlm::tlm_generic_payload& trans, tlm_phase &phase,sc_time& delay,sc_time_unit sc_time_units=SC_PS ) 
     {
-      tlm_phase_enum phase_enum;
       cs_tlm_generic_payload_header csgp={0};
     
       while(shunt_prim_get_status_socket(socket,0) !=1 );
