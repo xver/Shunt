@@ -30,7 +30,7 @@ int shunt_api_send    (int sockid,cs_header* h_trnx,...) {
   char*          String_;
 
   va_list ap;
-  char * msg ="\nshunt_api_send";
+  const char * msg ="\nshunt_api_send";
   int Result_ = 1;
   int main_data_type_ = -1; 
   int data_type_      = -1;
@@ -112,7 +112,7 @@ int shunt_api_recv    (int sockid,cs_header* h_trnx,...) {
   char*          String_;
 
   va_list ap;
-  char * msg ="\nshunt_api_recv";
+  const char * msg ="\nshunt_api_recv";
   int Result_ = 1;
   int main_data_type_ = -1; 
   int data_type_      = -1;
