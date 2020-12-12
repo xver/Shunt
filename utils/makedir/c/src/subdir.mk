@@ -23,7 +23,7 @@ C_DEPS += \
 c/src/%.o: ../c/src/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C Compiler'
-	gcc -std=gnu11 -I"${SHUNT_HOME}/utils/dpi/include" -I"${SHUNT_HOME}/utils/c/include" -include$(SHUNT_SVDPI)/svdpi.h -include"${SHUNT_HOME}/utils/c/include/shunt_primitives.h" -include"${SHUNT_HOME}/utils/c/include/shunt_client_server.h" -include"${SHUNT_HOME}/utils/c/include/shunt_user_api.h" -include"${SHUNT_HOME}/utils/dpi/include/shunt_dpi.h" -O0 -g3 -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	gcc -std=gnu11 -Wall -Werror -Wpedantic -Wextra -Wno-odr  -shared -I"${SHUNT_HOME}/utils/dpi/include" -I"${SHUNT_HOME}/utils/c/include"  -I"$(SHUNT_SVDPI)" -include$(SHUNT_SVDPI)/svdpi.h -include"${SHUNT_HOME}/utils/c/include/shunt_primitives.h" -include"${SHUNT_HOME}/utils/c/include/shunt_client_server.h" -include"${SHUNT_HOME}/utils/c/include/shunt_user_api.h" -include"${SHUNT_HOME}/utils/dpi/include/shunt_dpi.h" -O0 -g3 -Wall -c -fmessage-length=0 -fPIC -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
