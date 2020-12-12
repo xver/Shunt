@@ -29,7 +29,7 @@ long shunt_prim_hash(const char *str) {
   return hash;
 }
 
-void shunt_prim_error(char *msg) {
+void shunt_prim_error(const char *msg) {
   extern int errno;
   if (errno==0) {
     printf(" ERROR: shunt_cs:: %s\n", msg);
@@ -116,7 +116,7 @@ unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd ) {
   struct sockaddr_in targetaddr; /* target addr */
   struct hostent *hostp; /* target host info */
   char *hostaddrp; /* dotted decimal host addr string */
-  char *hostname = "N/A";  /* host name */
+  const char *hostname = "N/A";  /* host name */
   /*
    * wait for a connection request
    */
