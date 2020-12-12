@@ -18,16 +18,16 @@
 
 //Data exchange utilities (header)
 
-long shunt_cs_data_type_hash(long data_type,char* data_type_names[],int last_enum) {
+long shunt_cs_data_type_hash(long data_type,const char* data_type_names[],int last_enum) {
   long result_ = -1;
   
   if ( data_type < last_enum+1 && data_type >= 0 ) {
     result_ = shunt_prim_hash(data_type_names[data_type]);
   }
   return result_;
-};
+}
 
-int shunt_cs_data_type(long hash,char* trnx_type_names[],int last_enum) {
+int shunt_cs_data_type(long hash,const char* trnx_type_names[],int last_enum) {
   int result_ = -1;
   int i =0;
   
@@ -37,9 +37,9 @@ int shunt_cs_data_type(long hash,char* trnx_type_names[],int last_enum) {
     i++;
   }
   return result_;
-};
+}
 
-void shunt_cs_print_header (cs_header* h,char* data_type_names[],int last_enum,char* msg) {
+void shunt_cs_print_header (cs_header* h,const char* data_type_names[],int last_enum,char* msg) {
   
   printf("\n%s h_trnx->trnx_type\t(%lx)",msg,h->trnx_type);
   printf("\n%s h_trnx->trnx_id\t(%lx)",msg,h->trnx_id);
@@ -55,7 +55,7 @@ void shunt_cs_print_header (cs_header* h,char* data_type_names[],int last_enum,c
   return;
 }
 
-void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,char* data_type_names[],int last_enum,char* msg) {
+void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,const char* data_type_names[],int last_enum,char* msg) {
   
   int data_type_ = shunt_cs_data_type(h_data->data_type,data_type_names,last_enum);
   if (data_type_>=0)
@@ -112,7 +112,7 @@ int shunt_cs_recv_header   (int sockid,cs_header* h) {
   else { 
     Result_ =-1;
     printf("\nshunt_cs_recv_header() get bad  header (%lx)(Ref. to %lx) numbytes=%0d \n", leader_in,leader_ref,numbytes);
-    for (int i=0;i<(sizeof(*h) + sizeof(long int))/sizeof(long int);i++) printf("error shunt_cs_recv_header() recv_arr[%0d]=(%ld)%lx\n",i,recv_arr[i],recv_arr[i]);
+    for (unsigned int i=0;i<(sizeof(*h) + sizeof(long int))/sizeof(long int);i++) printf("error shunt_cs_recv_header() recv_arr[%0d]=(%ld)%lx\n",i,recv_arr[i],recv_arr[i]);
   }
   return Result_;
 }
@@ -516,7 +516,7 @@ void  shunt_cs_tlm_recv_gp_data (int sockid, const cs_tlm_generic_payload_header
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG 
       printf("shunt_sc_tlm_recv_gp_data() get bad header=%0lx expected(%0lx)\n",leader_ ,recv_arr_[0] );
 #endif
-      for (int i=0;i<size_/sizeof(long int);i++) printf("error shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx\n",i,recv_arr_[i],recv_arr_[i]);
+      for (unsigned int i=0;i<size_/sizeof(long int);i++) printf("error shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx\n",i,recv_arr_[i],recv_arr_[i]);
     }
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
     for (int i=0;i<size_/sizeof(long int);i++) printf("DEBUG: shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx\n",i,recv_arr_[i],recv_arr_[i]);
