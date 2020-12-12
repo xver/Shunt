@@ -135,7 +135,7 @@ long shunt_prim_hash(const char *str);
   Returns: 
   void
  */
-void shunt_prim_error(char *msg);
+void shunt_prim_error(const char *msg);
 
 /////////////////////////////
 //Section: TCP/IP Functions
