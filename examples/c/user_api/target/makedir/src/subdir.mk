@@ -2,15 +2,15 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-# Add inputs and outputs from these tool invocations to the build variables 
+# Add inputs and outputs from these tool invocations to the build variables
 C_SRCS += \
-../src/apiC_Target.c 
+../src/apiC_Target.c
 
 OBJS += \
-./src/apiC_Target.o 
+./src/apiC_Target.o
 
 C_DEPS += \
-./src/apiC_Target.d 
+./src/apiC_Target.d
 
 
 # Each subdirectory must supply rules for building sources it contributes
