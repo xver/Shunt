@@ -57,20 +57,20 @@ struct Initiator: sc_module
       shunt_recv_b_transport(m_socket,*trans,delay );
 
       if (trans->get_command() != SHUNT_TLM_END_SIM) {
-    	  socket->b_transport( *trans, delay );  // Blocking transport call
-      	  // Initiator obliged to check response status and delay
-      	  if ( trans->is_response_error() )
-      		  SC_REPORT_ERROR("TLM-2", "Response error from b_transport");
+          socket->b_transport( *trans, delay );  // Blocking transport call
+          // Initiator obliged to check response status and delay
+          if ( trans->is_response_error() )
+              SC_REPORT_ERROR("TLM-2", "Response error from b_transport");
 
-      	  tlm::tlm_command cmd =  trans->get_command();
-      	  cout << "CLIENT trans = { " << (cmd ? 'W' : 'R') << ", " << hex << i
-      	       << " } , data = " << hex << data << " at time " << sc_time_stamp()
-	       << " delay = " << delay << endl;
+          tlm::tlm_command cmd =  trans->get_command();
+          cout << "CLIENT trans = { " << (cmd ? 'W' : 'R') << ", " << hex << i
+               << " } , data = " << hex << data << " at time " << sc_time_stamp()
+           << " delay = " << delay << endl;
 
-      	  // Realize the delay annotated onto the transport call
-      	  wait(delay);
-      	  shunt_send_b_transport(m_socket,*trans,delay );
-      	  ++i;
+          // Realize the delay annotated onto the transport call
+          wait(delay);
+          shunt_send_b_transport(m_socket,*trans,delay );
+          ++i;
       }
       else end_sim =1;
     }
