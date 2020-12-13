@@ -2,15 +2,15 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-# Add inputs and outputs from these tool invocations to the build variables 
+# Add inputs and outputs from these tool invocations to the build variables
 C_SRCS += \
-../src/primC_Initiator.c 
+../src/primC_Initiator.c
 
 OBJS += \
-./src/primC_Initiator.o 
+./src/primC_Initiator.o
 
 C_DEPS += \
-./src/primC_Initiator.d 
+./src/primC_Initiator.d
 
 
 # Each subdirectory must supply rules for building sources it contributes
