@@ -33,18 +33,18 @@ struct Initiator: sc_module
 
   void thread_process()
   {
-    
+
     // TLM-2 generic payload transaction, reused across calls to b_transport
     m_socket = shunt_tlm_init_server(MY_PORT);
     tlm::tlm_generic_payload* trans = new tlm::tlm_generic_payload;
     sc_time delay;
-    shunt_tlm_command command; 
+    shunt_tlm_command command;
     shunt_recv_b_transport(m_socket,*trans,delay);
     command = (shunt_tlm_command)trans->get_command();
     cout<<"SERVER: SHUNT_TLM_START_SIM command="<<hex <<command<<endl;
 
     delay = sc_time(10, SC_NS);
-       
+
     // Generate a random sequence of reads and writes
     for (int i = 32; i < 96; i += 4)
     {
@@ -61,13 +61,13 @@ struct Initiator: sc_module
       trans->set_byte_enable_ptr( 0 ); // 0 indicates unused
       trans->set_dmi_allowed( false ); // Mandatory initial value
       trans->set_response_status( tlm::TLM_INCOMPLETE_RESPONSE ); // Mandatory initial value
-    
+
       //socket->b_transport( *trans, delay );  // Blocking transport call
       shunt_send_b_transport(m_socket,*trans, delay );
       shunt_recv_b_transport(m_socket,*trans, delay );
       cout << "SERVER trans recv = { " << (cmd ? 'W' : 'R') << ", " << hex << i
 	   << " } , data = " << hex << data << " at time " << sc_time_stamp()
-	   << " delay = " << delay 
+	   << " delay = " << delay
 	   << " response = "<< trans->is_response_error()<< endl;
       // Initiator obliged to check response status and delay
       if ( trans->is_response_error() )
@@ -77,7 +77,7 @@ struct Initiator: sc_module
       wait(delay);
     }
     shunt_tlm_send_command(m_socket,SHUNT_TLM_END_SIM);
-    shunt_prim_close_socket(m_socket); 
+    shunt_prim_close_socket(m_socket);
     cout <<"LT_simple_sv test is finished"<<endl;
   }
 
