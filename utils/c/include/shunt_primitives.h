@@ -154,7 +154,7 @@ struct in_addr {
 struct sockaddr_in  {
   unsigned short int sin_family; /* Address family */
   unsigned short int sin_port;   /* Port number */
-  struct in_addr sin_addr;	 /* IP address */
+  struct in_addr sin_addr;   /* IP address */
   unsigned char sin_zero[...];   /* Pad to size of 'struct sockaddr' */
 };
 
