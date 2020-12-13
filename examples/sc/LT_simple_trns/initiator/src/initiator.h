@@ -18,7 +18,7 @@ using namespace shunt_tlm;
 // Initiator module generating generic payload transactions
 
 struct Initiator: sc_module
-{	 
+{
   int m_socket=0;
   // TLM-2 socket, defaults to 32-bits wide, base protocol
   tlm_utils::simple_initiator_socket<Initiator> socket;
@@ -32,7 +32,7 @@ struct Initiator: sc_module
   {
 
     // TLM-2 generic payload transaction, reused across calls to b_transport
- 
+
     tlm::tlm_generic_payload* trans = new tlm::tlm_generic_payload;
     sc_time delay = sc_time(10, SC_NS);
 
@@ -68,7 +68,7 @@ struct Initiator: sc_module
       wait(delay);
     }
     shunt_tlm_send_command(m_socket,SHUNT_TLM_END_SIM);
-    shunt_prim_close_socket(m_socket); 
+    shunt_prim_close_socket(m_socket);
     cout <<"LT_simple_trns test is finished"<<endl;
   }
 
