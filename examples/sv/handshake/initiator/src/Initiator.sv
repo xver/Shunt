@@ -27,131 +27,131 @@ module automatic Initiator;
 
    initial
      begin
-	int Pass;
-	string Status;
-	string Test_name;
+    int Pass;
+    string Status;
+    string Test_name;
 
-	Pass   = 1;
-	Socket = 0;
+    Pass   = 1;
+    Socket = 0;
 
-	$display("Initiator: START");
+    $display("Initiator: START");
 
-	Test_name = "\tinit_initiator";
+    Test_name = "\tinit_initiator";
 
-	Socket = init_initiator(`MY_PORT);
-	if (!Socket) Pass=0;
-	$display("\tInitiator: socket=%0d",Socket);
-	print_status(Test_name,Pass);
+    Socket = init_initiator(`MY_PORT);
+    if (!Socket) Pass=0;
+    $display("\tInitiator: socket=%0d",Socket);
+    print_status(Test_name,Pass);
 
 
-	Test_name = "\tint_loopback";
-	Pass=int_loopback_test(Socket);
-	print_status(Test_name,Pass);
-	Test_name = "\tint vector loopback";
-	Pass=int_loopback_test(Socket,9);
-	print_status(Test_name,Pass);
+    Test_name = "\tint_loopback";
+    Pass=int_loopback_test(Socket);
+    print_status(Test_name,Pass);
+    Test_name = "\tint vector loopback";
+    Pass=int_loopback_test(Socket,9);
+    print_status(Test_name,Pass);
 
-	Test_name = "\tshort_loopback";
-	Pass=short_loopback_test(Socket);
-	print_status(Test_name,Pass);
-	Test_name = "\tshort vector loopback";
-	Pass=short_loopback_test(Socket,11);
-	print_status(Test_name,Pass);
+    Test_name = "\tshort_loopback";
+    Pass=short_loopback_test(Socket);
+    print_status(Test_name,Pass);
+    Test_name = "\tshort vector loopback";
+    Pass=short_loopback_test(Socket,11);
+    print_status(Test_name,Pass);
 
-	Test_name = "\tlong_loopback";
-	Pass=long_loopback_test(Socket);
-	print_status(Test_name,Pass);
-	Test_name = "\tint vector loopback";
-	Pass=long_loopback_test(Socket,7);
-	print_status(Test_name,Pass);
+    Test_name = "\tlong_loopback";
+    Pass=long_loopback_test(Socket);
+    print_status(Test_name,Pass);
+    Test_name = "\tint vector loopback";
+    Pass=long_loopback_test(Socket,7);
+    print_status(Test_name,Pass);
 
-	Test_name = "\tbyte loopback";
-	Pass=byte_loopback_test(Socket);
-	print_status(Test_name,Pass);
-	Test_name = "\tbyte vector loopback";
-	Pass=byte_loopback_test(Socket,15);
-	print_status(Test_name,Pass);
+    Test_name = "\tbyte loopback";
+    Pass=byte_loopback_test(Socket);
+    print_status(Test_name,Pass);
+    Test_name = "\tbyte vector loopback";
+    Pass=byte_loopback_test(Socket,15);
+    print_status(Test_name,Pass);
 
-	Test_name = "\tbit loopback";
-	Pass=bit_loopback_test(Socket);
-	print_status(Test_name,Pass);
+    Test_name = "\tbit loopback";
+    Pass=bit_loopback_test(Socket);
+    print_status(Test_name,Pass);
 
-	Test_name = "\tinteger loopback";
-	Pass=integer_loopback_test(Socket);
-	print_status(Test_name,Pass);
-	Test_name = "\tinteger vector loopback";
-	Pass=integer_loopback_test(Socket,23);
-	print_status(Test_name,Pass);
+    Test_name = "\tinteger loopback";
+    Pass=integer_loopback_test(Socket);
+    print_status(Test_name,Pass);
+    Test_name = "\tinteger vector loopback";
+    Pass=integer_loopback_test(Socket,23);
+    print_status(Test_name,Pass);
 
-	Test_name = "\treg loopback";
-	Pass=reg_loopback_test(Socket);
-	print_status(Test_name,Pass);
-	Test_name = "\tlogic loopback";
-	Pass=logic_loopback_test(Socket);
-	print_status(Test_name,Pass);
+    Test_name = "\treg loopback";
+    Pass=reg_loopback_test(Socket);
+    print_status(Test_name,Pass);
+    Test_name = "\tlogic loopback";
+    Pass=logic_loopback_test(Socket);
+    print_status(Test_name,Pass);
 
         Test_name = "\treal_loopback";
-	Pass=real_loopback_test(Socket);
-	print_status(Test_name,Pass);
-	Test_name = "\treal vector loopback";
-	Pass=real_loopback_test(Socket,11);
+    Pass=real_loopback_test(Socket);
+    print_status(Test_name,Pass);
+    Test_name = "\treal vector loopback";
+    Pass=real_loopback_test(Socket,11);
 
         Test_name = "\tshortreal_loopback";
-	Pass=shortreal_loopback_test(Socket);
-	print_status(Test_name,Pass);
-	Test_name = "\tshortreal vector loopback";
-	Pass=shortreal_loopback_test(Socket,11);
+    Pass=shortreal_loopback_test(Socket);
+    print_status(Test_name,Pass);
+    Test_name = "\tshortreal vector loopback";
+    Pass=shortreal_loopback_test(Socket,11);
 
         Test_name = "\tstring_loopback";
-	Pass=string_loopback_test(Socket);
-	print_status(Test_name,Pass);
+    Pass=string_loopback_test(Socket);
+    print_status(Test_name,Pass);
 
-	// *****************END**********************************
-	Test_name = "Initiator";
-	print_status(Test_name,Pass);
+    // *****************END**********************************
+    Test_name = "Initiator";
+    print_status(Test_name,Pass);
 
      end
 
 
    function int init_initiator(int portno);
       begin
-	 int socket_id;
-	 socket_id=0;
-	 socket_id = shunt_dpi_initiator_init(portno);
-	 return socket_id;
+     int socket_id;
+     socket_id=0;
+     socket_id = shunt_dpi_initiator_init(portno);
+     return socket_id;
       end
    endfunction : init_initiator
 
    function int byte_loopback_test(int socket_id,int n_payloads=1);
       begin
-	 int success;
+     int success;
          byte Byte_exp[];
-	 byte Byte_act[];
+     byte Byte_act[];
          string Test_name = "initiator byte_loopback_test";
-	 Byte_exp = new[n_payloads];
-	 success =1;
-	 for(int i=0;i<n_payloads;i++) Byte_exp[i] = "A"+i;
-	 Byte_exp[n_payloads] = "\0";
+     Byte_exp = new[n_payloads];
+     success =1;
+     for(int i=0;i<n_payloads;i++) Byte_exp[i] = "A"+i;
+     Byte_exp[n_payloads] = "\0";
 
-	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_BYTE");
-	 h_trnx_exp.n_payloads = n_payloads;
+     //set up header
+     h_trnx_exp.trnx_type = $urandom;
+     h_trnx_exp.trnx_id   = $urandom;
+     h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_BYTE");
+     h_trnx_exp.n_payloads = n_payloads;
 
-	 //send
-	 if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send header ");
-	 if (shunt_dpi_hs_send_byte  (socket_id,h_trnx_exp,Byte_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send data");
+     //send
+     if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send header ");
+     if (shunt_dpi_hs_send_byte  (socket_id,h_trnx_exp,Byte_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send data");
 
-	 //recv
-	 if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
-	 Byte_act = new[h_trnx_act.n_payloads];
-	 if (shunt_dpi_hs_recv_byte(socket_id,h_trnx_act,Byte_act)<= 0) success = 0;
-	 if (success == 0 )  $display("\nByte loopback fail recv");
+     //recv
+     if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
+     Byte_act = new[h_trnx_act.n_payloads];
+     if (shunt_dpi_hs_recv_byte(socket_id,h_trnx_act,Byte_act)<= 0) success = 0;
+     if (success == 0 )  $display("\nByte loopback fail recv");
 
-	 for(int i=0;i<n_payloads;i++)	if (Byte_exp[i] != Byte_act[i])success=0;
+     for(int i=0;i<n_payloads;i++)  if (Byte_exp[i] != Byte_act[i])success=0;
          return  success;
       end
    endfunction : byte_loopback_test
@@ -159,34 +159,34 @@ module automatic Initiator;
 
    function int int_loopback_test(int socket_id,int n_payloads=1);
       begin
-	 int success;
+     int success;
          int Int_exp[];
-	 int Int_act[];
+     int Int_act[];
          string Test_name = "initiator int_loopback_test";
-	 Int_exp = new[n_payloads];
-	 success =1;
-	 for(int i=0;i<n_payloads;i++) Int_exp[i] = 100 +i;
-	 Int_exp[n_payloads] = "\0";
+     Int_exp = new[n_payloads];
+     success =1;
+     for(int i=0;i<n_payloads;i++) Int_exp[i] = 100 +i;
+     Int_exp[n_payloads] = "\0";
 
-	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_INT");
-	 h_trnx_exp.n_payloads = n_payloads;
+     //set up header
+     h_trnx_exp.trnx_type = $urandom;
+     h_trnx_exp.trnx_id   = $urandom;
+     h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_INT");
+     h_trnx_exp.n_payloads = n_payloads;
 
-	 //send
-	 if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send header ");
-	 if (shunt_dpi_hs_send_int  (socket_id,h_trnx_exp,Int_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send data");
+     //send
+     if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send header ");
+     if (shunt_dpi_hs_send_int  (socket_id,h_trnx_exp,Int_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send data");
 
-	 //recv
-	 if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
-	 Int_act = new[h_trnx_act.n_payloads];
-	 if (shunt_dpi_hs_recv_int(socket_id,h_trnx_act,Int_act)<= 0) success = 0;
-	 if (success == 0 )  $display("\nInt loopback fail recv");
+     //recv
+     if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
+     Int_act = new[h_trnx_act.n_payloads];
+     if (shunt_dpi_hs_recv_int(socket_id,h_trnx_act,Int_act)<= 0) success = 0;
+     if (success == 0 )  $display("\nInt loopback fail recv");
 
-	 for(int i=0;i<n_payloads;i++)	if (Int_exp[i] != Int_act[i])success=0;
+     for(int i=0;i<n_payloads;i++)  if (Int_exp[i] != Int_act[i])success=0;
          return  success;
 
       end
@@ -194,34 +194,34 @@ module automatic Initiator;
 
    function int short_loopback_test(int socket_id,int n_payloads=1);
       begin
-	 int success;
+     int success;
          shortint Short_exp[];
-	 shortint Short_act[];
+     shortint Short_act[];
          string Test_name = "initiator short_loopback_test";
-	 Short_exp = new[n_payloads];
-	 success =1;
-	 for(int i=0;i<n_payloads;i++) Short_exp[i] = 300 +i;
-	 Short_exp[n_payloads] = "\0";
+     Short_exp = new[n_payloads];
+     success =1;
+     for(int i=0;i<n_payloads;i++) Short_exp[i] = 300 +i;
+     Short_exp[n_payloads] = "\0";
 
-	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_SHORTINT");
-	 h_trnx_exp.n_payloads = n_payloads;
+     //set up header
+     h_trnx_exp.trnx_type = $urandom;
+     h_trnx_exp.trnx_id   = $urandom;
+     h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_SHORTINT");
+     h_trnx_exp.n_payloads = n_payloads;
 
-	 //send
-	 if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send header ");
-	 if (shunt_dpi_hs_send_short  (socket_id,h_trnx_exp,Short_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send data");
+     //send
+     if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send header ");
+     if (shunt_dpi_hs_send_short  (socket_id,h_trnx_exp,Short_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send data");
 
-	 //recv
-	 if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
-	 Short_act = new[h_trnx_act.n_payloads];
-	 if (shunt_dpi_hs_recv_short(socket_id,h_trnx_act,Short_act)<= 0) success = 0;
-	 if (success == 0 )  $display("\nInt loopback fail recv");
+     //recv
+     if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
+     Short_act = new[h_trnx_act.n_payloads];
+     if (shunt_dpi_hs_recv_short(socket_id,h_trnx_act,Short_act)<= 0) success = 0;
+     if (success == 0 )  $display("\nInt loopback fail recv");
 
-	 for(int i=0;i<n_payloads;i++)	if (Short_exp[i] != Short_act[i])success=0;
+     for(int i=0;i<n_payloads;i++)  if (Short_exp[i] != Short_act[i])success=0;
          return  success;
 
       end
@@ -229,137 +229,137 @@ module automatic Initiator;
 
    function int string_loopback_test(int socket_id);
       begin
-	 int success;
-	 int i;
+     int success;
+     int i;
          string String_exp;
-	 string String_act;
-	    string Test_name = "string_loopback_test";
-	 String_exp = `STRING_MESSAGE;
-	 String_act = `STRING_MESSAGE1;
-	 success =1;
-	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_STRING");
-	 h_trnx_exp.n_payloads = String_exp.len();
+     string String_act;
+        string Test_name = "string_loopback_test";
+     String_exp = `STRING_MESSAGE;
+     String_act = `STRING_MESSAGE1;
+     success =1;
+     //set up header
+     h_trnx_exp.trnx_type = $urandom;
+     h_trnx_exp.trnx_id   = $urandom;
+     h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_STRING");
+     h_trnx_exp.n_payloads = String_exp.len();
 
-	 //send
-	 if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
- 	 if (success == 0 )  $display("\ninitiator: fail send header ");
-	 if (shunt_dpi_hs_send_string  (socket_id,h_trnx_exp,String_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send data");
+     //send
+     if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send header ");
+     if (shunt_dpi_hs_send_string  (socket_id,h_trnx_exp,String_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send data");
 
-	 //recv
-	 if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
-	 String_act = new[h_trnx_act.n_payloads];
-	 if (shunt_dpi_hs_recv_string(socket_id,h_trnx_act,String_act)<= 0) success = 0;
+     //recv
+     if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
+     String_act = new[h_trnx_act.n_payloads];
+     if (shunt_dpi_hs_recv_string(socket_id,h_trnx_act,String_act)<= 0) success = 0;
 
-	 foreach(String_exp[i]) if(String_act[i] != String_exp[i]) success =0;
-	 return  success;
+     foreach(String_exp[i]) if(String_act[i] != String_exp[i]) success =0;
+     return  success;
       end
    endfunction : string_loopback_test
 
    function int long_loopback_test(int socket_id,int n_payloads=1);
       begin
-	 int success;
+     int success;
          longint Long_exp[];
-	 longint Long_act[];
+     longint Long_act[];
          string Test_name = "initiator long_loopback_test";
-	 Long_exp = new[n_payloads];
-	 success =1;
-	 for(int i=0;i<n_payloads;i++) Long_exp[i] = 1000 +i;
-	 Long_exp[n_payloads] = "\0";
+     Long_exp = new[n_payloads];
+     success =1;
+     for(int i=0;i<n_payloads;i++) Long_exp[i] = 1000 +i;
+     Long_exp[n_payloads] = "\0";
 
-	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_LONGINT");
-	 h_trnx_exp.n_payloads = n_payloads;
+     //set up header
+     h_trnx_exp.trnx_type = $urandom;
+     h_trnx_exp.trnx_id   = $urandom;
+     h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_LONGINT");
+     h_trnx_exp.n_payloads = n_payloads;
 
-	 //send
-	 if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send header ");
-	 if (shunt_dpi_hs_send_long  (socket_id,h_trnx_exp,Long_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send data");
+     //send
+     if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send header ");
+     if (shunt_dpi_hs_send_long  (socket_id,h_trnx_exp,Long_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send data");
 
-	 //recv
-	 if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
-	 Long_act = new[h_trnx_act.n_payloads];
-	 if (shunt_dpi_hs_recv_long(socket_id,h_trnx_act,Long_act)<= 0) success = 0;
-	 if (success == 0 )  $display("\nInt loopback fail recv");
+     //recv
+     if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
+     Long_act = new[h_trnx_act.n_payloads];
+     if (shunt_dpi_hs_recv_long(socket_id,h_trnx_act,Long_act)<= 0) success = 0;
+     if (success == 0 )  $display("\nInt loopback fail recv");
 
-	 for(int i=0;i<n_payloads;i++)	if (Long_exp[i] != Long_act[i])success=0;
+     for(int i=0;i<n_payloads;i++)  if (Long_exp[i] != Long_act[i])success=0;
          return  success;
       end
    endfunction : long_loopback_test
 
    function int real_loopback_test(int socket_id,int n_payloads=1);
       begin
-	 int success;
+     int success;
          real Real_exp[];
-	 real Real_act[];
+     real Real_act[];
          string Test_name = "initiator real_loopback_test";
-	 Real_exp = new[n_payloads];
-	 success =1;
-	 for(int i=0;i<n_payloads;i++) Real_exp[i] = 300.123+i;
-	 Real_exp[n_payloads] = "\0";
+     Real_exp = new[n_payloads];
+     success =1;
+     for(int i=0;i<n_payloads;i++) Real_exp[i] = 300.123+i;
+     Real_exp[n_payloads] = "\0";
 
-	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_REAL");
-	 h_trnx_exp.n_payloads = n_payloads;
+     //set up header
+     h_trnx_exp.trnx_type = $urandom;
+     h_trnx_exp.trnx_id   = $urandom;
+     h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_REAL");
+     h_trnx_exp.n_payloads = n_payloads;
 
-	 //send
-	 if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send header ");
-	 if (shunt_dpi_hs_send_real  (socket_id,h_trnx_exp,Real_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send data");
+     //send
+     if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send header ");
+     if (shunt_dpi_hs_send_real  (socket_id,h_trnx_exp,Real_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send data");
 
-	 //recv
-	 if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
-	 Real_act = new[h_trnx_act.n_payloads];
-	 if (shunt_dpi_hs_recv_real(socket_id,h_trnx_act,Real_act)<= 0) success = 0;
+     //recv
+     if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
+     Real_act = new[h_trnx_act.n_payloads];
+     if (shunt_dpi_hs_recv_real(socket_id,h_trnx_act,Real_act)<= 0) success = 0;
 
-	 for(int i=0;i<n_payloads;i++)	if (Real_exp[i] != Real_act[i])success=0;
+     for(int i=0;i<n_payloads;i++)  if (Real_exp[i] != Real_act[i])success=0;
          return  success;
       end
    endfunction : real_loopback_test
 
    function int shortreal_loopback_test(int socket_id,int n_payloads=1);
       begin
-	 int success;
+     int success;
          shortreal Shortreal_exp[];
-	 shortreal Shortreal_act[];
+     shortreal Shortreal_act[];
          string Test_name = "initiator shortreal_loopback_test";
-	 Shortreal_exp = new[n_payloads];
-	 success =1;
-	 for(int i=0;i<n_payloads;i++) Shortreal_exp[i] = 300.123+i;
-	 Shortreal_exp[n_payloads] = "\0";
+     Shortreal_exp = new[n_payloads];
+     success =1;
+     for(int i=0;i<n_payloads;i++) Shortreal_exp[i] = 300.123+i;
+     Shortreal_exp[n_payloads] = "\0";
 
-	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_SHORTREAL");
-	 h_trnx_exp.n_payloads = n_payloads;
+     //set up header
+     h_trnx_exp.trnx_type = $urandom;
+     h_trnx_exp.trnx_id   = $urandom;
+     h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_SHORTREAL");
+     h_trnx_exp.n_payloads = n_payloads;
 
-	 //send
-	 if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send header ");
-	 if (shunt_dpi_hs_send_shortreal  (socket_id,h_trnx_exp,Shortreal_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send data");
+     //send
+     if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send header ");
+     if (shunt_dpi_hs_send_shortreal  (socket_id,h_trnx_exp,Shortreal_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send data");
 
-	 //recv
-	 if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
-	 Shortreal_act = new[h_trnx_act.n_payloads];
-	 if (shunt_dpi_hs_recv_shortreal(socket_id,h_trnx_act,Shortreal_act)<= 0) success = 0;
+     //recv
+     if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
+     Shortreal_act = new[h_trnx_act.n_payloads];
+     if (shunt_dpi_hs_recv_shortreal(socket_id,h_trnx_act,Shortreal_act)<= 0) success = 0;
 
-	 foreach (Shortreal_exp[i])  begin
-	    real zero_ = 0;
-	    zero_ = Shortreal_exp[i] - Shortreal_act[i];
-	    if (zero_ < 0)  zero_ = Shortreal_act[i] - Shortreal_exp[i];
-	    if (zero_ > 0.0001) success=0;
-	 end
+     foreach (Shortreal_exp[i])  begin
+        real zero_ = 0;
+        zero_ = Shortreal_exp[i] - Shortreal_act[i];
+        if (zero_ < 0)  zero_ = Shortreal_act[i] - Shortreal_exp[i];
+        if (zero_ > 0.0001) success=0;
+     end
 
          return  success;
       end
@@ -367,37 +367,37 @@ module automatic Initiator;
 
    function int intV_loopback_test(int socket_id);
       begin
-	 int success;
-	 int i;
+     int success;
+     int i;
          int IntV_exp[`V_SIZE];
-	 int IntV_act[`V_SIZE];
+     int IntV_act[`V_SIZE];
 
-	 success =1;
+     success =1;
 
-	 foreach(IntV_exp[i]) IntV_exp[i] = 100+(i+1);
-	 foreach(IntV_act[i]) IntV_act[i] = 300+(i+1);
-	 if(!shunt_dpi_send_intV(socket_id,`V_SIZE,IntV_exp)) success =0;
-	 if(!shunt_dpi_recv_intV(socket_id,`V_SIZE,IntV_act)) success =0;
-	 foreach(IntV_exp[i]) if(IntV_act[i] != IntV_exp[i]) success =0;
-	 return  success;
+     foreach(IntV_exp[i]) IntV_exp[i] = 100+(i+1);
+     foreach(IntV_act[i]) IntV_act[i] = 300+(i+1);
+     if(!shunt_dpi_send_intV(socket_id,`V_SIZE,IntV_exp)) success =0;
+     if(!shunt_dpi_recv_intV(socket_id,`V_SIZE,IntV_act)) success =0;
+     foreach(IntV_exp[i]) if(IntV_act[i] != IntV_exp[i]) success =0;
+     return  success;
       end
    endfunction: intV_loopback_test
 
    function int realV_loopback_test(int socket_id);
       begin
-	 int success;
-	 int i;
+     int success;
+     int i;
          real RealV_exp[`V_SIZE];
-	 real RealV_act[`V_SIZE];
+     real RealV_act[`V_SIZE];
 
-	 success =1;
+     success =1;
 
-	 foreach(RealV_exp[i]) RealV_exp[i] = 100+(i+1);
-	 foreach(RealV_act[i]) RealV_act[i] = 300+(i+1);
-	 if(!shunt_dpi_send_realV(socket_id,`V_SIZE,RealV_exp))  success =0;
-	 if(!shunt_dpi_recv_realV(socket_id,`V_SIZE,RealV_act))  success =0;
-	 foreach(RealV_exp[i]) if(RealV_act[i] != RealV_exp[i]) success =0;
-	 return  success;
+     foreach(RealV_exp[i]) RealV_exp[i] = 100+(i+1);
+     foreach(RealV_act[i]) RealV_act[i] = 300+(i+1);
+     if(!shunt_dpi_send_realV(socket_id,`V_SIZE,RealV_exp))  success =0;
+     if(!shunt_dpi_recv_realV(socket_id,`V_SIZE,RealV_act))  success =0;
+     foreach(RealV_exp[i]) if(RealV_act[i] != RealV_exp[i]) success =0;
+     return  success;
       end
    endfunction : realV_loopback_test
 
@@ -405,10 +405,10 @@ module automatic Initiator;
 
 
    function int   byteA_loopback_test(int socket_id,int n_payloads=1);
-      int 	success;
-      byte 	Byte_exp[][];
-      byte 	Byte_act[][];
-      string 	Test_name = "initiator byteA_loopback_test";
+      int   success;
+      byte  Byte_exp[][];
+      byte  Byte_act[][];
+      string    Test_name = "initiator byteA_loopback_test";
       success =1;
 
       //set up data
@@ -458,10 +458,10 @@ module automatic Initiator;
    endfunction :byteA_loopback_test
 
    function int   intA_loopback_test(int socket_id,int n_payloads=1);
-      int 	success;
-      int 	Int_exp[][];
-      int 	Int_act[][];
-      string 	Test_name = "initiator intA_loopback_test";
+      int   success;
+      int   Int_exp[][];
+      int   Int_act[][];
+      string    Test_name = "initiator intA_loopback_test";
       success =1;
 
       //set up data
@@ -511,10 +511,10 @@ module automatic Initiator;
    endfunction :intA_loopback_test
 
    function int   realA_loopback_test(int socket_id,int n_payloads=1);
-      int 	success;
-      real 	Real_exp[][];
-      real 	Real_act[][];
-      string 	Test_name = "initiator realA_loopback_test";
+      int   success;
+      real  Real_exp[][];
+      real  Real_act[][];
+      string    Test_name = "initiator realA_loopback_test";
       success =1;
 
       //set up data
@@ -567,144 +567,144 @@ module automatic Initiator;
 
    function int reg_loopback_test(int socket_id,int n_payloads=1);
       begin
-	 localparam N = 133;//N 4*32 bit max
+     localparam N = 133;//N 4*32 bit max
 
-	 int success;
-	 int i;
-	 reg [N-1:0] XReg_exp;
+     int success;
+     int i;
+     reg [N-1:0] XReg_exp;
          reg [N-1:0] Reg_exp;
-	 reg [N-1:0] Reg_act;
-	 string    s_me = "reg_loopback_test";
-	 success =1;
+     reg [N-1:0] Reg_act;
+     string    s_me = "reg_loopback_test";
+     success =1;
 
-	 //data set
-	 XReg_exp = 'hx;
-	 Reg_exp =  {$urandom(),$urandom(),$urandom(),$urandom()}& XReg_exp;
-	 Reg_exp =   Reg_exp | {$urandom(),$urandom(),$urandom(),$urandom()};
+     //data set
+     XReg_exp = 'hx;
+     Reg_exp =  {$urandom(),$urandom(),$urandom(),$urandom()}& XReg_exp;
+     Reg_exp =   Reg_exp | {$urandom(),$urandom(),$urandom(),$urandom()};
 
-	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_REG");
-	 h_trnx_exp.n_payloads = N;
+     //set up header
+     h_trnx_exp.trnx_type = $urandom;
+     h_trnx_exp.trnx_id   = $urandom;
+     h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_REG");
+     h_trnx_exp.n_payloads = N;
 
-	 //send
-	 if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-	 if(!shunt_dpi_hs_send_regN(socket_id,h_trnx_exp,Reg_exp))  success =0;
+     //send
+     if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+     if(!shunt_dpi_hs_send_regN(socket_id,h_trnx_exp,Reg_exp))  success =0;
 
-	 //recv
-	 if (shunt_dpi_recv_header(socket_id,h_trnx_act)<= 0) success = 0;
-	 if(!shunt_dpi_hs_recv_regN(socket_id,h_trnx_act,Reg_act))  success =0;
-	 //
-	 if(Reg_act !== Reg_exp) success =0;
-	 return  success;
+     //recv
+     if (shunt_dpi_recv_header(socket_id,h_trnx_act)<= 0) success = 0;
+     if(!shunt_dpi_hs_recv_regN(socket_id,h_trnx_act,Reg_act))  success =0;
+     //
+     if(Reg_act !== Reg_exp) success =0;
+     return  success;
       end
    endfunction : reg_loopback_test
 
    function int logic_loopback_test(int socket_id,int n_payloads=1);
       begin
-	 localparam N = 76;//N 4*32 bit max
+     localparam N = 76;//N 4*32 bit max
 
-	 int success;
-	 int i;
-	 logic [N-1:0] XLogic_exp;
+     int success;
+     int i;
+     logic [N-1:0] XLogic_exp;
          logic [N-1:0] Logic_exp;
-	 logic [N-1:0] Logic_act;
-	 string    s_me = "logic_loopback_test";
-	 success =1;
+     logic [N-1:0] Logic_act;
+     string    s_me = "logic_loopback_test";
+     success =1;
 
-	 //data set
-	 XLogic_exp = 'hx;
-	 Logic_exp =  {$urandom(),$urandom(),$urandom(),$urandom()}& XLogic_exp;
-	 Logic_exp =   Logic_exp | {$urandom(),$urandom(),$urandom(),$urandom()};
+     //data set
+     XLogic_exp = 'hx;
+     Logic_exp =  {$urandom(),$urandom(),$urandom(),$urandom()}& XLogic_exp;
+     Logic_exp =   Logic_exp | {$urandom(),$urandom(),$urandom(),$urandom()};
 
-	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_REG");
-	 h_trnx_exp.n_payloads = N;
+     //set up header
+     h_trnx_exp.trnx_type = $urandom;
+     h_trnx_exp.trnx_id   = $urandom;
+     h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_REG");
+     h_trnx_exp.n_payloads = N;
 
-	 //send
-	 if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-	 if(!shunt_dpi_hs_send_logicN(socket_id,h_trnx_exp,Logic_exp))  success =0;
+     //send
+     if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+     if(!shunt_dpi_hs_send_logicN(socket_id,h_trnx_exp,Logic_exp))  success =0;
 
-	 //recv
-	 if (shunt_dpi_recv_header(socket_id,h_trnx_act)<= 0) success = 0;
-	 if(!shunt_dpi_hs_recv_logicN(socket_id,h_trnx_act,Logic_act))  success =0;
-	 //
-	 if(Logic_act !== Logic_exp) success =0;
-	 return  success;
+     //recv
+     if (shunt_dpi_recv_header(socket_id,h_trnx_act)<= 0) success = 0;
+     if(!shunt_dpi_hs_recv_logicN(socket_id,h_trnx_act,Logic_act))  success =0;
+     //
+     if(Logic_act !== Logic_exp) success =0;
+     return  success;
       end
    endfunction : logic_loopback_test
    //
    function int bit_loopback_test(int socket_id,int n_payloads=1);
       begin
-	 localparam N = 133;//N 4*32 bit max
+     localparam N = 133;//N 4*32 bit max
 
-	 int success;
-	 int i;
-	 bit [N-1:0] Bit_exp;
-	 bit [N-1:0] Bit_act;
-	 string    s_me = "bit_loopback_test";
-	 success =1;
+     int success;
+     int i;
+     bit [N-1:0] Bit_exp;
+     bit [N-1:0] Bit_act;
+     string    s_me = "bit_loopback_test";
+     success =1;
 
-	 //data set
-	 Bit_exp =  {$urandom(),$urandom(),$urandom(),$urandom()};
+     //data set
+     Bit_exp =  {$urandom(),$urandom(),$urandom(),$urandom()};
 
-	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_BIT");
-	 h_trnx_exp.n_payloads = N;
+     //set up header
+     h_trnx_exp.trnx_type = $urandom;
+     h_trnx_exp.trnx_id   = $urandom;
+     h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_BIT");
+     h_trnx_exp.n_payloads = N;
 
-	 //send
-	 if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-	 if(!shunt_dpi_hs_send_bitN(socket_id,h_trnx_exp,Bit_exp))  success =0;
+     //send
+     if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+     if(!shunt_dpi_hs_send_bitN(socket_id,h_trnx_exp,Bit_exp))  success =0;
 
-	 //recv
-	 if (shunt_dpi_recv_header(socket_id,h_trnx_act)<= 0) success = 0;
-	 if(!shunt_dpi_hs_recv_bitN(socket_id,h_trnx_act,Bit_act))  success =0;
-	 //
-	 if(Bit_act !== Bit_exp) success =0;
-	 return  success;
+     //recv
+     if (shunt_dpi_recv_header(socket_id,h_trnx_act)<= 0) success = 0;
+     if(!shunt_dpi_hs_recv_bitN(socket_id,h_trnx_act,Bit_act))  success =0;
+     //
+     if(Bit_act !== Bit_exp) success =0;
+     return  success;
       end
    endfunction : bit_loopback_test
 
  function int integer_loopback_test(int socket_id,int n_payloads=1);
       begin
-	 int success;
+     int success;
          integer Integer_exp[];
-	 integer Integer_act[];
+     integer Integer_act[];
          string Test_name = "initiator integer_loopback_test";
-	 Integer_exp = new[n_payloads];
-	 success =1;
-	 for(int i=0;i<n_payloads;i++) Integer_exp[i] = "A"+i;
-	 //data set
+     Integer_exp = new[n_payloads];
+     success =1;
+     for(int i=0;i<n_payloads;i++) Integer_exp[i] = "A"+i;
+     //data set
 
          foreach(Integer_exp[i]) begin
-	    integer X = 'hx;
-	    Integer_exp[i] =  $urandom()& X;
-	    Integer_exp[i] =  Integer_exp[i] | $urandom();
-	 end
+        integer X = 'hx;
+        Integer_exp[i] =  $urandom()& X;
+        Integer_exp[i] =  Integer_exp[i] | $urandom();
+     end
 
-	 //set up header
-	 h_trnx_exp.trnx_type = $urandom;
-	 h_trnx_exp.trnx_id   = $urandom;
-	 h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_INTEGER");
-	 h_trnx_exp.n_payloads = n_payloads;
+     //set up header
+     h_trnx_exp.trnx_type = $urandom;
+     h_trnx_exp.trnx_id   = $urandom;
+     h_trnx_exp.data_type = shunt_dpi_hash("SHUNT_INTEGER");
+     h_trnx_exp.n_payloads = n_payloads;
 
-	 //send
-	 if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send header ");
-	 if (shunt_dpi_hs_send_integer  (socket_id,h_trnx_exp,Integer_exp)<= 0) success = 0;
-	 if (success == 0 )  $display("\ninitiator: fail send data");
+     //send
+     if (shunt_dpi_send_header(socket_id,h_trnx_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send header ");
+     if (shunt_dpi_hs_send_integer  (socket_id,h_trnx_exp,Integer_exp)<= 0) success = 0;
+     if (success == 0 )  $display("\ninitiator: fail send data");
 
-	 //recv
-	 if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
-	 Integer_act = new[h_trnx_act.n_payloads];
-	 if (shunt_dpi_hs_recv_integer(socket_id,h_trnx_act,Integer_act)<= 0) success = 0;
-	 if (success == 0 )  $display("\nInteger loopback fail recv");
-	 for(int i=0;i<n_payloads;i++)	if (Integer_exp[i] !== Integer_act[i])success=0;
+     //recv
+     if (shunt_dpi_recv_header (socket_id,h_trnx_act)<= 0) success = 0;
+     Integer_act = new[h_trnx_act.n_payloads];
+     if (shunt_dpi_hs_recv_integer(socket_id,h_trnx_act,Integer_act)<= 0) success = 0;
+     if (success == 0 )  $display("\nInteger loopback fail recv");
+     for(int i=0;i<n_payloads;i++)  if (Integer_exp[i] !== Integer_act[i])success=0;
          return  success;
       end
  endfunction : integer_loopback_test
@@ -712,10 +712,10 @@ module automatic Initiator;
 //
    function void print_status(string Test_name,int Status_int);
       begin
-	 string Status;
-	 if (!Status_int) Status = "FAIL";
-	 else  Status = "PASS";
-	 $display("%s TEST %s",Test_name,Status);
+     string Status;
+     if (!Status_int) Status = "FAIL";
+     else  Status = "PASS";
+     $display("%s TEST %s",Test_name,Status);
       end
    endfunction : print_status
 
