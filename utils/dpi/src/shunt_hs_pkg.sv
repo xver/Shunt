@@ -31,17 +31,17 @@ package shunt_hs_pkg;
     */
    function int shunt_hs_send_byteA  (input int sockid,input cs_header_t h_trnx,input cs_data_header_t h_data,input byte Array[][]);
       cs_header_t h_trnx_;
-      int 	 Result_;
-      string 	 s_me;
+      int    Result_;
+      string     s_me;
       s_me = "\nshunt_hs_send_byteA::";
 
       Result_ =0;
       foreach(h_data.trnx_payload_sizes[i])  begin
-	 h_trnx_.trnx_type  = h_trnx.trnx_type;
-	 h_trnx_.trnx_id    = h_trnx.trnx_id;
-	 h_trnx_.data_type  = h_data.data_type;
-	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
-	 Result_=  shunt_dpi_hs_send_byte  (sockid,h_trnx_,Array[i]);
+     h_trnx_.trnx_type  = h_trnx.trnx_type;
+     h_trnx_.trnx_id    = h_trnx.trnx_id;
+     h_trnx_.data_type  = h_data.data_type;
+     h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
+     Result_=  shunt_dpi_hs_send_byte  (sockid,h_trnx_,Array[i]);
       end
       return (Result_);
    endfunction : shunt_hs_send_byteA
@@ -70,11 +70,11 @@ package shunt_hs_pkg;
 
       Result_ =0;
       foreach(h_data.trnx_payload_sizes[i])  begin
-	 h_trnx_.trnx_type  = h_trnx.trnx_type;
-	 h_trnx_.trnx_id    = h_trnx.trnx_id;
-	 h_trnx_.data_type  = h_data.data_type;
-	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
-	 Result_= shunt_dpi_hs_recv_byte(sockid,h_trnx_,Array[i]);
+     h_trnx_.trnx_type  = h_trnx.trnx_type;
+     h_trnx_.trnx_id    = h_trnx.trnx_id;
+     h_trnx_.data_type  = h_data.data_type;
+     h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
+     Result_= shunt_dpi_hs_recv_byte(sockid,h_trnx_,Array[i]);
       end
       return (Result_);
    endfunction : shunt_hs_recv_byteA
@@ -96,17 +96,17 @@ package shunt_hs_pkg;
     */
    function int shunt_hs_send_intA  (input int sockid,input cs_header_t h_trnx,input cs_data_header_t h_data,input int Array[][]);
       cs_header_t h_trnx_;
-      int 	 Result_;
-      string 	 s_me;
+      int    Result_;
+      string     s_me;
       s_me = "\nshunt_hs_send_intA::";
 
       Result_ =0;
       foreach(h_data.trnx_payload_sizes[i])  begin
-	 h_trnx_.trnx_type  = h_trnx.trnx_type;
-	 h_trnx_.trnx_id    = h_trnx.trnx_id;
-	 h_trnx_.data_type  = h_data.data_type;
-	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
-	 Result_=  shunt_dpi_hs_send_int  (sockid,h_trnx_,Array[i]);
+     h_trnx_.trnx_type  = h_trnx.trnx_type;
+     h_trnx_.trnx_id    = h_trnx.trnx_id;
+     h_trnx_.data_type  = h_data.data_type;
+     h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
+     Result_=  shunt_dpi_hs_send_int  (sockid,h_trnx_,Array[i]);
       end
       return (Result_);
    endfunction : shunt_hs_send_intA
@@ -137,11 +137,11 @@ package shunt_hs_pkg;
 
       Result_ =0;
       foreach(h_data.trnx_payload_sizes[i])  begin
-	 h_trnx_.trnx_type  = h_trnx.trnx_type;
-	 h_trnx_.trnx_id    = h_trnx.trnx_id;
-	 h_trnx_.data_type  = h_data.data_type;
-	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
-	 Result_= shunt_dpi_hs_recv_int(sockid,h_trnx_,Array[i]);
+     h_trnx_.trnx_type  = h_trnx.trnx_type;
+     h_trnx_.trnx_id    = h_trnx.trnx_id;
+     h_trnx_.data_type  = h_data.data_type;
+     h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
+     Result_= shunt_dpi_hs_recv_int(sockid,h_trnx_,Array[i]);
       end
       return (Result_);
    endfunction : shunt_hs_recv_intA
@@ -164,17 +164,17 @@ package shunt_hs_pkg;
     */
    function int shunt_hs_send_realA  (input int sockid,input cs_header_t h_trnx,input cs_data_header_t h_data,input real Array[][]);
       cs_header_t h_trnx_;
-      int 	 Result_;
-      string 	 s_me;
+      int    Result_;
+      string     s_me;
       s_me = "\nshunt_hs_send_realA::";
 
       Result_ =0;
       foreach(h_data.trnx_payload_sizes[i])  begin
-	 h_trnx_.trnx_type  = h_trnx.trnx_type;
-	 h_trnx_.trnx_id    = h_trnx.trnx_id;
-	 h_trnx_.data_type  = h_data.data_type;
-	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
-	 Result_=  shunt_dpi_hs_send_real  (sockid,h_trnx_,Array[i]);
+     h_trnx_.trnx_type  = h_trnx.trnx_type;
+     h_trnx_.trnx_id    = h_trnx.trnx_id;
+     h_trnx_.data_type  = h_data.data_type;
+     h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
+     Result_=  shunt_dpi_hs_send_real  (sockid,h_trnx_,Array[i]);
       end
       return (Result_);
    endfunction : shunt_hs_send_realA
@@ -203,11 +203,11 @@ package shunt_hs_pkg;
 
       Result_ =0;
       foreach(h_data.trnx_payload_sizes[i])  begin
-	 h_trnx_.trnx_type  = h_trnx.trnx_type;
-	 h_trnx_.trnx_id    = h_trnx.trnx_id;
-	 h_trnx_.data_type  = h_data.data_type;
-	 h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
-	 Result_= shunt_dpi_hs_recv_real(sockid,h_trnx_,Array[i]);
+     h_trnx_.trnx_type  = h_trnx.trnx_type;
+     h_trnx_.trnx_id    = h_trnx.trnx_id;
+     h_trnx_.data_type  = h_data.data_type;
+     h_trnx_.n_payloads = h_data.trnx_payload_sizes[i];
+     Result_= shunt_dpi_hs_recv_real(sockid,h_trnx_,Array[i]);
       end
       return (Result_);
    endfunction : shunt_hs_recv_realA
