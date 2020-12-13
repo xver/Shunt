@@ -1,10 +1,10 @@
-/* 
+/*
  ============================================================================
  File        : shunt_primitives.h
  Version     : 1.0.0
- Copyright (c) 2016-2017 IC Verimeter. All rights reserved.  
-               Licensed under the MIT License. 
-               See LICENSE file in the project root for full license information.  
+ Copyright (c) 2016-2017 IC Verimeter. All rights reserved.
+               Licensed under the MIT License.
+               See LICENSE file in the project root for full license information.
  Description : target-initiator primitive(basic) utils
                System Verilog target initiator handshake (TCP/IP SystemVerilog SHUNT)
 
@@ -32,7 +32,7 @@
 #include <poll.h>
 #include <signal.h>
 #include <time.h>
-#include <sys/time.h> 
+#include <sys/time.h>
 
 #ifdef SHUNT_SVDPI
 #include "svdpi.h"
@@ -60,13 +60,13 @@ typedef s_vpi_vecval svLogicVecVal;
 
 //Title: Client-Server Primitives
 
-/* 
- * About: Verilog Data Types elements: 
- * 
+/*
+ * About: Verilog Data Types elements:
+ *
  * Integer 2 states::
  *
  * (start code)
- *  
+ *
  *    SHUNT ENUM       |  SV type    | function
  *  ------------------------------------------------------------------------
  *  SHUNT_INT          | int         | shunt_prim_xxxx_int
@@ -74,24 +74,24 @@ typedef s_vpi_vecval svLogicVecVal;
  *  SHUNT_LONGINT      | longint     | shunt_prim_xxxx_long
  *  SHUNT_BYTE         | byte        | shunt_prim_xxxx_byte
  *  SHUNT_BIT          | bit         | N/A see shunt_client_server.c shunt_cs_xxx_bitN.
- * 
+ *
  * (end code)
  *
  * Integer 4 states::
  *
  * (start code)
- *  
+ *
  *    SHUNT ENUM       |  SV type     |  function
  *  ------------------------------------------------------------------------
  *    SHUNT_INTEGER    | integer,time |  shunt_prim_xxxx_integer
  *    SHUNT_REG        | reg,logic    |  N/A see  shunt_client_server.c shunt_cs_xxx_regN
  *
  * (end code)
- * 
- * Non integer types IEEE 754::  
+ *
+ * Non integer types IEEE 754::
  *
  * (start code)
- *  
+ *
  *    SHUNT ENUM       |  SV type     |  function
  *  ------------------------------------------------------------------------
  *   SHUNT_REAL        | real,realtime| shunt_prim_xxxx_double
@@ -100,39 +100,39 @@ typedef s_vpi_vecval svLogicVecVal;
  *
  * (end code)
  *
- *  Special Shunt types::   
+ *  Special Shunt types::
  *
  * (start code)
- *  
+ *
  *   SHUNT_A_STRUCTURE | complex data types/user defined data types : arrays/struct,union,enums (N/A)
- *   SHUNT_HEADER_ONLY | cs_header_t header only                                                (N/A)     
+ *   SHUNT_HEADER_ONLY | cs_header_t header only                                                (N/A)
  *
  * (end code)
 */
 
 ///////////////////////////////
-//Section:  Common Functions 
+//Section:  Common Functions
 
 /*
-  Function: shunt_prim_hash 
-  simple hash function 
-  
-  Parameters: 
+  Function: shunt_prim_hash
+  simple hash function
+
+  Parameters:
   str - hash key
-  
-  Returns: 
+
+  Returns:
   hash value
 */
 long shunt_prim_hash(const char *str);
 
 /*
-  Function: shunt_prim_error 
+  Function: shunt_prim_error
   perror wrapper
- 
+
   Parameters:
   str - error message
-  
-  Returns: 
+
+  Returns:
   void
  */
 void shunt_prim_error(const char *msg);
@@ -177,29 +177,29 @@ struct hostent {
 /*
  Function: shunt_prim_init_initiator
  TCP/IP initiator initialization
- 
- Parameters: 
- 
+
+ Parameters:
+
  portno - socket port
-  
- Returns:  
+
+ Returns:
 
  socket id
-   
+
 */
 unsigned int shunt_prim_init_initiator(const unsigned int portno);
 
 /*
   Function: shunt_prim_tcp_parent_init_initiator
   Multi-Slave TCP IP initialisation, create TCP/IP a parent/listener and start listening for client connections
-  
-  
-  Parameters: 
- 
+
+
+  Parameters:
+
   portno - socket port
-  
-  
-  Returns:  
+
+
+  Returns:
 
   socket id - parent socket id
 
@@ -208,14 +208,14 @@ unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno);
 
 /*
   Function: shunt_prim_tcp_child_init_initiator
-  Multi-Slave TCP IP initialisation, establish TCP/IP  initiator-target connection 
-  
+  Multi-Slave TCP IP initialisation, establish TCP/IP  initiator-target connection
+
   Parameters:
- 
+
   socket id - parent socket id
-  
+
   Returns:
-  
+
   child socket id
  */
 unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd);
@@ -223,17 +223,17 @@ unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd);
 /*
  Function: shunt_prim_init_target
  TCP/IP target initialization
- 
+
  Parameters:
- 
+
  parentfd - parent socket
 
  hostname - initiator name
- 
+
  Returns:
- 
- socket id 
-   
+
+ socket id
+
 */
 unsigned int shunt_prim_init_target(const unsigned int portno,const char *hostname);
 
@@ -241,46 +241,46 @@ unsigned int shunt_prim_init_target(const unsigned int portno,const char *hostna
  Function: shunt_prim_get_socket_error
  An auxiliary function: to clear any errors, which can cause close(fd) to fail
  ref to https://stackoverflow.com/questions/12730477/close-is-not-closing-socket-properly
- 
+
 Parameters:
- 
+
  fd - socket
- 
- Returns: 
+
+ Returns:
 
  err - error if err<0
-   
+
 */
 
 int shunt_prim_get_socket_error(int fd);
 
 /*
  Function: shunt_prim_close_socket
- terminates TCP socket 
- 
+ terminates TCP socket
+
  Parameters:
- 
+
   fd - socket
-  
- Returns: 
+
+ Returns:
 
  N/A
-   
+
 */
 void shunt_prim_close_socket(int fd);
 
 /*
  Function: shunt_prim_unblock_socket
- sets TCP socket unblocked mode 
- 
+ sets TCP socket unblocked mode
+
  Parameters:
  flag -  1/0- unblocked(deafult)/blocked
  fd - socket
-  
- Returns: 
+
+ Returns:
 
  N/A
-   
+
 */
 void shunt_prim_unblock_socket(int flag , int sockfd);
 
@@ -290,16 +290,16 @@ void shunt_prim_unblock_socket(int flag , int sockfd);
   Function: shunt_prim_tcp_nodelay_socket
 
   enable/disable Nagle algorithm (TCP_NODELAY)
- 
+
   Parameters:
- 
+
   sockfd - socket
   flag -  1/0- enable/disable Nagle algorithm (TCP_NODELAY)
 
-  Returns: 
-  
+  Returns:
+
   N/A
-   
+
 */
 void shunt_prim_tcp_nodelay_socket(int flag, int sockfd);
 
@@ -308,24 +308,24 @@ void shunt_prim_tcp_nodelay_socket(int flag, int sockfd);
   returns status for TCP socket <event> on a fd <soket>
    Parameters:
   sockfd - socket
-  short event-  the <event> mask is specifying following 
+  short event-  the <event> mask is specifying following
 
   - 0- is equal equal POLLIN, data is ready to recv(),
 
   - 1- is equal to POLLOUT, socket can send() data to this socket without blocking
 
   - else is equal to POLLNVAL, function returns "process failed" status;
- 
-  Returns: 
-  socket even status 
+
+  Returns:
+  socket even status
 
   -  "0"- No <event>
-  
-  -  "-1"- <event> process has failed 
-  
+
+  -  "-1"- <event> process has failed
+
   -  "1"- <event> occurs
- 
-     
+
+
 */
 
 int shunt_prim_get_status_socket(int fd,int event);
@@ -334,14 +334,14 @@ int shunt_prim_get_status_socket(int fd,int event);
 /*
 Function: Example:  target,initiator init
 
-(start code)    
+(start code)
  #define MY_HOST "localhost"
  #define MY_PORT  3450
- char* hostname; 
+ char* hostname;
  int port;
  port = MY_PORT;
  hostname =   MY_HOST;
-  
+
  shunt_prim_init_initiator(port);
  shunt_prim_init_target(port,hostname);
 (end)
@@ -353,81 +353,81 @@ Function: Example:  target,initiator init
 
 /*
   Function: shunt_prim_send_int
-  send verilog/C "int" data over TCP/IP 
-  
+  send verilog/C "int" data over TCP/IP
+
   Parameters:
   sockfd - socket id
   Int  -   data
-  
+
   Returns:
   number of bytes have been sent : success > 0
-  
+
   See Also:
-  <shunt_prim_recv_int>  
+  <shunt_prim_recv_int>
 */
 int shunt_prim_send_int    (const int sockfd,const int* Int);
 
 /*
  Function: shunt_prim_recv_int
   fetch verilog/C "int" data from TCP/IP socket
-  
+
   Parameters:
   sockfd - socket id
-  Int - data from socket 
-  
-  Returns: 
+  Int - data from socket
+
+  Returns:
   number of bytes have been received  : success > 0
-  
+
   See Also:
-  <shunt_prim_send_int>  
+  <shunt_prim_send_int>
 */
 int shunt_prim_recv_int    (const int sockfd,int* Int);
 
 /*
  Function: shunt_prim_send_double
-  send verilog "double" over TCP/IP 
-  
+  send verilog "double" over TCP/IP
+
   Parameters:
    sockfd - socket id
    Double  - data to send
-  
+
   Returns:
     number of bytes have been sent : success > 0
-  
+
     See Also:
-    
+
     <shunt_prim_recv_double>
 */
 int shunt_prim_send_double    (const int sockfd,const double* Double);
 
 /*
   Function: shunt_prim_recv_double
-  fetch verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" from TCP/IP 
-  
+  fetch verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" from TCP/IP
+
   Parameters:
   sockfd - socket id
-  Double - data from socket 
-  
-  Returns: 
- number of bytes have been sent : success > 0 
+  Double - data from socket
+
+  Returns:
+ number of bytes have been sent : success > 0
 
 See Also:
    <shunt_prim_recv_double>
-    
+
 */
 int shunt_prim_recv_double   (const int sockfd,double* Double);
 
 /*
  Function: shunt_prim_send_float
-  send verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" over TCP/IP 
-  
+  send verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" over TCP/IP
+
   Parameters:
    sockfd - socket id
    Double  - data to send
-  
+
   Returns:
     number of bytes have been sent : success > 0
-  
+
     See Also:
    <shunt_prim_recv_float>
 */
@@ -436,32 +436,32 @@ int shunt_prim_send_float     (const int sockfd,const float* Float);
 
 /*
   Function: shunt_prim_recv_float
-  fetch verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" from TCP/IP 
-  
+  fetch verilog "real"/"shortreal"/"realtime"/C "double"/"float","double" from TCP/IP
+
   Parameters:
   sockfd - socket id
-  Double - data from socket 
-  
-  Returns: 
-  number of bytes have been sent : success > 0 
+  Double - data from socket
+
+  Returns:
+  number of bytes have been sent : success > 0
 
   See Also:
   <shunt_prim_send_float>
-    
+
 */
 int shunt_prim_recv_float    (const int sockfd,float* Float);
 
 /*
   Function: shunt_prim_send_short
-  send verilog "shortint"/C "short int" over TCP/IP 
-  
+  send verilog "shortint"/C "short int" over TCP/IP
+
   Parameters:
   sockfd - socket id
   Short  - data to send
-  
+
   Returns:
   number of bytes have been sent : success > 0
-  
+
   See Also:
   <shunt_prim_recv_short>
 */
@@ -469,33 +469,33 @@ int shunt_prim_send_short (const int sockfd,const short int* Short);
 
 /*
   Function: shunt_prim_recv_short
-  fetch verilog "shortint"/C "short int" over TCP/IP 
-  
+  fetch verilog "shortint"/C "short int" over TCP/IP
+
   Parameters:
   sockfd - socket id
-  Short - data from socket 
-  
-  Returns: 
+  Short - data from socket
+
+  Returns:
   number of bytes have been sent : success > 0
 
   See Also:
   <shunt_prim_send_short>
-    
+
 */
 int shunt_prim_recv_short    (const int sockfd,short int* Short);
 
 
 /*
  Function: shunt_prim_send_long
-  send verilog "longint"/C "long int" over TCP/IP 
-  
+  send verilog "longint"/C "long int" over TCP/IP
+
   Parameters:
   sockfd - socket id
   Long  - data to send
-  
+
   Returns:
   number of bytes have been sent : success > 0
-  
+
   See Also:
   <shunt_prim_recv_long>
 */
@@ -503,17 +503,17 @@ int shunt_prim_send_long    (const int sockfd,const long int* Long);
 
 /*
   Function: shunt_prim_recv_long
-  fetch verilog "longint"/C "long int" over TCP/IP 
-  
+  fetch verilog "longint"/C "long int" over TCP/IP
+
   Parameters:
   sockfd - socket id
-  Long - data from socket 
-  
-  Returns: 
+  Long - data from socket
+
+  Returns:
  number of bytes have been sent : success > 0
- 
+
  See Also:
-  <shunt_prim_send_long>  
+  <shunt_prim_send_long>
 */
 int shunt_prim_recv_long    (const int sockfd,long int* Long);
 
@@ -559,7 +559,7 @@ int shunt_prim_recv_byte    (const int sockfd,char* Byte);
 
   Returns:
    number of bytes have been sent : success > 0
-   
+
    See Also:
    <shunt_prim_recv_integer>
 
@@ -576,7 +576,7 @@ int shunt_prim_send_integer(const unsigned int sockfd,const svLogicVecVal* Int);
 
   Returns:
     number of bytes have been received  : success > 0
- 
+
     See Also:
    <shunt_prim_send_integer>
 
