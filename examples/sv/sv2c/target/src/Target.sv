@@ -23,7 +23,7 @@ module automatic Target;
    import shunt_dpi_pkg::*;
 
    string String;
-   int 	  Socket;
+   int    Socket;
    cs_header_t      h_trnx;
 `ifndef NO_CS_DATA_HEADER_T
    cs_data_header_t h_data;
@@ -33,45 +33,45 @@ module automatic Target;
    initial
      begin
 
-	int Result;
+    int Result;
 
-	Socket=0;
-	Result=0;
+    Socket=0;
+    Result=0;
 
         //#1000ns;
 
         //
-	//String.toupper();
-	$display("Target: START");
-	Socket = init_target(`MY_PORT, `MY_HOST);
-	$display("Target: socket=%0d",Socket);
+    //String.toupper();
+    $display("Target: START");
+    Socket = init_target(`MY_PORT, `MY_HOST);
+    $display("Target: socket=%0d",Socket);
 
-	header_loopback_test(Socket);
-	short_loopback_test(Socket);
-	int_loopback_test(Socket);
-	long_loopback_test(Socket);
-	byte_loopback_test(Socket);
-	integer_loopback_test(Socket);
-	time_loopback_test(Socket);
-	bit_loopback_test(Socket);
-	reg_loopback_test(Socket);
-	logic_loopback_test(Socket);
-	bitN_loopback_test(Socket);
-	regN_loopback_test(Socket);
-	logicN_loopback_test(Socket);
-	real_loopback_test(Socket);
-	shortreal_loopback_test(Socket);
-	string_loopback_test(Socket);
-	shortV_loopback_test(Socket);
-	longV_loopback_test(Socket);
-	realV_loopback_test(Socket);
-	shortrealV_loopback_test(Socket);
-	integerV_loopback_test(Socket);
-	intV_loopback_test(Socket);
-	pkt_longV_loopback_test(Socket);
-	shunt_dpi_close_socket(Socket);
-	$finish;
-	$display("\nTarget: END");
+    header_loopback_test(Socket);
+    short_loopback_test(Socket);
+    int_loopback_test(Socket);
+    long_loopback_test(Socket);
+    byte_loopback_test(Socket);
+    integer_loopback_test(Socket);
+    time_loopback_test(Socket);
+    bit_loopback_test(Socket);
+    reg_loopback_test(Socket);
+    logic_loopback_test(Socket);
+    bitN_loopback_test(Socket);
+    regN_loopback_test(Socket);
+    logicN_loopback_test(Socket);
+    real_loopback_test(Socket);
+    shortreal_loopback_test(Socket);
+    string_loopback_test(Socket);
+    shortV_loopback_test(Socket);
+    longV_loopback_test(Socket);
+    realV_loopback_test(Socket);
+    shortrealV_loopback_test(Socket);
+    integerV_loopback_test(Socket);
+    intV_loopback_test(Socket);
+    pkt_longV_loopback_test(Socket);
+    shunt_dpi_close_socket(Socket);
+    $finish;
+    $display("\nTarget: END");
 
      end // initial begin
 
@@ -249,7 +249,7 @@ module automatic Target;
 
    function void bitN_loopback_test(int socket_id);
       bit [1024:0] BitN;
-      string 	   Test_name;
+      string       Test_name;
 
  `ifndef NO_SHUNT_DPI_HS_RECV_BITN
   `ifndef NO_SHUNT_DPI_HS_SEND_BITN
@@ -269,7 +269,7 @@ module automatic Target;
 
    function void regN_loopback_test(int socket_id);
       reg [1024:0] RegN;
-      string 	   Test_name;
+      string       Test_name;
 
  `ifndef NO_SHUNT_DPI_HS_RECV_REGN
   `ifndef NO_SHUNT_DPI_HS_SEND_REGN
@@ -289,7 +289,7 @@ module automatic Target;
 
    function void logicN_loopback_test(int socket_id);
       logic [1024:0] LogicN;
-      string 	     Test_name;
+      string         Test_name;
 
  `ifndef NO_SHUNT_DPI_HS_RECV_LOGICN
   `ifndef NO_SHUNT_DPI_HS_SEND_LOGICN
@@ -308,8 +308,8 @@ module automatic Target;
    endfunction : logicN_loopback_test
 
    function void real_loopback_test(int socket_id);
-      real 	     Real;
-      string 	     Test_name;
+      real       Real;
+      string         Test_name;
 
  `ifndef NO_SHUNT_DPI_RECV_REAL
   `ifndef NO_SHUNT_DPI_SEND_REAL
@@ -329,7 +329,7 @@ module automatic Target;
   `ifndef NO_SHUNT_DPI_RECV_SHORTREAL
    `ifndef NO_SHUNT_DPI_SEND_SHORTREAL
       shortreal      Shortreal;
-      string 	     Test_name;
+      string         Test_name;
 
       Test_name = "target shortreal_loopback_test recv";
       if (!shunt_dpi_recv_shortreal(socket_id,Shortreal)) $display("%s TEST FAIL",Test_name);
@@ -342,13 +342,13 @@ module automatic Target;
 
    function void string_loopback_test(int socket_id);
 
-      string 	     Test_name;
-      int 	     size;
-      int 	     Result_;
+      string         Test_name;
+      int        size;
+      int        Result_;
 
   `ifndef NO_SHUNT_DPI_RECV_STRING
    `ifndef NO_SHUNT_DPI_SEND_STRING
-      String 	     = `STRING_MESSAGE1;
+      String         = `STRING_MESSAGE1;
       Test_name = "target string_loopback_test recv";
 
       if (shunt_dpi_recv_string(socket_id,String.len(),String)<=0) $display("%s TEST FAIL",Test_name);
@@ -361,16 +361,16 @@ module automatic Target;
 
    function void shortV_loopback_test(int socket_id);
       begin
-	 string Test_name;
-	 shortint ShortV[`V_SIZE];
+     string Test_name;
+     shortint ShortV[`V_SIZE];
 
    `ifndef NO_SHUNT_DPI_RECV_SHORTV
     `ifndef NO_SHUNT_DPI_SEND_SHORTV
-	 Test_name = "target shortV_loopback_test";
+     Test_name = "target shortV_loopback_test";
 
-	 if(shunt_dpi_recv_shortV(socket_id,`V_SIZE,ShortV)<=0) $display("%s TEST FAIL",Test_name);
-	 //foreach (ShortV[shortV_i])$display("\n %s  ShortV[%0d] = %d",Test_name,shortV_i,ShortV[shortV_i]);
-	 if(shunt_dpi_send_shortV(socket_id,`V_SIZE,ShortV)<=0) $display("%s TEST FAIL",Test_name);
+     if(shunt_dpi_recv_shortV(socket_id,`V_SIZE,ShortV)<=0) $display("%s TEST FAIL",Test_name);
+     //foreach (ShortV[shortV_i])$display("\n %s  ShortV[%0d] = %d",Test_name,shortV_i,ShortV[shortV_i]);
+     if(shunt_dpi_send_shortV(socket_id,`V_SIZE,ShortV)<=0) $display("%s TEST FAIL",Test_name);
     `endif //`ifndef NO_SHUNT_DPI_RECV_SHORTV
    `endif  //`ifndef NO_SHUNT_DPI_SEND_SHORTV
       end
@@ -379,16 +379,16 @@ module automatic Target;
 
    function void intV_loopback_test(int socket_id);
       begin
-	 string Test_name;
-	 int IntV[`V_SIZE];
+     string Test_name;
+     int IntV[`V_SIZE];
 
    `ifndef NO_SHUNT_DPI_RECV_INTV
     `ifndef NO_SHUNT_DPI_SEND_INTV
-	 Test_name = "target intV_loopback_test";
+     Test_name = "target intV_loopback_test";
 
-	 if(shunt_dpi_recv_intV(socket_id,`V_SIZE,IntV)<=0) $display("%s TEST FAIL",Test_name);
-	 //foreach (IntV[intV_i])$display("\n %s  IntV[%0d] = %d",Test_name,intV_i,IntV[intV_i]);
-	 if(shunt_dpi_send_intV(socket_id,`V_SIZE,IntV)<=0) $display("%s TEST FAIL",Test_name);
+     if(shunt_dpi_recv_intV(socket_id,`V_SIZE,IntV)<=0) $display("%s TEST FAIL",Test_name);
+     //foreach (IntV[intV_i])$display("\n %s  IntV[%0d] = %d",Test_name,intV_i,IntV[intV_i]);
+     if(shunt_dpi_send_intV(socket_id,`V_SIZE,IntV)<=0) $display("%s TEST FAIL",Test_name);
     `endif //`ifndef NO_SHUNT_DPI_RECV_INTV
    `endif  //`ifndef NO_SHUNT_DPI_SEND_INTV
       end
@@ -398,16 +398,16 @@ module automatic Target;
 
    function void  longV_loopback_test(int socket_id);
       begin
-	 string Test_name;
-	 longint LongV[`V_SIZE];
+     string Test_name;
+     longint LongV[`V_SIZE];
 
    `ifndef NO_SHUNT_DPI_RECV_LONGV
     `ifndef NO_SHUNT_DPI_SEND_LONGV
-	 Test_name = "target longV_loopback_test";
+     Test_name = "target longV_loopback_test";
 
-	 if(shunt_dpi_recv_longV(socket_id,`V_SIZE,LongV)<=0) $display("%s TEST FAIL",Test_name);
-	 //foreach (LongV[i])$display("\n %s  LongV[%0d] = %d",Test_name,i,LongV[i]);
-	 if(shunt_dpi_send_longV(socket_id,`V_SIZE,LongV)<=0) $display("%s TEST FAIL",Test_name);
+     if(shunt_dpi_recv_longV(socket_id,`V_SIZE,LongV)<=0) $display("%s TEST FAIL",Test_name);
+     //foreach (LongV[i])$display("\n %s  LongV[%0d] = %d",Test_name,i,LongV[i]);
+     if(shunt_dpi_send_longV(socket_id,`V_SIZE,LongV)<=0) $display("%s TEST FAIL",Test_name);
     `endif // `ifndef NO_SHUNT_DPI_RECV_LONGV
    `endif  // `ifndef NO_SHUNT_DPI_SEND_LONGV
 
@@ -415,8 +415,8 @@ module automatic Target;
    endfunction : longV_loopback_test
 
    function void realV_loopback_test(int socket_id);
-      real 	 RealV[`V_SIZE];
-      string 	 Test_name;
+      real   RealV[`V_SIZE];
+      string     Test_name;
 
    `ifndef NO_SHUNT_DPI_RECV_REALV
     `ifndef NO_SHUNT_DPI_SEND_REALV
@@ -433,7 +433,7 @@ module automatic Target;
    `ifndef NO_SHUNT_DPI_RECV_SHORTREALV
     `ifndef NO_SHUNT_DPI_SEND_SHORTREALV
       shortreal  ShortrealV[`V_SIZE];
-      string 	 Test_name;
+      string     Test_name;
 
       Test_name = "target shortrealV_loopback_test";
 
@@ -445,8 +445,8 @@ module automatic Target;
    endfunction : shortrealV_loopback_test
 
    function void integerV_loopback_test(int socket_id);
-      integer 	 IntegerV[`V_SIZE];
-      string 	 Test_name;
+      integer    IntegerV[`V_SIZE];
+      string     Test_name;
 
    `ifndef NO_SHUNT_DPI_RECV_INTEGERV
     `ifndef NO_SHUNT_DPI_SEND_INTEGERV
@@ -463,20 +463,20 @@ module automatic Target;
 
    function void  pkt_longV_loopback_test(int socket_id);
       begin
-	 string Test_name;
-	 longint Pkt_longv[`V_SIZE];
-	 cs_header_t      h_;
+     string Test_name;
+     longint Pkt_longv[`V_SIZE];
+     cs_header_t      h_;
    `ifndef NO_SHUNT_DPI_RECV_PKT_LONGV
     `ifndef NO_SHUNT_DPI_SEND_PKT_LONGV
-	 Test_name = "target pkt_longv_loopback_test";
-	 //$display("\n %s  h_trnx.n_payloads = %0d",Test_name, h_.n_payloads);
-	 h_trnx.trnx_type = 'h101;
-	 h_trnx.trnx_id   = 'h102;//{$random,$random};
-	 h_trnx.data_type = shunt_dpi_hash("SHUNT_LONGINT");
-	 h_trnx.n_payloads = `V_SIZE;
-	 if(shunt_dpi_recv_pkt_longV(socket_id,h_trnx,Pkt_longv)<=0) $display("%s TEST FAIL",Test_name);
-	 //foreach (Pkt_longv[i])$display("\n %s  Pkt_longv[%0d] = %d",Test_name,i,Pkt_longv[i]);
-	 if(shunt_dpi_send_pkt_longV(socket_id,h_trnx,Pkt_longv)<=0) $display("%s TEST FAIL",Test_name);
+     Test_name = "target pkt_longv_loopback_test";
+     //$display("\n %s  h_trnx.n_payloads = %0d",Test_name, h_.n_payloads);
+     h_trnx.trnx_type = 'h101;
+     h_trnx.trnx_id   = 'h102;//{$random,$random};
+     h_trnx.data_type = shunt_dpi_hash("SHUNT_LONGINT");
+     h_trnx.n_payloads = `V_SIZE;
+     if(shunt_dpi_recv_pkt_longV(socket_id,h_trnx,Pkt_longv)<=0) $display("%s TEST FAIL",Test_name);
+     //foreach (Pkt_longv[i])$display("\n %s  Pkt_longv[%0d] = %d",Test_name,i,Pkt_longv[i]);
+     if(shunt_dpi_send_pkt_longV(socket_id,h_trnx,Pkt_longv)<=0) $display("%s TEST FAIL",Test_name);
 
     `endif // `ifndef NO_SHUNT_DPI_RECV_PKT_LONGV
    `endif  // `ifndef NO_SHUNT_DPI_SEND_PKT_LONGV
@@ -484,7 +484,7 @@ module automatic Target;
    endfunction: pkt_longV_loopback_test
    ///
    function void header_loopback_test(int socket_id);
-      string 	 Test_name;
+      string     Test_name;
 
        Test_name = "header_loopback_test recv";
        //recv
@@ -497,10 +497,10 @@ module automatic Target;
    ///
     function automatic void print_shunt_header(cs_header_t h_,string name_in="",string i_am);
       //   typedef struct{
-      // longint 	 trnx_type;
-      // longint 	 trnx_id;
-      // longint 	 data_type;
-      // int 	 n_payloads;
+      // longint     trnx_type;
+      // longint     trnx_id;
+      // longint     data_type;
+      // int     n_payloads;
       //} cs_header_t;
       $display("\n%s  %s.trnx_type  = %0h",i_am,name_in, h_.trnx_type);
       $display("\n%s  %s.trnx_id    = %0h",i_am,name_in, h_.trnx_id);
