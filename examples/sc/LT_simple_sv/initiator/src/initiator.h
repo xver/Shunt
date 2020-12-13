@@ -66,9 +66,9 @@ struct Initiator: sc_module
       shunt_send_b_transport(m_socket,*trans, delay );
       shunt_recv_b_transport(m_socket,*trans, delay );
       cout << "SERVER trans recv = { " << (cmd ? 'W' : 'R') << ", " << hex << i
-	   << " } , data = " << hex << data << " at time " << sc_time_stamp()
-	   << " delay = " << delay
-	   << " response = "<< trans->is_response_error()<< endl;
+       << " } , data = " << hex << data << " at time " << sc_time_stamp()
+       << " delay = " << delay
+       << " response = "<< trans->is_response_error()<< endl;
       // Initiator obliged to check response status and delay
       if ( trans->is_response_error() )
         SC_REPORT_ERROR("TLM-2", "Response error from b_transport");
