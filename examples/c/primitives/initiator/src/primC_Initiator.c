@@ -17,7 +17,7 @@ int main(void) {
   int  socket;
   int  port;
   int success = 1;
-  
+
   port =       MY_PORT;
   socket= shunt_prim_init_initiator(port);
   if (socket<0) {
@@ -25,10 +25,10 @@ int main(void) {
     success = 0;
   }
   printf("\nexample_prim_initiator::socket=%d", socket);
-  
+
   if (success>0) {
     puts("\nexample_prim_initiator start: Echo loopback initiator example start");
-  
+
     //INT example
     int Int = 0xaa5555aa;
     int IntLoopBack = 0x5a5a5a5a;
@@ -46,7 +46,7 @@ int main(void) {
     double DoubleLoopBack = 9101112;
     if(shunt_prim_send_double(socket,&Double)       <= 0 ) success = 0;
     if(shunt_prim_recv_double(socket,&DoubleLoopBack)<= 0) success = 0;
-    
+
     if (DoubleLoopBack == Double && success >0)
       printf("\ndouble loopback pass");
     else {
@@ -58,7 +58,7 @@ int main(void) {
     char ByteLoopBack = 'b';
     if(shunt_prim_send_byte(socket,&Byte)       <= 0 ) success = 0;
     if(shunt_prim_recv_byte(socket,&ByteLoopBack)<= 0) success = 0;
-    
+
     if (ByteLoopBack == Byte && success >0)
         printf("\nbyte loopback pass");
     else {
@@ -72,7 +72,7 @@ int main(void) {
 
   if ( success >0)
     return EXIT_SUCCESS;
-  else 
+  else
     return EXIT_FAILURE;
 }
 
