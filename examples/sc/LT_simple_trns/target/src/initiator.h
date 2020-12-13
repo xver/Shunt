@@ -53,7 +53,7 @@ struct Initiator: sc_module
       //trans->set_dmi_allowed( false ); // Mandatory initial value
       //trans->set_response_status( tlm::TLM_INCOMPLETE_RESPONSE ); // Mandatory initial value
       //
-     
+
       socket->b_transport( *trans, delay );  // Blocking transport call
       if (trans->get_command() != (unsigned int) SHUNT_TLM_END_SIM) {
 	// Initiator obliged to check response status and delay
@@ -67,7 +67,7 @@ struct Initiator: sc_module
 
       	  // Realize the delay annotated onto the transport call
       	  wait(delay);
-      
+
       	  ++i;
       }
       else end_sim =1;
