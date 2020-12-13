@@ -2,15 +2,15 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-# Add inputs and outputs from these tool invocations to the build variables 
+# Add inputs and outputs from these tool invocations to the build variables
 C_SRCS += \
-../src/csC_Target.c 
+../src/csC_Target.c
 
 OBJS += \
-./src/csC_Target.o 
+./src/csC_Target.o
 
 C_DEPS += \
-./src/csC_Target.d 
+./src/csC_Target.d
 
 
 # Each subdirectory must supply rules for building sources it contributes
