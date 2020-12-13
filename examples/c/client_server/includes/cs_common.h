@@ -60,7 +60,7 @@ void shunt_cs_print_intV   (cs_header* h,int *Int,char* msg) {
   void
 */
 void shunt_cs_print_doubleV   (cs_header* h,double *Double,char* msg) {
-  
+
   if (h->data_type==  shunt_prim_hash("SHUNT_REAL")) {
     for (int i=0;i< h->n_payloads;i++) {
       printf("\n %s DoubleV[%0d]=%f",msg,i,Double[i]);
@@ -111,10 +111,10 @@ int shunt_cs_comp_doubleV   (cs_header* h,double *lhs,double *rhs) {
   compare two SHUNT headers
 
   Parameters:
-  
+
   h_lhs,h_rhs - two cs headers
   Returns:
-  
+
   success > 0
 */
 int shunt_cs_comp_header  (cs_header h_lhs,cs_header h_rhs) {
@@ -129,7 +129,7 @@ int shunt_cs_comp_header  (cs_header h_lhs,cs_header h_rhs) {
 /*
   Function: shunt_cs_comp_data_header
   compare two SHUNT data headers
-  
+
   Parameters:
   h_lhs,h_rhs - two cs data headers
   n_payloads - number of data payloads
