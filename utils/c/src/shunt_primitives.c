@@ -25,7 +25,7 @@ long shunt_prim_hash(const char *str) {
   int c;
 
   while (( c = *str++) )
-	  hash = (	(hash << 5) + hash) + c; /* hash * 33 + c */
+      hash = (  (hash << 5) + hash) + c; /* hash * 33 + c */
   return hash;
 }
 
@@ -72,8 +72,8 @@ unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno){
   parentfd = socket(AF_INET, SOCK_STREAM, 0);
 
   if (parentfd < 0) {
-	  shunt_prim_error("shunt_prim_tcp_parent_init_initiator opening socket<0");
-	  return parentfd ;
+      shunt_prim_error("shunt_prim_tcp_parent_init_initiator opening socket<0");
+      return parentfd ;
   }
 
   /* Eliminates "ERROR on binding: Address already in use" error.
@@ -145,7 +145,7 @@ unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd ) {
   }
   else {
     printf("initiator established connection with Hostname(%s) IP(%s)\n",
-	   hostname, hostaddrp); }
+       hostname, hostaddrp); }
   return childfd;
 }
 
@@ -200,7 +200,7 @@ int shunt_prim_get_status_socket(int fd,int event) {
 
   if(fds_.events != POLLNVAL) {
     Result_ = poll(&fds_,1,time_);
-    if( Result_ == POLLERR ) 	printf("POLL_ERR(%0d) Error on poll fd(%0d) ",Result_,fd);
+    if( Result_ == POLLERR )    printf("POLL_ERR(%0d) Error on poll fd(%0d) ",Result_,fd);
   }
   return Result_;
 }
