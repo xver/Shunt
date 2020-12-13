@@ -18,7 +18,7 @@ int main(void) {
   char *hostname;
   int port;
   int success=1;
-  
+
   port = MY_PORT;
   hostname =   MY_HOST;
   //
@@ -31,7 +31,7 @@ int main(void) {
 
   if (success>0) {
     puts("\nexample_prim_target start: Echo loopback target example start");
-    
+
     //INT Example
     int Int;
     Int = 0xdeadbeaf;
@@ -60,6 +60,6 @@ int main(void) {
   }
   if ( success >0)
     return EXIT_SUCCESS;
-  else 
+  else
     return EXIT_FAILURE;
 }
