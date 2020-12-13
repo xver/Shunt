@@ -2,10 +2,10 @@
 
 all: check_shunt_home check_dpi_home
 
-check_shunt_home: 
+check_shunt_home:
 	$(call check_defined,SHUNT_HOME)
 
-check_dpi_home: 
+check_dpi_home:
 	$(call check_defined,SHUNT_SVDPI)
 
 check_defined = \
