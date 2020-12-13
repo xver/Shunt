@@ -74,7 +74,7 @@ int shunt_cs_comp_doubleV   (cs_header* h,double *lhs,double *rhs) {
   void
 */
 void shunt_cs_print_doubleV   (cs_header* h,double *Double,char* msg) {
-  
+
   if (h->data_type==  shunt_prim_hash("SHUNT_REAL")) {
     for (int i=0;i< h->n_payloads;i++) {
       printf("\n %s DoubleV[%0d]=%f",msg,i,Double[i]);
@@ -138,7 +138,7 @@ void shunt_cs_print_byteA   (int n_payloads,cs_data_header* h,char *ArrayS,char*
   void
 */
 void shunt_cs_print_longV   (cs_header* h,long int *Long,char* msg) {
-  
+
   if (h->data_type==  shunt_prim_hash("SHUNT_LONGINT")) {
     for (int i=0;i< h->n_payloads;i++) {
       printf("\n %s LongV[%0d]=%ld",msg,i,Long[i]);
