@@ -44,7 +44,7 @@ void shunt_dpi_unblock_socket(int flag ,int fd) {
 int shunt_dpi_get_status_socket(int fd,int event) {
   int Result_;
   Result_ = shunt_prim_get_status_socket(fd,event);
-  return Result_; 
+  return Result_;
 }
 
 void shunt_dpi_tcp_nodelay_socket(int flag, int sockfd) {
@@ -54,7 +54,7 @@ void shunt_dpi_tcp_nodelay_socket(int flag, int sockfd) {
 
 unsigned int shunt_dpi_listener_init(const unsigned int portno) {
   unsigned int  Result_;
-  Result_ =shunt_prim_tcp_parent_init_initiator(portno);  
+  Result_ =shunt_prim_tcp_parent_init_initiator(portno);
   return Result_;
 }
 
@@ -64,7 +64,7 @@ unsigned int shunt_dpi_tcp_connect(const unsigned int parentfd) {
   return Result_;
 }
 //--------------------
-// Direct send/recv  
+// Direct send/recv
 //--------------------
 
 int shunt_dpi_send_short  (const int sockfd,const short int Short) {
@@ -105,30 +105,30 @@ int shunt_dpi_recv_long  (int sockfd,long int* Long) {
 
 int shunt_dpi_send_time    (const unsigned int sockfd,svLogicVecVal* Time) {
   int Result_;
-   
+
  Result_ = 1;
  for (int  i=0;i<2;i++) {
    if (shunt_dpi_send_int(sockfd, (int)Time[i].aval)<=0) Result_=0 ;
    if (shunt_dpi_send_int(sockfd, (int)Time[i].bval)<=0) Result_=0 ;
  }
- 
- return Result_; 
+
+ return Result_;
 
 }
 
 int shunt_dpi_recv_time    (const unsigned int sockfd,svLogicVecVal* Time) {
   int Result_;
-  
+
   Result_ = 1;
-  for (int  i=0;i<2;i++) { 
+  for (int  i=0;i<2;i++) {
     if (shunt_dpi_recv_int (sockfd,(int*)(&Time[i].aval))<=0) Result_=0 ;
     if (shunt_dpi_recv_int (sockfd,(int*)(&Time[i].bval))<=0) Result_=0 ;
-    } 
+    }
 
  return Result_;
 }
 
-////Direct send/recv  
+////Direct send/recv
 int shunt_dpi_send_byte(const  unsigned int sockfd, const char Byte) {
   int Result_ =0;
   Result_ = shunt_prim_send_byte(sockfd,&Byte);
@@ -140,7 +140,7 @@ int shunt_dpi_send_bit (const unsigned int sockfd,const svBit Bit) {
 }
 
 int shunt_dpi_send_reg (const unsigned int sockfd,const svLogic Reg) {
-  return shunt_dpi_send_byte(sockfd,Reg); 
+  return shunt_dpi_send_byte(sockfd,Reg);
 }
 
 int shunt_dpi_send_logic (const unsigned int sockfd,const svLogic Logic) {
@@ -158,13 +158,13 @@ int shunt_dpi_recv_bit     (const unsigned int sockfd,svBit* Bit) {
 }
 
 int shunt_dpi_recv_reg     (const unsigned int sockfd,svLogic* Reg) {
-  return shunt_dpi_recv_byte(sockfd,(char*)Reg);  
+  return shunt_dpi_recv_byte(sockfd,(char*)Reg);
 }
 
 int shunt_dpi_recv_logic     (const unsigned int sockfd,svLogic* Logic) {
   return  shunt_dpi_recv_reg(sockfd,Logic);
 }
-////Direct send/recv  
+////Direct send/recv
 int shunt_dpi_send_real(const  unsigned int sockfd,double Real) {
   int Result_ =0;
   Result_ =shunt_prim_send_double(sockfd,&Real);
@@ -192,15 +192,15 @@ int shunt_dpi_recv_realtime(const  unsigned int sockfd,double* Real) {
 int shunt_dpi_recv_shortreal(const  unsigned int sockfd,float* Real) {
   int Result_ =0;
   Result_ =shunt_prim_recv_float(sockfd,Real);
-  return Result_; 
+  return Result_;
 }
 
-////Direct send/recv  
+////Direct send/recv
 //*****************************************
 int shunt_dpi_send_intV(int sockid, const int size,const svOpenArrayHandle Int){
   cs_header h_ ;
-    
-  int* Int_= (int *) svGetArrayPtr(Int); 
+
+  int* Int_= (int *) svGetArrayPtr(Int);
 
   int Result_ =0;
   h_.trnx_type = rand();
@@ -230,8 +230,8 @@ int shunt_dpi_recv_intV(int sockid,int size,svOpenArrayHandle Int) {
 
 int shunt_dpi_send_shortV(int sockid, const int size,const svOpenArrayHandle Int){
   cs_header h_ ;
-    
-  short int* Short_= (short int *) svGetArrayPtr(Int); 
+
+  short int* Short_= (short int *) svGetArrayPtr(Int);
 
   int Result_ =0;
   h_.trnx_type = rand();
@@ -258,15 +258,15 @@ int shunt_dpi_recv_shortV(int sockid,int size,svOpenArrayHandle Int) {
 // ****************************************************
 int shunt_dpi_send_longV(int sockid, const int size,const svOpenArrayHandle Int){
   cs_header h_ ;
-  
-  long int* Long_= (long int *) svGetArrayPtr(Int); 
+
+  long int* Long_= (long int *) svGetArrayPtr(Int);
 
   int Result_ =0;
   h_.trnx_type = rand();
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_LONGINT");
   h_.n_payloads = size;
-  
+
   Result_ = shunt_cs_send_longV(sockid,&h_,Long_);
   return Result_;
 }
@@ -274,7 +274,7 @@ int shunt_dpi_send_longV(int sockid, const int size,const svOpenArrayHandle Int)
 
 int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int) {
   cs_header h_;
-  
+
    long int* Long_ = (long int *) svGetArrayPtr(Int);
 
   int Result_ =0;
@@ -283,11 +283,11 @@ int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int) {
   h_.data_type  = shunt_prim_hash("SHUNT_LONGINT");
   h_.n_payloads = size;
   Result_ = shunt_cs_recv_longV(sockid,&h_,Long_);
-  
+
   return Result_;
 }
 
-////Direct send/recv  
+////Direct send/recv
 
 int shunt_dpi_send_realV(int sockid, const int size,const svOpenArrayHandle Real) {
   cs_header h_ ;
@@ -325,14 +325,14 @@ int shunt_dpi_send_shortrealV(int sockid, const int size,const svOpenArrayHandle
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_SHORTREAL");
   h_.n_payloads = size;
-  
+
   Result_ = shunt_cs_send_floatV(sockid,&h_,Shortreal_);
   return Result_;
 }
 
 int shunt_dpi_recv_shortrealV(int sockid,int size,svOpenArrayHandle Shortreal) {
   cs_header h_;
-  
+
   float* Shortreal_ = (float *) svGetArrayPtr(Shortreal);
 
   int Result_ =0;
@@ -344,24 +344,24 @@ int shunt_dpi_recv_shortrealV(int sockid,int size,svOpenArrayHandle Shortreal) {
   return Result_;
 }
 
-////Direct send/recv  
+////Direct send/recv
 
 int shunt_dpi_send_string(int sockid,int size,char* string) {
   cs_header h_ ;
-  
+
   int Result_ =0;
   h_.trnx_type  = rand();
   h_.trnx_id    = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_BYTE");
   h_.n_payloads = size;
-  
+
   Result_ = shunt_cs_send_byteV(sockid, &h_,string);
   return Result_;
 }
 
 int shunt_dpi_recv_string(int sockid,int size,char** string) {
   cs_header h_ ;
-  
+
   int Result_ =0;
   h_.trnx_type = rand();
   h_.trnx_id   = rand();
@@ -390,11 +390,11 @@ int shunt_dpi_send_header         (int sockid,cs_header* h){
 int shunt_dpi_send_data_header (int sockid,cs_header* h,long data_type,svOpenArrayHandle trnx_payload_sizes) {
   cs_data_header h_data_;
   int Result_ =0;
-  
+
   h_data_.data_type = data_type;
   int* Int_ = (int*) svGetArrayPtr(trnx_payload_sizes);
   for(int i=0;i<h->n_payloads;i++) h_data_.trnx_payload_sizes[i] = Int_[i];
-  
+
   Result_ = shunt_cs_send_data_header (sockid,h->n_payloads,&h_data_);
   return Result_;
 }
@@ -410,14 +410,14 @@ int shunt_dpi_recv_data_header   (int sockid,cs_header* h,long* data_type,svOpen
   cs_data_header h_data;
   int n_payloads;
   n_payloads =  h->n_payloads;
-  
+
   Result_ = shunt_cs_recv_data_header(sockid,n_payloads,&h_data);
-  
-  int* Int_ = (int *)svGetArrayPtr(trnx_payload_sizes); 
-  *data_type =h_data.data_type;  
-  for (int i=0;i<n_payloads;i++) { 
+
+  int* Int_ = (int *)svGetArrayPtr(trnx_payload_sizes);
+  *data_type =h_data.data_type;
+  for (int i=0;i<n_payloads;i++) {
     Int_[i]  = h_data.trnx_payload_sizes[i];
-  } 
+  }
   return Result_;
 }
 
@@ -522,34 +522,34 @@ int shunt_dpi_send_integer (const unsigned int sockfd,svLogicVecVal* Int) {
 
 
 int shunt_dpi_recv_integer (const unsigned int sockfd,svLogicVecVal* Int) {
-  return shunt_prim_recv_integer (sockfd,Int); 
+  return shunt_prim_recv_integer (sockfd,Int);
 }
 
 
 int shunt_dpi_send_integerV (const unsigned int sockid,const int size,const svLogicVecVal* IntegerV){
   cs_header h_;
-  
+
   svLogicVecVal* IntegerV_ =  (svLogicVecVal*)svGetArrayPtr((svOpenArrayHandle*)IntegerV);
 
   h_.trnx_type = rand();
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_INTEGER");
   h_.n_payloads = size;
-  
+
   return shunt_cs_send_integerV(sockid,&h_,IntegerV_);
 }
 
 int shunt_dpi_recv_integerV (const unsigned int sockid,const int size,svLogicVecVal* IntegerV) {
   cs_header h_;
-  
+
   svLogicVecVal* IntegerV_ = (svLogicVecVal*) svGetArrayPtr(IntegerV);
 
   h_.trnx_type = rand();
   h_.trnx_id   = rand();
   h_.data_type  = shunt_prim_hash("SHUNT_INTEGER");
   h_.n_payloads = size;
-  
-  return shunt_cs_recv_integerV(sockid,&h_,IntegerV_); 
+
+  return shunt_cs_recv_integerV(sockid,&h_,IntegerV_);
 }
 
 int shunt_dpi_hs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
@@ -571,28 +571,28 @@ int shunt_dpi_hs_recv_logicN (const unsigned int sockfd,cs_header* h_trnx,svLogi
   return shunt_cs_recv_regN (sockfd,h_trnx,Reg_);
 }
 int shunt_dpi_send_bitN  (const int sockfd,const int size,const svBitVecVal* bitN) {
-    
+
   cs_header* h_ = NULL;
 
-  h_->trnx_type = rand(); 
-  h_->trnx_id   = rand(); 
-  h_->data_type  = shunt_prim_hash("SHUNT_BIT"); 
+  h_->trnx_type = rand();
+  h_->trnx_id   = rand();
+  h_->data_type  = shunt_prim_hash("SHUNT_BIT");
   h_->n_payloads = size;
-  
+
   svBitVecVal* bitN_ =  (svBitVecVal*)svGetArrayPtr((svOpenArrayHandle*)bitN);
   return shunt_cs_send_bitN(sockfd,h_,bitN_);
 }
 
 int shunt_dpi_hs_send_bitN  (const int sockfd,const cs_header* h_trnx,const svBitVecVal* bitN) {
   svBitVecVal* bitN_ =  (svBitVecVal*)svGetArrayPtr((svOpenArrayHandle*)bitN);
-  return  shunt_cs_send_bitN  (sockfd,h_trnx,bitN_); 
+  return  shunt_cs_send_bitN  (sockfd,h_trnx,bitN_);
 }
 
 int shunt_dpi_recv_bitN  (const int sockfd,const int size,svBitVecVal* bitN) {
   cs_header* h_ = NULL;
-  h_->trnx_type = rand(); 
-  h_->trnx_id   = rand(); 
-  h_->data_type  = shunt_prim_hash("SHUNT_BIT"); 
+  h_->trnx_type = rand();
+  h_->trnx_id   = rand();
+  h_->data_type  = shunt_prim_hash("SHUNT_BIT");
   h_->n_payloads = size;
   svBitVecVal* bitN_ =  (svBitVecVal*)svGetArrayPtr((svOpenArrayHandle*)bitN);
   return shunt_cs_recv_bitN(sockfd,h_,bitN_);
@@ -623,13 +623,13 @@ void shunt_dpi_tlm_send_gp_transport(int sockid, cs_tlm_generic_payload_header* 
   unsigned char *byte_enable_tcp;// =  (unsigned char *) svGetArrayPtr(byte_enable);
   unsigned char *data_ =     (unsigned char *) svGetArrayPtr(data);
   unsigned char *byte_enable_ =  (unsigned char *) svGetArrayPtr(byte_enable);
-  
+
   data_tcp        = (unsigned char*)malloc(h->length);
   byte_enable_tcp = (unsigned char*)malloc(h->byte_enable_length);
 
   if(h->length > 0) {
-    memcpy(data_tcp,data_,h->length); 
-    if (h->byte_enable_length>0) memcpy(byte_enable_tcp,byte_enable_,h->byte_enable_length); 
+    memcpy(data_tcp,data_,h->length);
+    if (h->byte_enable_length>0) memcpy(byte_enable_tcp,byte_enable_,h->byte_enable_length);
   }
 #ifdef SHUNT_DPI_C_DEBUG
   for (int i=0;i<h->length;i++) printf("DEBUG: shunt_dpi_tlm_send_gp() data_tcp[%0d]=(%d)%x\n",i,data_tcp[i],data_tcp[i]);
@@ -646,7 +646,7 @@ void shunt_dpi_tlm_send_command(int socket,const shunt_dpi_tlm_command_e Com) {
 }
 
 void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header* h,svOpenArrayHandle data,svOpenArrayHandle byte_enable) {
-  
+
   unsigned long int* data_tcp;
   unsigned long int* byte_enable_tcp;
   unsigned char* data_        = (unsigned char *) svGetArrayPtr(data);
@@ -655,16 +655,16 @@ void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header*
   while(shunt_prim_get_status_socket(sockid,0) !=1 );
   shunt_cs_tlm_recv_gp_header(sockid,h);
   if(h->length > 0) {
-    
+
 #ifdef SHUNT_DPI_C_DEBUG
     printf("(\nDEBUG: shunt_dpi_tlm_recv_gp_transport() h->length >0 (%0ld)",h->length);
     int size_data_payload        = shunt_cs_tlm_data_payload_size(h->length);
     int size_byte_enable_payload = shunt_cs_tlm_data_payload_size(h->byte_enable_length);
 #endif
-    
+
     data_tcp        = (unsigned long int*)malloc(h->length);
     if (h->byte_enable_length>0)byte_enable_tcp = (unsigned long int*)malloc(h->byte_enable_length);
-    
+
     shunt_cs_tlm_recv_gp_data (sockid,h, data_tcp, byte_enable_tcp);
 
 #ifdef SHUNT_DPI_C_DEBUG
@@ -672,9 +672,9 @@ void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header*
 #endif
 
     memcpy(data_,data_tcp,h->length);
-    
-    if (h->byte_enable_length>0) memcpy(byte_enable_,byte_enable_tcp,h->byte_enable_length); 
-    
+
+    if (h->byte_enable_length>0) memcpy(byte_enable_,byte_enable_tcp,h->byte_enable_length);
+
     free(data_tcp);
     if (h->byte_enable_length>0)free(byte_enable_tcp);
 
