@@ -28,7 +28,7 @@
 // Does not show the non-blocking transport interface.
 //----------------------------------------------------------------------
 //Modifications Notes:
-//This example was adjusted to demonstrate blocking TLM 2.0 transfer over TCP/IP communication 
+//This example was adjusted to demonstrate blocking TLM 2.0 transfer over TCP/IP communication
 //with b_trasport call task modification.
 //see the readme file for details.
 #include "top.h"
