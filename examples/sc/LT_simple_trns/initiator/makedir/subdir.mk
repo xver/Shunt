@@ -2,18 +2,18 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-# Add inputs and outputs from these tool invocations to the build variables 
+# Add inputs and outputs from these tool invocations to the build variables
 CPP_SRCS += \
 ../design.cpp \
-../testbench.cpp 
+../testbench.cpp
 
 OBJS += \
 ../bin/design.o \
-../bin//testbench.o 
+../bin//testbench.o
 
 CPP_DEPS += \
 ../bin/design.d \
-../bin/testbench.d 
+../bin/testbench.d
 
 
 # Each subdirectory must supply rules for building sources it contributes
