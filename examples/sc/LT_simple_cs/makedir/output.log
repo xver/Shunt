@@ -1,4 +1,4 @@
-trans = { R, 20 } , data = aa000029 at time 0 s delay = 10 ns 
+trans = { R, 20 } , data = aa000029 at time 0 s delay = 10 ns
 trans = { R, 24 } , data = aa0000cd at time 10 ns delay = 10 ns
 trans = { R, 28 } , data = aa0000ba at time 20 ns delay = 10 ns
 trans = { R, 2c } , data = aa0000ab at time 30 ns delay = 10 ns
