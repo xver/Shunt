@@ -20,7 +20,7 @@ struct Memory: sc_module
   int m_socket =0;
   // TLM-2 socket, defaults to 32-bits wide, base protocol
   tlm_utils::simple_target_socket<Memory> socket;
-  
+
   enum { SIZE = 256 };
 
   SC_CTOR(Memory)
@@ -57,7 +57,7 @@ struct Memory: sc_module
     //memcpy(ptr, &mem[adr], len);
     //else if ( cmd == tlm::TLM_WRITE_COMMAND )
     //memcpy(&mem[adr], ptr, len);
-   
+
     // Obliged to set response status to indicate successful completion
     //trans.set_response_status( tlm::TLM_OK_RESPONSE );
     shunt_send_b_transport(m_socket,trans, delay );
