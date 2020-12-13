@@ -2,15 +2,15 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-# Add inputs and outputs from these tool invocations to the build variables 
+# Add inputs and outputs from these tool invocations to the build variables
 C_SRCS += \
-../dpi/src/shunt_dpi.c 
+../dpi/src/shunt_dpi.c
 
 OBJS += \
-./dpi/src/shunt_dpi.o 
+./dpi/src/shunt_dpi.o
 
 C_DEPS += \
-./dpi/src/shunt_dpi.d 
+./dpi/src/shunt_dpi.d
 
 
 # Each subdirectory must supply rules for building sources it contributes
