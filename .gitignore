@@ -4,7 +4,7 @@
 *.so
 *.d
 *.o
-#emacs temp files 
+#emacs temp files
 *.*~
 *~
 \#*
@@ -12,5 +12,8 @@
 *.settings.xml
 *.eclipse.cdt.codan.core.prefs
 *.eclipse.cdt.core.prefs
-
-
+**/bin/*
+**vscode/*
+*.json
+*.vcd
+examples/makedir/r
