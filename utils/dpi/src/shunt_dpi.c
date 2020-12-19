@@ -669,6 +669,7 @@ void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header*
 
 #ifdef SHUNT_DPI_C_DEBUG
     for (int i=0;i<size_data_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport () data_tcp[%0d]=(%ld)%lx",i,data_tcp[i],data_tcp[i]);
+    for (int i=0;i<size_byte_enable_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport () byte_enable_tcp[%0d]=(%ld)%lx",i,byte_enable_tcp[i],byte_enable_tcp[i]); 
 #endif
 
     memcpy(data_,data_tcp,h->length);
@@ -679,7 +680,7 @@ void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header*
     if (h->byte_enable_length>0)free(byte_enable_tcp);
 
 #ifdef SHUNT_DPI_C_DEBUG
-    for (int i=0;i<h->length;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport () data_[%0d]=(%ld)%lx\n",i,data_[i],data_[i]);
+    for (int i=0;i<h->length;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport () data_[%0d]=(%d)%x\n",i,data_[i],data_[i]);
 #endif
   }
 }
