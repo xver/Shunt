@@ -632,7 +632,9 @@ void shunt_dpi_tlm_send_gp_transport(int sockid, cs_tlm_generic_payload_header* 
     if (h->byte_enable_length>0) memcpy(byte_enable_tcp,byte_enable_,h->byte_enable_length);
   }
 #ifdef SHUNT_DPI_C_DEBUG
-  for (int i=0;i<h->length;i++) printf("DEBUG: shunt_dpi_tlm_send_gp() data_tcp[%0d]=(%d)%x\n",i,data_tcp[i],data_tcp[i]);
+  int size_byte_enable_payload = shunt_cs_tlm_data_payload_size(h->byte_enable_length);
+  for (int i=0;i<h->length;i++) printf("\nDEBUG: shunt_dpi_tlm_send_gp() data_tcp[%0d]=(%d)%x",i,data_tcp[i],data_tcp[i]);
+  for (int i=0;i<size_byte_enable_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_send_gp()  byte_enable_tcp[%0d]=(%d)%x",i,byte_enable_tcp[i],byte_enable_tcp[i]);
 #endif
   shunt_cs_tlm_send_gp(sockid,h,data_tcp,byte_enable_tcp);
   free(data_tcp);
@@ -657,7 +659,7 @@ void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header*
   if(h->length > 0) {
 
 #ifdef SHUNT_DPI_C_DEBUG
-    printf("(\nDEBUG: shunt_dpi_tlm_recv_gp_transport() h->length >0 (%0ld)",h->length);
+    printf("(\nDEBUG: shunt_dpi_tlm_recv_gp_transport() h->length >0 (%0ld) h->byte_enable_length (%0ld)",h->length,h->byte_enable_length);
     int size_data_payload        = shunt_cs_tlm_data_payload_size(h->length);
     int size_byte_enable_payload = shunt_cs_tlm_data_payload_size(h->byte_enable_length);
 #endif
@@ -669,7 +671,7 @@ void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header*
 
 #ifdef SHUNT_DPI_C_DEBUG
     for (int i=0;i<size_data_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport () data_tcp[%0d]=(%ld)%lx",i,data_tcp[i],data_tcp[i]);
-    for (int i=0;i<size_byte_enable_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport () byte_enable_tcp[%0d]=(%ld)%lx",i,byte_enable_tcp[i],byte_enable_tcp[i]); 
+    for (int i=0;i<size_byte_enable_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport () byte_enable_tcp[%0d]=(%ld)%lx",i,byte_enable_tcp[i],byte_enable_tcp[i]);
 #endif
 
     memcpy(data_,data_tcp,h->length);
