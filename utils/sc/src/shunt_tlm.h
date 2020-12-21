@@ -289,7 +289,7 @@ namespace shunt_tlm
     csgp.delay =delay.to_default_time_units();
     csgp.tlm_phase = (unsigned long)phase;
 #ifdef SHUNT_TLM_DEBUG
-    shunt_tlm_print_csgp(csgp," shunt_tlm_send_transport() ");
+    shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_tlm_send_transport() ");
 #endif
     shunt_cs_tlm_send_gp(socket,&csgp,ptr ,byt);
     };
@@ -321,7 +321,7 @@ namespace shunt_tlm
 
     shunt_cs_tlm_recv_gp_header(socket,&csgp);
 #ifdef SHUNT_TLM_DEBUG
-    shunt_tlm_print_csgp(csgp,"shunt_tlm_recv_transport() ");
+    shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_tlm_recv_transport() ");
 #endif
     shunt_csgp2tlmgp (trans,&csgp);
 
@@ -330,14 +330,13 @@ namespace shunt_tlm
       size_byte_enable_payload= shunt_cs_tlm_data_payload_size(csgp.byte_enable_length);
       data_tcp = new long unsigned[size_data_payload];
       size_byte_enable_payload = shunt_cs_tlm_data_payload_size(csgp.byte_enable_length);
-      if ( size_byte_enable_payload>0) byte_enable_tcp = new long unsigned[size_byte_enable_payload];
 #ifdef SHUNT_TLM_DEBUG
-      cout<<"shunt_tlm_recv_transport() (pre-shunt_tlm_recv_gp_data) DEBUG: size_data_payload="<<hex<<size_data_payload
+      cout<<"\nDEBUG: shunt_tlm_recv_transport() (pre-shunt_tlm_recv_gp_data) size_data_payload="<<hex<<size_data_payload
           <<" size_byte_enable_payload="<<size_byte_enable_payload<<endl;
 #endif
+      if ( size_byte_enable_payload>0) byte_enable_tcp = new long unsigned[size_byte_enable_payload];
+
       shunt_cs_tlm_recv_gp_data(socket,&csgp,data_tcp,byte_enable_tcp);
-
-
 
       //unpack to byte arrays
       memcpy(ptr,data_tcp,trans.get_data_length());
@@ -345,10 +344,10 @@ namespace shunt_tlm
       if (csgp.byte_enable_length>0) memcpy(&byt,&byte_enable_tcp,trans.get_byte_enable_length());
 #ifdef SHUNT_TLM_DEBUG
       for(int i=0;i<size_data_payload;i++) {
-        cout<<"shunt_tlm_recv_transport() (post-shunt_tlm_recv_gp_data) DEBUG: data_tcp"<<"["<<i<<"]"<<"="<<hex<<data_tcp[i]<<endl;
+        cout<<"\nDEBUG: shunt_tlm_recv_transport() (post-shunt_tlm_recv_gp_data) data_tcp"<<"["<<i<<"]"<<"="<<hex<<data_tcp[i]<<endl;
       }
       for(int i=0;i<size_byte_enable_payload;i++) {
-        cout<<"shunt_tlm_recv_transport() (post-shunt_tlm_recv_gp_data)DEBUG: byte_enable_tcp"<<"["<<i<<"]"<<"="<<hex<<byte_enable_tcp[i]<<endl;
+        cout<<"\nDEBUG: shunt_tlm_recv_transport() (post-shunt_tlm_recv_gp_data) byte_enable_tcp"<<"["<<i<<"]"<<"="<<hex<<byte_enable_tcp[i]<<endl;
       }
 #endif
       delete [] data_tcp;
@@ -387,7 +386,7 @@ namespace shunt_tlm
     command_ = (shunt_tlm_command)csgp.command;
     *Com = command_;
 #ifdef SHUNT_TLM_DEBUG
-    cout<<"shunt_tlm_recv_command()"<<hex<<command_<<"->"<<csgp.command<<endl;
+    cout<<"\nDEBUG: shunt_tlm_recv_command() "<<hex<<command_<<"->"<<csgp.command<<endl;
 #endif
   };
 
@@ -435,7 +434,7 @@ namespace shunt_tlm
       while(shunt_prim_get_status_socket(socket,0) !=1 );
       shunt_tlm_recv_transport( socket,trans,csgp);
 #ifdef SHUNT_TLM_DEBUG
-      shunt_tlm_print_csgp(csgp);
+      shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_recv_b_transport()");
 #endif
       delay = sc_time(csgp.delay,sc_time_units);
     };
@@ -469,7 +468,7 @@ namespace shunt_tlm
 
       shunt_tlm_send_transport(socket,trans,csgp,delay,phase_enum);
 #ifdef SHUNT_TLM_DEBUG
-      shunt_tlm_print_csgp(csgp,"shunt_send_nb_transport_fw send: ");
+      shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_send_nb_transport_fw send ");
 #endif
     }
 
@@ -492,7 +491,7 @@ namespace shunt_tlm
       while(shunt_prim_get_status_socket(socket,0) !=1 );
       shunt_cs_tlm_recv_gp_header(socket,&csgp);
 #ifdef SHUNT_TLM_DEBUG
-      shunt_tlm_print_csgp(csgp,"shunt_recv_nb_transport_tlm_sync_resp:");
+      shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_recv_nb_transport_tlm_sync_resp:");
 #endif
       return (tlm_sync_enum)csgp.tlm_sync;
     };
@@ -522,7 +521,7 @@ namespace shunt_tlm
       shunt_tlm_recv_transport(socket,trans,csgp);
       delay = sc_time(csgp.delay,sc_time_units);
 #ifdef SHUNT_TLM_DEBUG
-      shunt_tlm_print_csgp(csgp,"shunt_recv_nb_transport_fw:");
+      shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_recv_nb_transport_fw:");
 #endif
     }
 
@@ -545,7 +544,7 @@ namespace shunt_tlm
       while(shunt_prim_get_status_socket(socket,1) !=1 );
       shunt_cs_tlm_send_gp_header(socket,&csgp);
 #ifdef SHUNT_TLM_DEBUG
-      shunt_tlm_print_csgp(csgp,"shunt_send_nb_transport_tlm_sync_resp:");
+      shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_send_nb_transport_tlm_sync_resp:");
 #endif
   };
 
