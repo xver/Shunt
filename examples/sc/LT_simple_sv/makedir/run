@@ -1,3 +1,3 @@
-../initiator/bin/LTcs_initiator&
+../initiator/bin/LTcs_initiator | tee LTcs_initiator.log &
 sleep 5
-../target/bin/obj_dir/Vcs_common
+../target/bin/obj_dir/Vcs_common | tee Vcs_common_target.log
