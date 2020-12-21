@@ -78,7 +78,7 @@ int shunt_cs_send_header    (int sockid,cs_header* h) {
   send_arr[0] = shunt_prim_hash("shunt_cs_header_leader");
   memcpy(&send_arr[1], h,sizeof(*h));
   numbytes = send(sockid,send_arr,sizeof(*h) + sizeof(long int), 0);
-  if (numbytes <= 0)  shunt_prim_error("\nERROR in  shunt_cs_send_header : numbytes < 0 ");
+  if (numbytes <= 0)  shunt_prim_error("\nERROR: in  shunt_cs_send_header : numbytes < 0 ");
   else  Result_=1;
 
   return Result_;
@@ -101,7 +101,7 @@ int shunt_cs_recv_header   (int sockid,cs_header* h) {
   int  numbytes=0;
 
   numbytes = recv(sockid,recv_arr ,sizeof(*h) + sizeof(long int), 0);
-  if (numbytes<0)   shunt_prim_error("\nERROR in shunt_cs_recv_header : numbytes < 0 ");
+  if (numbytes<0)   shunt_prim_error("\nERROR: in shunt_cs_recv_header : numbytes < 0 ");
   Result_ = numbytes;
 
   leader_in     = recv_arr[0];
@@ -111,8 +111,8 @@ int shunt_cs_recv_header   (int sockid,cs_header* h) {
   }
   else {
     Result_ =-1;
-    printf("\nshunt_cs_recv_header() get bad  header (%lx)(Ref. to %lx) numbytes=%0d \n", leader_in,leader_ref,numbytes);
-    for (unsigned int i=0;i<(sizeof(*h) + sizeof(long int))/sizeof(long int);i++) printf("error shunt_cs_recv_header() recv_arr[%0d]=(%ld)%lx\n",i,recv_arr[i],recv_arr[i]);
+    printf("\nERROR: shunt_cs_recv_header() get bad  header (%lx)(Ref. to %lx) numbytes=%0d", leader_in,leader_ref,numbytes);
+    for (unsigned int i=0;i<(sizeof(*h) + sizeof(long int))/sizeof(long int);i++) printf("\nERROR: shunt_cs_recv_header() recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
   }
   return Result_;
 }
@@ -374,45 +374,52 @@ void shunt_cs_tlm_send_gp  (int sockid, const cs_tlm_generic_payload_header* h,c
 
   long int* send_arr_ = (long int*)malloc(size_); // array to hold the result
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-  printf("\nshunt_cs_tlm_send_gp() DEBUG data_size_(%0d)  byte_en_size_(%0d) size_(%0ld.%0ld)=%0d\n",data_size_,byte_en_size_,size_/sizeof(long int),size_%sizeof(long int),size_);
+  printf("\nDEBUG: shunt_cs_tlm_send_gp() data_size_(%0d)  byte_en_size_(%0d) size_(%0ld.%0ld)=%0d",data_size_,byte_en_size_,size_/sizeof(long int),size_%sizeof(long int),size_);
 #endif
 
   int  offset      = 0;
+
   send_arr_[offset]   =  shunt_cs_get_tlm_header_leader();
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-  printf("shunt_cs_tlm_send_gp() DEBUG offset=%0d\n",offset);
+  printf("\nDEBUG: shunt_cs_tlm_send_gp() tlm_header leader offset=%0d",offset);
 #endif
-
+  
   ++offset;
   memcpy(&send_arr_[offset], h,sizeof(*h));
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-  printf("shunt_cs_tlm_send_gp() DEBUG offset=%0d\n",offset);
+  printf("\nDEBUG: shunt_cs_tlm_send_gp() header offset=%0d",offset);
 #endif
+  
   if (data_size_ != 0) {
     offset = offset + sizeof(*h)/sizeof(long int);
     send_arr_[offset] = shunt_cs_get_tlm_data_leader();
-    //printf("shunt_cs_tlm_send_gp() DEBUG offset=%0d\n",offset);
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG
+    printf("\nDEBUG: shunt_cs_tlm_send_gp() tlm_data leader offset=%0d",offset);
+#endif
 
     ++offset;
     memcpy(&send_arr_[offset],data, h->length*sizeof(char));
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-    printf("shunt_cs_tlm_send_gp() DEBUG offset=%0d\n",offset);
+    printf("\nDEBUG: shunt_cs_tlm_send_gp() tlm_data array offset=%0d",offset);
 #endif
+
     offset = offset + data_size_;
     memcpy(&send_arr_[offset],byte_enable,h->byte_enable_length*sizeof(char));
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-    printf("shunt_cs_tlm_send_gp() DEBUG offset=%0d\n",offset);
+    printf("\nDEBUG: shunt_cs_tlm_send_gp() tlm_byte_enable array offset=%0d",offset);
 #endif
   }
   unsigned int max_loop =  offset;
+  
   if (offset>0) max_loop++;
+
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   for(unsigned int loop = 0; loop < max_loop ; loop++) {
-    printf("shunt_cs_tlm_send_gp() DEBUG send_arr_[%0d]=%lx\n",loop,send_arr_[loop]);
+    printf("\nDEBUG: shunt_cs_tlm_send_gp() send_arr_[%0d]=%lx",loop,send_arr_[loop]);
   }
 #endif
   int numbytes_ = send(sockid,send_arr_,size_, 0);
-  if (numbytes_ <= 0)  shunt_prim_error("\nERROR in  shunt_pkt_send_longV()  : numbytes < 0 ");
+  if (numbytes_ <= 0)  shunt_prim_error("\nERROR: in  shunt_pkt_send_longV()  : numbytes < 0 ");
 
   free(send_arr_);
 }
@@ -425,27 +432,29 @@ void shunt_cs_tlm_send_gp_header  (int sockid, cs_tlm_generic_payload_header* h)
 
   long int* send_arr_ = (long int*)malloc(size_); // array to hold the result
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-  printf("\nshunt_cs_tlm_send_gp() DEBUG size_(%0d) size_(%0ld.%0ld)=%0d\n",size_,size_/sizeof(long int),size_%sizeof(long int),size_);
+  printf("\nDEBUG: shunt_cs_tlm_send_gp() size_(%0d) size_(%0ld.%0ld)=%0d",size_,size_/sizeof(long int),size_%sizeof(long int),size_);
 #endif
   //
   int  offset      = 0;
   send_arr_[offset]   =  shunt_cs_get_tlm_header_leader();
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-  printf("shunt_cs_tlm_send_gp() DEBUG offset=%0d\n",offset);
+  printf("\nDEBUG: shunt_cs_tlm_send_gp() offset=%0d",offset);
 #endif
   ++offset;
   memcpy(&send_arr_[offset], h,sizeof(*h));
-  //printf("shunt_cs_tlm_send_gp() DEBUG offset=%0d\n",offset);
 
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG
+  printf("\nDEBUG: shunt_cs_tlm_send_gp() offset=%0d",offset);
+#endif
   unsigned int max_loop =  offset;
   if (offset>0) max_loop++;
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   for(unsigned int loop = 0; loop < max_loop ; loop++) {
-    printf("shunt_cs_tlm_send_gp() DEBUG send_arr_[%0d]=%lx\n",loop,send_arr_[loop]);
+    printf("\nDEBUG: shunt_cs_tlm_send_gp() send_arr_[%0d]=%lx",loop,send_arr_[loop]);
   }
 #endif
   int numbytes_ = send(sockid,send_arr_,size_, 0);
-  if (numbytes_ <= 0)  shunt_prim_error("\nERROR in  shunt_pkt_send_longV()  : numbytes < 0 ");
+  if (numbytes_ <= 0)  shunt_prim_error("\nERROR: in  shunt_pkt_send_longV()  : numbytes < 0 ");
 
   free(send_arr_);
 }
@@ -459,7 +468,7 @@ void shunt_cs_tlm_recv_gp_header  (int sockid, cs_tlm_generic_payload_header* h)
   int  numbytes=0;
 
   numbytes = recv(sockid,recv_arr ,sizeof(*h) + sizeof(long int), 0);
-  if (numbytes<0)   shunt_prim_error("\nERROR in shunt_cs_tlm_recv_gp_header : numbytes < 0 ");
+  if (numbytes<0)   shunt_prim_error("\nERROR: in shunt_cs_tlm_recv_gp_header : numbytes < 0 ");
   Result_ = numbytes;
 
   leader_in  = recv_arr[0];
@@ -467,14 +476,14 @@ void shunt_cs_tlm_recv_gp_header  (int sockid, cs_tlm_generic_payload_header* h)
   if ( Result_ > 0 && (leader_in == leader_ref)) {
     memcpy(h,&recv_arr[1],sizeof(*h));
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-    for (unsigned int i=0;i<(sizeof(*h) + sizeof(long int))/sizeof(long int);i++) printf("DEBUG: shunt_cs_tlm_recv_gp_header() recv_arr[%0d]=(%ld)%lx\n",i,recv_arr[i],recv_arr[i]);
+    for (unsigned int i=0;i<(sizeof(*h) + sizeof(long int))/sizeof(long int);i++) printf("\nDEBUG: shunt_cs_tlm_recv_gp_header() recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
 #endif
   }
   else {
     Result_ =-1;
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-    printf("\nshunt_cs_tlm_recv_gp_header() get bad  header (%lx)(Ref. to %lx) numbytes=%0d \n", leader_in,leader_ref,numbytes);
-    for (unsigned int i=0;i<(sizeof(*h) + sizeof(long int))/sizeof(long int);i++) printf("error shunt_cs_tlm_recv_gp_header() recv_arr[%0d]=(%ld)%lx\n",i,recv_arr[i],recv_arr[i]);
+    printf("\nDEBUG: shunt_cs_tlm_recv_gp_header() get bad  header (%lx)(Ref. to %lx) numbytes=%0d", leader_in,leader_ref,numbytes);
+    for (unsigned int i=0;i<(sizeof(*h) + sizeof(long int))/sizeof(long int);i++) printf("DEBUG: error shunt_cs_tlm_recv_gp_header() recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
 #endif
   }
 
@@ -488,7 +497,7 @@ void  shunt_cs_tlm_recv_gp_data (int sockid, const cs_tlm_generic_payload_header
   long int leader_ =  shunt_cs_get_tlm_data_leader();
 
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-  printf("shunt_cs_tlm_recv_gp_data(DEBUG: shunt_cs_tlm_recv_gp_data()  h->length=%0ld\n",h->length);
+  printf("\nDEBUG: shunt_cs_tlm_recv_gp_data()  h->length (%0ld)  ",h->length);
 #endif
 
   if(h->length>0) {
@@ -501,7 +510,7 @@ void  shunt_cs_tlm_recv_gp_data (int sockid, const cs_tlm_generic_payload_header
     numbytes_ =  recv(sockid,recv_arr_ ,size_ , 0);
 
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-    printf("DEBUG: shunt_cs_tlm_recv_gp_data() size_=%0d numbytes_=%0d  data_size_=%0d byte_en_size_=%0d\n",size_,numbytes_, data_size_,byte_en_size_);
+    printf("\nDEBUG: shunt_cs_tlm_recv_gp_data() size_=%0d numbytes_=%0d  data_size_=%0d byte_en_size_=%0d",size_,numbytes_, data_size_,byte_en_size_);
 #endif
 
     if (numbytes_ <= 0) shunt_prim_error("\nERROR in  shunt_cs_tlm_recv_gp_data() : numbytes < 0 ");
@@ -514,14 +523,14 @@ void  shunt_cs_tlm_recv_gp_data (int sockid, const cs_tlm_generic_payload_header
     else {
 
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-      printf("shunt_sc_tlm_recv_gp_data() get bad header=%0lx expected(%0lx)\n",leader_ ,recv_arr_[0] );
+      printf("\nDEBUG: shunt_sc_tlm_recv_gp_data() get bad header=%0lx expected(%0lx)",leader_ ,recv_arr_[0] );
 #endif
-      for (unsigned int i=0;i<size_/sizeof(long int);i++) printf("error shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx\n",i,recv_arr_[i],recv_arr_[i]);
+      for (unsigned int i=0;i<size_/sizeof(long int);i++) printf("\nERROR: shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx",i,recv_arr_[i],recv_arr_[i]);
     }
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-    for (unsigned int i=0;i<size_/sizeof(long int);i++) printf("DEBUG: shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx\n",i,recv_arr_[i],recv_arr_[i]);
-    for (int i=0;i<data_size_;i++) printf("DEBUG: shunt_cs_tlm_recv_gp_data() data[%0d]=(%ld)%lx\n",i,data[i],data[i]);
-    for (int i=0;i<byte_en_size_;i++) printf("DEBUG: shunt_cs_tlm_recv_gp_data() byte_enable[%0d]=(%ld)%lx\n",i,byte_enable[i],byte_enable[i]);
+    for (unsigned int i=0;i<size_/sizeof(long int);i++) printf("\nDEBUG: shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx",i,recv_arr_[i],recv_arr_[i]);
+    for (int i=0;i<data_size_;i++) printf("\nDEBUG: shunt_cs_tlm_recv_gp_data() data[%0d]=(%ld)%lx",i,data[i],data[i]);
+    for (int i=0;i<byte_en_size_;i++) printf("\nDEBUG: shunt_cs_tlm_recv_gp_data() byte_enable[%0d]=(%ld)%lx",i,byte_enable[i],byte_enable[i]);
 #endif
   }
 }
