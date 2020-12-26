@@ -578,7 +578,7 @@ int shunt_cs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVa
 
 //Section: Auxiliary tasks
 
-int shunt_cs_tlm_data_payload_size(const int data_size);
+unsigned int shunt_cs_tlm_data_payload_size(const unsigned int data_size);
 
 /*
   Function: shunt_cs_print_header
