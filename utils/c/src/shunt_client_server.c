@@ -354,8 +354,8 @@ long int shunt_cs_get_tlm_data_leader() {
   return Result_;
 }
 
-int shunt_cs_tlm_data_payload_size(const int data_size) {
-  int data_size_ = data_size*sizeof(char)/sizeof(long int);
+unsigned int shunt_cs_tlm_data_payload_size(const unsigned int data_size) {
+  unsigned int data_size_ = data_size*sizeof(char)/sizeof(long int);
   if (data_size*sizeof(char)%sizeof(long int)>0 || data_size_ ==0) ++data_size_;
   return data_size_;
 }
