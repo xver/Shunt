@@ -192,8 +192,9 @@ namespace shunt_tlm
       //tlmgp.set_data_ptr(unsigned char* data)
       //tlmgp.set_byte_enable_ptr(unsigned char* byte_enable)
     }
-/*
-      Function: shunt_tlm_string2tlm_phase
+    
+    /*
+      Function: shunt_tlm_get_phase_enum
       map tlm_phase object to tlm_phase_enum
 
       Parameters:
@@ -206,19 +207,14 @@ namespace shunt_tlm
       }
       ---
     */
-
-    tlm_phase_enum shunt_tlm_string2tlm_phase(tlm_phase& phase)
+    
+   tlm_phase_enum shunt_tlm_get_phase_enum(const tlm_phase& phase)
     {
-      string phase_name;
-      tlm_phase_enum Result_ =  tlm::UNINITIALIZED_PHASE;
-      phase_name= phase.get_name();
-      if(phase_name.compare("UNINITIALIZED_PHASE")==0) Result_ = tlm::UNINITIALIZED_PHASE;
-      if(phase_name.compare("BEGIN_REQ")==0)           Result_ = tlm::BEGIN_REQ;
-      if(phase_name.compare("END_REQ")==0)             Result_ = tlm::END_REQ;
-      if(phase_name.compare("BEGIN_RESP")==0)          Result_ = tlm::BEGIN_RESP;
-    if(phase_name.compare("END_RESP")==0)            Result_ = tlm::END_RESP;
-    return  Result_;
+      unsigned int  phase_ ;
+      phase_ = phase;
+      return  (tlm_phase_enum)phase_;
     }
+ 
 
     //Section:  TCP/IP Server/Client init
 
@@ -464,7 +460,7 @@ namespace shunt_tlm
       tlm::tlm_generic_payload trans_recv;
 
       csgp.delay =delay.to_default_time_units();
-      phase_enum = shunt_tlm_string2tlm_phase(phase);
+      phase_enum = shunt_tlm_get_phase_enum(phase);
 
       shunt_tlm_send_transport(socket,trans,csgp,delay,phase_enum);
 #ifdef SHUNT_TLM_DEBUG
