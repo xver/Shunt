@@ -1,4 +1,4 @@
-﻿Format: 2.0.2
+﻿Format: 2.2 (Development Release 1)
 
 # This is the file you use to provide information about your project.  It can
 # also be used to specify input and output settings so you don't have to
@@ -28,9 +28,9 @@ Copyright: Copyright © 2016-2020 IC Verimeter
 #    d     - Single digit day, when possible.  1 is "1".
 #    dd    - Always double digit day.  1 is "01".
 #    day   - Day with text extension.  1 is "1st".
-#    yy    - Double digit year.  2017 is "17".
-#    yyyy  - Four digit year.  2017 is "2017".
-#    year  - Four digit year.  2017 is "2017".
+#    yy    - Double digit year.  2020 is "20".
+#    yyyy  - Four digit year.  2020 is "2020".
+#    year  - Four digit year.  2020 is "2020".
 #
 # Style: [style]
 #    The style to apply to the generated documentation.  It can be the name of
@@ -41,21 +41,17 @@ Copyright: Copyright © 2016-2020 IC Verimeter
 # Source Code
 # ------------------------------------------------------------------------
 
-Source Folder: ..\utils\c\include
+Source Folder: ../utils/c/include
    Name: 1. C utils
 
-Source Folder 2: ..\utils\dpi\include
+Source Folder 2: ../utils/dpi/include
    Name: 2. DPI C utils
 
-Source Folder 3: ..\utils\dpi\src
+Source Folder 3: ../utils/dpi/src
    Name: 3. DPI SV utils
 
-Source Folder 4: ..\utils\sc\src
+Source Folder 4: ../utils/sc/src
    Name: 4. TLM 2.0 SC utils
-
-
-
-
 
 
 # This is where you specify what files and folders Natural Docs should be
@@ -93,6 +89,27 @@ Source Folder 4: ..\utils\sc\src
 #
 #    The data folders of common version control systems (.git, .svn, .cvs, .hg)
 #    are ignored automatically.  You do not have to specify them here.
+
+
+# Images
+# ------------------------------------------------------------------------
+
+# This is where you specify additional folders Natural Docs should look for
+# images in.  When you put something like (see diagram.jpg) in a comment
+# Natural Docs looks for it relative to the source file.  If you put
+# additional folders here it will also check them for the image.
+#
+# If you use any of these options on the command line, this entire section is
+# ignored except for numbers.
+#
+# All paths are relative to the project configuration folder, which lets this
+# file remain portable across computers and not cause problems in version
+# control systems.  You can enter absolute paths and they will be converted
+# automatically.
+#
+# Image Folder: [path]
+#    Specifies a folder which will be searched for image files.  They can be
+#    referenced in comments with (see filename.jpg).
 
 
 # Generated Documentation
