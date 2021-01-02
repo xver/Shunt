@@ -29,7 +29,7 @@ all: ${SHUNT_HOME}/bin/csC_Initiator
 ${SHUNT_HOME}/bin/csC_Initiator: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc  -Wall -Werror -Wpedantic -Wextra -o "${SHUNT_HOME}/bin/csC_Initiator" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc  -Wall -Werror -Wpedantic -Wextra $(USER_OPT)  -o "${SHUNT_HOME}/bin/csC_Initiator" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
