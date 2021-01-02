@@ -56,7 +56,7 @@ struct Initiator: sc_module
       //
       shunt_recv_b_transport(m_socket,*trans,delay );
 
-      if (trans->get_command() != SHUNT_TLM_END_SIM) {
+      if (trans->get_command() != (unsigned int)SHUNT_TLM_END_SIM) {
           socket->b_transport( *trans, delay );  // Blocking transport call
           // Initiator obliged to check response status and delay
           if ( trans->is_response_error() )
