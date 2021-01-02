@@ -30,6 +30,9 @@ Setup following variables:
  - cd to “$SHUNT_HOME/utils/makedir/“
  - run “make clean;make all”
 Compile result will be placed under ***${SHUNT_HOME}/bin as a “libutils.so”***
+
+NOTE: use the USER_OPT to add compiler options. (Example: make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG ') 
+
 # Compile and run all SV/C examples
 - cd to *$SHUNT_HOME/examples/makedir*
 - run *./run_examples* 
