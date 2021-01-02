@@ -30,7 +30,7 @@ all: ${SHUNT_HOME}/bin/libutils.so
 ${SHUNT_HOME}/bin/libutils.so: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -std=gnu11 -Wall -Werror -Wpedantic -Wextra  -Wno-odr -shared -o "${SHUNT_HOME}/bin/libutils.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -std=gnu11 -Wall -Werror -Wpedantic -Wextra  -Wno-odr $(USER_OPT) -shared -o "${SHUNT_HOME}/bin/libutils.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
