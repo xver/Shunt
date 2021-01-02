@@ -43,7 +43,7 @@ all: ../bin/LTcs_initiator
 ../bin/LTcs_initiator: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++  -Wall -Werror -Wpedantic -Wextra -L$(SYSTEMC_HOME)/lib-linux64 -o "../bin/LTcs_initiator" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++  -Wall -Werror -Wpedantic -Wextra  $(USER_OPT) -L$(SYSTEMC_HOME)/lib-linux64 -o "../bin/LTcs_initiator" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
