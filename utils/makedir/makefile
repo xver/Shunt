@@ -8,10 +8,15 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include dpi/src/subdir.mk
+
+
 -include c/src/subdir.mk
 -include subdir.mk
 -include objects.mk
+
+ifeq ($(MAKECMDGOALS),$(filter $(MAKECMDGOALS),all ${SHUNT_HOME}/bin/libutils.so))
+-include dpi/src/subdir.mk
+endif
 
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(strip $(C_DEPS)),)
@@ -24,7 +29,7 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: ${SHUNT_HOME}/bin/libutils.so
+all:  ${SHUNT_HOME}/bin/libutils.so
 
 # Tool invocations
 ${SHUNT_HOME}/bin/libutils.so: $(OBJS) $(USER_OBJS)
@@ -34,9 +39,17 @@ ${SHUNT_HOME}/bin/libutils.so: $(OBJS) $(USER_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
+${SHUNT_HOME}/bin/libCutils.so: $(OBJS) $(USER_OBJS)
+	@echo 'Building target: $@'
+	@echo 'Invoking: GCC C Linker'
+	gcc -std=gnu11 -Wall -Werror -Wpedantic -Wextra  -Wno-odr $(USER_OPT) -shared -o "${SHUNT_HOME}/bin/libCutils.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	@echo 'Finished building target: $@'
+	@echo ' '
+
+
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(LIBRARIES) ${SHUNT_HOME}/bin/libutils.so
+	-$(RM) $(OBJS)$(C_DEPS)$(LIBRARIES) ${SHUNT_HOME}/bin/libutils.so  ${SHUNT_HOME}/bin/libCutils.so
 	-@echo ' '
 
 .PHONY: all clean dependents
