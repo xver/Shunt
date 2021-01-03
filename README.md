@@ -62,7 +62,9 @@ SystemC to SV  b_transport over TCP/IP :
  
 Release History:
 -----------------------
-2.1.1 -  (Current Version) SystemC compile/link cleanup: tab & trailing whitespaces, c++ compile/link -Wall -Werror -Wpedantic -Wextra -Wno-odr
+2.1.2 - (Current Version) Cumulative release: cleanup & SystemC related fixes
+
+2.1.1 - SystemC compile/link cleanup: tab & trailing whitespaces, c++ compile/link -Wall -Werror -Wpedantic -Wextra -Wno-odr
 
 2.1.0  - System Verilog TLM-2.0 generic payload over TCP/IP  
 
