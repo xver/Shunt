@@ -1696,7 +1696,7 @@ package shunt_dpi_pkg;
     */
 
 `ifndef NO_SHUNT_DPI_TLM_SEND_GP_TRANSPORT
-   import "DPI-C" function void shunt_dpi_tlm_send_gp_transport(input int sockid, inout cs_tlm_generic_payload_header_t h, inout  byte data[], inout  byte byte_enable[]);
+   import "DPI-C" function void shunt_dpi_tlm_send_gp_transport(input int sockid, inout cs_tlm_generic_payload_header_t h, inout  byte unsigned  data[], inout  byte unsigned  byte_enable[]);
 `endif
 
 
@@ -1712,7 +1712,7 @@ package shunt_dpi_pkg;
   byte_enable - byte_enable vector pointer (output)
 */
 `ifndef NO_SHUNT_DPI_TLM_RECV_GP_TRANSPORT
-   import "DPI-C"  function void  shunt_dpi_tlm_recv_gp_transport (input int sockid, inout cs_tlm_generic_payload_header_t h,inout byte data[],inout byte  byte_enable[]);
+   import "DPI-C"  function void  shunt_dpi_tlm_recv_gp_transport (input int sockid, inout cs_tlm_generic_payload_header_t h,inout byte unsigned data[],inout byte unsigned  byte_enable[]);
 `endif
 
    /////
