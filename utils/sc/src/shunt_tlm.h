@@ -2,7 +2,7 @@
    ============================================================================
    File        : shunt_tlm.h
    Version     : 1.0.0
-   Copyright (c) 2016-2020 IC Verimeter. All rights reserved.
+   Copyright (c) 2016-2021 IC Verimeter. All rights reserved.
    Licensed under the MIT License.
    See LICENSE file in the project root for full license information.
    Description : shunt_tlm utils
@@ -130,6 +130,7 @@ namespace shunt_tlm
       default : print_string="TLM_UNKNOWN_SYNC"; break;
       }
     cout<<" tlm_sync("<<hex <<print_string<<")"
+        << "  tlm_extension_id("<<(unsigned)csgp.tlm_extension_id<<")"
         <<"]"<<endl;
     }
 
@@ -160,6 +161,7 @@ namespace shunt_tlm
 
     */
     void shunt_tlmgp2csgp (cs_tlm_generic_payload_header *csgp,const tlm::tlm_generic_payload& tlmgp) {
+      //tlm::tlm_extension* ext_handle; 
       csgp->option             = (long) tlmgp.get_gp_option();
       csgp->command            = (long) tlmgp.get_command();
       csgp->address            = (long) tlmgp.get_address();
@@ -168,6 +170,8 @@ namespace shunt_tlm
       csgp->streaming_width    = (long) tlmgp.get_streaming_width();
       csgp->dmi                = (long) tlmgp.is_dmi_allowed();
       csgp->response_status    = (long) tlmgp.get_response_status();
+      csgp->tlm_extension_id = 0;
+
       //tlmgp.get_data_ptr();
       //tlmgp.get_byte_enable_ptr();
     }
