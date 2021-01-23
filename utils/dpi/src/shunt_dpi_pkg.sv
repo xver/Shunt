@@ -1,7 +1,7 @@
 /*
 ============================================================================
  File    : shunt_dpi_pkg.sv
- Copyright (c) 2016-2020 IC Verimeter. All rights reserved.
+ Copyright (c) 2016-2021 IC Verimeter. All rights reserved.
                Licensed under the MIT License.
                See LICENSE file in the project root for full license information.
  Description : shunt dpi bridge
@@ -1588,7 +1588,7 @@ package shunt_dpi_pkg;
    //Section: Data TLM2.0 utils
 
    /*
-    Variable:  cs_tlm_generic_payload_header
+    Variable:  cs_tlm_generic_payload_header_t
 
     *TLM 2.0 Generic Payload structure* (Ref. to TLM 2.0 Generic Payload attributes)
 
@@ -1634,10 +1634,12 @@ package shunt_dpi_pkg;
     ---
 
     - *tlm_sync*     shunt tlm header nb_trasport atribute:
-
+   
     --- Code
     enum  tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED }
     ---
+    
+    - *tlm_extension_id*  (long) tlm_extension id. if "0" - extension is not available 
     */
    typedef struct packed {
       longint       option;
@@ -1651,8 +1653,97 @@ package shunt_dpi_pkg;
       longint       delay;
       longint       tlm_phase;
       longint       tlm_sync;
+      longint       tlm_extension_id;
    } cs_tlm_generic_payload_header_t;
+/*
+  Variable:   cs_tlm_axi3_extension_payload_header_t
 
+   *TLM 2.0  ARM AXI3 signals extension structure*  REF to Copyright 2003, 2004, 2010, 2011 ARM. All rights reserved.ARM IHI 0022D (ID102711)
+
+   - *AxBURST* - determines how the address for each transfer within the burst is calculated
+
+   --- Code
+   AxBURST[1:0] | Burst type
+   =========================
+   0b00         |  FIXED
+   0b01         |  INCR
+   0b10         |  WRAP
+   0b11         |  Reserved
+   ---
+ 
+   *AxCACHE* - Memory type indicates how transactions are required to progress through a system
+  
+   --- Code
+   AxCACHE | Value | Transaction attribute
+    ======================================
+    [0]    |   0   |    Non-bufferable
+           |   1   |    Bufferable
+    [1]    |   0   |    Non-cacheable
+           |   1   |    Cacheable
+    [2]    |   0   |    No Read-allocate
+           |   1   |    Read-allocate
+    [3]    |   0   |    No Write-allocate
+           |   1   |    Write-allocate
+   ---
+   
+   *AxID*  - is identification tag for the transaction address group.
+   
+   *AxLEN* - gives the exact number of transfers in a burst. 
+   
+   *AxLOCK*  - provides additional information about the transaction atomic characteristics
+    
+   --- Code
+   AxLOCK[1:0] | Access type
+   =============================
+   0b00        | Normal access
+   0b01        | Exclusive access
+   0b10        | Locked access
+   0b11        | Reserved
+   ---
+ 
+   *AxPROT* - indicates the privilege and transaction security level.
+    
+   --- Code
+    AxPROT | Value |     Function
+    =====================================
+    [0]    |   0   |  Unprivileged access
+           |   1   |  Privileged access
+    [1]    |   0   |  Secure access
+           |   1   |  Non-secure access
+    [2]    |   0   |  Data access
+           |   1   |  Instruction access
+    ---
+   
+    *AxSIZE* - indicates the size of each transfer in the burst.
+ 
+    *xRESP*  - indicates the status of the read transfer.
+ 
+    --- Code
+    RRESP[1:0] |
+    BRESP[1:0] | Response
+    =====================
+    0b00       | OKAY
+    0b01       | EXOKAY
+    0b10       | SLVERR
+    0b11       | DECERR
+    ---
+    
+    *xSTRB* -  indicates which byte lanes hold valid data.
+*/
+
+typedef struct packed{
+  longint  AxBURST;
+  longint  AxCACHE;
+  longint  AxID;
+  longint  AxLEN;
+  longint  AxLOCK;
+  longint  AxPROT;
+  longint  AxSIZE;
+  longint  xRESP;
+  longint  xSTRB;
+} cs_tlm_axi3_extension_payload_header_t; 
+
+   
  typedef enum {SHUNT_TLM_ACCEPTED,SHUNT_TLM_UPDATED,SHUNT_TLM_COMPLETED} shunt_tlm_sync_e;
 
  typedef enum {SHUNT_TLM_READ_COMMAND,SHUNT_TLM_WRITE_COMMAND,SHUNT_TLM_IGNORE_COMMAND,SHUNT_TLM_END_SIM,SHUNT_TLM_START_SIM} shunt_tlm_command_e;
@@ -1682,12 +1773,12 @@ package shunt_dpi_pkg;
 
    /*
     Function: shunt_dpi_tlm_send_gp_transport
-    send tlm generic payload  packet ( cs_tlm_generic_payload_header  + byte data vector + byte_enable vector )
+    send tlm generic payload  packet ( cs_tlm_generic_payload_header_t  + byte data vector + byte_enable vector )
 
     Parameters:
 
     sockid - socket id from init sever/client
-    h - cs_tlm_generic_payload_header
+    h - cs_tlm_generic_payload_header_t
     data - data payload array
     byte_enable - byte_enable array
 
@@ -1707,7 +1798,7 @@ package shunt_dpi_pkg;
   Parameters:
 
   sockid - socket id from init sever/client
-  h - cs_tlm_generic_payload_header (input only) should have a valid data length and byte_enable_length
+  h - cs_tlm_generic_payload_header_t (input only) should have a valid data length and byte_enable_length
   data - data payload byte-vector pointer  (output)
   byte_enable - byte_enable vector pointer (output)
 */
@@ -1715,6 +1806,81 @@ package shunt_dpi_pkg;
    import "DPI-C"  function void  shunt_dpi_tlm_recv_gp_transport (input int sockid, inout cs_tlm_generic_payload_header_t h,inout byte unsigned data[],inout byte unsigned  byte_enable[]);
 `endif
 
+/*
+  Function: shunt_dpi_tlm_recv_gp_header
+  recieve tlm generic payload  header ( cs_tlm_generic_payload_header_t only)
+
+  Parameters:
+
+  sockid - socket id from init sever/client
+  h - cs_tlm_generic_payload_header_t (output)
+
+
+*/
+`ifndef NO_SHUNT_DPI_TLM_RECV_GP_HEADER
+   import "DPI-C"  function void shunt_dpi_tlm_recv_gp_header (input int sockid, inout cs_tlm_generic_payload_header_t h);
+`endif
+
+/*
+  Function: shunt_dpi_tlm_send_gp_header
+  send tlm generic payload  header ( cs_tlm_generic_payload_header_t only)
+
+  Parameters:
+
+  sockid - socket id from init sever/client
+  h - cs_tlm_generic_payload_header_t (output)
+
+
+*/
+`ifndef NO_SHUNT_DPI_TLM_SEND_GP_HEADER
+   import "DPI-C"  function void shunt_dpi_tlm_send_gp_header (input int sockid, inout cs_tlm_generic_payload_header_t h);
+`endif
+
+/*
+  Function: shunt_dpi_tlm_recv_axi3_header
+  recieve tlm generic payload  header ( cs_tlm_generic_payload_header_t only)
+
+  Parameters:
+
+  sockid - socket id from init sever/client
+  h - cs_tlm_generic_payload_header_t (output)
+
+
+*/
+`ifndef NO_SHUNT_DPI_TLM_RECV_AXI3_HEADER
+   import "DPI-C" function void shunt_dpi_tlm_recv_axi3_header(input int sockid, inout cs_tlm_axi3_extension_payload_header_t h);
+`endif
+
+/*
+  Function: shunt_dpi_tlm_send_axi3_header
+  send tlm extension  header (cs_tlm_axi3_extension_payload_header only)
+
+  Parameters:
+
+  sockid - socket id from init sever/client
+  h - cs_tlm_axi3_extension_payload_header_t (output)
+
+
+*/
+`ifndef NO_SHUNT_DPI_TLM_SEND_AXI3_HEADER
+   import "DPI-C" function void shunt_dpi_tlm_send_axi3_header (input int sockid, inout cs_tlm_axi3_extension_payload_header_t h);   
+`endif
+
+/*
+  Function: shunt_dpi_tlm_recv_gp_data
+  recieve tlm generic payload  packet (byte data vector + byte_enable vector )
+
+  Parameters:
+
+  sockid - socket id from init sever/client
+  h - cs_tlm_generic_payload_header (input only) should have a valid data length and byte_enable_length
+  data - data payload byte-vector pointer  (output)
+  byte_enable - byte_enable vector pointer (output)
+*/
+`ifndef NO_SHUNT_DPI_TLM_RECV_GP_DATA
+   import "DPI-C" function void shunt_dpi_tlm_recv_gp_data (input int sockid, input cs_tlm_generic_payload_header_t h,inout byte unsigned data[],inout byte unsigned   byte_enable);
+`endif 
+   
    /////
    //axulary function
 
@@ -1743,9 +1909,8 @@ package shunt_dpi_pkg;
       $write(",delay(%0d)",csgp.delay);
       $write(",tlm_phase_(%0s)",tlm_phase_.name());
       $write(",tlm_sync(%0s)\n",tlm_sync_.name());
+      $write(",tlm_extension_id(%0d)\n",csgp.tlm_extension_id);
       /* verilator lint_on UNUSED */
    endfunction : shunt_dpi_tlm_gp_header_print
-
-   ////
 
 endpackage : shunt_dpi_pkg
