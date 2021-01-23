@@ -2,7 +2,7 @@
    ============================================================================
    File        : shunt_client_server.c
    Version     : 1.0.0
-   Copyright (c) 2016-2020 IC Verimeter. All rights reserved.
+   Copyright (c) 2016-2021 IC Verimeter. All rights reserved.
                  Licensed under the MIT License.
                  See LICENSE file in the project root for full license information.
    Description : Target-Initiator (Client-Server aka cs) handshake utils
@@ -12,6 +12,7 @@
 
 #ifndef  SHUNT_CLIENT_SERVER_C_
 #define  SHUNT_CLIENT_SERVER_C_
+
 
 #include "shunt_client_server.h"
 
@@ -354,6 +355,11 @@ long int shunt_cs_get_tlm_data_leader() {
   return Result_;
 }
 
+long int shunt_cs_get_tlm_axi3_ext_leader() {
+  long int Result_ = shunt_prim_hash("shunt_tlm_axi3_extension_payload_header_leader");
+  return Result_;
+}
+
 unsigned int shunt_cs_tlm_data_payload_size(const unsigned int data_size) {
   unsigned int data_size_ = data_size*sizeof(char)/sizeof(long int);
   if (data_size*sizeof(char)%sizeof(long int)>0 || data_size_ ==0) ++data_size_;
@@ -419,7 +425,7 @@ void shunt_cs_tlm_send_gp  (int sockid, const cs_tlm_generic_payload_header* h,c
   }
 #endif
   int numbytes_ = send(sockid,send_arr_,size_, 0);
-  if (numbytes_ <= 0)  shunt_prim_error("\nERROR: in  shunt_pkt_send_longV()  : numbytes < 0 ");
+  if (numbytes_ <= 0)  shunt_prim_error("\nERROR: in shunt_cs_tlm_send_gp()  : numbytes < 0 ");
 
   free(send_arr_);
 }
@@ -432,29 +438,29 @@ void shunt_cs_tlm_send_gp_header  (int sockid, cs_tlm_generic_payload_header* h)
 
   long int* send_arr_ = (long int*)malloc(size_); // array to hold the result
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-  printf("\nDEBUG: shunt_cs_tlm_send_gp() size_(%0d) size_(%0ld.%0ld)=%0d",size_,size_/sizeof(long int),size_%sizeof(long int),size_);
+  printf("\nDEBUG: shunt_cs_tlm_send_gp_header() size_(%0d) size_(%0ld.%0ld)=%0d",size_,size_/sizeof(long int),size_%sizeof(long int),size_);
 #endif
   //
   int  offset      = 0;
   send_arr_[offset]   =  shunt_cs_get_tlm_header_leader();
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-  printf("\nDEBUG: shunt_cs_tlm_send_gp() offset=%0d",offset);
+  printf("\nDEBUG: shunt_cs_tlm_send_gp_header () offset=%0d",offset);
 #endif
   ++offset;
   memcpy(&send_arr_[offset], h,sizeof(*h));
 
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-  printf("\nDEBUG: shunt_cs_tlm_send_gp() offset=%0d",offset);
+  printf("\nDEBUG: shunt_cs_tlm_send_gp_header() offset=%0d",offset);
 #endif
   unsigned int max_loop =  offset;
   if (offset>0) max_loop++;
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   for(unsigned int loop = 0; loop < max_loop ; loop++) {
-    printf("\nDEBUG: shunt_cs_tlm_send_gp() send_arr_[%0d]=%lx",loop,send_arr_[loop]);
+    printf("\nDEBUG: shunt_cs_tlm_send_gp_header() send_arr_[%0d]=%lx",loop,send_arr_[loop]);
   }
 #endif
   int numbytes_ = send(sockid,send_arr_,size_, 0);
-  if (numbytes_ <= 0)  shunt_prim_error("\nERROR: in  shunt_pkt_send_longV()  : numbytes < 0 ");
+  if (numbytes_ <= 0)  shunt_prim_error("\nERROR: in shunt_cs_tlm_send_gp_header    : numbytes < 0 ");
 
   free(send_arr_);
 }
@@ -486,7 +492,70 @@ void shunt_cs_tlm_recv_gp_header  (int sockid, cs_tlm_generic_payload_header* h)
     for (unsigned int i=0;i<(sizeof(*h) + sizeof(long int))/sizeof(long int);i++) printf("DEBUG: error shunt_cs_tlm_recv_gp_header() recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
 #endif
   }
+}
 
+void shunt_cs_tlm_send_axi3_header  (int sockid, cs_tlm_axi3_extension_payload_header* h) {
+
+  //long int mem/array for  cs_tlm_axi3_extension_payload_header
+  //pkt size: <tlm header leader> +  <tlm header> + <tlm data leader> + <data vector> + <byte_enable>
+  int  size_  = sizeof(long int)+ sizeof(*h);
+
+  long int* send_arr_ = (long int*)malloc(size_); // array to hold the result
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG
+  printf("\nDEBUG: shunt_cs_tlm_send_axi3_header size_(%0d) size_(%0ld.%0ld)=%0d",size_,size_/sizeof(long int),size_%sizeof(long int),size_);
+#endif
+  //
+  int  offset      = 0;
+  send_arr_[offset]   =  shunt_cs_get_tlm_axi3_ext_leader();
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG
+  printf("\nDEBUG: shunt_cs_tlm_send_axi3_header offset=%0d",offset);
+#endif
+  ++offset;
+  memcpy(&send_arr_[offset], h,sizeof(*h));
+
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG
+  printf("\nDEBUG: shunt_cs_tlm_send_axi3_header offset=%0d",offset);
+#endif
+  unsigned int max_loop =  offset;
+  if (offset>0) max_loop++;
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG
+  for(unsigned int loop = 0; loop < max_loop ; loop++) {
+    printf("\nDEBUG: shunt_cs_tlm_send_axi3_header send_arr_[%0d]=%lx",loop,send_arr_[loop]);
+  }
+#endif
+  int numbytes_ = send(sockid,send_arr_,size_, 0);
+  if (numbytes_ <= 0)  shunt_prim_error("\nERROR: in shunt_cs_tlm_send_axi3_header()   : numbytes < 0 ");
+
+  free(send_arr_);
+}
+
+
+void  shunt_cs_tlm_recv_axi3_header (int sockid, cs_tlm_axi3_extension_payload_header* h) {
+  int  Result_=1;
+  long int leader_in;
+  long int leader_ref;
+  long recv_arr[(sizeof(*h) + sizeof(long int))/sizeof(long int)];
+  int  numbytes=0;
+
+  numbytes = recv(sockid,recv_arr ,sizeof(*h) + sizeof(long int), 0);
+  if (numbytes<0)   shunt_prim_error("\nERROR: in  shunt_cs_tlm_recv_axi3_header : numbytes < 0 ");
+  Result_ = numbytes;
+
+  leader_in  = recv_arr[0];
+  leader_ref = shunt_cs_get_tlm_axi3_ext_leader();
+  if ( Result_ > 0 && (leader_in == leader_ref)) {
+    memcpy(h,&recv_arr[1],sizeof(*h));
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG
+    for (unsigned int i=0;i<(sizeof(*h) + sizeof(long int))/sizeof(long int);i++) printf("\nDEBUG:  shunt_cs_tlm_recv_axi3_header() recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
+#endif
+  }
+  else {
+    Result_ =-1;
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG
+    printf("\nDEBUG: shunt_cs_tlm_recv_axi3_header()  get bad  header (%lx)(Ref. to %lx) numbytes=%0d", leader_in,leader_ref,numbytes);
+    for (unsigned int i=0;i<(sizeof(*h) + sizeof(long int))/sizeof(long int);i++) printf("DEBUG: error shunt_cs_tlm_recv_gp_header() recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
+#endif
+  }
 }
 
 void  shunt_cs_tlm_recv_gp_data (int sockid, const cs_tlm_generic_payload_header* h,unsigned long* data,unsigned long* byte_enable) {
@@ -536,3 +605,4 @@ void  shunt_cs_tlm_recv_gp_data (int sockid, const cs_tlm_generic_payload_header
 }
 
 #endif
+
