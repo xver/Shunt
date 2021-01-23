@@ -1,7 +1,7 @@
 /*
   ============================================================================
   File        : shunt_dpi.c
-  Copyright (c) 2016-2020 IC Verimeter. All rights reserved.
+  Copyright (c) 2016-2021 IC Verimeter. All rights reserved.
                 Licensed under the MIT License.
                 See LICENSE file in the project root for full license information.
   Description : shunt dpi bridge
@@ -643,6 +643,9 @@ void shunt_dpi_tlm_send_gp_transport(int sockid, cs_tlm_generic_payload_header* 
 void shunt_dpi_tlm_send_command(int socket,const shunt_dpi_tlm_command_e Com) {
   cs_tlm_generic_payload_header csgp={0};
   csgp.command = Com;
+#ifdef SHUNT_DPI_C_DEBUG
+  printf("(\nDEBUG: shunt_dpi_tlm_send_command() csgp->lengtcsgp >0 (%0ld) csgp->byte_enable_lengtcsgp (%0ld)",csgp.length,csgp.byte_enable_length);
+#endif
   shunt_cs_tlm_send_gp_header (socket,&csgp);
 }
 
@@ -668,8 +671,8 @@ void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header*
     shunt_cs_tlm_recv_gp_data (sockid,h, data_tcp, byte_enable_tcp);
 
 #ifdef SHUNT_DPI_C_DEBUG
-    for (int i=0;i<size_data_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport () data_tcp[%0d]=(%ld)%lx",i,data_tcp[i],data_tcp[i]);
-    for (int i=0;i<size_byte_enable_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport () byte_enable_tcp[%0d]=(%ld)%lx",i,byte_enable_tcp[i],byte_enable_tcp[i]);
+    for (int i=0;i<size_data_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport() data_tcp[%0d]=(%ld)%lx",i,data_tcp[i],data_tcp[i]);
+    for (int i=0;i<size_byte_enable_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport() byte_enable_tcp[%0d]=(%ld)%lx",i,byte_enable_tcp[i],byte_enable_tcp[i]);
 #endif
 
     memcpy(data_,data_tcp,h->length);
@@ -680,10 +683,66 @@ void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header*
     free(byte_enable_tcp);
 
 #ifdef SHUNT_DPI_C_DEBUG
-    for (int i=0;i<h->length;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport () data_[%0d]=(%d)%x\n",i,data_[i],data_[i]);
+    for (int i=0;i<h->length;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_transport() data_[%0d]=(%d)%x\n",i,data_[i],data_[i]);
 #endif
   }
 }
+
+void shunt_dpi_tlm_recv_gp_header (int sockid, cs_tlm_generic_payload_header* h) {
+  shunt_cs_tlm_recv_gp_header (sockid, h);
+}
+
+void shunt_dpi_tlm_send_gp_header (int sockid, cs_tlm_generic_payload_header* h) {
+  shunt_cs_tlm_send_gp_header (sockid,h);
+}
+
+void shunt_dpi_tlm_recv_axi3_header (int sockid, cs_tlm_axi3_extension_payload_header* h) {
+  shunt_cs_tlm_recv_axi3_header (sockid,h);
+}
+
+void shunt_dpi_tlm_send_axi3_header (int sockid, cs_tlm_axi3_extension_payload_header* h) {
+  shunt_cs_tlm_send_axi3_header (sockid, h);
+}
+
+///////
+void  shunt_dpi_tlm_recv_gp_data (int sockid, cs_tlm_generic_payload_header* h,svOpenArrayHandle data,svOpenArrayHandle byte_enable){
+  
+  unsigned long int* data_tcp;
+  unsigned long int* byte_enable_tcp;
+  unsigned char* data_        = (unsigned char *) svGetArrayPtr(data);
+  unsigned char* byte_enable_ = (unsigned char *) svGetArrayPtr(byte_enable);
+
+  while(shunt_prim_get_status_socket(sockid,0) !=1 );
+  if(h->length > 0) {
+    int size_byte_enable_payload = shunt_cs_tlm_data_payload_size(h->byte_enable_length);
+#ifdef SHUNT_DPI_C_DEBUG
+    int size_data_payload        = shunt_cs_tlm_data_payload_size(h->length);
+    printf("(\nDEBUG:  shunt_dpi_tlm_recv_gp_data h->length >0 (%0ld) h->byte_enable_length (%0ld)",h->length,h->byte_enable_length);
+#endif
+    
+    data_tcp        = (unsigned long int*)malloc(h->length);
+    byte_enable_tcp = (unsigned long int*)malloc(size_byte_enable_payload*sizeof(long int));
+    
+    shunt_cs_tlm_recv_gp_data (sockid,h, data_tcp, byte_enable_tcp);
+    
+#ifdef SHUNT_DPI_C_DEBUG
+    for (int i=0;i<size_data_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_data() data_tcp[%0d]=(%ld)%lx",i,data_tcp[i],data_tcp[i]);
+    for (int i=0;i<size_byte_enable_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_data() byte_enable_tcp[%0d]=(%ld)%lx",i,byte_enable_tcp[i],byte_enable_tcp[i]);
+#endif
+    
+    memcpy(data_,data_tcp,h->length);
+
+    if (h->byte_enable_length>0) memcpy(byte_enable_,byte_enable_tcp,h->byte_enable_length);
+
+    free(data_tcp);
+    free(byte_enable_tcp);
+
+#ifdef SHUNT_DPI_C_DEBUG
+    for (int i=0;i<h->length;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_data() data_[%0d]=(%d)%x\n",i,data_[i],data_[i]);
+#endif
+  }
+}
+/////
 
 //Linux system utils
 long int shunt_dpi_gettimeofday_sec() {
