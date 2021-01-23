@@ -658,7 +658,6 @@ void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,const char*
    TLM_COMMAND_ERROR_RESPONSE = -3, TLM_BURST_ERROR_RESPONSE = -4, TLM_BYTE_ENABLE_ERROR_RESPONSE = -5
    }
    ---
-
    - *delay*              Shunt tlm header extension equal to b_transport/nb_trasport delay atribute
 
    - *tlm_phase*          Shunt tlm header nb_trasport atribute:
@@ -674,6 +673,9 @@ void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,const char*
    --- Code
    enum  tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED }
    ---
+   
+- *tlm_extension_id*   (long) tlm_extension id. if "0" - extension is not available 
+
 */
 
 #if __BYTE_ORDER__== __ORDER_BIG_ENDIAN__
@@ -689,11 +691,13 @@ typedef struct cs_tlm_generic_payload_header_t {
   long delay;
   long tlm_phase;
   long tlm_sync;
+  long tlm_extension_id;
 } cs_tlm_generic_payload_header;
 #endif
 
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 typedef struct cs_tlm_generic_payload_header_t {
+  long tlm_extension_id;
   long tlm_sync;
   long tlm_phase;
   long delay;
@@ -708,6 +712,112 @@ typedef struct cs_tlm_generic_payload_header_t {
 } cs_tlm_generic_payload_header;
 #endif
 
+/*
+  Variable:   cs_tlm_axi3_extension_payload_header
+
+   *TLM 2.0  ARM AXI3 signals extension structure*  REF to Copyright 2003, 2004, 2010, 2011 ARM. All rights reserved.ARM IHI 0022D (ID102711)
+
+   - *AxBURST* - determines how the address for each transfer within the burst is calculated
+
+   --- Code
+   AxBURST[1:0] | Burst type
+   =========================
+   0b00         |  FIXED
+   0b01         |  INCR
+   0b10         |  WRAP
+   0b11         |  Reserved
+   ---
+ 
+   *AxCACHE* - Memory type indicates how transactions are required to progress through a system
+  
+   --- Code
+   AxCACHE | Value | Transaction attribute
+    ======================================
+    [0]    |   0   |    Non-bufferable
+           |   1   |    Bufferable
+    [1]    |   0   |    Non-cacheable
+           |   1   |    Cacheable
+    [2]    |   0   |    No Read-allocate
+           |   1   |    Read-allocate
+    [3]    |   0   |    No Write-allocate
+           |   1   |    Write-allocate
+   ---
+   
+   *AxID*  - is identification tag for the transaction address group.
+   
+   *AxLEN* - gives the exact number of transfers in a burst. 
+   
+   *AxLOCK*  - provides additional information about the transaction atomic characteristics
+    
+   --- Code
+   AxLOCK[1:0] | Access type
+   =============================
+   0b00        | Normal access
+   0b01        | Exclusive access
+   0b10        | Locked access
+   0b11        | Reserved
+   ---
+ 
+   *AxPROT* - indicates the privilege and transaction security level.
+    
+   --- Code
+    AxPROT | Value |     Function
+    =====================================
+    [0]    |   0   |  Unprivileged access
+           |   1   |  Privileged access
+    [1]    |   0   |  Secure access
+           |   1   |  Non-secure access
+    [2]    |   0   |  Data access
+           |   1   |  Instruction access
+    ---
+   
+    *AxSIZE* - indicates the size of each transfer in the burst.
+ 
+    *xRESP*  - indicates the status of the read transfer.
+ 
+    --- Code
+    RRESP[1:0] |
+    BRESP[1:0] | Response
+    =====================
+    0b00       | OKAY
+    0b01       | EXOKAY
+    0b10       | SLVERR
+    0b11       | DECERR
+    ---
+    
+    *xSTRB* -  indicates which byte lanes hold valid data.
+*/
+
+
+
+
+#if __BYTE_ORDER__== __ORDER_BIG_ENDIAN__
+typedef struct cs_tlm_axi3_extension_payload_header_t {
+  long  AxBURST;
+  long  AxCACHE;
+  long  AxID;
+  long  AxLEN;
+  long  AxLOCK;
+  long  AxPROT;
+  long  AxSIZE;
+  long  xRESP;
+  long  xSTRB;
+} cs_tlm_axi3_extension_payload_header; 
+#endif
+
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+typedef struct cs_tlm_axi3_extension_payload_header_t {
+  long  xSTRB;
+  long  xRESP;
+  long  AxSIZE;
+  long  AxPROT;
+  long  AxLOCK;
+  long  AxLEN;
+  long  AxID;
+  long  AxCACHE;
+  long  AxBURST;
+} cs_tlm_axi3_extension_payload_header; 
+#endif
 /*
   Function: shunt_cs_tlm_send_gp
   send tlm generic payload  packet ( cs_tlm_generic_payload_header  + byte data vector + byte_enable vector )
@@ -737,7 +847,7 @@ void shunt_cs_tlm_recv_gp_header (int sockid, cs_tlm_generic_payload_header* h);
 
 /*
   Function: shunt_cs_tlm_send_gp_header
-  recieve tlm generic payload  header ( cs_tlm_generic_payload_header only)
+  send tlm generic payload  header ( cs_tlm_generic_payload_header only)
 
   Parameters:
 
@@ -748,7 +858,31 @@ void shunt_cs_tlm_recv_gp_header (int sockid, cs_tlm_generic_payload_header* h);
 */
 void shunt_cs_tlm_send_gp_header (int sockid, cs_tlm_generic_payload_header* h);
 
+/*
+  Function: shunt_cs_tlm_recv_axi3_header
+  recieve tlm generic payload  header ( cs_tlm_generic_payload_header only)
 
+  Parameters:
+
+  sockid - socket id from init sever/client
+  h - cs_tlm_generic_payload_header (output)
+
+
+*/
+void shunt_cs_tlm_recv_axi3_header (int sockid, cs_tlm_axi3_extension_payload_header* h);
+
+/*
+  Function: shunt_cs_tlm_send_axi3_header
+  send tlm extension  header (cs_tlm_axi3_extension_payload_header only)
+
+  Parameters:
+
+  sockid - socket id from init sever/client
+  h - cs_tlm_axi3_extension_payload_header (output)
+
+
+*/
+void shunt_cs_tlm_send_axi3_header (int sockid, cs_tlm_axi3_extension_payload_header* h);
 
 
 /*
