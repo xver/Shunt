@@ -10,7 +10,7 @@
 
 Title: SystemVerilog TCP/IP "IC Shunt"
 
-Copyright: Copyright © 2016-2020 IC Verimeter
+Copyright: Copyright © 2016-2021 IC Verimeter
 
 
 # This is where you specify general information about your project.
