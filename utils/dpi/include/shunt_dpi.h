@@ -1,7 +1,7 @@
 /*
 =========================================================
  File        : shunt_dpi.h
- Copyright (c) 2016-2020 IC Verimeter. All rights reserved.
+ Copyright (c) 2016-2021 IC Verimeter. All rights reserved.
                Licensed under the MIT License.
                See LICENSE file in the project root for full license information.
  Description : shunt dpi bridge
@@ -883,6 +883,71 @@ void shunt_dpi_tlm_send_gp_transport(int sockid, cs_tlm_generic_payload_header* 
   -  <shunt_cs_tlm_recv_gp_header> and <shunt_cs_tlm_recv_gp_data>
 */
 void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header* h,svOpenArrayHandle data,svOpenArrayHandle byte_enable);
+
+/*
+  Function: shunt_dpi_tlm_recv_gp_header
+  recieve tlm generic payload  header ( cs_tlm_generic_payload_header only)
+
+  Parameters:
+
+  sockid - socket id from init sever/client
+  h - cs_tlm_generic_payload_header (output)
+
+
+*/
+void shunt_dpi_tlm_recv_gp_header (int sockid, cs_tlm_generic_payload_header* h);
+
+/*
+  Function: shunt_dpi_tlm_send_gp_header
+  send tlm generic payload  header ( cs_tlm_generic_payload_header only)
+
+  Parameters:
+
+  sockid - socket id from init sever/client
+  h - cs_tlm_generic_payload_header (output)
+
+
+*/
+void shunt_dpi_tlm_send_gp_header (int sockid, cs_tlm_generic_payload_header* h);
+
+/*
+  Function: shunt_dpi_tlm_recv_axi3_header
+  recieve tlm generic payload  header ( cs_tlm_generic_payload_header only)
+
+  Parameters:
+
+  sockid - socket id from init sever/client
+  h - cs_tlm_generic_payload_header (output)
+
+
+*/
+void shunt_dpi_tlm_recv_axi3_header (int sockid, cs_tlm_axi3_extension_payload_header* h);
+
+/*
+  Function: shunt_dpi_tlm_send_axi3_header
+  send tlm extension  header (cs_tlm_axi3_extension_payload_header only)
+
+  Parameters:
+
+  sockid - socket id from init sever/client
+  h - cs_tlm_axi3_extension_payload_header (output)
+
+
+*/
+void shunt_dpi_tlm_send_axi3_header (int sockid, cs_tlm_axi3_extension_payload_header* h);
+
+/*
+  Function: shunt_dpi_tlm_recv_gp_data
+  recieve tlm generic payload  packet (byte data vector + byte_enable vector )
+
+  Parameters:
+
+  sockid - socket id from init sever/client
+  h - cs_tlm_generic_payload_header (input only) should have a valid data length and byte_enable_length
+  data - data payload byte-vector pointer  (output)
+  byte_enable - byte_enable vector pointer (output)
+*/
+void  shunt_dpi_tlm_recv_gp_data (int sockid, cs_tlm_generic_payload_header* h,svOpenArrayHandle data,svOpenArrayHandle byte_enable);
 
 // Section: Data exchange (hs)
 /*
