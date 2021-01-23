@@ -18,5 +18,5 @@ Tne Shunt is available under a "MIT" License. It can be used without restriction
 
 
  ============================================================================
- Copyright (c) 2016-2019 IC Verimeter. All rights reserved.  
+ Copyright (c) 2016-2021 IC Verimeter. All rights reserved.  
 ============================================================================= 
