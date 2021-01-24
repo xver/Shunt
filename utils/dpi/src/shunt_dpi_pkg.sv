@@ -1913,4 +1913,19 @@ typedef struct packed{
       /* verilator lint_on UNUSED */
    endfunction : shunt_dpi_tlm_gp_header_print
 
+   function void shunt_dpi_tlm_axi3_header_print (cs_tlm_axi3_extension_payload_header_t h_axi3,string prefix="");
+      /* verilator lint_off UNUSED */
+      $write("\n%0s h_axi3.AxBURST(%0b)",prefix,h_axi3.AxBURST);
+      $write(",h_axi3.AxCACHE(%0b)",h_axi3.AxCACHE);
+      $write(",h_axi3.AxID(%0d)",h_axi3.AxID);
+      $write(",h_axi3.AxLEN(%0d)",h_axi3.AxLEN);
+      $write(",h_axi3.AxLOCK(%0b)",h_axi3.AxLOCK);
+      $write(",h_axi3.AxPROT(%0b)",h_axi3.AxPROT);
+      $write(",h_axi3.AxSIZE(%0d)",h_axi3.AxSIZE);
+      $write(",h_axi3.xRESP(%0b)",h_axi3.xRESP);
+      $write(",h_axi3.xSTRB(%0h)",h_axi3.xSTRB);
+      /* verilator lint_on UNUSED */
+   endfunction : shunt_dpi_tlm_axi3_header_print
+   
+   
 endpackage : shunt_dpi_pkg

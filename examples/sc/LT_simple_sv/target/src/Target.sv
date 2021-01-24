@@ -33,8 +33,10 @@ module automatic Target(input reg clk_i);
    int          clk_next;
 
    int          sockid =0;
+   
    cs_tlm_generic_payload_header_t h;
-
+   cs_tlm_axi3_extension_payload_header_t h_ext;
+   cs_tlm_axi3_extension_payload_header_t h_ext_out;
    byte         data_in[4];
    byte         byte_enable_in[4];
 
@@ -49,6 +51,15 @@ module automatic Target(input reg clk_i);
       sockid = shunt_dpi_target_init(`MY_PORT,`MY_HOST);
       shunt_dpi_tlm_send_command(sockid,SHUNT_TLM_START_SIM);
       start_sim =1;
+      h_ext_out.AxBURST = 0;
+      h_ext_out.AxCACHE = 0;
+      h_ext_out.AxID    = 11;
+      h_ext_out.AxLEN   = 0;
+      h_ext_out.AxLOCK  = 3;
+      h_ext_out.AxPROT  = 0;
+      h_ext_out.AxSIZE  = 0;
+      h_ext_out.xRESP   = 3;
+      h_ext_out.xSTRB   = 0;
    end
 
    memory  mem(.data(mem_data),.addr(mem_addr), .we(mem_we), .clk(clk_i), .q(mem_q));
@@ -62,7 +73,7 @@ module automatic Target(input reg clk_i);
    always @(posedge clk_i) begin
       //if(trnx_in_progress) $display("\nTARGET : mem.ram[%0d]=%h mem_data=%h @%0d\n",h.address,mem.ram[h.address],mem_data,clk_cnt);
       if (end_sim)  begin
-         $display("TARGET: SHUNT_TLM_END_SIM clk_cnt=%0d\n",clk_cnt);
+         $display("\nTARGET: SHUNT_TLM_END_SIM clk_cnt=%0d\n",clk_cnt);
          $finish;
       end
    end
@@ -73,6 +84,10 @@ module automatic Target(input reg clk_i);
       if(start_sim) begin
          if(!trnx_in_progress) begin
             shunt_dpi_tlm_recv_gp_transport(sockid,h,data_in,byte_enable_in);
+            shunt_dpi_tlm_recv_axi3_header(sockid,h_ext);
+            shunt_dpi_tlm_axi3_header_print (h_ext,"TRAGET: ");
+            shunt_dpi_tlm_send_axi3_header (sockid,h_ext_out);   
+            
             /* verilator lint_off BLKSEQ */
             h.response_status = SHUNT_TLM_OK_RESPONSE;
             /* verilator lint_on BLKSEQ */

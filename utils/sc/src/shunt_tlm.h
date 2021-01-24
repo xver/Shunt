@@ -134,6 +134,33 @@ namespace shunt_tlm
         <<"]"<<endl;
     }
 
+    //////////////////
+    /*
+      Function: shunt_tlm_print_axi3
+      print shunt axi3 header structure (cs_tlm_axi3_extension_payload_header)
+
+      Parameters:
+
+      axi3   - Ref. to <cs_tlm_axi3_extension_payload_header>
+
+      prefix - Message prefix
+
+    */
+    void shunt_tlm_print_axi3_header (const cs_tlm_axi3_extension_payload_header  h_axi3,string prefix="") {
+      cout<< prefix
+          <<"h_axi3.AxBURST"<<hex<<h_axi3.AxBURST
+          <<" ,h_axi3.AxCACHE="<<hex<<h_axi3.AxCACHE
+          <<" ,h_axi3.AxID="<<hex<<h_axi3.AxID
+          <<" ,h_axi3.AxLEN="<<dec<<h_axi3.AxLEN
+          <<" ,h_axi3.AxLOCK="<<hex<<h_axi3.AxLOCK
+          <<" ,h_axi3.AxPROT="<<hex<<h_axi3.AxPROT
+          <<" ,h_axi3.AxSIZE="<<dec<<h_axi3.AxSIZE
+          <<" ,h_axi3.xRESP="<<hex<<h_axi3.xRESP
+          <<" ,h_axi3.xSTRB="<<hex<<h_axi3.xSTRB
+          <<endl;
+    }
+
+    /////////////////
     /*
       Function: is_shunt_tlm_end_sim
       get simulation status
