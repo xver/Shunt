@@ -1878,7 +1878,7 @@ typedef struct packed{
   byte_enable - byte_enable vector pointer (output)
 */
 `ifndef NO_SHUNT_DPI_TLM_RECV_GP_DATA
-   import "DPI-C" function void shunt_dpi_tlm_recv_gp_data (input int sockid, input cs_tlm_generic_payload_header_t h,inout byte unsigned data[],inout byte unsigned   byte_enable);
+   import "DPI-C" function void shunt_dpi_tlm_recv_gp_data (input int sockid, input cs_tlm_generic_payload_header_t h,inout byte unsigned data[],inout byte unsigned   byte_enable[]);
 `endif 
    
    /////
