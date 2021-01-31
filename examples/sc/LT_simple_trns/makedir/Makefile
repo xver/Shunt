@@ -6,6 +6,12 @@ all: make_all
 	./run
 .PHONY: run
 
+initiator: 
+	cd ../initiator/makedir && $(MAKE) clean && $(MAKE) all
+
+target:
+	cd ../target/makedir    && $(MAKE) clean && $(MAKE) all	
+
 clean:
 	cd ../initiator/makedir && $(MAKE) clean
 	cd ../target/makedir    && $(MAKE) clean
