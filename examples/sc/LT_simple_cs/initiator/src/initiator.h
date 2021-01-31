@@ -53,12 +53,12 @@ struct Initiator: sc_module
       trans->set_dmi_allowed( false ); // Mandatory initial value
       trans->set_response_status( tlm::TLM_INCOMPLETE_RESPONSE ); // Mandatory initial value
 
-
-
+      long tlm_extension_id =0;
+      
       //socket->b_transport( *trans, delay );  // Blocking transport call
-
-      shunt_send_b_transport(m_socket,*trans, delay );
-      shunt_recv_b_transport(m_socket,*trans, delay );
+      
+      shunt_send_b_transport(m_socket,*trans,tlm_extension_id,delay );
+      shunt_recv_b_transport(m_socket,*trans,tlm_extension_id, delay );
       cout << "SERVER trans = { " << (cmd ? 'W' : 'R') << ", " << hex << i
                     << " } , data = " << hex << data << " at time " << sc_time_stamp()
                     << " delay = " << delay << endl;
