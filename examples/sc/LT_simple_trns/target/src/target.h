@@ -37,8 +37,8 @@ struct Memory: sc_module
   // TLM-2 blocking transport method
   virtual void b_transport( tlm::tlm_generic_payload& trans, sc_time& delay )
   {
-
-    shunt_recv_b_transport(m_socket,trans,delay );
+    long tlm_extension_id=0;
+    shunt_recv_b_transport(m_socket,trans,tlm_extension_id,delay );
     tlm::tlm_command cmd = trans.get_command();
     sc_dt::uint64    adr = trans.get_address() / 4;
     unsigned char*   ptr = trans.get_data_ptr();
@@ -62,7 +62,7 @@ struct Memory: sc_module
 
     // Obliged to set response status to indicate successful completion
     trans.set_response_status( tlm::TLM_OK_RESPONSE );
-    shunt_send_b_transport(m_socket,trans,delay );
+    shunt_send_b_transport(m_socket,trans,tlm_extension_id,delay );
   }
 
   int mem[SIZE];
