@@ -41,7 +41,8 @@ struct Initiator: sc_module
 
     sc_time delay;
     shunt_tlm_command command;
-    shunt_recv_b_transport(m_socket,*trans,delay);
+    long tlm_extension_id=0;
+    shunt_recv_b_transport(m_socket,*trans,tlm_extension_id,delay);
     command = (shunt_tlm_command)trans->get_command();
     cout<<"SERVER: SHUNT_TLM_START_SIM command="<<hex <<command<<endl;
 
@@ -77,13 +78,13 @@ struct Initiator: sc_module
       trans->set_response_status( tlm::TLM_INCOMPLETE_RESPONSE ); // Mandatory initial value
       //
       //socket->b_transport( *trans, delay );  // Blocking transport call
-      shunt_send_b_transport(m_socket,*trans, delay );
+      shunt_send_b_transport(m_socket,*trans,tlm_extension_id, delay );
       //////
       shunt_cs_tlm_send_axi3_header(m_socket,&gp_ext);
       shunt_cs_tlm_recv_axi3_header(m_socket,&gp_ext);
       shunt_tlm_print_axi3_header(gp_ext,"SERVER: ");
       /////
-      shunt_recv_b_transport(m_socket,*trans, delay );
+        shunt_recv_b_transport(m_socket,*trans, tlm_extension_id,delay );
       cout << "SERVER trans recv = { " << (cmd ? 'W' : 'R') << ", " << hex << i
        << " } , data = " << hex << data << " at time " << sc_time_stamp()
        << " delay = " << delay
