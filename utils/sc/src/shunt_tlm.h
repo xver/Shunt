@@ -134,7 +134,6 @@ namespace shunt_tlm
         <<"]"<<endl;
     }
 
-    //////////////////
     /*
       Function: shunt_tlm_print_axi3
       print shunt axi3 header structure (cs_tlm_axi3_extension_payload_header)
@@ -160,7 +159,6 @@ namespace shunt_tlm
           <<endl;
     }
 
-    /////////////////
     /*
       Function: is_shunt_tlm_end_sim
       get simulation status
@@ -197,8 +195,7 @@ namespace shunt_tlm
       csgp->streaming_width    = (long) tlmgp.get_streaming_width();
       csgp->dmi                = (long) tlmgp.is_dmi_allowed();
       csgp->response_status    = (long) tlmgp.get_response_status();
-      csgp->tlm_extension_id = 0;
-
+     
       //tlmgp.get_data_ptr();
       //tlmgp.get_byte_enable_ptr();
     }
@@ -426,18 +423,20 @@ namespace shunt_tlm
     Parameters:
     socket - socket id
     trans  - tlm_generic_payload object
+    tlm_extension_id - see <cs_tlm_axi3_extension_payload_header> 
     delay  - sc_time
 
     See Also:
     - <shunt_tlm_send_transport>
 
   */
-  void shunt_send_b_transport( int socket,tlm::tlm_generic_payload& trans, sc_time& delay )
+  void shunt_send_b_transport( int socket,tlm::tlm_generic_payload& trans,long tlm_extension_id, sc_time& delay )
   {
     cs_tlm_generic_payload_header csgp={0};
     tlm_phase_enum phase =UNINITIALIZED_PHASE;
 
     csgp.delay =delay.to_default_time_units();
+    csgp.tlm_extension_id = tlm_extension_id;
     shunt_tlm_send_transport(socket,trans,csgp,delay,phase);
   };
 
@@ -449,12 +448,13 @@ namespace shunt_tlm
     Parameters:
     socket - socket id
     trans  - tlm_generic_payload object (output)
+    tlm_extension_id - see <cs_tlm_axi3_extension_payload_header> 
     delay  - sc_time (output)
 
     See Also:
     - <shunt_tlm_recv_transport>
   */
-    void shunt_recv_b_transport( int socket,tlm::tlm_generic_payload& trans, sc_time& delay,sc_time_unit sc_time_units=SC_NS)
+  void shunt_recv_b_transport( int socket,tlm::tlm_generic_payload& trans,long& tlm_extension_id, sc_time& delay,sc_time_unit sc_time_units=SC_NS)
     {
       cs_tlm_generic_payload_header csgp={0};
 
@@ -464,6 +464,7 @@ namespace shunt_tlm
       shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_recv_b_transport()");
 #endif
       delay = sc_time(csgp.delay,sc_time_units);
+      tlm_extension_id = csgp.tlm_extension_id;
     };
 
 
@@ -477,13 +478,14 @@ namespace shunt_tlm
       socket - socket id
       trans  - tlm_generic_payload object
       phase  - tlm_phase
+      tlm_extension_id - see <cs_tlm_axi3_extension_payload_header> 
       delay  - sc_time
 
       See Also:
       - <shunt_tlm_send_transport>
 
     */
-    void shunt_send_nb_transport(int socket,tlm::tlm_generic_payload& trans, tlm_phase &phase,sc_time& delay )
+  void shunt_send_nb_transport(int socket,tlm::tlm_generic_payload& trans,long tlm_extension_id, tlm_phase &phase,sc_time& delay )
     {
       tlm_phase_enum phase_enum;
       cs_tlm_generic_payload_header csgp={0};
@@ -492,11 +494,12 @@ namespace shunt_tlm
 
       csgp.delay =delay.to_default_time_units();
       phase_enum = shunt_tlm_get_phase_enum(phase);
-
+      csgp.tlm_extension_id = tlm_extension_id;
       shunt_tlm_send_transport(socket,trans,csgp,delay,phase_enum);
 #ifdef SHUNT_TLM_DEBUG
       shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_send_nb_transport_fw send ");
 #endif
+      
     }
 
     /*
@@ -505,13 +508,13 @@ namespace shunt_tlm
 
       Parameters:
       socket - socket id
-
+      tlm_extension_id - see <cs_tlm_axi3_extension_payload_header> 
       Returns: tlm_sync_enum status.
 
       See Also:
       - <shunt_tlm_recv_transport>
     */
-    tlm_sync_enum shunt_recv_nb_transport_tlm_sync_resp(int socket) {
+  tlm_sync_enum shunt_recv_nb_transport_tlm_sync_resp(int socket,long& tlm_extension_id) {
       cs_tlm_generic_payload_header csgp={0};
       csgp.tlm_sync = -1;
 
@@ -520,6 +523,7 @@ namespace shunt_tlm
 #ifdef SHUNT_TLM_DEBUG
       shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_recv_nb_transport_tlm_sync_resp:");
 #endif
+      tlm_extension_id = csgp.tlm_extension_id;
       return (tlm_sync_enum)csgp.tlm_sync;
     };
 
@@ -532,6 +536,7 @@ namespace shunt_tlm
       socket - socket id
       trans  - tlm_generic_payload object  (output)
       phase  - tlm_phase (output)
+      tlm_extension_id - see <cs_tlm_axi3_extension_payload_header> 
       delay  - sc_time  (output)
       sc_time_units - sc_time_unit (input)
 
@@ -540,13 +545,14 @@ namespace shunt_tlm
 
     */
 
-    void  shunt_recv_nb_transport(int socket,tlm::tlm_generic_payload& trans, tlm_phase &phase,sc_time& delay,sc_time_unit sc_time_units=SC_PS )
+  void  shunt_recv_nb_transport(int socket,tlm::tlm_generic_payload& trans,long& tlm_extension_id, tlm_phase &phase,sc_time& delay,sc_time_unit sc_time_units=SC_PS )
     {
       cs_tlm_generic_payload_header csgp={0};
 
       while(shunt_prim_get_status_socket(socket,0) !=1 );
       shunt_tlm_recv_transport(socket,trans,csgp);
       delay = sc_time(csgp.delay,sc_time_units);
+      tlm_extension_id =csgp.tlm_extension_id;  
 #ifdef SHUNT_TLM_DEBUG
       shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_recv_nb_transport_fw:");
 #endif
@@ -564,18 +570,17 @@ namespace shunt_tlm
       - <shunt_tlm_send_transport>
 
     */
-    void shunt_send_nb_transport_tlm_sync_resp(int socket,tlm_sync_enum tlm_sync) {
+  void shunt_send_nb_transport_tlm_sync_resp(int socket,tlm_sync_enum tlm_sync,long tlm_extension_id) {
       cs_tlm_generic_payload_header csgp={0};
       csgp.tlm_sync = tlm_sync;
 
       while(shunt_prim_get_status_socket(socket,1) !=1 );
+      csgp.tlm_extension_id =  tlm_extension_id;
       shunt_cs_tlm_send_gp_header(socket,&csgp);
 #ifdef SHUNT_TLM_DEBUG
       shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_send_nb_transport_tlm_sync_resp:");
 #endif
   };
-
-
 
 };
 
