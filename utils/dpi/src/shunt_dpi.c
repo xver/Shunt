@@ -704,7 +704,7 @@ void shunt_dpi_tlm_send_axi3_header (int sockid, cs_tlm_axi3_extension_payload_h
   shunt_cs_tlm_send_axi3_header (sockid, h);
 }
 
-///////
+
 void  shunt_dpi_tlm_recv_gp_data (int sockid, cs_tlm_generic_payload_header* h,svOpenArrayHandle data,svOpenArrayHandle byte_enable){
   
   unsigned long int* data_tcp;
@@ -742,7 +742,6 @@ void  shunt_dpi_tlm_recv_gp_data (int sockid, cs_tlm_generic_payload_header* h,s
 #endif
   }
 }
-/////
 
 //Linux system utils
 long int shunt_dpi_gettimeofday_sec() {
