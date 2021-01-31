@@ -60,8 +60,10 @@ struct Memory: sc_module
 
     // Obliged to set response status to indicate successful completion
     //trans.set_response_status( tlm::TLM_OK_RESPONSE );
-    shunt_send_b_transport(m_socket,trans, delay );
-    shunt_recv_b_transport(m_socket,trans, delay );
+    long tlm_extension_id=0;
+    
+    shunt_send_b_transport(m_socket,trans,tlm_extension_id,delay );
+    shunt_recv_b_transport(m_socket,trans,tlm_extension_id, delay );
   }
 
   int mem[SIZE];
