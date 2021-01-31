@@ -84,7 +84,9 @@ module automatic Target(input reg clk_i);
       if(start_sim) begin
          if(!trnx_in_progress) begin
             shunt_dpi_tlm_recv_gp_transport(sockid,h,data_in,byte_enable_in);
+            shunt_dpi_tlm_gp_header_print (h,"TARGET: ");
             shunt_dpi_tlm_recv_axi3_header(sockid,h_ext);
+            
             shunt_dpi_tlm_axi3_header_print (h_ext,"TRAGET: ");
             shunt_dpi_tlm_send_axi3_header (sockid,h_ext_out);   
             

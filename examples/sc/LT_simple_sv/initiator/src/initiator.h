@@ -65,7 +65,7 @@ struct Initiator: sc_module
       gp_ext.AxSIZE=3;
       gp_ext.xRESP=1;
       gp_ext.xSTRB=15;
-     
+      tlm_extension_id=123456;
       //
       // Initialize 8 out of the 10 attributes, byte_enable_length and extensions being unused
       trans->set_command( cmd );
