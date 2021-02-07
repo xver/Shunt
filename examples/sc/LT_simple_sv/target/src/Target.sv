@@ -48,6 +48,12 @@ module automatic Target(input reg clk_i);
    /* verilator lint_on UNUSED */
 
    initial   begin
+      
+      $display("TARGET: shunt_dpi_tlm_header_id()=%h",shunt_dpi_tlm_header_id());
+      $display("TARGET: shunt_dpi_tlm_data_id()=%h", shunt_dpi_tlm_data_id());
+      $display("TARGET: shunt_dpi_tlm_axi3_ext_id()=%h",shunt_dpi_tlm_axi3_ext_id());
+      $display("TARGET: shunt_dpi_tlm_signal_id()=%h",shunt_dpi_tlm_signal_id());
+          
       sockid = shunt_dpi_target_init(`MY_PORT,`MY_HOST);
       shunt_dpi_tlm_send_command(sockid,SHUNT_TLM_START_SIM);
       start_sim =1;

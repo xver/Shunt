@@ -37,8 +37,12 @@ struct Initiator: sc_module
     // TLM-2 generic payload transaction, reused across calls to b_transport
     m_socket = shunt_tlm_init_server(MY_PORT);
     tlm::tlm_generic_payload* trans = new tlm::tlm_generic_payload;
-   
-
+    
+    cout<<"\nSERVER: shunt_cs_get_cs_header_leader()="<<hex <<shunt_cs_get_cs_header_leader()
+        <<" \nshunt_cs_get_tlm_data_leader()="<<hex <<shunt_cs_get_tlm_data_leader()
+        <<" \nshunt_cs_get_tlm_axi3_ext_leader()="<<hex<<shunt_cs_get_tlm_axi3_ext_leader()
+        <<" \nshunt_cs_get_tlm_axi3_signal_leader()="<<hex<<shunt_cs_get_tlm_axi3_signal_leader()
+        <<endl;
     sc_time delay;
     shunt_tlm_command command;
     long tlm_extension_id=0;
