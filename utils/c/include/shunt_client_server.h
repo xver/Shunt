@@ -350,7 +350,7 @@ Function: shunt_cs_send_longV
     See Also:
     <shunt_cs_recv_longV>
 */
-int shunt_cs_send_longV  (int sockid, const cs_header* header,const long int* Long);
+int shunt_cs_send_longV  (int sockid, const cs_header* header,const long* Long);
 
 /*
   Function: shunt_cs_recv_longV
@@ -368,7 +368,7 @@ int shunt_cs_send_longV  (int sockid, const cs_header* header,const long int* Lo
   See Also:
     <shunt_cs_send_longV>
 */
-int shunt_cs_recv_longV  (int sockid, cs_header* header,long int* Long);
+int shunt_cs_recv_longV  (int sockid, cs_header* header,long* Long);
 
 
 /*
@@ -621,6 +621,87 @@ See Also:
 
 */
 void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,const char* data_type_names[],int last_enum,char* msg);
+
+/*
+  Function: shunt_cs_get_cs_header_leader 
+  predefined hash functions for obtain the specific hash value.  
+
+  Parameters:
+  N/A
+  
+  Returns:
+  long - hash value;
+
+See Also:
+  <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+
+*/
+long shunt_cs_get_cs_header_leader();
+
+/*
+  Function: shunt_cs_get_tlm_header_leader
+  predefined hash functions for obtain the specific hash value.  
+
+  Parameters:
+  N/A
+  
+  Returns:
+  long - hash value;
+
+See Also:
+  <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+
+*/
+long shunt_cs_get_tlm_header_leader();
+
+/*
+  Function: shunt_cs_get_tlm_data_leader
+  predefined hash functions for obtain the specific hash value.  
+
+  Parameters:
+  N/A
+  
+  Returns:
+  long - hash value;
+
+See Also:
+  <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+
+*/
+long  shunt_cs_get_tlm_data_leader();
+
+/*
+  Function: shunt_cs_get_tlm_axi3_ext_leader
+  predefined hash functions for obtain the specific hash value.  
+
+  Parameters:
+  N/A
+  
+  Returns:
+  long - hash value;
+
+See Also:
+  <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+
+*/
+long shunt_cs_get_tlm_axi3_ext_leader();
+
+/*
+  Function: shunt_cs_get_tlm_axi3_signal_leader
+  predefined hash functions for obtain the specific hash value.  
+
+  Parameters:
+  N/A
+  
+  Returns:
+  long - hash value;
+
+See Also:
+  <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+
+*/
+
+long  shunt_cs_get_tlm_axi3_signal_leader();
 
 //Section: TLM2.0 utils
 /*
