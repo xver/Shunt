@@ -123,7 +123,7 @@ int shunt_api_recv (int sockid,cs_header* h_trnx, ...);
   Returns:
   number of elements have been sent  : success > 0
 */
-int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long int* Long);
+int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long* Long);
 
 /*
   Function: shunt_pkt_rcv_longV
@@ -138,7 +138,7 @@ int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long int* L
   Returns:
   number of elements have been received  : success > 0
 */
-int shunt_pkt_recv_longV  (int sockid, cs_header* header,long int* Long);
+int shunt_pkt_recv_longV  (int sockid, cs_header* header,long* Long);
 
 #endif
 
