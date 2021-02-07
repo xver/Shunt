@@ -857,7 +857,6 @@ typedef enum
 
 typedef enum {SHUNT_TLM_READ_COMMAND,SHUNT_TLM_WRITE_COMMAND,SHUNT_TLM_IGNORE_COMMAND,SHUNT_TLM_END_SIM,SHUNT_TLM_START_SIM} shunt_dpi_tlm_command_e;
 
-//////
 /*
   Function: shunt_dpi_tlm_header_id
   predefined hash functions for obtain the specific hash value.  
@@ -922,8 +921,6 @@ See Also:
 */
 
 long  shunt_dpi_tlm_signal_id();
-
-//////
 
  /*
     Function: shunt_tlm_send_command

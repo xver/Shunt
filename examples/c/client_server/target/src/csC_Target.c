@@ -80,9 +80,6 @@ int main(void) {
     if (shunt_cs_send_intV(socket,&h_trnx,IntV)<=0) success = 0;
     if (success == 0 )  printf("\n target Int data fail to send");
 
-
-    ////////////////////////////////////
-
     //Double Test
 
     //Double vector
@@ -125,11 +122,6 @@ int main(void) {
     //data
     if (shunt_cs_send_byteV(socket,&h_trnx,String)<=0) success = 0;
     if (success == 0 )  printf("\n target String data fail to send");
-
-
-
-    ////////////////////////////////////
-
 
     //puts("\ncsC_Target end");
   }

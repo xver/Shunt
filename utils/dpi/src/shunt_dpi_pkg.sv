@@ -1772,7 +1772,6 @@ typedef struct packed{
    import "DPI-C" function  void shunt_dpi_tlm_send_command(int socket,shunt_tlm_command_e Com);
 `endif
 
-   //////
    /*
     Function: shunt_dpi_tlm_header_id
     predefined hash functions for obtain the specific hash value.  
@@ -1846,7 +1845,7 @@ typedef struct packed{
 `ifndef  NO_SHUNT_DPI_TLM_SIGNAL_ID
    import "DPI-C" function longint  shunt_dpi_tlm_signal_id();
 `endif
-   /////
+
    /*
     Function: shunt_dpi_tlm_send_gp_transport
     send tlm generic payload  packet ( cs_tlm_generic_payload_header_t  + byte data vector + byte_enable vector )

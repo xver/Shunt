@@ -811,7 +811,6 @@ module automatic Initiator;
       return  success;
    endfunction : integerV_loopback_test
 
-   /////
    function int pkt_longV_loopback_test(int socket_id);
       int     success;
 `ifndef NO_SHUNT_DPI_SEND_PKT_LONGV
@@ -847,7 +846,7 @@ module automatic Initiator;
       return  success;
      /* verilator lint_on WIDTH */
    endfunction : pkt_longV_loopback_test
-   ////
+   
 
    function int header_loopback_test(int socket_id,int n_payloads=1);
       string      s_me = "header_loopback_test()";
@@ -867,9 +866,6 @@ module automatic Initiator;
       //
       return  success;
    endfunction : header_loopback_test
-
-   ////
-
 
    function void print_status(string Test_name,int Status_int);
       string  Status;

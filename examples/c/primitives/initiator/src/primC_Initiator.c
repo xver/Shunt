@@ -65,7 +65,6 @@ int main(void) {
       success = 0;
       printf("\nbyte loopback fail %c != %c \n",ByteLoopBack,Byte);
     }
-    ///////
 
     puts("\nexample_prim_initiator end\n");
   }

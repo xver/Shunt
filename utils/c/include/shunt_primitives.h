@@ -110,7 +110,6 @@ typedef s_vpi_vecval svLogicVecVal;
  * (end code)
 */
 
-///////////////////////////////
 //Section:  Common Functions
 
 /*
@@ -137,7 +136,6 @@ long shunt_prim_hash(const char *str);
  */
 void shunt_prim_error(const char *msg);
 
-/////////////////////////////
 //Section: TCP/IP Functions
 
 #if 0

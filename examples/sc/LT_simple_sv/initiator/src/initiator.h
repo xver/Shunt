@@ -83,12 +83,12 @@ struct Initiator: sc_module
       //
       //socket->b_transport( *trans, delay );  // Blocking transport call
       shunt_send_b_transport(m_socket,*trans,tlm_extension_id, delay );
-      //////
+      
       shunt_cs_tlm_send_axi3_header(m_socket,&gp_ext);
       shunt_cs_tlm_recv_axi3_header(m_socket,&gp_ext);
       shunt_tlm_print_axi3_header(gp_ext,"SERVER: ");
-      /////
-        shunt_recv_b_transport(m_socket,*trans, tlm_extension_id,delay );
+      
+      shunt_recv_b_transport(m_socket,*trans, tlm_extension_id,delay );
       cout << "SERVER trans recv = { " << (cmd ? 'W' : 'R') << ", " << hex << i
        << " } , data = " << hex << data << " at time " << sc_time_stamp()
        << " delay = " << delay

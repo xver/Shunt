@@ -164,7 +164,7 @@ int shunt_dpi_recv_reg     (const unsigned int sockfd,svLogic* Reg) {
 int shunt_dpi_recv_logic     (const unsigned int sockfd,svLogic* Logic) {
   return  shunt_dpi_recv_reg(sockfd,Logic);
 }
-////Direct send/recv
+//Direct send/recv
 int shunt_dpi_send_real(const  unsigned int sockfd,double Real) {
   int Result_ =0;
   Result_ =shunt_prim_send_double(sockfd,&Real);
@@ -195,7 +195,7 @@ int shunt_dpi_recv_shortreal(const  unsigned int sockfd,float* Real) {
   return Result_;
 }
 
-////Direct send/recv
+//Direct send/recv
 //*****************************************
 int shunt_dpi_send_intV(int sockid, const int size,const svOpenArrayHandle Int){
   cs_header h_ ;
@@ -287,7 +287,7 @@ int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int) {
   return Result_;
 }
 
-////Direct send/recv
+//Direct send/recv
 
 int shunt_dpi_send_realV(int sockid, const int size,const svOpenArrayHandle Real) {
   cs_header h_ ;
@@ -344,7 +344,7 @@ int shunt_dpi_recv_shortrealV(int sockid,int size,svOpenArrayHandle Shortreal) {
   return Result_;
 }
 
-////Direct send/recv
+//Direct send/recv
 
 int shunt_dpi_send_string(int sockid,int size,char* string) {
   cs_header h_ ;
@@ -380,7 +380,7 @@ long shunt_dpi_hash(const char *str) {
   Result_ = shunt_prim_hash(str);
   return Result_;
 }
-////  HandShake(hs) send/recv
+//  HandShake(hs) send/recv
 int shunt_dpi_send_header         (int sockid,cs_header* h){
  int Result_ =0;
  Result_ = shunt_cs_send_header(sockid,h);
@@ -421,7 +421,7 @@ int shunt_dpi_recv_data_header   (int sockid,cs_header* h,long* data_type,svOpen
   return Result_;
 }
 
-////  HandShake(hs) send/recv
+//  HandShake(hs) send/recv
 
 int shunt_dpi_hs_send (int sockid,cs_header* h_trnx,svOpenArrayHandle Array){
   return shunt_api_send (sockid,h_trnx,Array);
@@ -469,7 +469,7 @@ int shunt_dpi_hs_send_shortreal (int sockid,cs_header* h_trnx,svOpenArrayHandle 
   return shunt_dpi_hs_send(sockid,h_trnx,Float_);
 }
 
-////  HandShake(hs) send/recv
+//  HandShake(hs) send/recv
 int shunt_dpi_hs_recv (int sockid,cs_header* h_trnx,svOpenArrayHandle** Array){
   return shunt_api_recv   (sockid,h_trnx,Array);
 }
@@ -623,7 +623,7 @@ long shunt_dpi_get_cs_header_id() {
 }
 
 //TLM 2.0
-////////
+
 long shunt_dpi_tlm_header_id() {
   long Result_ =  shunt_cs_get_tlm_header_leader();
   return Result_;
@@ -643,7 +643,7 @@ long  shunt_dpi_tlm_signal_id() {
   long Result_ =   shunt_cs_get_tlm_axi3_signal_leader();
   return Result_;
 }
-////////
+
 void shunt_dpi_tlm_send_gp_transport(int sockid, cs_tlm_generic_payload_header* h, svOpenArrayHandle* data, svOpenArrayHandle* byte_enable){
   unsigned char *data_tcp;// =  (unsigned char *)svGetArrayPtr(data);
   unsigned char *byte_enable_tcp;// =  (unsigned char *) svGetArrayPtr(byte_enable);

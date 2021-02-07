@@ -101,7 +101,6 @@ int main(void) {
       msg = "initiator: data_act";
       shunt_cs_print_data_header(&h_trnx_act,&h_data_act,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
     }
-    ////////////////////////////////////////////////
 
     //Int Test
     success =1;
@@ -261,12 +260,8 @@ int main(void) {
       msg = "initiator: data_act";
       printf("\n%s String_act=%s",msg,String_act);
     }
-
-
-
-    /////////////////////////////////////////
-
-      puts("\n\ncsC_Initiator end");
+    
+    puts("\n\ncsC_Initiator end");
   }
 
   if ( success >0)

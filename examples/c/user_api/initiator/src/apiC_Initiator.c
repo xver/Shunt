@@ -238,8 +238,6 @@ int main(void) {
       msg = "initiator: data_act";
       shunt_cs_print_longV(&h_trnx_act,LongVact,msg);
     }
-    ////////////////////////////////////////
-
     puts("\n\napiC_Initiator end");
   }
 

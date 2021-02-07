@@ -16,9 +16,8 @@
 
 #include "shunt_primitives.h"
 #define on_error(...) { fprintf(stderr, __VA_ARGS__); fflush(stderr); exit(1); }
-////////////////////////////////////
+
 //Common Functions
-////////////////////////////////////
 
 long shunt_prim_hash(const char *str) {
   long hash = 5381;
@@ -38,9 +37,7 @@ void shunt_prim_error(const char *msg) {
   exit(1);
 }
 
-//////////////////////////////////
 //TCP/IP Functions
-//////////////////////////////////
 
 unsigned int  shunt_prim_init_initiator(const unsigned int portno) {
 
@@ -252,9 +249,7 @@ void shunt_prim_close_socket(int fd) {
    return;
 }
 
-//////////////////////////////////
 //Data exchange primitives
-/////////////////////////////////
 
 int shunt_prim_send_short(const int sockfd,const short int* Short)
 {

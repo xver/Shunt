@@ -60,7 +60,6 @@ int main(void) {
     //data
     if (shunt_api_send(socket,&h_trnx,IntV)<=0) success = 0;
     if (success == 0 )  printf("\n target Int data fail to send");
-    ////////////////////////////////////
 
     //Double Test
     //Double vector
@@ -115,7 +114,7 @@ int main(void) {
     //send loopback
     success=shunt_pkt_send_longV (socket, &h_trnx, LongV);
     if (success == 0 )  printf("\n target String data fail to send");
-    ////////////////////////////////////
+    
     puts("\napiC_Target end");
   }
 
