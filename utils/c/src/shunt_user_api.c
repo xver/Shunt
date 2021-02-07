@@ -53,7 +53,7 @@ int shunt_api_send    (int sockid,cs_header* h_trnx,...) {
     break;
 
   case SHUNT_LONGINT:
-    Long_ = va_arg (ap,long int* );
+    Long_ = va_arg (ap,long* );
       Result_ = shunt_cs_send_longV(sockid,h_trnx,Long_);
     break;
 
@@ -135,7 +135,7 @@ int shunt_api_recv    (int sockid,cs_header* h_trnx,...) {
     break;
 
   case SHUNT_LONGINT:
-    Long_ = va_arg (ap,long int* );
+    Long_ = va_arg (ap,long* );
       Result_ = shunt_cs_recv_longV(sockid,h_trnx,Long_);
     break;
 
@@ -180,22 +180,22 @@ int shunt_api_recv    (int sockid,cs_header* h_trnx,...) {
   return Result_;
 }
 
-int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long int* LongV) {
+int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long* LongV) {
   int  Result_     = 0;
 
-  //long int mem/array
+  //long mem/array
   //pkt size: leader +  cs_header + input array
-  int  size_       = sizeof(long int)+sizeof(*header)+ header->n_payloads*sizeof(long int);
+  int  size_       = sizeof(long)+sizeof(*header)+ header->n_payloads*sizeof(long);
   int  offset      = 0;
 
   //send array init
   long leader_        = shunt_prim_hash("shunt_cs_header_leader");
-  long int* send_arr_ = (long int*)malloc(size_); // array to hold the result
+  long* send_arr_ = (long*)malloc(size_); // array to hold the result
   send_arr_[offset]   = leader_;
   offset++;
   //copy/allocate
   memcpy(&send_arr_[offset], header,sizeof(*header));
-  memcpy(&send_arr_[sizeof(*header)/sizeof(long int)+offset],LongV,header->n_payloads*sizeof(long int));
+  memcpy(&send_arr_[sizeof(*header)/sizeof(long)+offset],LongV,header->n_payloads*sizeof(long));
 
   int numbytes_ = send(sockid,send_arr_,size_, 0);
   if (numbytes_ <= 0)  shunt_prim_error("\nERROR in  shunt_pkt_send_longV()  : numbytes < 0 ");
@@ -205,17 +205,17 @@ int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long int* L
   return Result_;
 }
 
-int shunt_pkt_recv_longV  (int sockid, cs_header* header,long int* LongV) {
+int shunt_pkt_recv_longV  (int sockid, cs_header* header,long* LongV) {
   //
-  //long int mem/array
+  //long mem/array
   //pkt size: leader +  cs_header + input array
-  int  size_        = sizeof(long int)+sizeof(*header)+sizeof(long int)*header->n_payloads;
+  int  size_        = sizeof(long)+sizeof(*header)+sizeof(long)*header->n_payloads;
   int  offset       = 0;
-  int  header_size_ = sizeof(*header)/sizeof(long int);
+  int  header_size_ = sizeof(*header)/sizeof(long);
   int numbytes_     = -1;
   //recive array init
   long leader_        = shunt_prim_hash("shunt_cs_header_leader");
-  long int* recv_arr_ = (long int*)malloc(size_); // array to hold the result
+  long* recv_arr_ = (long*)malloc(size_); // array to hold the result
 
   //
   numbytes_ =  recv(sockid,recv_arr_ ,size_ , 0);
@@ -225,7 +225,7 @@ int shunt_pkt_recv_longV  (int sockid, cs_header* header,long int* LongV) {
     offset= offset+1;
     memcpy(header,&recv_arr_[offset],sizeof(*header));
     offset = offset +header_size_;
-    memcpy(LongV,&recv_arr_[offset],header->n_payloads*sizeof(long int));
+    memcpy(LongV,&recv_arr_[offset],header->n_payloads*sizeof(long));
   }
   else printf("shunt_api_rcv_pkt_longV() get bad  header=%0ld\n", recv_arr_[0] );
   free(recv_arr_ );
