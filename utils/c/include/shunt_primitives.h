@@ -487,7 +487,7 @@ int shunt_prim_recv_short    (const int sockfd,short int* Short);
 
 /*
  Function: shunt_prim_send_long
-  send verilog "longint"/C "long int" over TCP/IP
+  send verilog "longint"/C "long" over TCP/IP
 
   Parameters:
   sockfd - socket id
@@ -499,11 +499,11 @@ int shunt_prim_recv_short    (const int sockfd,short int* Short);
   See Also:
   <shunt_prim_recv_long>
 */
-int shunt_prim_send_long    (const int sockfd,const long int* Long);
+int shunt_prim_send_long    (const int sockfd,const long* Long);
 
 /*
   Function: shunt_prim_recv_long
-  fetch verilog "longint"/C "long int" over TCP/IP
+  fetch verilog "longint"/C "long" over TCP/IP
 
   Parameters:
   sockfd - socket id
@@ -515,7 +515,7 @@ int shunt_prim_send_long    (const int sockfd,const long int* Long);
  See Also:
   <shunt_prim_send_long>
 */
-int shunt_prim_recv_long    (const int sockfd,long int* Long);
+int shunt_prim_recv_long    (const int sockfd,long* Long);
 
 /*
  Function: shunt_prim_send_byte
