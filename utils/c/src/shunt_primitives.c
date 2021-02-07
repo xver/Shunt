@@ -294,21 +294,21 @@ int shunt_prim_recv_int    (const int sockfd, int* Int)
   return numbytes;
 }
 
-int shunt_prim_send_long(const int sockfd,const long int* Long)
+int shunt_prim_send_long(const int sockfd,const long* Long)
 {
   int numbytes;
 
-  numbytes = send(sockfd,Long, sizeof(long int), 0);
+  numbytes = send(sockfd,Long, sizeof(long), 0);
   if (numbytes < 0)  shunt_prim_error("\nERROR in shunt_prim_send_long : numbytes < 0 ");
   return numbytes;
 }
 
-int shunt_prim_recv_long    (const int sockfd, long int* Long)
+int shunt_prim_recv_long    (const int sockfd, long* Long)
 {
 
   int numbytes;
 
-  numbytes = recv(sockfd, Long,sizeof(long int) , 0);
+  numbytes = recv(sockfd, Long,sizeof(long) , 0);
   if (numbytes < 0) shunt_prim_error("\nERROR in shunt_prim_recv_long : numbytes < 0 ");
   return numbytes;
 }
