@@ -205,7 +205,7 @@ int shunt_dpi_recv_short  (int sockfd,short int* Short);
 
 /*
   Function: shunt_dpi_send_long
-  send verilog"longint" /C "long int" data over TCP/IP
+  send verilog"longint" /C "long" data over TCP/IP
 
   Parameters:
   sockfd - socket id
@@ -218,12 +218,12 @@ int shunt_dpi_recv_short  (int sockfd,short int* Short);
   - <shunt_prim_send_long>
   - <shunt_dpi_recv_long>
 */
-int shunt_dpi_send_long  (const int sockfd,const long int Long);
+int shunt_dpi_send_long  (const int sockfd,const long Long);
 
 
 /*
   Function: shunt_dpi_recv_long
-  fetch verilog"longint"/C "long int" data from TCP/IP socket
+  fetch verilog"longint"/C "long" data from TCP/IP socket
 
   Parameters:
   sockfd - socket id
@@ -237,7 +237,7 @@ int shunt_dpi_send_long  (const int sockfd,const long int Long);
   - <shunt_prim_recv_long>
   - <shunt_dpi_send_long>
 */
-int shunt_dpi_recv_long  (int sockfd,long int* Long);
+int shunt_dpi_recv_long  (int sockfd,long* Long);
 
 /*
   Function: shunt_dpi_send_int
@@ -823,6 +823,22 @@ int shunt_dpi_send_string   (int sockid,int size,char* string);
 */
 int shunt_dpi_recv_string   (int sockid,int size,char** string);
 
+/*
+  Function: shunt_dpi_get_cs_header_id 
+  predefined hash functions for obtain the specific hash value.  
+
+  Parameters:
+  N/A
+  
+  Returns:
+  long - hash value;
+
+See Also:
+  <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+
+*/
+long shunt_dpi_get_cs_header_id();
+
 // Section: Data exchange (cs) TLM
 
 /* Enum: shunt_dpi_tlm_command_e
@@ -841,6 +857,73 @@ typedef enum
 
 typedef enum {SHUNT_TLM_READ_COMMAND,SHUNT_TLM_WRITE_COMMAND,SHUNT_TLM_IGNORE_COMMAND,SHUNT_TLM_END_SIM,SHUNT_TLM_START_SIM} shunt_dpi_tlm_command_e;
 
+//////
+/*
+  Function: shunt_dpi_tlm_header_id
+  predefined hash functions for obtain the specific hash value.  
+
+  Parameters:
+  N/A
+  
+  Returns:
+  long - hash value;
+
+See Also:
+  <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+
+*/
+long shunt_dpi_tlm_header_id();
+
+/*
+  Function: shunt_dpi_tlm_data_id
+  predefined hash functions for obtain the specific hash value.  
+
+  Parameters:
+  N/A
+  
+  Returns:
+  long - hash value;
+
+See Also:
+  <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+
+*/
+long  shunt_dpi_tlm_data_id();
+
+/*
+  Function: shunt_dpi_tlm_axi3_ext_id
+  predefined hash functions for obtain the specific hash value.  
+
+  Parameters:
+  N/A
+  
+  Returns:
+  long - hash value;
+
+See Also:
+  <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+
+*/
+long shunt_dpi_tlm_axi3_ext_id();
+
+/*
+  Function: shunt_dpi_tlm_signal_id
+  predefined hash functions for obtain the specific hash value.  
+
+  Parameters:
+  N/A
+  
+  Returns:
+  long - hash value;
+
+See Also:
+  <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+
+*/
+
+long  shunt_dpi_tlm_signal_id();
+
+//////
 
  /*
     Function: shunt_tlm_send_command
@@ -1278,7 +1361,7 @@ int shunt_dpi_recv_pkt_longV  (int sockid, cs_header* h, svOpenArrayHandle Long)
   Returns: longint the number of seconds since the Epoch
   longint a
 */
-long int shunt_dpi_gettimeofday_sec();
+long shunt_dpi_gettimeofday_sec();
 
 /*
   Function:  shunt_dpi_gettimeofday_usec
@@ -1289,7 +1372,7 @@ long int shunt_dpi_gettimeofday_sec();
   Returns: longint the number of microsecond since the Epoch
   longint a
 */
-long int shunt_dpi_gettimeofday_usec();
+long shunt_dpi_gettimeofday_usec();
 
 
 
