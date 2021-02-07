@@ -1758,7 +1758,8 @@ typedef struct packed{
 
  typedef enum {SHUNT_TLM_UNINITIALIZED_PHASE=0,SHUNT_TLM_BEGIN_REQ=1,SHUNT_TLM_END_REQ,SHUNT_TLM_BEGIN_RESP,
            SHUNT_TLM_END_RESP} shunt_tlm_phase_e;
-
+   
+   
    /*
     Function: shunt_tlm_send_command
     send hunt_tlm_command
@@ -1771,17 +1772,92 @@ typedef struct packed{
    import "DPI-C" function  void shunt_dpi_tlm_send_command(int socket,shunt_tlm_command_e Com);
 `endif
 
+   //////
+   /*
+    Function: shunt_dpi_tlm_header_id
+    predefined hash functions for obtain the specific hash value.  
+    
+    Parameters:
+    N/A
+    
+    Returns:
+    long - hash value;
+    
+    See Also:
+    <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+    
+    */
+`ifndef NO_SHUNT_DPI_TLM_HEADER_ID
+   import "DPI-C" function longint shunt_dpi_tlm_header_id();
+`endif
+   
+   /*
+    Function: shunt_dpi_tlm_data_id
+    predefined hash functions for obtain the specific hash value.  
+    
+    Parameters:
+    N/A
+    
+    Returns:
+    long - hash value;
+    
+    See Also:
+    <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+    
+    */
+
+`ifndef  NO_SHUNT_DPI_TLM_DATA_LEADER
+   import "DPI-C" function longint  shunt_dpi_tlm_data_id();
+`endif
+   
+   /*
+    Function: shunt_dpi_tlm_axi3_ext_id
+    predefined hash functions for obtain the specific hash value.  
+    
+    Parameters:
+    N/A
+    
+    Returns:
+    long - hash value;
+    
+    See Also:
+    <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+    
+    */
+`ifndef NO_SHUNT_DPI_TLM_AXI3_EXT_ID
+   import "DPI-C" function longint shunt_dpi_tlm_axi3_ext_id();
+`endif
+   
+   /*
+    Function: shunt_dpi_tlm_signal_id
+    predefined hash functions for obtain the specific hash value.  
+    
+    Parameters:
+    N/A
+    
+    Returns:
+    long - hash value;
+    
+    See Also:
+    <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
+    
+    */
+   
+`ifndef  NO_SHUNT_DPI_TLM_SIGNAL_ID
+   import "DPI-C" function longint  shunt_dpi_tlm_signal_id();
+`endif
+   /////
    /*
     Function: shunt_dpi_tlm_send_gp_transport
     send tlm generic payload  packet ( cs_tlm_generic_payload_header_t  + byte data vector + byte_enable vector )
-
+    
     Parameters:
-
+    
     sockid - socket id from init sever/client
     h - cs_tlm_generic_payload_header_t
     data - data payload array
     byte_enable - byte_enable array
-
+    
     See Also:
     -  <shunt_cs_tlm_send_gp_transport>
     */
@@ -1881,7 +1957,6 @@ typedef struct packed{
    import "DPI-C" function void shunt_dpi_tlm_recv_gp_data (input int sockid, input cs_tlm_generic_payload_header_t h,inout byte unsigned data[],inout byte unsigned   byte_enable[]);
 `endif 
    
-   /////
    //axulary function
 
    function void shunt_dpi_tlm_gp_header_print (cs_tlm_generic_payload_header_t csgp,string prefix="");
