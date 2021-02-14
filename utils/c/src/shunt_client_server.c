@@ -385,6 +385,7 @@ void shunt_cs_tlm_send_gp  (int sockid, const cs_tlm_generic_payload_header* h,c
   int  size_  = sizeof(long)+ sizeof(*h)+ sizeof(long) + data_size_*sizeof(long) + byte_en_size_*sizeof(long);
 
   long* send_arr_ = (long*)malloc(size_); // array to hold the result
+  memset(send_arr_,0,size_);
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   printf("\nDEBUG: shunt_cs_tlm_send_gp() data_size_(%0d)  byte_en_size_(%0d) size_(%0ld.%0ld)=%0d",data_size_,byte_en_size_,size_/sizeof(long),size_%sizeof(long),size_);
 #endif
@@ -443,6 +444,7 @@ void shunt_cs_tlm_send_gp_header  (int sockid, cs_tlm_generic_payload_header* h)
   int  size_  = sizeof(long)+ sizeof(*h);
 
   long* send_arr_ = (long*)malloc(size_); // array to hold the result
+  memset(send_arr_,0,size_);
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   printf("\nDEBUG: shunt_cs_tlm_send_gp_header() size_(%0d) size_(%0ld.%0ld)=%0d",size_,size_/sizeof(long),size_%sizeof(long),size_);
 #endif
@@ -507,6 +509,7 @@ void shunt_cs_tlm_send_axi3_header  (int sockid, cs_tlm_axi3_extension_payload_h
   int  size_  = sizeof(long)+ sizeof(*h);
 
   long* send_arr_ = (long*)malloc(size_); // array to hold the result
+  memset(send_arr_,0,size_);
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   printf("\nDEBUG: shunt_cs_tlm_send_axi3_header size_(%0d) size_(%0ld.%0ld)=%0d",size_,size_/sizeof(long),size_%sizeof(long),size_);
 #endif
@@ -581,6 +584,7 @@ void  shunt_cs_tlm_recv_gp_data (int sockid, const cs_tlm_generic_payload_header
 
     int size_ = sizeof(long)+data_size_*sizeof(long)+byte_en_size_*sizeof(long);//data leader + data + byte_en
     long* recv_arr_ = (long*)malloc(size_); // array to hold the result
+    memset(recv_arr_,0,size_);
 
     numbytes_ =  recv(sockid,recv_arr_ ,size_ , 0);
 
