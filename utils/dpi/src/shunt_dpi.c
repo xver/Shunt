@@ -652,8 +652,9 @@ void shunt_dpi_tlm_send_gp_transport(int sockid, cs_tlm_generic_payload_header* 
   unsigned int size_byte_enable_payload = shunt_cs_tlm_data_payload_size(h->byte_enable_length);
   data_tcp        = (unsigned char*)malloc(h->length);
   byte_enable_tcp = (unsigned char*)malloc(size_byte_enable_payload*sizeof(long));
-
   if(h->length > 0) {
+    memset(data_tcp,0,h->length);
+    memset(byte_enable_tcp,0,size_byte_enable_payload*sizeof(long));
     memcpy(data_tcp,data_,h->length);
     memcpy(byte_enable_tcp,byte_enable_,(size_byte_enable_payload*sizeof(long)));
   }
@@ -692,8 +693,9 @@ void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header*
 #endif
 
     data_tcp        = (unsigned long*)malloc(h->length);
+    memset(data_tcp,0,h->length);
     byte_enable_tcp = (unsigned long*)malloc(size_byte_enable_payload*sizeof(long));
-
+    memset(byte_enable_tcp,0,size_byte_enable_payload*sizeof(long));
     shunt_cs_tlm_recv_gp_data (sockid,h, data_tcp, byte_enable_tcp);
 
 #ifdef SHUNT_DPI_C_DEBUG
@@ -747,7 +749,9 @@ void  shunt_dpi_tlm_recv_gp_data (int sockid, cs_tlm_generic_payload_header* h,s
 #endif
     
     data_tcp        = (unsigned long*)malloc(h->length);
+    memset(data_tcp,0,h->length);
     byte_enable_tcp = (unsigned long*)malloc(size_byte_enable_payload*sizeof(long));
+    shunt_cs_tlm_recv_gp_data (sockid,h, data_tcp, byte_enable_tcp);
     
     shunt_cs_tlm_recv_gp_data (sockid,h, data_tcp, byte_enable_tcp);
     
