@@ -191,6 +191,7 @@ int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long* LongV
   //send array init
   long leader_        = shunt_prim_hash("shunt_cs_header_leader");
   long* send_arr_ = (long*)malloc(size_); // array to hold the result
+  memset(send_arr_,0,size_);
   send_arr_[offset]   = leader_;
   offset++;
   //copy/allocate
@@ -216,6 +217,7 @@ int shunt_pkt_recv_longV  (int sockid, cs_header* header,long* LongV) {
   //recive array init
   long leader_        = shunt_prim_hash("shunt_cs_header_leader");
   long* recv_arr_ = (long*)malloc(size_); // array to hold the result
+  memset(recv_arr_,0,size_);
 
   //
   numbytes_ =  recv(sockid,recv_arr_ ,size_ , 0);
