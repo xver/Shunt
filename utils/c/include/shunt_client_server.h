@@ -236,10 +236,9 @@ int shunt_cs_send_data_header    (int sockid,int n_payloads,cs_data_header* h);
   header - cs_header structure
 
   Returns:
-
   number of elements have been received  : success > 0
-
- See Also:
+  
+  See Also:
   <cs_data_header_t>
 
 */
@@ -294,8 +293,9 @@ int shunt_cs_send_intV   (int sockid, const cs_header* header,const int* Int);
 
   Returns:
   number of elements have been received  : success > 0
- See Also:
-    <shunt_cs_send_intV>
+
+  See Also:
+  <shunt_cs_send_intV>
 */
 int shunt_cs_recv_intV   (int sockid, cs_header* header,int* Int);
 
@@ -468,11 +468,11 @@ int shunt_cs_send_byteV   (int sockid,const cs_header* header,const char* byteV)
   header - cs_header structure
   byteV  - Data received
 
- Returns:
- number of elements have been received  : success > 0
-
-See Also:
-  <shunt_cs_send_byteV>
+  Returns:
+  number of elements have been received  : success > 0
+ 
+ See Also:
+ <shunt_cs_send_byteV>
 */
 int shunt_cs_recv_byteV   (int sockid,cs_header* header,char* byteV);
 
@@ -520,8 +520,8 @@ int shunt_cs_recv_bitN     (int sockid,const cs_header* h,svBitVecVal* bitN);
     Returns:
     number of bytes have been sent : success > 0
 
-See Also:
-  <shunt_cs_recv_integer>
+    See Also:
+    <shunt_cs_send_bitN>
 */
 int shunt_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* integerV) ;
 

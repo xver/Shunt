@@ -381,7 +381,7 @@ int shunt_dpi_send_shortreal (const unsigned int sockfd,const float Real);
 
   See Also:
   - <shunt_prim_recv_float>
-  - <shunt_dpi_send_shortrea>
+  - <shunt_dpi_send_shortreal>
 */
 int shunt_dpi_recv_shortreal (const unsigned int sockfd,float* Real);
 
@@ -454,7 +454,7 @@ int shunt_dpi_send_bit     (const unsigned int sockfd,const svBit Bit);
 
   See Also:
   - <shunt_prim_recv_byte>
-  - <shunt_dpi_send_bit >
+  - <shunt_dpi_send_bit>
 */
 int shunt_dpi_recv_bit     (const unsigned int sockfd,svBit* Bit);
 

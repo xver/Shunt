@@ -509,7 +509,9 @@ namespace shunt_tlm
       Parameters:
       socket - socket id
       tlm_extension_id - see <cs_tlm_axi3_extension_payload_header> 
-      Returns: tlm_sync_enum status.
+     
+      Returns: 
+      tlm_sync_enum status.
 
       See Also:
       - <shunt_tlm_recv_transport>

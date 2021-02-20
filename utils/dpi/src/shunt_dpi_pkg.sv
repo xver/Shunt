@@ -60,7 +60,8 @@ package shunt_dpi_pkg;
 
     Returns:
     socket id
-    (see shunt_prim_init_initiator)
+    See Also:
+    <shunt_prim_init_initiator>
 
     (start code)
     //Example:
@@ -89,7 +90,9 @@ package shunt_dpi_pkg;
 
     Returns:
     socket id
-    ( see  shunt_prim_init_tcptarget)
+    
+    See Also:
+    <shunt_prim_init_target>
 
     (start code)
     //Example:
@@ -1858,7 +1861,7 @@ typedef struct packed{
     byte_enable - byte_enable array
     
     See Also:
-    -  <shunt_cs_tlm_send_gp_transport>
+    <shunt_cs_tlm_send_gp>
     */
 
 `ifndef NO_SHUNT_DPI_TLM_SEND_GP_TRANSPORT
