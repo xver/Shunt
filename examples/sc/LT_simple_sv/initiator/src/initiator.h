@@ -69,7 +69,7 @@ struct Initiator: sc_module
       gp_ext.AxSIZE=3;
       gp_ext.xRESP=1;
       gp_ext.xSTRB=15;
-      tlm_extension_id=123456;
+      tlm_extension_id=shunt_cs_get_tlm_axi3_ext_leader();
       //
       // Initialize 8 out of the 10 attributes, byte_enable_length and extensions being unused
       trans->set_command( cmd );
@@ -86,6 +86,7 @@ struct Initiator: sc_module
       
       shunt_cs_tlm_send_axi3_header(m_socket,&gp_ext);
       shunt_cs_tlm_recv_axi3_header(m_socket,&gp_ext);
+      
       shunt_tlm_print_axi3_header(gp_ext,"SERVER: ");
       
       shunt_recv_b_transport(m_socket,*trans, tlm_extension_id,delay );
