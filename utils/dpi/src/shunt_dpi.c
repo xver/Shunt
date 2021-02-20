@@ -751,7 +751,6 @@ void  shunt_dpi_tlm_recv_gp_data (int sockid, cs_tlm_generic_payload_header* h,s
     data_tcp        = (unsigned long*)malloc(h->length);
     memset(data_tcp,0,h->length);
     byte_enable_tcp = (unsigned long*)malloc(size_byte_enable_payload*sizeof(long));
-    shunt_cs_tlm_recv_gp_data (sockid,h, data_tcp, byte_enable_tcp);
     
     shunt_cs_tlm_recv_gp_data (sockid,h, data_tcp, byte_enable_tcp);
     
