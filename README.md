@@ -35,7 +35,7 @@ NOTE: use the USER_OPT to add compiler options. (Example all debug options: make
 
 # Compile and run all SV/C examples
 - cd to *$SHUNT_HOME/examples/makedir*
-- run *./run_examples* 
+- run *./run_examples* or *./run_examples_debug* 
 
 # Compile and run C examples
 - cd  to example makedir root directory. *(Example: $SHUNT_HOME/examples/c/primitives/makedir)*
