@@ -1595,17 +1595,17 @@ package shunt_dpi_pkg;
     Variable:  cs_tlm_generic_payload_header_t
 
     *TLM 2.0 Generic Payload structure* (Ref. to TLM 2.0 Generic Payload attributes)
-
+     
     - *option*       Generic payload option :
 
     --- Code
-    enum  tlm_gp_option { TLM_MIN_PAYLOAD, TLM_FULL_PAYLOAD, TLM_FULL_PAYLOAD_ACCEPTED }
+    enum  tlm_gp_option { SHUNT_TLM_MIN_PAYLOAD, SHUNT_TLM_FULL_PAYLOAD, SHUNT_TLM_FULL_PAYLOAD_ACCEPTED }
     ---
 
     - *command*     Transaction type:
 
     --- Code
-    enum  tlm_command { TLM_READ_COMMAND, TLM_WRITE_COMMAND, TLM_IGNORE_COMMAND }
+    enum  tlm_command { SHUNT_TLM_READ_COMMAND, SHUNT_TLM_WRITE_COMMAND, SHUNT_TLM_IGNORE_COMMAND }
     ---
 
     - *address*      Transaction base start address (bytes)
@@ -1622,8 +1622,8 @@ package shunt_dpi_pkg;
 
     --- Code
     enum  tlm_response_status {
-    TLM_OK_RESPONSE = 1, TLM_INCOMPLETE_RESPONSE = 0, TLM_GENERIC_ERROR_RESPONSE = -1, TLM_ADDRESS_ERROR_RESPONSE = -2,
-    TLM_COMMAND_ERROR_RESPONSE = -3, TLM_BURST_ERROR_RESPONSE = -4, TLM_BYTE_ENABLE_ERROR_RESPONSE = -5
+    SHUNT_TLM_OK_RESPONSE = 1, SHUNT_TLM_INCOMPLETE_RESPONSE = 0, SHUNT_TLM_GENERIC_ERROR_RESPONSE = -1, SHUNT_TLM_ADDRESS_ERROR_RESPONSE = -2,
+    SHUNT_TLM_COMMAND_ERROR_RESPONSE = -3, SHUNT_TLM_BURST_ERROR_RESPONSE = -4, SHUNT_TLM_BYTE_ENABLE_ERROR_RESPONSE = -5
     }
     ---
 
@@ -1640,7 +1640,7 @@ package shunt_dpi_pkg;
     - *tlm_sync*     shunt tlm header nb_trasport atribute:
    
     --- Code
-    enum  tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED }
+    enum  tlm_sync_enum { SHUNT_TLM_ACCEPTED, SHUNT_TLM_UPDATED, SHUNT_TLM_COMPLETED }
     ---
     
     - *tlm_extension_id*  (long) tlm_extension id. if "0" - extension is not available 
