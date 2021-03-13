@@ -55,9 +55,9 @@ namespace shunt_tlm
   /* Enum: shunt_tlm_command
 
   SHUNT_TLM_END_SIM - end of Client simulation, send by Server
+  SHUNT_TLM_START_SIM - start of simulation,send by Target
   --- Code
-  enum shunt_tlm_command {
-  SHUNT_TLM_END_SIM =tlm_command::TLM_IGNORE_COMMAND+1,SHUNT_TLM_START_SIM};
+  enum shunt_tlm_command {SHUNT_TLM_END_SIM = tlm_command::TLM_IGNORE_COMMAND+1,SHUNT_TLM_START_SIM};
   ---
   */
   enum shunt_tlm_command {
@@ -76,10 +76,10 @@ namespace shunt_tlm
       prefix - Message prefix
 
     */
-    void shunt_tlm_print_csgp (const cs_tlm_generic_payload_header csgp,string prefix="") {
+    void shunt_tlm_print_csgp(const cs_tlm_generic_payload_header csgp,string prefix="") {
       const char *print_string;
 
-      switch (csgp.option) {
+      switch(csgp.option) {
       case tlm::TLM_MIN_PAYLOAD: print_string="TLM_MIN_PAYLOAD"; break;
       case tlm::TLM_FULL_PAYLOAD: print_string="TLM_FULL_PAYLOAD"; break;
       case tlm::TLM_FULL_PAYLOAD_ACCEPTED : print_string="TLM_FULL_PAYLOAD_ACCEPTED"; break;
@@ -87,11 +87,12 @@ namespace shunt_tlm
       }
       cout<< prefix <<" csgp .option("<<print_string<<")";
 
-      switch ( csgp.command) {
+      switch( csgp.command) {
       case tlm::TLM_WRITE_COMMAND  : print_string="TLM_WRITE_COMMAND"; break;
       case tlm::TLM_READ_COMMAND   : print_string="TLM_READ_COMMAND"; break;
       case tlm::TLM_IGNORE_COMMAND : print_string="TLM_IGNORE_COMMAND"; break;
       case SHUNT_TLM_END_SIM       : print_string="SHUNT_TLM_END_SIM"; break;
+      case SHUNT_TLM_START_SIM     : print_string="SHUNT_TLM_START_SIM"; break;
       default                 : print_string="TLM_UNKNOWN_COMMAND"; break;
       }
       cout<<" command("<< print_string<<")"
@@ -99,7 +100,7 @@ namespace shunt_tlm
           <<" length("<< hex <<(unsigned)csgp.length<<")"
           <<" streaming_width("<< hex <<(unsigned)csgp.streaming_width<<")"
           <<" byte_enable_length("<< hex <<(unsigned)csgp.byte_enable_length<<")";
-      switch ( csgp.response_status) {
+      switch( csgp.response_status) {
       case tlm::TLM_OK_RESPONSE            : print_string="TLM_OK_RESPONSE"; break;
       case tlm::TLM_INCOMPLETE_RESPONSE    : print_string="TLM_INCOMPLETE_RESPONSE"; break;
       case tlm::TLM_GENERIC_ERROR_RESPONSE : print_string="TLM_GENERIC_ERROR_RESPONSE"; break;
@@ -113,7 +114,7 @@ namespace shunt_tlm
           <<" Shunt tlm header extension["
           <<" delay("<< hex <<csgp.delay<<")";
 
-      switch ( csgp.tlm_phase) {
+      switch( csgp.tlm_phase) {
       case tlm::UNINITIALIZED_PHASE: print_string="UNINITIALIZED_PHASE"; break;
       case tlm::BEGIN_REQ : print_string="BEGIN_REQ"; break;
       case tlm::END_REQ : print_string="END_REQ"; break;
@@ -123,7 +124,7 @@ namespace shunt_tlm
       }
       cout <<" tlm_phase("<< hex <<print_string<<","<<hex<<csgp.tlm_phase<<")";
 
-      switch ( csgp.tlm_sync) {
+      switch( csgp.tlm_sync) {
       case tlm::TLM_ACCEPTED: print_string="TLM_ACCEPTED"; break;
       case tlm::TLM_UPDATED: print_string="TLM_UPDATED"; break;
       case tlm::TLM_COMPLETED: print_string="TLM_COMPLETED"; break;
@@ -136,7 +137,7 @@ namespace shunt_tlm
 
     /*
       Function: shunt_tlm_print_axi3
-      print shunt axi3 header structure (cs_tlm_axi3_extension_payload_header)
+      print shunt axi3 header structure(cs_tlm_axi3_extension_payload_header)
 
       Parameters:
 
@@ -145,7 +146,7 @@ namespace shunt_tlm
       prefix - Message prefix
 
     */
-    void shunt_tlm_print_axi3_header (const cs_tlm_axi3_extension_payload_header  h_axi3,string prefix="") {
+    void shunt_tlm_print_axi3_header(const cs_tlm_axi3_extension_payload_header  h_axi3,string prefix="") {
       cout<< prefix
           <<"h_axi3.AxBURST"<<hex<<h_axi3.AxBURST
           <<" ,h_axi3.AxCACHE="<<hex<<h_axi3.AxCACHE
@@ -171,7 +172,7 @@ namespace shunt_tlm
     */
     int is_shunt_tlm_end_sim( cs_tlm_generic_payload_header csgp) {
       int Result_ =0;
-      if (csgp.command == SHUNT_TLM_END_SIM) Result_ = 1;
+      if(csgp.command == SHUNT_TLM_END_SIM) Result_ = 1;
       return Result_;
     }
 
@@ -185,7 +186,7 @@ namespace shunt_tlm
       tlmgp  - tlm Generic Payload (tlmgp)
 
     */
-    void shunt_tlmgp2csgp (cs_tlm_generic_payload_header *csgp,const tlm::tlm_generic_payload& tlmgp) {
+    void shunt_tlmgp2csgp(cs_tlm_generic_payload_header *csgp,const tlm::tlm_generic_payload& tlmgp) {
       //tlm::tlm_extension* ext_handle; 
       csgp->option             = (long) tlmgp.get_gp_option();
       csgp->command            = (long) tlmgp.get_command();
@@ -208,7 +209,7 @@ namespace shunt_tlm
       csgp   - Ref. to <cs_tlm_generic_payload_header>
 
     */
-    void shunt_csgp2tlmgp         (tlm::tlm_generic_payload& tlmgp, const cs_tlm_generic_payload_header *csgp) {
+    void shunt_csgp2tlmgp          (tlm::tlm_generic_payload& tlmgp, const cs_tlm_generic_payload_header *csgp) {
       tlmgp.set_gp_option          ((tlm::tlm_gp_option)csgp->option);
       tlmgp.set_command            ((tlm::tlm_command)csgp->command);
       tlmgp.set_address            ((sc_dt::uint64)csgp->address);
@@ -347,9 +348,9 @@ namespace shunt_tlm
 #ifdef SHUNT_TLM_DEBUG
     shunt_tlm_print_csgp(csgp,"\nDEBUG: shunt_tlm_recv_transport() ");
 #endif
-    shunt_csgp2tlmgp (trans,&csgp);
+    shunt_csgp2tlmgp(trans,&csgp);
 
-    if (csgp.length>0) {
+    if(csgp.length>0) {
       size_data_payload = shunt_cs_tlm_data_payload_size(csgp.length);
       size_byte_enable_payload= shunt_cs_tlm_data_payload_size(csgp.byte_enable_length);
       data_tcp = new long unsigned[size_data_payload];
@@ -358,14 +359,14 @@ namespace shunt_tlm
       cout<<"\nDEBUG: shunt_tlm_recv_transport() (pre-shunt_tlm_recv_gp_data) size_data_payload="<<hex<<size_data_payload
           <<" size_byte_enable_payload="<<size_byte_enable_payload<<endl;
 #endif
-      if ( size_byte_enable_payload>0) byte_enable_tcp = new long unsigned[size_byte_enable_payload];
+      if( size_byte_enable_payload>0) byte_enable_tcp = new long unsigned[size_byte_enable_payload];
 
       shunt_cs_tlm_recv_gp_data(socket,&csgp,data_tcp,byte_enable_tcp);
 
       //unpack to byte arrays
       memcpy(ptr,data_tcp,trans.get_data_length());
 
-      if (csgp.byte_enable_length>0) memcpy(&byt,&byte_enable_tcp,trans.get_byte_enable_length());
+      if(csgp.byte_enable_length>0) memcpy(&byt,&byte_enable_tcp,trans.get_byte_enable_length());
 #ifdef SHUNT_TLM_DEBUG
       for(int i=0;i<size_data_payload;i++) {
         cout<<"\nDEBUG: shunt_tlm_recv_transport() (post-shunt_tlm_recv_gp_data) data_tcp"<<"["<<i<<"]"<<"="<<hex<<data_tcp[i]<<endl;
