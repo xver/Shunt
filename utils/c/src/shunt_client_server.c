@@ -19,7 +19,7 @@
 
 //Data exchange utilities (header)
 
-long shunt_cs_data_type_hash(long data_type,const char* data_type_names[],int last_enum) {
+INLINE long shunt_cs_data_type_hash(long data_type,const char* data_type_names[],int last_enum) {
   long result_ = -1;
 
   if(data_type < last_enum+1 && data_type >= 0 ) {
@@ -28,7 +28,7 @@ long shunt_cs_data_type_hash(long data_type,const char* data_type_names[],int la
   return result_;
 }
 
-int shunt_cs_data_type(long hash,const char* trnx_type_names[],int last_enum) {
+INLINE int shunt_cs_data_type(long hash,const char* trnx_type_names[],int last_enum) {
   int result_ = -1;
   int i =0;
 
@@ -40,7 +40,7 @@ int shunt_cs_data_type(long hash,const char* trnx_type_names[],int last_enum) {
   return result_;
 }
 
-void shunt_cs_print_header(cs_header* h,const char* data_type_names[],int last_enum,char* msg) {
+INLINE void shunt_cs_print_header(cs_header* h,const char* data_type_names[],int last_enum,char* msg) {
 
   printf("\n%s h_trnx->trnx_type\t(%lx)",msg,h->trnx_type);
   printf("\n%s h_trnx->trnx_id\t(%lx)",msg,h->trnx_id);
@@ -56,7 +56,7 @@ void shunt_cs_print_header(cs_header* h,const char* data_type_names[],int last_e
   return;
 }
 
-void shunt_cs_print_data_header(cs_header* h,cs_data_header* h_data,const char* data_type_names[],int last_enum,char* msg) {
+INLINE void shunt_cs_print_data_header(cs_header* h,cs_data_header* h_data,const char* data_type_names[],int last_enum,char* msg) {
 
   int data_type_ = shunt_cs_data_type(h_data->data_type,data_type_names,last_enum);
   if(data_type_>=0)
@@ -71,7 +71,7 @@ void shunt_cs_print_data_header(cs_header* h,cs_data_header* h_data,const char* 
   return;
 }
 
-int shunt_cs_send_header(int sockid,cs_header* h) {
+INLINE int shunt_cs_send_header(int sockid,cs_header* h) {
   int Result_=0;
   long send_arr[(sizeof(*h) + sizeof(long))/sizeof(long)];
   int numbytes;
@@ -85,7 +85,7 @@ int shunt_cs_send_header(int sockid,cs_header* h) {
   return Result_;
 }
 
-int shunt_cs_send_data_header(int sockid,int n_payloads,cs_data_header* h) {
+INLINE int shunt_cs_send_data_header(int sockid,int n_payloads,cs_data_header* h) {
   int Result_=1;
   if(shunt_prim_send_long(sockid,&h->data_type)==0) Result_=0;
   for(int i=0;i<n_payloads;i++) {
@@ -94,7 +94,7 @@ int shunt_cs_send_data_header(int sockid,int n_payloads,cs_data_header* h) {
   return Result_;
 }
 
-int shunt_cs_recv_header(int sockid,cs_header* h) {
+INLINE int shunt_cs_recv_header(int sockid,cs_header* h) {
   int  Result_=1;
   long leader_in;
   long leader_ref;
@@ -118,7 +118,7 @@ int shunt_cs_recv_header(int sockid,cs_header* h) {
   return Result_;
 }
 
-int shunt_cs_recv_data_header(int sockid,int n_payloads,cs_data_header* h) {
+INLINE int shunt_cs_recv_data_header(int sockid,int n_payloads,cs_data_header* h) {
 
   int Result_=1;
 
@@ -132,7 +132,7 @@ int shunt_cs_recv_data_header(int sockid,int n_payloads,cs_data_header* h) {
 
 // Data exchange utilities (element/vector)
 
-int shunt_cs_send_intV(int sockid,const cs_header* h,const int* Int) {
+INLINE int shunt_cs_send_intV(int sockid,const cs_header* h,const int* Int) {
   int Result_=-1;
   if(h->data_type==  shunt_prim_hash("SHUNT_INT")) {
     Result_ = send(sockid,Int, h->n_payloads*sizeof(int), 0);
@@ -140,7 +140,7 @@ int shunt_cs_send_intV(int sockid,const cs_header* h,const int* Int) {
   return Result_;
 }
 
-int shunt_cs_send_shortV(int sockid,const cs_header* h,const short int * Short) {
+INLINE int shunt_cs_send_shortV(int sockid,const cs_header* h,const short int * Short) {
   int Result_=-1;
   if(h->data_type==  shunt_prim_hash("SHUNT_SHORTINT")) {
     Result_ = send(sockid,Short, h->n_payloads*sizeof(int), 0);
@@ -148,7 +148,7 @@ int shunt_cs_send_shortV(int sockid,const cs_header* h,const short int * Short) 
   return Result_;
 }
 
-int shunt_cs_send_longV(int sockid,const cs_header* h,const long * Long) {
+INLINE int shunt_cs_send_longV(int sockid,const cs_header* h,const long * Long) {
   int Result_=-1;
   if(h->data_type==  shunt_prim_hash("SHUNT_LONGINT")) {
     Result_ = send(sockid,Long, h->n_payloads*sizeof(long), 0);
@@ -156,7 +156,7 @@ int shunt_cs_send_longV(int sockid,const cs_header* h,const long * Long) {
   return Result_;
 }
 
-int shunt_cs_send_doubleV(int sockid,const cs_header* h,const double* Double) {
+INLINE int shunt_cs_send_doubleV(int sockid,const cs_header* h,const double* Double) {
   int Result_=-1;
 
   if(h->data_type ==  shunt_prim_hash("SHUNT_REAL")) {
@@ -167,7 +167,7 @@ int shunt_cs_send_doubleV(int sockid,const cs_header* h,const double* Double) {
   return Result_;
 }
 
-int shunt_cs_send_floatV(int sockid,const cs_header* h,const float* Float) {
+INLINE int shunt_cs_send_floatV(int sockid,const cs_header* h,const float* Float) {
   int Result_=-1;
   if(h->data_type ==  shunt_prim_hash("SHUNT_SHORTREAL")) {
     for(int i=0;i< h->n_payloads;i++) {
@@ -177,7 +177,7 @@ int shunt_cs_send_floatV(int sockid,const cs_header* h,const float* Float) {
   return Result_;
 }
 
-int shunt_cs_send_byteV(int sockid,const cs_header* h,const char* byteV) {
+INLINE int shunt_cs_send_byteV(int sockid,const cs_header* h,const char* byteV) {
   int Result_=-1;
   char B_ = 0;
   if(h->data_type==  shunt_prim_hash("SHUNT_BYTE" )|| h->data_type==  shunt_prim_hash("SHUNT_STRING")) {
@@ -189,7 +189,7 @@ int shunt_cs_send_byteV(int sockid,const cs_header* h,const char* byteV) {
   return Result_;
 }
 
-int shunt_cs_send_integerV(int sockid,const cs_header* h,const svLogicVecVal* IntegerV) {
+INLINE int shunt_cs_send_integerV(int sockid,const cs_header* h,const svLogicVecVal* IntegerV) {
   int Result_=-1;
   int Size_ =   h->n_payloads;
 
@@ -201,7 +201,7 @@ int shunt_cs_send_integerV(int sockid,const cs_header* h,const svLogicVecVal* In
   return Result_;
 }
 
-int shunt_cs_send_regN(const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
+INLINE int shunt_cs_send_regN(const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg) {
   int Result_;
 
   Result_ = 1;
@@ -219,7 +219,7 @@ int shunt_cs_send_regN(const unsigned int sockfd,cs_header* h_trnx,const  svLogi
   return Result_;
 }
 
-int shunt_cs_send_bitN(int sockid,const cs_header* h,const svBitVecVal* BitN) {
+INLINE int shunt_cs_send_bitN(int sockid,const cs_header* h,const svBitVecVal* BitN) {
   int Result_=-1;
   int Size_ =   h->n_payloads/ 32;
 
@@ -236,7 +236,7 @@ int shunt_cs_send_bitN(int sockid,const cs_header* h,const svBitVecVal* BitN) {
 }
 
 
-int  shunt_cs_recv_intV(int sockid,cs_header* h,int* Int) {
+INLINE int  shunt_cs_recv_intV(int sockid,cs_header* h,int* Int) {
   int Result_=-1;
   if(h->data_type == shunt_prim_hash("SHUNT_INT")) {
     Result_ =  recv(sockid,Int , h->n_payloads*sizeof(int) , 0);
@@ -244,7 +244,7 @@ int  shunt_cs_recv_intV(int sockid,cs_header* h,int* Int) {
   return Result_;
 }
 
-int  shunt_cs_recv_shortV(int sockid,cs_header* h,short int* Shortint) {
+INLINE int  shunt_cs_recv_shortV(int sockid,cs_header* h,short int* Shortint) {
   int Result_=-1;
   if(h->data_type == shunt_prim_hash("SHUNT_SHORTINT")) {
     Result_ =  recv(sockid,Shortint , h->n_payloads*sizeof(int) , 0);
@@ -252,7 +252,7 @@ int  shunt_cs_recv_shortV(int sockid,cs_header* h,short int* Shortint) {
   return Result_;
 }
 
-int  shunt_cs_recv_longV(int sockid,cs_header* h,long* Longint) {
+INLINE int  shunt_cs_recv_longV(int sockid,cs_header* h,long* Longint) {
   int Result_=-1;
   if(h->data_type == shunt_prim_hash("SHUNT_LONGINT")) {
     Result_ =  recv(sockid,Longint , h->n_payloads*sizeof(long) , 0);
@@ -261,7 +261,7 @@ int  shunt_cs_recv_longV(int sockid,cs_header* h,long* Longint) {
 }
 
 
-int  shunt_cs_recv_doubleV(int sockid,cs_header* h,double* Double) {
+INLINE int  shunt_cs_recv_doubleV(int sockid,cs_header* h,double* Double) {
   int Result_=-1;
 
   if(h->data_type ==  shunt_prim_hash("SHUNT_REAL")) {
@@ -273,7 +273,7 @@ int  shunt_cs_recv_doubleV(int sockid,cs_header* h,double* Double) {
 }
 
 
-int  shunt_cs_recv_floatV(int sockid,cs_header* h,float* Float) {
+INLINE int  shunt_cs_recv_floatV(int sockid,cs_header* h,float* Float) {
   int Result_=-1;
 
   if(h->data_type ==  shunt_prim_hash("SHUNT_SHORTREAL")) {
@@ -284,7 +284,7 @@ int  shunt_cs_recv_floatV(int sockid,cs_header* h,float* Float) {
   return Result_;
 }
 
-int shunt_cs_recv_byteV(int sockid,cs_header* h,char* byteV) {
+INLINE int shunt_cs_recv_byteV(int sockid,cs_header* h,char* byteV) {
   int Result_=-1;
   char B_=0;
   if(h->data_type == shunt_prim_hash("SHUNT_BYTE" )|| h->data_type == shunt_prim_hash("SHUNT_STRING")) {
@@ -296,7 +296,7 @@ int shunt_cs_recv_byteV(int sockid,cs_header* h,char* byteV) {
   return Result_;
 }
 
-int shunt_cs_recv_bitN(int sockid,const cs_header* h,svBitVecVal* BitN) {
+INLINE int shunt_cs_recv_bitN(int sockid,const cs_header* h,svBitVecVal* BitN) {
   int Result_=-1;
   int Size_ =   h->n_payloads/ 32;
   if(h->n_payloads % 32 > 0) ++Size_;
@@ -312,7 +312,7 @@ int shunt_cs_recv_bitN(int sockid,const cs_header* h,svBitVecVal* BitN) {
 }
 
 
-int shunt_cs_recv_integerV(int sockid,const cs_header* h,svLogicVecVal* IntegerV) {
+INLINE int shunt_cs_recv_integerV(int sockid,const cs_header* h,svLogicVecVal* IntegerV) {
   int Result_=-1;
   int Size_ =   h->n_payloads;
 
@@ -324,7 +324,7 @@ int shunt_cs_recv_integerV(int sockid,const cs_header* h,svLogicVecVal* IntegerV
   return Result_;
 }
 
-int shunt_cs_recv_regN(const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
+INLINE int shunt_cs_recv_regN(const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg) {
   int Result_;
   Result_ = 1;
   svLogicVecVal* Reg_ =  Reg;
@@ -340,40 +340,40 @@ int shunt_cs_recv_regN(const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal
   return Result_;
 }
 //aux functions
-long shunt_cs_get_cs_header_leader() {
+INLINE long shunt_cs_get_cs_header_leader() {
   long  Result_ = shunt_prim_hash("shunt_cs_header_leader");
   return Result_;
 }
 
-long shunt_cs_get_tlm_header_leader() {
+INLINE long shunt_cs_get_tlm_header_leader() {
   long Result_ = shunt_prim_hash("shunt_tlm_generic_payload_header_leader");
   return Result_;
 }
 
-long shunt_cs_get_tlm_data_leader() {
+INLINE long shunt_cs_get_tlm_data_leader() {
   long Result_ =  shunt_prim_hash("shunt_tlm_generic_payload_data_leader");
   return Result_;
 }
 
-long shunt_cs_get_tlm_axi3_ext_leader() {
+INLINE long shunt_cs_get_tlm_axi3_ext_leader() {
   long Result_ = shunt_prim_hash("shunt_tlm_axi3_extension_payload_header_leader");
   return Result_;
 }
 
-long shunt_cs_get_tlm_axi3_signal_leader() {
+INLINE long shunt_cs_get_tlm_axi3_signal_leader() {
   long Result_ = shunt_prim_hash("shunt_tlm_signal_extension_payload_header_leader");
   return Result_;
 }
 
 
-unsigned int shunt_cs_tlm_data_payload_size(const unsigned int data_size) {
+INLINE unsigned int shunt_cs_tlm_data_payload_size(const unsigned int data_size) {
   unsigned int data_size_ = data_size*sizeof(char)/sizeof(long);
   if(data_size*sizeof(char)%sizeof(long)>0 || data_size_ ==0) ++data_size_;
   return data_size_;
 }
 
 //TLM2.0
-void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header* h,const unsigned char* data,const unsigned char* byte_enable) {
+INLINE void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header* h,const unsigned char* data,const unsigned char* byte_enable) {
   int data_size_ =0;
   int byte_en_size_=0;
   //long mem/array for  cs_tlm_generic_payload_header
@@ -437,7 +437,7 @@ void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header* h,con
   free(send_arr_);
 }
 
-void shunt_cs_tlm_send_gp_header(int sockid, cs_tlm_generic_payload_header* h) {
+INLINE void shunt_cs_tlm_send_gp_header(int sockid, cs_tlm_generic_payload_header* h) {
 
   //long mem/array for  cs_tlm_generic_payload_header
   //pkt size: <tlm header leader> +  <tlm header> + <tlm data leader> + <data vector> + <byte_enable>
@@ -476,7 +476,7 @@ void shunt_cs_tlm_send_gp_header(int sockid, cs_tlm_generic_payload_header* h) {
 }
 
 
-void shunt_cs_tlm_recv_gp_header(int sockid, cs_tlm_generic_payload_header* h) {
+INLINE void shunt_cs_tlm_recv_gp_header(int sockid, cs_tlm_generic_payload_header* h) {
   int  Result_=1;
   long leader_in;
   long leader_ref;
@@ -506,7 +506,7 @@ void shunt_cs_tlm_recv_gp_header(int sockid, cs_tlm_generic_payload_header* h) {
   }
 }
 
-void shunt_cs_tlm_send_axi3_header(int sockid, cs_tlm_axi3_extension_payload_header* h) {
+INLINE void shunt_cs_tlm_send_axi3_header(int sockid, cs_tlm_axi3_extension_payload_header* h) {
 
   //long mem/array for  cs_tlm_axi3_extension_payload_header
   //pkt size: <tlm header leader> +  <tlm header> + <tlm data leader> + <data vector> + <byte_enable>
@@ -545,7 +545,7 @@ void shunt_cs_tlm_send_axi3_header(int sockid, cs_tlm_axi3_extension_payload_hea
 }
 
 
-void  shunt_cs_tlm_recv_axi3_header(int sockid, cs_tlm_axi3_extension_payload_header* h) {
+INLINE void  shunt_cs_tlm_recv_axi3_header(int sockid, cs_tlm_axi3_extension_payload_header* h) {
   int  Result_=1;
   long leader_in;
   long leader_ref;
@@ -575,7 +575,7 @@ void  shunt_cs_tlm_recv_axi3_header(int sockid, cs_tlm_axi3_extension_payload_he
   }
 }
 
-void  shunt_cs_tlm_recv_gp_data(int sockid, const cs_tlm_generic_payload_header* h,unsigned long* data,unsigned long* byte_enable) {
+INLINE void  shunt_cs_tlm_recv_gp_data(int sockid, const cs_tlm_generic_payload_header* h,unsigned long* data,unsigned long* byte_enable) {
   int data_size_ =0;
   int byte_en_size_=0;
   int numbytes_     = -1;

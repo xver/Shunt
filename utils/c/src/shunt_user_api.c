@@ -15,7 +15,7 @@
 
 #include "shunt_user_api.h"
 
-int shunt_api_send    (int sockid,cs_header* h_trnx,...) {
+INLINE int shunt_api_send    (int sockid,cs_header* h_trnx,...) {
 
   SHUNT_INSTR_HASH_INDEX_DEFINE;
 
@@ -98,7 +98,7 @@ int shunt_api_send    (int sockid,cs_header* h_trnx,...) {
 }
 
 
-int shunt_api_recv    (int sockid,cs_header* h_trnx,...) {
+INLINE int shunt_api_recv    (int sockid,cs_header* h_trnx,...) {
   SHUNT_INSTR_HASH_INDEX_DEFINE;
 
   int*           Int_;
@@ -180,7 +180,7 @@ int shunt_api_recv    (int sockid,cs_header* h_trnx,...) {
   return Result_;
 }
 
-int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long* LongV) {
+INLINE int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long* LongV) {
   int  Result_     = 0;
 
   //long mem/array
@@ -199,14 +199,14 @@ int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long* LongV
   memcpy(&send_arr_[sizeof(*header)/sizeof(long)+offset],LongV,header->n_payloads*sizeof(long));
 
   int numbytes_ = send(sockid,send_arr_,size_, 0);
-  if (numbytes_ <= 0)  shunt_prim_error("\nERROR in  shunt_pkt_send_longV()  : numbytes < 0 ");
+  if(numbytes_ <= 0)  shunt_prim_error("\nERROR in  shunt_pkt_send_longV()  : numbytes < 0 ");
   else  Result_=numbytes_;
 
   free(send_arr_);
   return Result_;
 }
 
-int shunt_pkt_recv_longV  (int sockid, cs_header* header,long* LongV) {
+INLINE int shunt_pkt_recv_longV  (int sockid, cs_header* header,long* LongV) {
   //
   //long mem/array
   //pkt size: leader +  cs_header + input array
@@ -222,8 +222,8 @@ int shunt_pkt_recv_longV  (int sockid, cs_header* header,long* LongV) {
   //
   numbytes_ =  recv(sockid,recv_arr_ ,size_ , 0);
 
-  if (numbytes_ <= 0) shunt_prim_error("\nERROR in shunt_api_rcv_pkt_longV : numbytes < 0 ");
-  if (leader_ == recv_arr_[offset]) {
+  if(numbytes_ <= 0) shunt_prim_error("\nERROR in shunt_api_rcv_pkt_longV : numbytes < 0 ");
+  if(leader_ == recv_arr_[offset]) {
     offset= offset+1;
     memcpy(header,&recv_arr_[offset],sizeof(*header));
     offset = offset +header_size_;

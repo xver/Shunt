@@ -16,6 +16,7 @@
 #include "shunt_client_server.h"
 #include "shunt_primitives.h"
 
+
 //-------------
 //prototypes
 //-------------
@@ -77,7 +78,7 @@
 
    number of elements have been sent  : success > 0
 */
-int shunt_api_send    (int sockid,cs_header* h_trnx, ...);
+INLINE int shunt_api_send    (int sockid,cs_header* h_trnx, ...);
 
 /*
   Function: shunt_api_recv
@@ -106,7 +107,7 @@ int shunt_api_send    (int sockid,cs_header* h_trnx, ...);
   Returns:
   number of elements have been received  : success > 0
 */
-int shunt_api_recv (int sockid,cs_header* h_trnx, ...);
+INLINE int shunt_api_recv (int sockid,cs_header* h_trnx, ...);
 
 //Section: Fixed size packet communication Data exchange (API)
 
@@ -123,7 +124,7 @@ int shunt_api_recv (int sockid,cs_header* h_trnx, ...);
   Returns:
   number of elements have been sent  : success > 0
 */
-int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long* Long);
+INLINE int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long* Long);
 
 /*
   Function: shunt_pkt_rcv_longV
@@ -138,7 +139,7 @@ int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long* Long)
   Returns:
   number of elements have been received  : success > 0
 */
-int shunt_pkt_recv_longV  (int sockid, cs_header* header,long* Long);
+INLINE int shunt_pkt_recv_longV  (int sockid, cs_header* header,long* Long);
 
 #endif
 

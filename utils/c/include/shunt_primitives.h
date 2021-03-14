@@ -14,6 +14,12 @@
 #ifndef  SHUNT_PRIMITIVES_H
 #define  SHUNT_PRIMITIVES_H
 
+//#ifdef __cplusplus
+//#define INLINE inline
+//#else
+#define INLINE 
+//#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -122,7 +128,7 @@ typedef s_vpi_vecval svLogicVecVal;
   Returns:
   hash value
 */
-long shunt_prim_hash(const char *str);
+INLINE long shunt_prim_hash(const char *str);
 
 /*
   Function: shunt_prim_error
@@ -134,7 +140,7 @@ long shunt_prim_hash(const char *str);
   Returns:
   void
  */
-void shunt_prim_error(const char *msg);
+INLINE void shunt_prim_error(const char *msg);
 
 //Section: TCP/IP Functions
 
@@ -185,7 +191,7 @@ struct hostent {
  socket id
 
 */
-unsigned int shunt_prim_init_initiator(const unsigned int portno);
+INLINE unsigned int shunt_prim_init_initiator(const unsigned int portno);
 
 /*
   Function: shunt_prim_tcp_parent_init_initiator
@@ -202,7 +208,7 @@ unsigned int shunt_prim_init_initiator(const unsigned int portno);
   socket id - parent socket id
 
 */
-unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno);
+INLINE unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno);
 
 /*
   Function: shunt_prim_tcp_child_init_initiator
@@ -216,7 +222,7 @@ unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno);
 
   child socket id
  */
-unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd);
+INLINE unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd);
 
 /*
  Function: shunt_prim_init_target
@@ -233,7 +239,7 @@ unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int parentfd);
  socket id
 
 */
-unsigned int shunt_prim_init_target(const unsigned int portno,const char *hostname);
+INLINE unsigned int shunt_prim_init_target(const unsigned int portno,const char *hostname);
 
 /*
  Function: shunt_prim_get_socket_error
@@ -249,8 +255,7 @@ Parameters:
  err - error if err<0
 
 */
-
-int shunt_prim_get_socket_error(int fd);
+INLINE int shunt_prim_get_socket_error(int fd);
 
 /*
  Function: shunt_prim_close_socket
@@ -265,7 +270,7 @@ int shunt_prim_get_socket_error(int fd);
  N/A
 
 */
-void shunt_prim_close_socket(int fd);
+INLINE void shunt_prim_close_socket(int fd);
 
 /*
  Function: shunt_prim_unblock_socket
@@ -280,7 +285,7 @@ void shunt_prim_close_socket(int fd);
  N/A
 
 */
-void shunt_prim_unblock_socket(int flag , int sockfd);
+INLINE void shunt_prim_unblock_socket(int flag , int sockfd);
 
 
 
@@ -299,7 +304,7 @@ void shunt_prim_unblock_socket(int flag , int sockfd);
   N/A
 
 */
-void shunt_prim_tcp_nodelay_socket(int flag, int sockfd);
+INLINE void shunt_prim_tcp_nodelay_socket(int flag, int sockfd);
 
 /*
   Function: shunt_prim_get_status_socket
@@ -325,8 +330,7 @@ void shunt_prim_tcp_nodelay_socket(int flag, int sockfd);
 
 
 */
-
-int shunt_prim_get_status_socket(int fd,int event);
+INLINE int shunt_prim_get_status_socket(int fd,int event);
 
 
 /*
@@ -363,7 +367,7 @@ Function: Example:  target,initiator init
   See Also:
   <shunt_prim_recv_int>
 */
-int shunt_prim_send_int    (const int sockfd,const int* Int);
+INLINE int shunt_prim_send_int    (const int sockfd,const int* Int);
 
 /*
  Function: shunt_prim_recv_int
@@ -379,7 +383,7 @@ int shunt_prim_send_int    (const int sockfd,const int* Int);
   See Also:
   <shunt_prim_send_int>
 */
-int shunt_prim_recv_int    (const int sockfd,int* Int);
+INLINE int shunt_prim_recv_int    (const int sockfd,int* Int);
 
 /*
  Function: shunt_prim_send_double
@@ -396,7 +400,7 @@ int shunt_prim_recv_int    (const int sockfd,int* Int);
 
     <shunt_prim_recv_double>
 */
-int shunt_prim_send_double    (const int sockfd,const double* Double);
+INLINE int shunt_prim_send_double    (const int sockfd,const double* Double);
 
 /*
   Function: shunt_prim_recv_double
@@ -413,7 +417,7 @@ See Also:
    <shunt_prim_recv_double>
 
 */
-int shunt_prim_recv_double   (const int sockfd,double* Double);
+INLINE int shunt_prim_recv_double   (const int sockfd,double* Double);
 
 /*
  Function: shunt_prim_send_float
@@ -429,7 +433,7 @@ int shunt_prim_recv_double   (const int sockfd,double* Double);
     See Also:
    <shunt_prim_recv_float>
 */
-int shunt_prim_send_float     (const int sockfd,const float* Float);
+INLINE int shunt_prim_send_float     (const int sockfd,const float* Float);
 
 
 /*
@@ -447,7 +451,7 @@ int shunt_prim_send_float     (const int sockfd,const float* Float);
   <shunt_prim_send_float>
 
 */
-int shunt_prim_recv_float    (const int sockfd,float* Float);
+INLINE int shunt_prim_recv_float    (const int sockfd,float* Float);
 
 /*
   Function: shunt_prim_send_short
@@ -463,7 +467,7 @@ int shunt_prim_recv_float    (const int sockfd,float* Float);
   See Also:
   <shunt_prim_recv_short>
 */
-int shunt_prim_send_short (const int sockfd,const short int* Short);
+INLINE int shunt_prim_send_short (const int sockfd,const short int* Short);
 
 /*
   Function: shunt_prim_recv_short
@@ -480,7 +484,7 @@ int shunt_prim_send_short (const int sockfd,const short int* Short);
   <shunt_prim_send_short>
 
 */
-int shunt_prim_recv_short    (const int sockfd,short int* Short);
+INLINE int shunt_prim_recv_short    (const int sockfd,short int* Short);
 
 
 /*
@@ -497,7 +501,7 @@ int shunt_prim_recv_short    (const int sockfd,short int* Short);
   See Also:
   <shunt_prim_recv_long>
 */
-int shunt_prim_send_long    (const int sockfd,const long* Long);
+INLINE int shunt_prim_send_long    (const int sockfd,const long* Long);
 
 /*
   Function: shunt_prim_recv_long
@@ -513,7 +517,7 @@ int shunt_prim_send_long    (const int sockfd,const long* Long);
  See Also:
   <shunt_prim_send_long>
 */
-int shunt_prim_recv_long    (const int sockfd,long* Long);
+INLINE int shunt_prim_recv_long    (const int sockfd,long* Long);
 
 /*
  Function: shunt_prim_send_byte
@@ -529,7 +533,7 @@ int shunt_prim_recv_long    (const int sockfd,long* Long);
  See Also:
   <shunt_prim_recv_byte>
 */
-int shunt_prim_send_byte    (const int sockfd,const char* Byte);
+INLINE int shunt_prim_send_byte    (const int sockfd,const char* Byte);
 
 /*
  Function: shunt_prim_recv_byte
@@ -545,7 +549,7 @@ int shunt_prim_send_byte    (const int sockfd,const char* Byte);
   <shunt_prim_send_byte>
 
 */
-int shunt_prim_recv_byte    (const int sockfd,char* Byte);
+INLINE int shunt_prim_recv_byte    (const int sockfd,char* Byte);
 
 /*
  Function: shunt_prim_send_integer
@@ -562,7 +566,7 @@ int shunt_prim_recv_byte    (const int sockfd,char* Byte);
    <shunt_prim_recv_integer>
 
 */
-int shunt_prim_send_integer(const unsigned int sockfd,const svLogicVecVal* Int);
+INLINE int shunt_prim_send_integer(const unsigned int sockfd,const svLogicVecVal* Int);
 
 /*
  Function:  shunt_prim_recv_integer
@@ -579,5 +583,5 @@ int shunt_prim_send_integer(const unsigned int sockfd,const svLogicVecVal* Int);
    <shunt_prim_send_integer>
 
 */
-int shunt_prim_recv_integer (const unsigned int sockfd,svLogicVecVal* Int);
+INLINE int shunt_prim_recv_integer (const unsigned int sockfd,svLogicVecVal* Int);
 #endif

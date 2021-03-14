@@ -163,7 +163,7 @@ typedef struct cs_data_header_t {
    <shunt_cs_data_type_hash>
 
 */
-long shunt_cs_data_type_hash(long data_type,const char* data_type_names[],int last_enum);
+INLINE long shunt_cs_data_type_hash(long data_type,const char* data_type_names[],int last_enum);
 
 /*
   Function: shunt_cs_data_type
@@ -183,7 +183,7 @@ long shunt_cs_data_type_hash(long data_type,const char* data_type_names[],int la
   See Also:
   <shunt_cs_data_type_hash>
 */
-int shunt_cs_data_type(long hash,const char* data_type_names[],int last_enum);
+INLINE int shunt_cs_data_type(long hash,const char* data_type_names[],int last_enum);
 
 /*
   Function: shunt_cs_send_header
@@ -202,7 +202,7 @@ int shunt_cs_data_type(long hash,const char* data_type_names[],int last_enum);
   <cs_header_t>
 
 */
-int shunt_cs_send_header    (int sockid,cs_header* h);
+INLINE int shunt_cs_send_header    (int sockid,cs_header* h);
 
 /*
   Function: shunt_cs_send_data_header
@@ -222,7 +222,7 @@ int shunt_cs_send_header    (int sockid,cs_header* h);
   <cs_data_header_t>
 
 */
-int shunt_cs_send_data_header    (int sockid,int n_payloads,cs_data_header* h);
+INLINE int shunt_cs_send_data_header    (int sockid,int n_payloads,cs_data_header* h);
 
 
 
@@ -242,7 +242,7 @@ int shunt_cs_send_data_header    (int sockid,int n_payloads,cs_data_header* h);
   <cs_data_header_t>
 
 */
-int shunt_cs_recv_header   (int sockid,cs_header* h);
+INLINE int shunt_cs_recv_header   (int sockid,cs_header* h);
 
 /*
   Function: shunt_cs_recv_data_header
@@ -259,7 +259,7 @@ See Also:
   <cs_data_header_t>
 
 */
-int shunt_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h);
+INLINE int shunt_cs_recv_data_header   (int sockid,int n_payloads,cs_data_header* h);
 
 // Section: Data exchange utilities
 
@@ -280,7 +280,7 @@ Function: shunt_cs_send_intV
   <shunt_cs_recv_intV>
 
 */
-int shunt_cs_send_intV   (int sockid, const cs_header* header,const int* Int);
+INLINE int shunt_cs_send_intV   (int sockid, const cs_header* header,const int* Int);
 
 /*
   Function: shunt_cs_recv_intV
@@ -297,7 +297,7 @@ int shunt_cs_send_intV   (int sockid, const cs_header* header,const int* Int);
   See Also:
   <shunt_cs_send_intV>
 */
-int shunt_cs_recv_intV   (int sockid, cs_header* header,int* Int);
+INLINE int shunt_cs_recv_intV   (int sockid, cs_header* header,int* Int);
 
 /*
 Function: shunt_cs_send_shortV
@@ -315,7 +315,7 @@ Function: shunt_cs_send_shortV
   <shunt_cs_recv_shortV>
 
 */
-int shunt_cs_send_shortV (int sockid, const cs_header* header,const short int* Short);
+INLINE int shunt_cs_send_shortV (int sockid, const cs_header* header,const short int* Short);
 
 /*
   Function: shunt_cs_recv_shortV
@@ -332,7 +332,7 @@ int shunt_cs_send_shortV (int sockid, const cs_header* header,const short int* S
   See Also:
     <shunt_cs_send_shortV>
 */
-int shunt_cs_recv_shortV (int sockid, cs_header* header,short int* Short);
+INLINE int shunt_cs_recv_shortV (int sockid, cs_header* header,short int* Short);
 
 
 /*
@@ -350,7 +350,7 @@ Function: shunt_cs_send_longV
     See Also:
     <shunt_cs_recv_longV>
 */
-int shunt_cs_send_longV  (int sockid, const cs_header* header,const long* Long);
+INLINE int shunt_cs_send_longV  (int sockid, const cs_header* header,const long* Long);
 
 /*
   Function: shunt_cs_recv_longV
@@ -368,7 +368,7 @@ int shunt_cs_send_longV  (int sockid, const cs_header* header,const long* Long);
   See Also:
     <shunt_cs_send_longV>
 */
-int shunt_cs_recv_longV  (int sockid, cs_header* header,long* Long);
+INLINE int shunt_cs_recv_longV  (int sockid, cs_header* header,long* Long);
 
 
 /*
@@ -386,7 +386,7 @@ int shunt_cs_recv_longV  (int sockid, cs_header* header,long* Long);
   See Also:
     <shunt_cs_recv_doubleV>
 */
-int shunt_cs_send_doubleV   (int sockid,const cs_header* header,const double* Double);
+INLINE int shunt_cs_send_doubleV   (int sockid,const cs_header* header,const double* Double);
 
 /*
   Function: shunt_cs_recv_doubleV
@@ -404,7 +404,7 @@ int shunt_cs_send_doubleV   (int sockid,const cs_header* header,const double* Do
   <shunt_cs_send_doubleV>
 
 */
-int shunt_cs_recv_doubleV   (int sockid,cs_header* header,double* Double);
+INLINE int shunt_cs_recv_doubleV   (int sockid,cs_header* header,double* Double);
 
 
 /*
@@ -422,7 +422,7 @@ int shunt_cs_recv_doubleV   (int sockid,cs_header* header,double* Double);
   See Also:
   <shunt_cs_recv_floatV>
 */
-int shunt_cs_send_floatV   (int sockid,const cs_header* header,const float* Float);
+INLINE int shunt_cs_send_floatV   (int sockid,const cs_header* header,const float* Float);
 
 /*
   Function: shunt_cs_recv_floatV
@@ -440,7 +440,7 @@ int shunt_cs_send_floatV   (int sockid,const cs_header* header,const float* Floa
   <shunt_cs_send_floatV>
 
 */
-int shunt_cs_recv_floatV   (int sockid,cs_header* header,float* Float);
+INLINE int shunt_cs_recv_floatV   (int sockid,cs_header* header,float* Float);
 
 /*
   Function: shunt_cs_send_byteV
@@ -457,7 +457,7 @@ int shunt_cs_recv_floatV   (int sockid,cs_header* header,float* Float);
   See Also:
   <shunt_cs_recv_byteV>
 */
-int shunt_cs_send_byteV   (int sockid,const cs_header* header,const char* byteV);
+INLINE int shunt_cs_send_byteV   (int sockid,const cs_header* header,const char* byteV);
 
 /*
   Function: shunt_cs_recv_byteV
@@ -474,7 +474,7 @@ int shunt_cs_send_byteV   (int sockid,const cs_header* header,const char* byteV)
  See Also:
  <shunt_cs_send_byteV>
 */
-int shunt_cs_recv_byteV   (int sockid,cs_header* header,char* byteV);
+INLINE int shunt_cs_recv_byteV   (int sockid,cs_header* header,char* byteV);
 
 /*
     Functions: shunt_cs_send_bitN
@@ -488,10 +488,10 @@ int shunt_cs_recv_byteV   (int sockid,cs_header* header,char* byteV);
     Returns:
     number of bytes have been sent : success > 0
 
-    */
-int shunt_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* bitN) ;
+*/
+INLINE int shunt_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* bitN) ;
 
-  /*
+/*
     Functions: shunt_cs_recv_bitN
     map bit[N:0] 2-state data type packed array of scalar bit types
     LRM  6.11
@@ -505,8 +505,8 @@ int shunt_cs_send_bitN (int sockid,const cs_header* h,const svBitVecVal* bitN) ;
 
 See Also:
   <shunt_cs_recv_bitN>
-    */
-int shunt_cs_recv_bitN     (int sockid,const cs_header* h,svBitVecVal* bitN);
+*/
+INLINE int shunt_cs_recv_bitN     (int sockid,const cs_header* h,svBitVecVal* bitN);
 
 /*
     Functions: shunt_cs_send_integerV
@@ -523,7 +523,7 @@ int shunt_cs_recv_bitN     (int sockid,const cs_header* h,svBitVecVal* bitN);
     See Also:
     <shunt_cs_send_bitN>
 */
-int shunt_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* integerV) ;
+INLINE int shunt_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* integerV) ;
 
 /*
     Functions: shunt_cs_recv_integerV
@@ -539,8 +539,8 @@ int shunt_cs_send_integerV (int sockid,const cs_header* h,const svLogicVecVal* i
 
 See Also:
   <shunt_cs_send_integerV>
-    */
-int shunt_cs_recv_integerV     (int sockid,const cs_header* h,svLogicVecVal* integerV);
+*/
+INLINE int shunt_cs_recv_integerV     (int sockid,const cs_header* h,svLogicVecVal* integerV);
 
 /*
     Functions: shunt_cs_send_regN
@@ -556,8 +556,8 @@ int shunt_cs_recv_integerV     (int sockid,const cs_header* h,svLogicVecVal* int
 
 See Also:
   <shunt_cs_recv_regN>
-    */
-int shunt_cs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg);
+*/
+INLINE int shunt_cs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLogicVecVal*  Reg);
 
 /*
     Functions:  shunt_cs_recv_regN
@@ -573,8 +573,8 @@ int shunt_cs_send_regN (const unsigned int sockfd,cs_header* h_trnx,const  svLog
 
 See Also:
   <shunt_cs_send_regN>
-    */
-int shunt_cs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
+*/
+INLINE int shunt_cs_recv_regN (const unsigned int sockfd,cs_header* h_trnx,svLogicVecVal* Reg);
 
 //Section: Auxiliary tasks
 
@@ -598,7 +598,7 @@ See Also:
   <cs_header_t>
 
 */
-void shunt_cs_print_header    (cs_header* h,const char* data_type_names[],int last_enum,char* msg);
+INLINE void shunt_cs_print_header    (cs_header* h,const char* data_type_names[],int last_enum,char* msg);
 
 /*
   Function: shunt_cs_print_data_header
@@ -620,7 +620,7 @@ See Also:
   <cs_data_header_t>
 
 */
-void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,const char* data_type_names[],int last_enum,char* msg);
+INLINE void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,const char* data_type_names[],int last_enum,char* msg);
 
 /*
   Function: shunt_cs_get_cs_header_leader 
@@ -636,7 +636,7 @@ See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-long shunt_cs_get_cs_header_leader();
+INLINE long shunt_cs_get_cs_header_leader();
 
 /*
   Function: shunt_cs_get_tlm_header_leader
@@ -652,7 +652,7 @@ See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-long shunt_cs_get_tlm_header_leader();
+INLINE long shunt_cs_get_tlm_header_leader();
 
 /*
   Function: shunt_cs_get_tlm_data_leader
@@ -668,7 +668,7 @@ See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-long  shunt_cs_get_tlm_data_leader();
+INLINE long  shunt_cs_get_tlm_data_leader();
 
 /*
   Function: shunt_cs_get_tlm_axi3_ext_leader
@@ -684,7 +684,7 @@ See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-long shunt_cs_get_tlm_axi3_ext_leader();
+INLINE long shunt_cs_get_tlm_axi3_ext_leader();
 
 /*
   Function: shunt_cs_get_tlm_axi3_signal_leader
@@ -700,8 +700,7 @@ See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-
-long  shunt_cs_get_tlm_axi3_signal_leader();
+INLINE long  shunt_cs_get_tlm_axi3_signal_leader();
 
 //Section: TLM2.0 utils
 /*
@@ -911,7 +910,7 @@ typedef struct cs_tlm_axi3_extension_payload_header_t {
   byte_enable - byte_enable vector pointer
 
 */
-void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header* h, const unsigned char* data, const unsigned char* byte_enable);
+INLINE void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header* h, const unsigned char* data, const unsigned char* byte_enable);
 
 /*
   Function: shunt_cs_tlm_recv_gp_header
@@ -924,7 +923,7 @@ void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header* h, co
 
 
 */
-void shunt_cs_tlm_recv_gp_header (int sockid, cs_tlm_generic_payload_header* h);
+INLINE void shunt_cs_tlm_recv_gp_header (int sockid, cs_tlm_generic_payload_header* h);
 
 /*
   Function: shunt_cs_tlm_send_gp_header
@@ -937,7 +936,7 @@ void shunt_cs_tlm_recv_gp_header (int sockid, cs_tlm_generic_payload_header* h);
 
 
 */
-void shunt_cs_tlm_send_gp_header (int sockid, cs_tlm_generic_payload_header* h);
+INLINE void shunt_cs_tlm_send_gp_header (int sockid, cs_tlm_generic_payload_header* h);
 
 /*
   Function: shunt_cs_tlm_recv_axi3_header
@@ -950,7 +949,7 @@ void shunt_cs_tlm_send_gp_header (int sockid, cs_tlm_generic_payload_header* h);
 
 
 */
-void shunt_cs_tlm_recv_axi3_header (int sockid, cs_tlm_axi3_extension_payload_header* h);
+INLINE void shunt_cs_tlm_recv_axi3_header (int sockid, cs_tlm_axi3_extension_payload_header* h);
 
 /*
   Function: shunt_cs_tlm_send_axi3_header
@@ -963,7 +962,7 @@ void shunt_cs_tlm_recv_axi3_header (int sockid, cs_tlm_axi3_extension_payload_he
 
 
 */
-void shunt_cs_tlm_send_axi3_header (int sockid, cs_tlm_axi3_extension_payload_header* h);
+INLINE void shunt_cs_tlm_send_axi3_header (int sockid, cs_tlm_axi3_extension_payload_header* h);
 
 
 /*
@@ -977,6 +976,6 @@ void shunt_cs_tlm_send_axi3_header (int sockid, cs_tlm_axi3_extension_payload_he
   data - data payload byte-vector pointer  (output)
   byte_enable - byte_enable vector pointer (output)
 */
-void  shunt_cs_tlm_recv_gp_data (int sockid, const cs_tlm_generic_payload_header* h,unsigned long* data,unsigned long* byte_enable);
+INLINE void  shunt_cs_tlm_recv_gp_data (int sockid, const cs_tlm_generic_payload_header* h,unsigned long* data,unsigned long* byte_enable);
 
 #endif

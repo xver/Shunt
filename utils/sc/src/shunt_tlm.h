@@ -22,9 +22,9 @@ namespace shunt_tlm
 {
 
   extern "C" {
-#include "shunt_user_api.c"
-#include "shunt_client_server.c"
 #include "shunt_primitives.c"
+#include "shunt_client_server.c"
+#include "shunt_user_api.c"
   }
 
   using namespace sc_core;

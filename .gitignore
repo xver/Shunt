@@ -16,4 +16,6 @@
 **vscode/*
 *.json
 *.vcd
-examples/makedir/r
+*/makedir/r
+examples/sc/LT_simple_sv/makedir/LTcs_initiator.log
+examples/sc/LT_simple_sv/makedir/Vcs_common_target.log
