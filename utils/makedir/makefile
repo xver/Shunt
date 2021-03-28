@@ -39,10 +39,10 @@ ${SHUNT_HOME}/bin/libutils.so: $(OBJS) $(USER_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-${SHUNT_HOME}/bin/libCutils.so: $(OBJS) $(USER_OBJS)
+${SHUNT_HOME}/bin/libCutils.so: $(C_OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -std=gnu11 -Wall -Werror -Wpedantic -Wextra  -Wno-odr $(USER_OPT) -shared -o "${SHUNT_HOME}/bin/libCutils.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -std=gnu11 -Wall -Werror -Wpedantic -Wextra  -Wno-odr $(USER_OPT) -shared -o "${SHUNT_HOME}/bin/libCutils.so" $(C_OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

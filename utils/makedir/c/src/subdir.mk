@@ -13,6 +13,12 @@ OBJS += \
 ./c/src/shunt_primitives.o \
 ./c/src/shunt_user_api.o
 
+C_OBJS += \
+./c/src/shunt_client_server.o \
+./c/src/shunt_primitives.o \
+./c/src/shunt_user_api.o
+
+
 C_DEPS += \
 ./c/src/shunt_client_server.d \
 ./c/src/shunt_primitives.d \
