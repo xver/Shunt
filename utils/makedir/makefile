@@ -29,7 +29,7 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all:  ${SHUNT_HOME}/bin/libutils.so
+all:  ${SHUNT_HOME}/bin/libutils.so ${SHUNT_HOME}/bin/libCutils.so
 
 # Tool invocations
 ${SHUNT_HOME}/bin/libutils.so: $(OBJS) $(USER_OBJS)
