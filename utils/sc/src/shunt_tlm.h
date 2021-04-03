@@ -26,14 +26,14 @@ namespace shunt_tlm
 #include "shunt_client_server.c"
 #include "shunt_user_api.c"
   }
-
+  
   using namespace sc_core;
   using namespace sc_dt;
   using namespace std;
   using namespace tlm;
-
+  
   /*
-      TLM Enumerations:
+    TLM Enumerations:
       enum  tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED }
 
       enum  tlm_command { TLM_READ_COMMAND, TLM_WRITE_COMMAND, TLM_IGNORE_COMMAND }

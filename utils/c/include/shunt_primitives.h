@@ -2,7 +2,7 @@
  ============================================================================
  File        : shunt_primitives.h
  Version     : 1.0.0
- Copyright (c) 2016-2017 IC Verimeter. All rights reserved.
+ Copyright (c) 2016-2021 IC Verimeter. All rights reserved.
                Licensed under the MIT License.
                See LICENSE file in the project root for full license information.
  Description : target-initiator primitive(basic) utils
@@ -13,53 +13,8 @@
 
 #ifndef  SHUNT_PRIMITIVES_H
 #define  SHUNT_PRIMITIVES_H
+#include "shunt_typedef.h"
 
-//#ifdef __cplusplus
-//#define INLINE inline
-//#else
-#define INLINE 
-//#endif
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <time.h>
-#include <stdarg.h>
-#include <stdint.h>
-#include <fcntl.h>
-#include <netinet/tcp.h>
-#include <poll.h>
-#include <signal.h>
-#include <time.h>
-#include <sys/time.h>
-
-#ifdef SHUNT_SVDPI
-#include "svdpi.h"
-#else
-#ifndef INCLUDED_SVDPI
-typedef uint8_t svScalar;
-typedef svScalar svLogic; /* scalar */
-typedef svScalar svBit; /* scalar */
-typedef uint32_t svBitVecVal;
-typedef void* svOpenArrayHandle;
-
-typedef struct t_vpi_vecval {
-uint32_t aval;
-uint32_t bval;
-} s_vpi_vecval, *p_vpi_vecval;
-typedef s_vpi_vecval svLogicVecVal;
-#endif
-#endif
-
-//compile error struct hostent has no member named h_addr https://github.com/dound/vns/issues/2
-#define h_addr h_addr_list[0] /* for backward compatibility */
 //-------------
 //prototypes
 //-------------
@@ -143,41 +98,6 @@ INLINE long shunt_prim_hash(const char *str);
 INLINE void shunt_prim_error(const char *msg);
 
 //Section: TCP/IP Functions
-
-#if 0
-/*
- * Structs exported from in.h
- */
-
-/* Internet address */
-struct in_addr {
-  unsigned int s_addr;
-};
-
-/* Internet style socket address */
-struct sockaddr_in  {
-  unsigned short int sin_family; /* Address family */
-  unsigned short int sin_port;   /* Port number */
-  struct in_addr sin_addr;   /* IP address */
-  unsigned char sin_zero[...];   /* Pad to size of 'struct sockaddr' */
-};
-
-/*
- * Struct exported from netdb.h
- */
-
-/* Domain name service (DNS) host entry */
-struct hostent {
-  char    *h_name;        /* official name of host */
-  char    **h_aliases;    /* alias list */
-  int     h_addrtype;     /* host address type */
-  int     h_length;       /* length of address */
-  char    **h_addr_list;  /* list of addresses */
-}
-#endif
-
-
-
 /*
  Function: shunt_prim_init_initiator
  TCP/IP initiator initialization
