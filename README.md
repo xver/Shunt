@@ -1,12 +1,12 @@
-# Welcome to the **SystemVerilog "TCP/IP Shunt"**!
+# Welcome to the **SystemVerilog/SytemC "TCP/IP Shunt"**!
 
 ![](https://github.com/xver/Shunt/blob/master/doc/shut_log_min.png)
 
 
 
-The **Shunt** is Open Source Client/Server TCP/IP socket based communication library for SystemVerilog simulation.
+The **Shunt** is Open Source Client/Server TCP/IP socket based communication library for SystemVerilog and SystemC simulations.
 
-* It aims to enable quick and easy development of communication between stand-alone SystemVerilog simulations and/or external applications
+* It aims to enable quick and easy development of communication between stand-alone SystemVerilog/SystemC simulations and/or external applications
 
 * It provides a common SystemVerilog/C API and supports mostly all System Verilog data types and data structures.
 
