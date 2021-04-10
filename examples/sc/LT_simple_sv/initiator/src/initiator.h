@@ -45,7 +45,7 @@ struct Initiator: sc_module
         <<endl;
     sc_time delay;
     shunt_tlm_command command;
-    long tlm_extension_id=0;
+    shunt_long_t tlm_extension_id=0;
     shunt_recv_b_transport(m_socket,*trans,tlm_extension_id,delay);
     command = (shunt_tlm_command)trans->get_command();
     cout<<"SERVER: SHUNT_TLM_START_SIM command="<<hex <<command<<endl;

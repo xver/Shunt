@@ -19,8 +19,8 @@
 
 //Data exchange utilities (header)
 
-INLINE long shunt_cs_data_type_hash(long data_type,const char* data_type_names[],int last_enum) {
-  long result_ = -1;
+INLINE shunt_long_t shunt_cs_data_type_hash(shunt_long_t data_type,const char* data_type_names[],int last_enum) {
+  shunt_long_t result_ = -1;
 
   if(data_type < last_enum+1 && data_type >= 0 ) {
     result_ = shunt_prim_hash(data_type_names[data_type]);
@@ -28,12 +28,12 @@ INLINE long shunt_cs_data_type_hash(long data_type,const char* data_type_names[]
   return result_;
 }
 
-INLINE int shunt_cs_data_type(long hash,const char* trnx_type_names[],int last_enum) {
+INLINE int shunt_cs_data_type(shunt_long_t hash,const char* trnx_type_names[],int last_enum) {
   int result_ = -1;
   int i =0;
 
   while(i < last_enum+1 && result_ < 0) {
-    long hash_ = shunt_prim_hash(trnx_type_names[i]);
+    shunt_long_t hash_ = shunt_prim_hash(trnx_type_names[i]);
     if(hash == hash_) result_ = i;
     i++;
   }
@@ -42,15 +42,15 @@ INLINE int shunt_cs_data_type(long hash,const char* trnx_type_names[],int last_e
 
 INLINE void shunt_cs_print_header(cs_header* h,const char* data_type_names[],int last_enum,char* msg) {
 
-  printf("\n%s h_trnx->trnx_type\t(%lx)",msg,h->trnx_type);
-  printf("\n%s h_trnx->trnx_id\t(%lx)",msg,h->trnx_id);
+  printf("\n%s h_trnx->trnx_type\t(%lx)",msg,(long)h->trnx_type);
+  printf("\n%s h_trnx->trnx_id\t(%lx)",msg,(long)h->trnx_id);
 
   int data_type_ = shunt_cs_data_type(h->data_type,data_type_names,last_enum);
   if(data_type_>=0)
-    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lx",msg,data_type_names[data_type_],data_type_,h->data_type);
+    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lx",msg,data_type_names[data_type_],data_type_,(long)h->data_type);
   else
-    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lx",msg,"N/A",data_type_,h->trnx_type);
-  printf("\n%s h_trnx->n_payloads\t(%0lu)",msg,h->n_payloads);
+    printf("\n%s h_trnx->data_type\t(%s )(%d)\thash=%lx",msg,"N/A",data_type_,(long)h->trnx_type);
+  printf("\n%s h_trnx->n_payloads\t(%0lu)",msg,(long)h->n_payloads);
   puts("\n");
 
   return;
@@ -60,9 +60,9 @@ INLINE void shunt_cs_print_data_header(cs_header* h,cs_data_header* h_data,const
 
   int data_type_ = shunt_cs_data_type(h_data->data_type,data_type_names,last_enum);
   if(data_type_>=0)
-    printf("\n%s h_data->data_type\t(%s )(%d)\thash=%lu",msg,data_type_names[data_type_],data_type_,h_data->data_type);
+    printf("\n%s h_data->data_type\t(%s )(%d)\thash=%lu",msg,data_type_names[data_type_],data_type_,(long)h_data->data_type);
   else
-    printf("\n%s h_data->data_type\t(%s )(%d)\thash=%lu",msg,"N/A",data_type_,h_data->data_type);
+    printf("\n%s h_data->data_type\t(%s )(%d)\thash=%lu",msg,"N/A",data_type_,(long)h_data->data_type);
 
   for(int i=0;i<h->n_payloads;i++) {
     printf("\n%s h_data->trnx_payload_sizes[%0d]=%d",msg,i,h_data->trnx_payload_sizes[i]);
@@ -73,12 +73,12 @@ INLINE void shunt_cs_print_data_header(cs_header* h,cs_data_header* h_data,const
 
 INLINE int shunt_cs_send_header(int sockid,cs_header* h) {
   int Result_=0;
-  long send_arr[(sizeof(*h) + sizeof(long))/sizeof(long)];
+  shunt_long_t send_arr[(sizeof(*h) + sizeof(shunt_long_t))/sizeof(shunt_long_t)];
   int numbytes;
 
   send_arr[0] = shunt_prim_hash("shunt_cs_header_leader");
   memcpy(&send_arr[1], h,sizeof(*h));
-  numbytes = send(sockid,send_arr,sizeof(*h) + sizeof(long), 0);
+  numbytes = send(sockid,send_arr,sizeof(*h) + sizeof(shunt_long_t), 0);
   if(numbytes <= 0)  shunt_prim_error("\nERROR: in  shunt_cs_send_header : numbytes < 0 ");
   else  Result_=1;
 
@@ -96,12 +96,12 @@ INLINE int shunt_cs_send_data_header(int sockid,int n_payloads,cs_data_header* h
 
 INLINE int shunt_cs_recv_header(int sockid,cs_header* h) {
   int  Result_=1;
-  long leader_in;
-  long leader_ref;
-  long recv_arr[(sizeof(*h) + sizeof(long))/sizeof(long)];
+  shunt_long_t leader_in;
+  shunt_long_t leader_ref;
+  shunt_long_t recv_arr[(sizeof(*h) + sizeof(shunt_long_t))/sizeof(shunt_long_t)];
   int  numbytes=0;
 
-  numbytes = recv(sockid,recv_arr ,sizeof(*h) + sizeof(long), 0);
+  numbytes = recv(sockid,recv_arr ,sizeof(*h) + sizeof(shunt_long_t), 0);
   if(numbytes<0)   shunt_prim_error("\nERROR: in shunt_cs_recv_header : numbytes < 0 ");
   Result_ = numbytes;
 
@@ -112,8 +112,8 @@ INLINE int shunt_cs_recv_header(int sockid,cs_header* h) {
   }
   else {
     Result_ =-1;
-    printf("\nERROR: shunt_cs_recv_header() get bad  header (%lx)(Ref. to %lx) numbytes=%0d", leader_in,leader_ref,numbytes);
-    for(unsigned int i=0;i<(sizeof(*h) + sizeof(long))/sizeof(long);i++) printf("\nERROR: shunt_cs_recv_header() recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
+    printf("\nERROR: shunt_cs_recv_header() get bad  header (%lx)(Ref. to %lx) numbytes=%0d", (long)leader_in,(long)leader_ref,numbytes);
+    for(unsigned int i=0;i<(sizeof(*h) + sizeof(shunt_long_t))/sizeof(shunt_long_t);i++) printf("\nERROR: shunt_cs_recv_header() recv_arr[%0d]=(%ld)%lx",i,(long)recv_arr[i],(long)recv_arr[i]);
   }
   return Result_;
 }
@@ -148,10 +148,10 @@ INLINE int shunt_cs_send_shortV(int sockid,const cs_header* h,const short int * 
   return Result_;
 }
 
-INLINE int shunt_cs_send_longV(int sockid,const cs_header* h,const long * Long) {
+INLINE int shunt_cs_send_longV(int sockid,const cs_header* h,const shunt_long_t * Long) {
   int Result_=-1;
   if(h->data_type==  shunt_prim_hash("SHUNT_LONGINT")) {
-    Result_ = send(sockid,Long, h->n_payloads*sizeof(long), 0);
+    Result_ = send(sockid,Long, h->n_payloads*sizeof(shunt_long_t), 0);
   }
   return Result_;
 }
@@ -252,10 +252,10 @@ INLINE int  shunt_cs_recv_shortV(int sockid,cs_header* h,short int* Shortint) {
   return Result_;
 }
 
-INLINE int  shunt_cs_recv_longV(int sockid,cs_header* h,long* Longint) {
+INLINE int  shunt_cs_recv_longV(int sockid,cs_header* h,shunt_long_t* Longint) {
   int Result_=-1;
   if(h->data_type == shunt_prim_hash("SHUNT_LONGINT")) {
-    Result_ =  recv(sockid,Longint , h->n_payloads*sizeof(long) , 0);
+    Result_ =  recv(sockid,Longint , h->n_payloads*sizeof(shunt_long_t) , 0);
   }
   return Result_;
 }
@@ -340,35 +340,35 @@ INLINE int shunt_cs_recv_regN(const unsigned int sockfd,cs_header* h_trnx,svLogi
   return Result_;
 }
 //aux functions
-INLINE long shunt_cs_get_cs_header_leader() {
-  long  Result_ = shunt_prim_hash("shunt_cs_header_leader");
+INLINE shunt_long_t shunt_cs_get_cs_header_leader() {
+  shunt_long_t  Result_ = shunt_prim_hash("shunt_cs_header_leader");
   return Result_;
 }
 
-INLINE long shunt_cs_get_tlm_header_leader() {
-  long Result_ = shunt_prim_hash("shunt_tlm_generic_payload_header_leader");
+INLINE shunt_long_t shunt_cs_get_tlm_header_leader() {
+  shunt_long_t Result_ = shunt_prim_hash("shunt_tlm_generic_payload_header_leader");
   return Result_;
 }
 
-INLINE long shunt_cs_get_tlm_data_leader() {
-  long Result_ =  shunt_prim_hash("shunt_tlm_generic_payload_data_leader");
+INLINE shunt_long_t shunt_cs_get_tlm_data_leader() {
+  shunt_long_t Result_ =  shunt_prim_hash("shunt_tlm_generic_payload_data_leader");
   return Result_;
 }
 
-INLINE long shunt_cs_get_tlm_axi3_ext_leader() {
-  long Result_ = shunt_prim_hash("shunt_tlm_axi3_extension_payload_header_leader");
+INLINE shunt_long_t shunt_cs_get_tlm_axi3_ext_leader() {
+  shunt_long_t Result_ = shunt_prim_hash("shunt_tlm_axi3_extension_payload_header_leader");
   return Result_;
 }
 
-INLINE long shunt_cs_get_tlm_axi3_signal_leader() {
-  long Result_ = shunt_prim_hash("shunt_tlm_signal_extension_payload_header_leader");
+INLINE shunt_long_t shunt_cs_get_tlm_axi3_signal_leader() {
+  shunt_long_t Result_ = shunt_prim_hash("shunt_tlm_signal_extension_payload_header_leader");
   return Result_;
 }
 
 
 INLINE unsigned int shunt_cs_tlm_data_payload_size(const unsigned int data_size) {
-  unsigned int data_size_ = data_size*sizeof(char)/sizeof(long);
-  if(data_size*sizeof(char)%sizeof(long)>0 || data_size_ ==0) ++data_size_;
+  unsigned int data_size_ = data_size*sizeof(char)/sizeof(shunt_long_t);
+  if(data_size*sizeof(char)%sizeof(shunt_long_t)>0 || data_size_ ==0) ++data_size_;
   return data_size_;
 }
 
@@ -376,18 +376,18 @@ INLINE unsigned int shunt_cs_tlm_data_payload_size(const unsigned int data_size)
 INLINE void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header* h,const unsigned char* data,const unsigned char* byte_enable) {
   int data_size_ =0;
   int byte_en_size_=0;
-  //long mem/array for  cs_tlm_generic_payload_header
+  //shunt_long_t mem/array for  cs_tlm_generic_payload_header
   //pkt size: <tlm header leader> +  <tlm header> + <tlm data leader> + <data vector> + <byte_enable>
   if(h->length >0 ) {
     data_size_ = shunt_cs_tlm_data_payload_size(h->length);
     byte_en_size_ = shunt_cs_tlm_data_payload_size(h->byte_enable_length);
   }
-  int  size_  = sizeof(long)+ sizeof(*h)+ sizeof(long) + data_size_*sizeof(long) + byte_en_size_*sizeof(long);
+  int  size_  = sizeof(shunt_long_t)+ sizeof(*h)+ sizeof(shunt_long_t) + data_size_*sizeof(shunt_long_t) + byte_en_size_*sizeof(shunt_long_t);
 
-  long* send_arr_ =(long*)malloc(size_); // array to hold the result
+  shunt_long_t* send_arr_ =(shunt_long_t*)malloc(size_); // array to hold the result
   memset(send_arr_,0,size_);
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-  printf("\nDEBUG: shunt_cs_tlm_send_gp() data_size_(%0d)  byte_en_size_(%0d) size_(%0ld.%0ld)=%0d",data_size_,byte_en_size_,size_/sizeof(long),size_%sizeof(long),size_);
+  printf("\nDEBUG: shunt_cs_tlm_send_gp() data_size_(%0d)  byte_en_size_(%0d) size_(%0ld.%0ld)=%0d",data_size_,byte_en_size_,size_/sizeof(shunt_long_t),size_%sizeof(shunt_long_t),size_);
 #endif
 
   int  offset      = 0;
@@ -404,7 +404,7 @@ INLINE void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header
 #endif
   
   if(data_size_ != 0) {
-    offset = offset + sizeof(*h)/sizeof(long);
+    offset = offset + sizeof(*h)/sizeof(shunt_long_t);
     send_arr_[offset] = shunt_cs_get_tlm_data_leader();
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
     printf("\nDEBUG: shunt_cs_tlm_send_gp() tlm_data leader offset=%0d",offset);
@@ -439,14 +439,14 @@ INLINE void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header
 
 INLINE void shunt_cs_tlm_send_gp_header(int sockid, cs_tlm_generic_payload_header* h) {
 
-  //long mem/array for  cs_tlm_generic_payload_header
+  //shunt_long_t mem/array for  cs_tlm_generic_payload_header
   //pkt size: <tlm header leader> +  <tlm header> + <tlm data leader> + <data vector> + <byte_enable>
-  int  size_  = sizeof(long)+ sizeof(*h);
+  int  size_  = sizeof(shunt_long_t)+ sizeof(*h);
 
-  long* send_arr_ = (long*)malloc(size_); // array to hold the result
+  shunt_long_t* send_arr_ = (shunt_long_t*)malloc(size_); // array to hold the result
   memset(send_arr_,0,size_);
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-  printf("\nDEBUG: shunt_cs_tlm_send_gp_header() size_(%0d) size_(%0ld.%0ld)=%0d",size_,size_/sizeof(long),size_%sizeof(long),size_);
+  printf("\nDEBUG: shunt_cs_tlm_send_gp_header() size_(%0d) size_(%0ld.%0ld)=%0d",size_,size_/sizeof(shunt_long_t),size_%sizeof(shunt_long_t),size_);
 #endif
   //
   int  offset      = 0;
@@ -478,12 +478,12 @@ INLINE void shunt_cs_tlm_send_gp_header(int sockid, cs_tlm_generic_payload_heade
 
 INLINE void shunt_cs_tlm_recv_gp_header(int sockid, cs_tlm_generic_payload_header* h) {
   int  Result_=1;
-  long leader_in;
-  long leader_ref;
-  long recv_arr[(sizeof(*h) + sizeof(long))/sizeof(long)];
+  shunt_long_t leader_in;
+  shunt_long_t leader_ref;
+  shunt_long_t recv_arr[(sizeof(*h) + sizeof(shunt_long_t))/sizeof(shunt_long_t)];
   int  numbytes=0;
 
-  numbytes = recv(sockid,recv_arr ,sizeof(*h) + sizeof(long), 0);
+  numbytes = recv(sockid,recv_arr ,sizeof(*h) + sizeof(shunt_long_t), 0);
   if(numbytes<0)   shunt_prim_error("\nERROR: in shunt_cs_tlm_recv_gp_header : numbytes < 0 ");
   Result_ = numbytes;
 
@@ -492,15 +492,15 @@ INLINE void shunt_cs_tlm_recv_gp_header(int sockid, cs_tlm_generic_payload_heade
   if(Result_ > 0 && (leader_in == leader_ref)) {
     memcpy(h,&recv_arr[1],sizeof(*h));
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-    for(unsigned int i=0;i<(sizeof(*h) + sizeof(long))/sizeof(long);i++) printf("\nDEBUG: shunt_cs_tlm_recv_gp_header() recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
+    for(unsigned int i=0;i<(sizeof(*h) + sizeof(shunt_long_t))/sizeof(shunt_long_t);i++) printf("\nDEBUG: shunt_cs_tlm_recv_gp_header() recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
     printf("\n");
 #endif
   }
   else {
     Result_ =-1;
-    printf("\nERROR: shunt_cs_tlm_recv_gp_header() get bad  header (%lx)(Ref. to %lx) numbytes=%0d", leader_in,leader_ref,numbytes);
+    printf("\nERROR: shunt_cs_tlm_recv_gp_header() get bad  header (%lx)(Ref. to %lx) numbytes=%0d", (long)leader_in,(long)leader_ref,numbytes);
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-    for(unsigned int i=0;i<(sizeof(*h) + sizeof(long))/sizeof(long);i++) printf("\nDEBUG: ERROR shunt_cs_tlm_recv_gp_header() recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
+    for(unsigned int i=0;i<(sizeof(*h) + sizeof(shunt_long_t))/sizeof(shunt_long_t);i++) printf("\nDEBUG: ERROR shunt_cs_tlm_recv_gp_header() recv_arr[%0d]=(%ld)%lx",i,(long)recv_arr[i],(long)recv_arr[i]);
     printf("\n");
 #endif
   }
@@ -508,14 +508,14 @@ INLINE void shunt_cs_tlm_recv_gp_header(int sockid, cs_tlm_generic_payload_heade
 
 INLINE void shunt_cs_tlm_send_axi3_header(int sockid, cs_tlm_axi3_extension_payload_header* h) {
 
-  //long mem/array for  cs_tlm_axi3_extension_payload_header
+  //shunt_long_t mem/array for  cs_tlm_axi3_extension_payload_header
   //pkt size: <tlm header leader> +  <tlm header> + <tlm data leader> + <data vector> + <byte_enable>
-  int  size_  = sizeof(long)+ sizeof(*h);
+  int  size_  = sizeof(shunt_long_t)+ sizeof(*h);
 
-  long* send_arr_ = (long*)malloc(size_); // array to hold the result
+  shunt_long_t* send_arr_ = (shunt_long_t*)malloc(size_); // array to hold the result
   memset(send_arr_,0,size_);
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-  printf("\nDEBUG: shunt_cs_tlm_send_axi3_header size_(%0d) size_(%0ld.%0ld)=%0d",size_,size_/sizeof(long),size_%sizeof(long),size_);
+  printf("\nDEBUG: shunt_cs_tlm_send_axi3_header size_(%0d) size_(%0ld.%0ld)=%0d",size_,size_/sizeof(shunt_long_t),size_%sizeof(shunt_long_t),size_);
 #endif
   //
   int  offset      = 0;
@@ -547,12 +547,12 @@ INLINE void shunt_cs_tlm_send_axi3_header(int sockid, cs_tlm_axi3_extension_payl
 
 INLINE void  shunt_cs_tlm_recv_axi3_header(int sockid, cs_tlm_axi3_extension_payload_header* h) {
   int  Result_=1;
-  long leader_in;
-  long leader_ref;
-  long recv_arr[(sizeof(*h) + sizeof(long))/sizeof(long)];
+  shunt_long_t leader_in;
+  shunt_long_t leader_ref;
+  shunt_long_t recv_arr[(sizeof(*h) + sizeof(shunt_long_t))/sizeof(shunt_long_t)];
   int  numbytes=0;
 
-  numbytes = recv(sockid,recv_arr ,sizeof(*h) + sizeof(long), 0);
+  numbytes = recv(sockid,recv_arr ,sizeof(*h) + sizeof(shunt_long_t), 0);
   if(numbytes<0)   shunt_prim_error("\nERROR: in  shunt_cs_tlm_recv_axi3_header : numbytes < 0 ");
   Result_ = numbytes;
 
@@ -561,26 +561,26 @@ INLINE void  shunt_cs_tlm_recv_axi3_header(int sockid, cs_tlm_axi3_extension_pay
   if(Result_ > 0 && (leader_in == leader_ref)) {
     memcpy(h,&recv_arr[1],sizeof(*h));
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-    for(unsigned int i=0;i<(sizeof(*h) + sizeof(long))/sizeof(long);i++) printf("\nDEBUG:  shunt_cs_tlm_recv_axi3_header() recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
+    for(unsigned int i=0;i<(sizeof(*h) + sizeof(shunt_long_t))/sizeof(shunt_long_t);i++) printf("\nDEBUG:  shunt_cs_tlm_recv_axi3_header() recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
     printf("\n");
 #endif
   }
   else {
     Result_ =-1;
-    printf("\nERROR: shunt_cs_tlm_recv_axi3_header()  get bad  header (%lx)(Ref. to %lx) numbytes=%0d", leader_in,leader_ref,numbytes);
+    printf("\nERROR: shunt_cs_tlm_recv_axi3_header()  get bad  header (%lx)(Ref. to %lx) numbytes=%0d", (long)leader_in,(long)leader_ref,numbytes);
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-    for(unsigned int i=0;i<(sizeof(*h) + sizeof(long))/sizeof(long);i++) printf("\nDEBUG: ERROR shunt_cs_tlm_recv_axi3_header recv_arr[%0d]=(%ld)%lx",i,recv_arr[i],recv_arr[i]);
+    for(unsigned int i=0;i<(sizeof(*h) + sizeof(shunt_long_t))/sizeof(shunt_long_t);i++) printf("\nDEBUG: ERROR shunt_cs_tlm_recv_axi3_header recv_arr[%0d]=(%ld)%lx",i,(long)recv_arr[i],(long)recv_arr[i]);
     printf("\n");
 #endif
   }
 }
 
-INLINE void  shunt_cs_tlm_recv_gp_data(int sockid, const cs_tlm_generic_payload_header* h,unsigned long* data,unsigned long* byte_enable) {
+INLINE void  shunt_cs_tlm_recv_gp_data(int sockid, const cs_tlm_generic_payload_header* h,shunt_long_t* data,shunt_long_t* byte_enable) {
   int data_size_ =0;
   int byte_en_size_=0;
   int numbytes_     = -1;
   int  offset       = 0;
-  long leader_ =  shunt_cs_get_tlm_data_leader();
+  shunt_long_t leader_ =  shunt_cs_get_tlm_data_leader();
 
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   printf("\nDEBUG: shunt_cs_tlm_recv_gp_data()  h->length (%0ld)  ",h->length);
@@ -590,8 +590,8 @@ INLINE void  shunt_cs_tlm_recv_gp_data(int sockid, const cs_tlm_generic_payload_
     data_size_    = shunt_cs_tlm_data_payload_size(h->length);
     byte_en_size_ = shunt_cs_tlm_data_payload_size(h->byte_enable_length);
 
-    int size_ = sizeof(long)+data_size_*sizeof(long)+byte_en_size_*sizeof(long);//data leader + data + byte_en
-    long* recv_arr_ = (long*)malloc(size_); // array to hold the result
+    int size_ = sizeof(shunt_long_t)+data_size_*sizeof(shunt_long_t)+byte_en_size_*sizeof(shunt_long_t);//data leader + data + byte_en
+    shunt_long_t* recv_arr_ = (shunt_long_t*)malloc(size_); // array to hold the result
     memset(recv_arr_,0,size_);
 
     numbytes_ =  recv(sockid,recv_arr_ ,size_ , 0);
@@ -603,19 +603,19 @@ INLINE void  shunt_cs_tlm_recv_gp_data(int sockid, const cs_tlm_generic_payload_
     if(numbytes_ <= 0) shunt_prim_error("\nERROR in  shunt_cs_tlm_recv_gp_data() : numbytes < 0 ");
     if(leader_ == recv_arr_[offset]) {
       offset= offset+1;
-      memcpy(data,&recv_arr_[offset],data_size_*sizeof(long));
+      memcpy(data,&recv_arr_[offset],data_size_*sizeof(shunt_long_t));
       offset= offset+data_size_;
-      memcpy(byte_enable,&recv_arr_[offset],byte_en_size_*sizeof(long));
+      memcpy(byte_enable,&recv_arr_[offset],byte_en_size_*sizeof(shunt_long_t));
     }
     else {
 
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
       printf("\nDEBUG: shunt_sc_tlm_recv_gp_data() get bad header=%0lx expected(%0lx)",leader_ ,recv_arr_[0] );
 #endif
-      for(unsigned int i=0;i<size_/sizeof(long);i++) printf("\nERROR: shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx",i,recv_arr_[i],recv_arr_[i]);
+      for(unsigned int i=0;i<size_/sizeof(shunt_long_t);i++) printf("\nERROR: shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx",i,(long)recv_arr_[i],(long)recv_arr_[i]);
     }
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-    for(unsigned int i=0;i<size_/sizeof(long);i++) printf("\nDEBUG: shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx",i,recv_arr_[i],recv_arr_[i]); 
+    for(unsigned int i=0;i<size_/sizeof(shunt_long_t);i++) printf("\nDEBUG: shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx",i,(long)recv_arr_[i],(long)recv_arr_[i]); 
     printf("\n");
     for(int i=0;i<data_size_;i++) printf("\nDEBUG: shunt_cs_tlm_recv_gp_data() data[%0d]=(%ld)%lx",i,data[i],data[i]);
     printf("\n");

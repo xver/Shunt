@@ -67,7 +67,7 @@
 
    - int*;
    - short int*;
-   - long  int*;
+   - shunt_long_t  int*;
    - svLogicVecVal* (Integer,Reg);
    - svBitVecVal*   (Bit);
    - double*;
@@ -96,7 +96,7 @@ INLINE int shunt_api_send    (int sockid,cs_header* h_trnx, ...);
 
   - int*;
   - short int*;
-  - long  int*;
+  - shunt_long_t  int*;
   - svLogicVecVal* (Integer,Reg);
   - svBitVecVal*   (Bit);
   - double*;
@@ -124,7 +124,7 @@ INLINE int shunt_api_recv (int sockid,cs_header* h_trnx, ...);
   Returns:
   number of elements have been sent  : success > 0
 */
-INLINE int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long* Long);
+INLINE int shunt_pkt_send_longV  (int sockid, const cs_header* header,const shunt_long_t* Long);
 
 /*
   Function: shunt_pkt_rcv_longV
@@ -139,7 +139,7 @@ INLINE int shunt_pkt_send_longV  (int sockid, const cs_header* header,const long
   Returns:
   number of elements have been received  : success > 0
 */
-INLINE int shunt_pkt_recv_longV  (int sockid, cs_header* header,long* Long);
+INLINE int shunt_pkt_recv_longV  (int sockid, cs_header* header,shunt_long_t* Long);
 
 #endif
 

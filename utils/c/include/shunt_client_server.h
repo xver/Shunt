@@ -88,7 +88,7 @@
    <shunt_cs_data_type_hash>
 
 */
-INLINE long shunt_cs_data_type_hash(long data_type,const char* data_type_names[],int last_enum);
+INLINE shunt_long_t shunt_cs_data_type_hash(shunt_long_t data_type,const char* data_type_names[],int last_enum);
 
 /*
   Function: shunt_cs_data_type
@@ -108,12 +108,12 @@ INLINE long shunt_cs_data_type_hash(long data_type,const char* data_type_names[]
   See Also:
   <shunt_cs_data_type_hash>
 */
-INLINE int shunt_cs_data_type(long hash,const char* data_type_names[],int last_enum);
+INLINE int shunt_cs_data_type(shunt_long_t hash,const char* data_type_names[],int last_enum);
 
 /*
   Function: shunt_cs_send_header
   send SHUNT header over TCP/IP
-
+  
   Parameters:
 
   sockid - socket id from init Target/Initiator
@@ -275,7 +275,7 @@ Function: shunt_cs_send_longV
     See Also:
     <shunt_cs_recv_longV>
 */
-INLINE int shunt_cs_send_longV  (int sockid, const cs_header* header,const long* Long);
+INLINE int shunt_cs_send_longV  (int sockid, const cs_header* header,const shunt_long_t* Long);
 
 /*
   Function: shunt_cs_recv_longV
@@ -284,7 +284,7 @@ INLINE int shunt_cs_send_longV  (int sockid, const cs_header* header,const long*
   Parameters:
   sockid - socket id
   header - cs_header structure
-  Long   - Data received
+  Shunt_Long_T   - Data received
 
   Returns:
   number of elements have been received  : success > 0
@@ -293,7 +293,7 @@ INLINE int shunt_cs_send_longV  (int sockid, const cs_header* header,const long*
   See Also:
     <shunt_cs_send_longV>
 */
-INLINE int shunt_cs_recv_longV  (int sockid, cs_header* header,long* Long);
+INLINE int shunt_cs_recv_longV  (int sockid, cs_header* header,shunt_long_t* Long);
 
 
 /*
@@ -555,13 +555,13 @@ INLINE void shunt_cs_print_data_header (cs_header* h,cs_data_header* h_data,cons
   N/A
   
   Returns:
-  long - hash value;
+  shunt_long_t - hash value;
 
 See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-INLINE long shunt_cs_get_cs_header_leader();
+INLINE shunt_long_t shunt_cs_get_cs_header_leader();
 
 /*
   Function: shunt_cs_get_tlm_header_leader
@@ -571,13 +571,13 @@ INLINE long shunt_cs_get_cs_header_leader();
   N/A
   
   Returns:
-  long - hash value;
+  shunt_long_t - hash value;
 
 See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-INLINE long shunt_cs_get_tlm_header_leader();
+INLINE shunt_long_t shunt_cs_get_tlm_header_leader();
 
 /*
   Function: shunt_cs_get_tlm_data_leader
@@ -587,13 +587,13 @@ INLINE long shunt_cs_get_tlm_header_leader();
   N/A
   
   Returns:
-  long - hash value;
+  shunt_long_t - hash value;
 
 See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-INLINE long  shunt_cs_get_tlm_data_leader();
+INLINE shunt_long_t  shunt_cs_get_tlm_data_leader();
 
 /*
   Function: shunt_cs_get_tlm_axi3_ext_leader
@@ -603,13 +603,13 @@ INLINE long  shunt_cs_get_tlm_data_leader();
   N/A
   
   Returns:
-  long - hash value;
+  shunt_long_t - hash value;
 
 See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-INLINE long shunt_cs_get_tlm_axi3_ext_leader();
+INLINE shunt_long_t shunt_cs_get_tlm_axi3_ext_leader();
 
 /*
   Function: shunt_cs_get_tlm_axi3_signal_leader
@@ -619,13 +619,13 @@ INLINE long shunt_cs_get_tlm_axi3_ext_leader();
   N/A
   
   Returns:
-  long - hash value;
+  shunt_long_t - hash value;
 
 See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-INLINE long  shunt_cs_get_tlm_axi3_signal_leader();
+INLINE shunt_long_t  shunt_cs_get_tlm_axi3_signal_leader();
 
 //Section: TLM2.0 utils
 
@@ -707,6 +707,6 @@ INLINE void shunt_cs_tlm_send_axi3_header (int sockid, cs_tlm_axi3_extension_pay
   data - data payload byte-vector pointer  (output)
   byte_enable - byte_enable vector pointer (output)
 */
-INLINE void  shunt_cs_tlm_recv_gp_data (int sockid, const cs_tlm_generic_payload_header* h,unsigned long* data,unsigned long* byte_enable);
+INLINE void  shunt_cs_tlm_recv_gp_data (int sockid, const cs_tlm_generic_payload_header* h,shunt_long_t* data,shunt_long_t* byte_enable);
 
 #endif

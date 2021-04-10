@@ -91,13 +91,13 @@ int shunt_dpi_recv_int(const  unsigned int sockfd,int* Int) {
   return Result_;
 }
 
-int shunt_dpi_send_long  (const int sockfd,const long Long) {
+int shunt_dpi_send_long  (const int sockfd,const shunt_long_t Long) {
   int Result_ =0;
   Result_ = shunt_prim_send_long(sockfd,&Long);
   return Result_;
 }
 
-int shunt_dpi_recv_long  (int sockfd,long* Long) {
+int shunt_dpi_recv_long  (int sockfd,shunt_long_t* Long) {
   int Result_ =0;
   Result_ =shunt_prim_recv_long(sockfd,Long);
   return Result_;
@@ -259,7 +259,7 @@ int shunt_dpi_recv_shortV(int sockid,int size,svOpenArrayHandle Int) {
 int shunt_dpi_send_longV(int sockid, const int size,const svOpenArrayHandle Int){
   cs_header h_ ;
 
-  long* Long_= (long *) svGetArrayPtr(Int);
+  shunt_long_t* Long_= (shunt_long_t *) svGetArrayPtr(Int);
 
   int Result_ =0;
   h_.trnx_type = rand();
@@ -275,7 +275,7 @@ int shunt_dpi_send_longV(int sockid, const int size,const svOpenArrayHandle Int)
 int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int) {
   cs_header h_;
 
-   long* Long_ = (long *) svGetArrayPtr(Int);
+   shunt_long_t* Long_ = (shunt_long_t *) svGetArrayPtr(Int);
 
   int Result_ =0;
   h_.trnx_type = rand();
@@ -375,8 +375,8 @@ int shunt_dpi_recv_string(int sockid,int size,char** string) {
 //--------------------
 // HandShake(hs) send/recv
 //--------------------
-long shunt_dpi_hash(const char *str) {
-  long Result_;
+shunt_long_t shunt_dpi_hash(const char *str) {
+  shunt_long_t Result_;
   Result_ = shunt_prim_hash(str);
   return Result_;
 }
@@ -387,7 +387,7 @@ int shunt_dpi_send_header         (int sockid,cs_header* h){
  return Result_;
 }
 
-int shunt_dpi_send_data_header (int sockid,cs_header* h,long data_type,svOpenArrayHandle trnx_payload_sizes) {
+int shunt_dpi_send_data_header (int sockid,cs_header* h,shunt_long_t data_type,svOpenArrayHandle trnx_payload_sizes) {
   cs_data_header h_data_;
   int Result_ =0;
 
@@ -405,7 +405,7 @@ int shunt_dpi_recv_header         (int sockid,cs_header* h){
  return Result_;
 }
 
-int shunt_dpi_recv_data_header   (int sockid,cs_header* h,long* data_type,svOpenArrayHandle**  trnx_payload_sizes) {
+int shunt_dpi_recv_data_header   (int sockid,cs_header* h,shunt_long_t* data_type,svOpenArrayHandle**  trnx_payload_sizes) {
   int Result_;
   cs_data_header h_data;
   int n_payloads;
@@ -438,7 +438,7 @@ int shunt_dpi_hs_send_int (int sockid,cs_header* h_trnx,svOpenArrayHandle Array 
 }
 
 int shunt_dpi_hs_send_long (int sockid,cs_header* h_trnx,svOpenArrayHandle Array) {
-  long* Long_ = (long *) svGetArrayPtr(Array);
+  shunt_long_t* Long_ = (shunt_long_t *) svGetArrayPtr(Array);
   return shunt_api_send(sockid,h_trnx,Long_);
 }
 
@@ -605,42 +605,42 @@ int shunt_dpi_hs_recv_bitN  (const int sockfd,const cs_header* h_trnx,svBitVecVa
 
 int shunt_dpi_send_pkt_longV  (int sockid, const cs_header* h,const  svOpenArrayHandle Long) {
   int Result_ =0;
-  long* Long_= (long *) svGetArrayPtr(Long);
+  shunt_long_t* Long_= (shunt_long_t *) svGetArrayPtr(Long);
   Result_ = shunt_pkt_send_longV (sockid,h,Long_);
   return Result_;
 }
 
 int shunt_dpi_recv_pkt_longV  (int sockid, cs_header* h, svOpenArrayHandle Long){
   int Result_ =0;
-  long* Long_ = (long *) svGetArrayPtr(Long);
+  shunt_long_t* Long_ = (shunt_long_t *) svGetArrayPtr(Long);
   Result_ = shunt_pkt_recv_longV  (sockid,h,Long_);
   return Result_;
 }
 
-long shunt_dpi_get_cs_header_id() {
-  long Result_ = shunt_cs_get_cs_header_leader();
+shunt_long_t shunt_dpi_get_cs_header_id() {
+  shunt_long_t Result_ = shunt_cs_get_cs_header_leader();
   return Result_;
 }
 
 //TLM 2.0
 
-long shunt_dpi_tlm_header_id() {
-  long Result_ =  shunt_cs_get_tlm_header_leader();
+shunt_long_t shunt_dpi_tlm_header_id() {
+  shunt_long_t Result_ =  shunt_cs_get_tlm_header_leader();
   return Result_;
 }
 
-long shunt_dpi_tlm_data_id() {
-  long Result_ =  shunt_cs_get_tlm_data_leader();
+shunt_long_t shunt_dpi_tlm_data_id() {
+  shunt_long_t Result_ =  shunt_cs_get_tlm_data_leader();
   return Result_;
 }
 
-long shunt_dpi_tlm_axi3_ext_id() {
-  long Result_ =  shunt_cs_get_tlm_axi3_ext_leader();
+shunt_long_t shunt_dpi_tlm_axi3_ext_id() {
+  shunt_long_t Result_ =  shunt_cs_get_tlm_axi3_ext_leader();
   return Result_;
 }
 
-long  shunt_dpi_tlm_signal_id() {
-  long Result_ =   shunt_cs_get_tlm_axi3_signal_leader();
+shunt_long_t  shunt_dpi_tlm_signal_id() {
+  shunt_long_t Result_ =   shunt_cs_get_tlm_axi3_signal_leader();
   return Result_;
 }
 
@@ -651,12 +651,12 @@ void shunt_dpi_tlm_send_gp_transport(int sockid, cs_tlm_generic_payload_header* 
   unsigned char *byte_enable_ =  (unsigned char *) svGetArrayPtr(byte_enable);
   unsigned int size_byte_enable_payload = shunt_cs_tlm_data_payload_size(h->byte_enable_length);
   data_tcp        = (unsigned char*)malloc(h->length);
-  byte_enable_tcp = (unsigned char*)malloc(size_byte_enable_payload*sizeof(long));
+  byte_enable_tcp = (unsigned char*)malloc(size_byte_enable_payload*sizeof(shunt_long_t));
   if(h->length > 0) {
     memset(data_tcp,0,h->length);
-    memset(byte_enable_tcp,0,size_byte_enable_payload*sizeof(long));
+    memset(byte_enable_tcp,0,size_byte_enable_payload*sizeof(shunt_long_t));
     memcpy(data_tcp,data_,h->length);
-    memcpy(byte_enable_tcp,byte_enable_,(size_byte_enable_payload*sizeof(long)));
+    memcpy(byte_enable_tcp,byte_enable_,(size_byte_enable_payload*sizeof(shunt_long_t)));
   }
 #ifdef SHUNT_DPI_C_DEBUG
   for (int i=0;i<h->length;i++) printf("\nDEBUG: shunt_dpi_tlm_send_gp() data_tcp[%0d]=(%d)%x",i,data_tcp[i],data_tcp[i]);
@@ -678,11 +678,11 @@ void shunt_dpi_tlm_send_command(int socket,const shunt_dpi_tlm_command_e Com) {
 
 void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header* h,svOpenArrayHandle data,svOpenArrayHandle byte_enable) {
 
-  unsigned long* data_tcp;
-  unsigned long* byte_enable_tcp;
+  shunt_long_t* data_tcp;
+  shunt_long_t* byte_enable_tcp;
   unsigned char* data_        = (unsigned char *) svGetArrayPtr(data);
   unsigned char* byte_enable_ = (unsigned char *) svGetArrayPtr(byte_enable);
-
+  
   while(shunt_prim_get_status_socket(sockid,0) !=1 );
   shunt_cs_tlm_recv_gp_header(sockid,h);
   if(h->length > 0) {
@@ -692,10 +692,10 @@ void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header*
     printf("(\nDEBUG: shunt_dpi_tlm_recv_gp_transport() h->length >0 (%0ld) h->byte_enable_length (%0ld)",h->length,h->byte_enable_length);
 #endif
 
-    data_tcp        = (unsigned long*)malloc(h->length);
+    data_tcp        = (shunt_long_t*)malloc(h->length);
     memset(data_tcp,0,h->length);
-    byte_enable_tcp = (unsigned long*)malloc(size_byte_enable_payload*sizeof(long));
-    memset(byte_enable_tcp,0,size_byte_enable_payload*sizeof(long));
+    byte_enable_tcp = (shunt_long_t*)malloc(size_byte_enable_payload*sizeof(shunt_long_t));
+    memset(byte_enable_tcp,0,size_byte_enable_payload*sizeof(shunt_long_t));
     shunt_cs_tlm_recv_gp_data (sockid,h, data_tcp, byte_enable_tcp);
 
 #ifdef SHUNT_DPI_C_DEBUG
@@ -735,8 +735,8 @@ void shunt_dpi_tlm_send_axi3_header (int sockid, cs_tlm_axi3_extension_payload_h
 
 void  shunt_dpi_tlm_recv_gp_data (int sockid, cs_tlm_generic_payload_header* h,svOpenArrayHandle data,svOpenArrayHandle byte_enable){
   
-  unsigned long* data_tcp;
-  unsigned long* byte_enable_tcp;
+  shunt_long_t* data_tcp;
+  shunt_long_t* byte_enable_tcp;
   unsigned char* data_        = (unsigned char *) svGetArrayPtr(data);
   unsigned char* byte_enable_ = (unsigned char *) svGetArrayPtr(byte_enable);
 
@@ -748,9 +748,9 @@ void  shunt_dpi_tlm_recv_gp_data (int sockid, cs_tlm_generic_payload_header* h,s
     printf("(\nDEBUG:  shunt_dpi_tlm_recv_gp_data h->length >0 (%0ld) h->byte_enable_length (%0ld)",h->length,h->byte_enable_length);
 #endif
     
-    data_tcp        = (unsigned long*)malloc(h->length);
+    data_tcp        = (shunt_long_t*)malloc(h->length);
     memset(data_tcp,0,h->length);
-    byte_enable_tcp = (unsigned long*)malloc(size_byte_enable_payload*sizeof(long));
+    byte_enable_tcp = (shunt_long_t*)malloc(size_byte_enable_payload*sizeof(shunt_long_t));
     
     shunt_cs_tlm_recv_gp_data (sockid,h, data_tcp, byte_enable_tcp);
     
@@ -773,13 +773,13 @@ void  shunt_dpi_tlm_recv_gp_data (int sockid, cs_tlm_generic_payload_header* h,s
 }
 
 //Linux system utils
-long shunt_dpi_gettimeofday_sec() {
+shunt_long_t shunt_dpi_gettimeofday_sec() {
   struct timeval currentTime;
   gettimeofday(&currentTime, NULL);
   return currentTime.tv_sec;
 }
 
-long shunt_dpi_gettimeofday_usec() {
+shunt_long_t shunt_dpi_gettimeofday_usec() {
   struct timeval currentTime;
   gettimeofday(&currentTime, NULL);
   return currentTime.tv_usec;

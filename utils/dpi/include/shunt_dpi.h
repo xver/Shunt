@@ -218,7 +218,7 @@ int shunt_dpi_recv_short  (int sockfd,short int* Short);
   - <shunt_prim_send_long>
   - <shunt_dpi_recv_long>
 */
-int shunt_dpi_send_long  (const int sockfd,const long Long);
+int shunt_dpi_send_long  (const int sockfd,const shunt_long_t Long);
 
 
 /*
@@ -237,7 +237,7 @@ int shunt_dpi_send_long  (const int sockfd,const long Long);
   - <shunt_prim_recv_long>
   - <shunt_dpi_send_long>
 */
-int shunt_dpi_recv_long  (int sockfd,long* Long);
+int shunt_dpi_recv_long  (int sockfd,shunt_long_t* Long);
 
 /*
   Function: shunt_dpi_send_int
@@ -837,7 +837,7 @@ See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-long shunt_dpi_get_cs_header_id();
+shunt_long_t shunt_dpi_get_cs_header_id();
 
 // Section: Data exchange (cs) TLM
 
@@ -871,7 +871,7 @@ See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-long shunt_dpi_tlm_header_id();
+shunt_long_t shunt_dpi_tlm_header_id();
 
 /*
   Function: shunt_dpi_tlm_data_id
@@ -887,7 +887,7 @@ See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-long  shunt_dpi_tlm_data_id();
+shunt_long_t  shunt_dpi_tlm_data_id();
 
 /*
   Function: shunt_dpi_tlm_axi3_ext_id
@@ -903,7 +903,7 @@ See Also:
   <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
 
 */
-long shunt_dpi_tlm_axi3_ext_id();
+shunt_long_t shunt_dpi_tlm_axi3_ext_id();
 
 /*
   Function: shunt_dpi_tlm_signal_id
@@ -920,7 +920,7 @@ See Also:
 
 */
 
-long  shunt_dpi_tlm_signal_id();
+shunt_long_t  shunt_dpi_tlm_signal_id();
 
  /*
     Function: shunt_tlm_send_command
@@ -1043,7 +1043,7 @@ void  shunt_dpi_tlm_recv_gp_data (int sockid, cs_tlm_generic_payload_header* h,s
   See Also:
   - <shunt_prim_hash>
 */
-long shunt_dpi_hash(const char *str);
+shunt_long_t shunt_dpi_hash(const char *str);
 
 /*
   Function: shunt_dpi_send_header
@@ -1098,7 +1098,7 @@ int shunt_dpi_recv_header   (int sockid,cs_header* h);
   - <shunt_cs_send_header>
   - <shunt_dpi_recv_data_header>
 */
-int shunt_dpi_send_data_header (int sockid,cs_header* h,long data_type,svOpenArrayHandle trnx_payload_sizes);
+int shunt_dpi_send_data_header (int sockid,cs_header* h,shunt_long_t data_type,svOpenArrayHandle trnx_payload_sizes);
 
 /*
   Function: shunt_dpi_recv_data_header
@@ -1115,7 +1115,7 @@ int shunt_dpi_send_data_header (int sockid,cs_header* h,long data_type,svOpenArr
   - <shunt_cs_recv_data_header>
   - <shunt_dpi_send_data_header>
 */
-int shunt_dpi_recv_data_header   (int sockid,cs_header* h,long* data_type,svOpenArrayHandle**  trnx_payload_sizes);
+int shunt_dpi_recv_data_header   (int sockid,cs_header* h,shunt_long_t* data_type,svOpenArrayHandle**  trnx_payload_sizes);
 
 /*
   Function: shunt_dpi_hs_send

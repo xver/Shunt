@@ -57,6 +57,7 @@ typedef s_vpi_vecval svLogicVecVal;
 #endif
 #endif
 
+
 //compile error struct hostent has no member named h_addr https://github.com/dound/vns/issues/2
 #define h_addr h_addr_list[0] /* for backward compatibility */
 #if 0
@@ -92,6 +93,15 @@ struct hostent {
 #endif
 
 //Section: Data exchange defines
+
+/*
+  Variable: shunt_long_t
+  - typedef 64 bit variable , default value ig *long long*
+*/
+
+#ifndef  shunt_long_t
+typedef long shunt_long_t;
+#endif
 
 /*
 Variable: SHUNT_INSTR_ENUM
@@ -142,19 +152,19 @@ Variable: SHUNT_INSTR_ENUM_NAMES
 
 #if __BYTE_ORDER__== __ORDER_BIG_ENDIAN__
 typedef struct cs_header_t {
-  long   trnx_type;
-  long   trnx_id;
-  long   data_type;
-  long   n_payloads;
+  shunt_long_t   trnx_type;
+  shunt_long_t   trnx_id;
+  shunt_long_t   data_type;
+  shunt_long_t   n_payloads;
 } cs_header;
 #endif
 
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 typedef struct cs_header_t {
-  long   n_payloads;
-  long   data_type;
-  long   trnx_id;
-  long   trnx_type;
+  shunt_long_t   n_payloads;
+  shunt_long_t   data_type;
+  shunt_long_t   trnx_id;
+  shunt_long_t   trnx_type;
 } cs_header;
 #endif
 
@@ -164,7 +174,7 @@ typedef struct cs_header_t {
   - trnx_payload_sizes   array of payload sizes, number of array elements are equal to n_payloads
 */
 typedef struct cs_data_header_t {
-  long   data_type;            // see SHUNT_INSTR_ENUM
+  shunt_long_t   data_type;            // see SHUNT_INSTR_ENUM
   int     *trnx_payload_sizes; // array of payload sizes, number of array elements are equal to n_payloads
 } cs_data_header;
 
@@ -177,18 +187,18 @@ typedef struct cs_data_header_t {
    --- Code
    //Big-endian view: 
    typedef struct cs_tlm_generic_payload_header_t {
-     long option;
-     long address;
-     long command;
-     long length;
-     long byte_enable_length;
-     long streaming_width;
-     long dmi;
-     long response_status;
-     long delay;
-     long tlm_phase;
-     long tlm_sync;
-     long tlm_extension_id;
+     shunt_long_t option;
+     shunt_long_t address;
+     shunt_long_t command;
+     shunt_long_t length;
+     shunt_long_t byte_enable_length;
+     shunt_long_t streaming_width;
+     shunt_long_t dmi;
+     shunt_long_t response_status;
+     shunt_long_t delay;
+     shunt_long_t tlm_phase;
+     shunt_long_t tlm_sync;
+     shunt_long_t tlm_extension_id;
    } cs_tlm_generic_payload_header;
    ---
    
@@ -244,35 +254,35 @@ typedef struct cs_data_header_t {
 
 #if __BYTE_ORDER__== __ORDER_BIG_ENDIAN__
 typedef struct cs_tlm_generic_payload_header_t {
-  long option;
-  long address;
-  long command;
-  long length;
-  long byte_enable_length;
-  long streaming_width;
-  long dmi;
-  long response_status;
-  long delay;
-  long tlm_phase;
-  long tlm_sync;
-  long tlm_extension_id;
+  shunt_long_t option;
+  shunt_long_t address;
+  shunt_long_t command;
+  shunt_long_t length;
+  shunt_long_t byte_enable_length;
+  shunt_long_t streaming_width;
+  shunt_long_t dmi;
+  shunt_long_t response_status;
+  shunt_long_t delay;
+  shunt_long_t tlm_phase;
+  shunt_long_t tlm_sync;
+  shunt_long_t tlm_extension_id;
 } cs_tlm_generic_payload_header;
 #endif
 
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 typedef struct cs_tlm_generic_payload_header_t {
-  long tlm_extension_id;
-  long tlm_sync;
-  long tlm_phase;
-  long delay;
-  long response_status;
-  long dmi;
-  long streaming_width;
-  long byte_enable_length;
-  long length;
-  long command;
-  long address;
-  long option;
+  shunt_long_t tlm_extension_id;
+  shunt_long_t tlm_sync;
+  shunt_long_t tlm_phase;
+  shunt_long_t delay;
+  shunt_long_t response_status;
+  shunt_long_t dmi;
+  shunt_long_t streaming_width;
+  shunt_long_t byte_enable_length;
+  shunt_long_t length;
+  shunt_long_t command;
+  shunt_long_t address;
+  shunt_long_t option;
 } cs_tlm_generic_payload_header;
 #endif
 
@@ -284,15 +294,15 @@ typedef struct cs_tlm_generic_payload_header_t {
   --- Code
   //Big-endian view: 
   typedef struct cs_tlm_axi3_extension_payload_header_t {
-    long  AxBURST;
-    long  AxCACHE;
-    long  AxID;
-    long  AxLEN;
-    long  AxLOCK;
-    long  AxPROT;
-    long  AxSIZE;
-    long  xRESP;
-    long  xSTRB;
+    shunt_long_t  AxBURST;
+    shunt_long_t  AxCACHE;
+    shunt_long_t  AxID;
+    shunt_long_t  AxLEN;
+    shunt_long_t  AxLOCK;
+    shunt_long_t  AxPROT;
+    shunt_long_t  AxSIZE;
+    shunt_long_t  xRESP;
+    shunt_long_t  xSTRB;
   } cs_tlm_axi3_extension_payload_header; 
   ---
 
@@ -372,29 +382,29 @@ typedef struct cs_tlm_generic_payload_header_t {
 
 #if __BYTE_ORDER__== __ORDER_BIG_ENDIAN__
 typedef struct cs_tlm_axi3_extension_payload_header_t {
-  long  AxBURST;
-  long  AxCACHE;
-  long  AxID;
-  long  AxLEN;
-  long  AxLOCK;
-  long  AxPROT;
-  long  AxSIZE;
-  long  xRESP;
-  long  xSTRB;
+  shunt_long_t  AxBURST;
+  shunt_long_t  AxCACHE;
+  shunt_long_t  AxID;
+  shunt_long_t  AxLEN;
+  shunt_long_t  AxLOCK;
+  shunt_long_t  AxPROT;
+  shunt_long_t  AxSIZE;
+  shunt_long_t  xRESP;
+  shunt_long_t  xSTRB;
 } cs_tlm_axi3_extension_payload_header; 
 #endif
 
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 typedef struct cs_tlm_axi3_extension_payload_header_t {
-  long  xSTRB;
-  long  xRESP;
-  long  AxSIZE;
-  long  AxPROT;
-  long  AxLOCK;
-  long  AxLEN;
-  long  AxID;
-  long  AxCACHE;
-  long  AxBURST;
+  shunt_long_t  xSTRB;
+  shunt_long_t  xRESP;
+  shunt_long_t  AxSIZE;
+  shunt_long_t  AxPROT;
+  shunt_long_t  AxLOCK;
+  shunt_long_t  AxLEN;
+  shunt_long_t  AxID;
+  shunt_long_t  AxCACHE;
+  shunt_long_t  AxBURST;
 } cs_tlm_axi3_extension_payload_header; 
 #endif
 #endif //#ifndef SHUNT_TYPEDEF_H

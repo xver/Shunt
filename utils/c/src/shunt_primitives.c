@@ -19,8 +19,8 @@
 
 //Common Functions
 
-INLINE long shunt_prim_hash(const char *str) {
-  long hash = 5381;
+INLINE shunt_long_t shunt_prim_hash(const char *str) {
+  shunt_long_t hash = 5381;
   int c;
 
   while (( c = *str++) )
@@ -285,7 +285,7 @@ INLINE int shunt_prim_recv_int    (const int sockfd, int* Int) {
   return numbytes;
 }
 
-INLINE int shunt_prim_send_long(const int sockfd,const long* Long) {
+INLINE int shunt_prim_send_long(const int sockfd,const shunt_long_t* Long) {
   int numbytes;
 
   numbytes = send(sockfd,Long, sizeof(long), 0);
@@ -293,7 +293,7 @@ INLINE int shunt_prim_send_long(const int sockfd,const long* Long) {
   return numbytes;
 }
 
-INLINE int shunt_prim_recv_long    (const int sockfd, long* Long) {
+INLINE int shunt_prim_recv_long    (const int sockfd, shunt_long_t* Long) {
 
   int numbytes;
 

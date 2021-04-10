@@ -83,7 +83,7 @@
   Returns:
   hash value
 */
-INLINE long shunt_prim_hash(const char *str);
+INLINE shunt_long_t shunt_prim_hash(const char *str);
 
 /*
   Function: shunt_prim_error
@@ -421,7 +421,7 @@ INLINE int shunt_prim_recv_short    (const int sockfd,short int* Short);
   See Also:
   <shunt_prim_recv_long>
 */
-INLINE int shunt_prim_send_long    (const int sockfd,const long* Long);
+INLINE int shunt_prim_send_long    (const int sockfd,const shunt_long_t* Long);
 
 /*
   Function: shunt_prim_recv_long
@@ -437,7 +437,7 @@ INLINE int shunt_prim_send_long    (const int sockfd,const long* Long);
  See Also:
   <shunt_prim_send_long>
 */
-INLINE int shunt_prim_recv_long    (const int sockfd,long* Long);
+INLINE int shunt_prim_recv_long    (const int sockfd,shunt_long_t* Long);
 
 /*
  Function: shunt_prim_send_byte
