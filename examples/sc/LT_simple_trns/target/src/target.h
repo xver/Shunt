@@ -37,7 +37,7 @@ struct Memory: sc_module
   // TLM-2 blocking transport method
   virtual void b_transport( tlm::tlm_generic_payload& trans, sc_time& delay )
   {
-    long tlm_extension_id=0;
+    shunt_long_t tlm_extension_id=0;
     shunt_recv_b_transport(m_socket,trans,tlm_extension_id,delay );
     tlm::tlm_command cmd = trans.get_command();
     sc_dt::uint64    adr = trans.get_address() / 4;

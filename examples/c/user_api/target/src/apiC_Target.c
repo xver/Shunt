@@ -105,9 +105,9 @@ int main(void) {
 
     //pkt LongV
     //header
-    long int* LongV;
+    shunt_long_t * LongV;
     //data
-    LongV = (long int*)malloc(h_trnx.n_payloads* sizeof(long int));
+    LongV = (shunt_long_t*)malloc(h_trnx.n_payloads* sizeof(shunt_long_t));
 
     success = shunt_pkt_recv_longV (socket,&h_trnx,LongV);
     if (success == 0 )  printf("\n target Long data fail to recv");

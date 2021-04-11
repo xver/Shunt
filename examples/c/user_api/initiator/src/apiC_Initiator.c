@@ -202,8 +202,8 @@ int main(void) {
 
     //header+LongV test
 
-    long int LongVexp[n];
-    long int* LongVact;
+    shunt_long_t LongVexp[n];
+    shunt_long_t * LongVact;
     msg = "Initiator: Long Int Packet Test ";
     for (int i = 0; i < n; i++) {
       LongVexp[i] = rand();
@@ -219,7 +219,7 @@ int main(void) {
     success=shunt_pkt_send_longV (socket, &h_trnx_exp, LongVexp);
 
     //recv
-    LongVact = malloc(sizeof(long int)*h_trnx_act.n_payloads);
+    LongVact = malloc(sizeof(shunt_long_t)*h_trnx_act.n_payloads);
 
     if (shunt_pkt_recv_longV(socket,&h_trnx_act,LongVact)<= 0) success = 0;
     if (success == 0 )  printf("\nLongV loopback fail recv");

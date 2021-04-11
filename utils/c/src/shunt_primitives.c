@@ -288,7 +288,7 @@ INLINE int shunt_prim_recv_int    (const int sockfd, int* Int) {
 INLINE int shunt_prim_send_long(const int sockfd,const shunt_long_t* Long) {
   int numbytes;
 
-  numbytes = send(sockfd,Long, sizeof(long), 0);
+  numbytes = send(sockfd,Long, sizeof(shunt_long_t), 0);
   if(numbytes < 0)  shunt_prim_error("\nERROR in shunt_prim_send_long : numbytes < 0 ");
   return numbytes;
 }
@@ -297,7 +297,7 @@ INLINE int shunt_prim_recv_long    (const int sockfd, shunt_long_t* Long) {
 
   int numbytes;
 
-  numbytes = recv(sockfd, Long,sizeof(long) , 0);
+  numbytes = recv(sockfd, Long,sizeof(shunt_long_t) , 0);
   if(numbytes < 0) shunt_prim_error("\nERROR in shunt_prim_recv_long : numbytes < 0 ");
   return numbytes;
 }

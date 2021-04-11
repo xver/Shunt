@@ -19,7 +19,7 @@ CPP_DEPS += \
 # Each subdirectory must supply rules for building sources it contributes
 %.o: ../src/%.cpp
 	@echo 'Building file: $<'
-	@echo 'Invoking: GCC C++ Compiler'
+	@echo 'Invoking: GCC C++ Compiler ./examples/sc/LT_simple_cs/target/makedir/subdir.mk:22'
 	g++  $(USER_OPT) -I$(SYSTEMC_HOME) -I$(SYSTEMC_HOME)/include -I$(SHUNT_HOME)/utils/sc/src -I$(SHUNT_HOME)/utils/c/include -I$(SHUNT_HOME)/utils/c/src -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '

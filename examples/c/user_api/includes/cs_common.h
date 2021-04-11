@@ -137,11 +137,11 @@ void shunt_cs_print_byteA   (int n_payloads,cs_data_header* h,char *ArrayS,char*
   Returns:
   void
 */
-void shunt_cs_print_longV   (cs_header* h,long int *Long,char* msg) {
+void shunt_cs_print_longV   (cs_header* h,shunt_long_t* Long,char* msg) {
 
   if (h->data_type==  shunt_prim_hash("SHUNT_LONGINT")) {
     for (int i=0;i< h->n_payloads;i++) {
-      printf("\n %s LongV[%0d]=%ld",msg,i,Long[i]);
+      printf("\n %s LongV[%0d]=%ld",msg,i,(long)Long[i]);
     }
   }
 }
@@ -156,7 +156,7 @@ void shunt_cs_print_longV   (cs_header* h,long int *Long,char* msg) {
   Returns:
   success > 0
 */
-int shunt_cs_comp_longV   (cs_header* h,long int *lhs,long int *rhs) {
+int shunt_cs_comp_longV   (cs_header* h, shunt_long_t* lhs,shunt_long_t* rhs) {
   int success = 1;
   if (h->data_type==  shunt_prim_hash("SHUNT_LONGINT")) {
     for (int i=0;i< h->n_payloads;i++) {

@@ -53,7 +53,7 @@ struct Initiator: sc_module
       trans->set_dmi_allowed( false ); // Mandatory initial value
       trans->set_response_status( tlm::TLM_INCOMPLETE_RESPONSE ); // Mandatory initial value
 
-      long tlm_extension_id =0;
+      shunt_long_t tlm_extension_id =0;
       
       //socket->b_transport( *trans, delay );  // Blocking transport call
       

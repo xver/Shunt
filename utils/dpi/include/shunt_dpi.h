@@ -1358,7 +1358,7 @@ int shunt_dpi_recv_pkt_longV  (int sockid, cs_header* h, svOpenArrayHandle Long)
   Returns: longint the number of seconds since the Epoch
   longint a
 */
-long shunt_dpi_gettimeofday_sec();
+shunt_long_t shunt_dpi_gettimeofday_sec();
 
 /*
   Function:  shunt_dpi_gettimeofday_usec
@@ -1369,7 +1369,7 @@ long shunt_dpi_gettimeofday_sec();
   Returns: longint the number of microsecond since the Epoch
   longint a
 */
-long shunt_dpi_gettimeofday_usec();
+shunt_long_t shunt_dpi_gettimeofday_usec();
 
 
 
