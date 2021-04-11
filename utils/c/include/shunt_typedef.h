@@ -100,7 +100,7 @@ struct hostent {
 */
 
 #ifndef  shunt_long_t
-typedef long shunt_long_t;
+typedef long long shunt_long_t;
 #endif
 
 /*

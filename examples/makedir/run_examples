@@ -2,7 +2,7 @@ rm -f  shunt.log
 #C
 pushd .;cd ../c/primitives/makedir;echo $PWD |& tee $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT=-g3 |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd
 pushd .;cd ../c/client_server/makedir;make USER_OPT=-g3 |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd
-pushd .;cd ../c/user_api/makedir/;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT=-g3 | tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd
+pushd .;cd ../c/user_api/makedir/;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT=-g3 |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd
 #SV
 command -v verilator >/dev/null 2>&1 || { echo >&2 "Shunt SV tests are required verilator but it's not installed.";}
 pushd .;cd ../sv/sv2c/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;./verilator_run  |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd      
