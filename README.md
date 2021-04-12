@@ -4,7 +4,7 @@
 
 
 
-The **Shunt** is Open Source Client/Server TCP/IP socket based communication library for SystemVerilog and SystemC simulations.
+The **Shunt** is Open Source Client/Server TCP/IP socket based communication library for **SystemVerilog** and **SystemC** simulations.
 
 * It aims to enable quick and easy development of communication between stand-alone SystemVerilog/SystemC simulations and/or external applications
 
@@ -29,7 +29,7 @@ Setup following variables:
 # Library compilation
  - cd to “$SHUNT_HOME/utils/makedir/“
  - run “make clean;make all”
-Compile result will be placed under ***${SHUNT_HOME}/bin as a “libutils.so”***
+Compile result will be placed under ***${SHUNT_HOME}/bin as a with dpi:“libutils.so” and without dpi:”libCutils.so”*** 
 
 NOTE: use the USER_OPT to add compiler options. (Example all debug options: make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG') 
 
@@ -92,6 +92,8 @@ Release History:
 -------------------------
 
 If you have any questions please contact us at icshunt.help@gmail.com
+
+Report bugs to [Issues](https://github.com/xver/Shunt/issues).
 
 !["Copyright (c) 2021 IC Verimeter"](https://github.com/xver/Shunt/blob/master/doc/IcVerimeter_logo.png)
 
