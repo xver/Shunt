@@ -96,7 +96,7 @@ struct hostent {
 
 /*
   Variable: shunt_long_t
-  - typedef 64 bit variable , default value ig *long long*
+  - typedef 64 bit variable , default value is "long long"
 */
 
 #ifndef  shunt_long_t
