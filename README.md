@@ -29,7 +29,7 @@ Setup following variables:
 # Library compilation
  - cd to “$SHUNT_HOME/utils/makedir/“
  - run “make clean;make all”
-Compile result will be placed under ***${SHUNT_HOME}/bin as a with dpi:“libutils.so” and without dpi:”libCutils.so”*** 
+Compile result will be placed under ***${SHUNT_HOME}/bin with dpi:“libutils.so” and without dpi:”libCutils.so”*** 
 
 NOTE: use the USER_OPT to add compiler options. (Example all debug options: make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG') 
 
