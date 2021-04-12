@@ -1,4 +1,4 @@
-rm -f  shunt.log
+./full_cleanup
 #C
 pushd .;cd ../c/primitives/makedir;echo $PWD |& tee $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT=-g3 |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd
 pushd .;cd ../c/client_server/makedir;make USER_OPT=-g3 |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd
