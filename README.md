@@ -62,7 +62,7 @@ SystemC to SV  b_transport over TCP/IP :
  
 Release History:
 -----------------------
-v2.2.0 - (Current Version) ARM AXI bus (Advanced eXtensible Interface) support + cumulative bug fixes, cleanups, and updates
+v2.2.0 - (Current Version) The ARM AXI (Advanced eXtensible Interface) bus supports cumulative bug fixes, cleanups and updates. 
  
 2.1.2 -  Cumulative release: cleanup & SystemC related fixes
 
