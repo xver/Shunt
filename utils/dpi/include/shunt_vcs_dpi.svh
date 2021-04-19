@@ -13,6 +13,8 @@
  System Verilog target initiator handshake (TCP/IP SystemVerilog SHUNT)
  ******************************************************
 */
+`ifndef SHUNT_VCS_DPI_H
+`define SHUNT_VCS_DPI_H
 
 `define NO_SHUNT_DPI_SEND_BITN
 `define NO_SHUNT_DPI_RECV_BITN
