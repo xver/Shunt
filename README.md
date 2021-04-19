@@ -16,9 +16,16 @@ The **Shunt** is available under a "MIT" License. It can be used without restric
 https://www.researchgate.net/publication/325206338_TCPIP_Socket_Based_Communication_for_SystemVerilog_Simulation
 *  API specification  -- https://raw.githack.com/xver/Shunt/master/doc/index.html
 
+### Commercial support
+Starting from the version 2.2.0, **"IC VERIMETER"** is pleased to announce the availability of commercial support. 
+Whether you need assistance with the **Shunt** integration into your project or customization, please contact us at icshunt.help@gmail.com
+
+#### Please, report bugs to [Issues](https://github.com/xver/Shunt/issues).
+
+
 # Getting Started
 
-# Library Installation
+### Library Installation
 
 Download Shunt from https://github.com/xver/Shunt
 
@@ -26,22 +33,22 @@ Setup following variables:
  - **“SHUNT_HOME”**  to the SHUNT home directory.
  - **“SHUNT_SVDPI”** to the location of svdpi.h file
 
-# Library compilation
+### Library compilation
  - cd to “$SHUNT_HOME/utils/makedir/“
  - run “make clean;make all”
 Compile result will be placed under ***${SHUNT_HOME}/bin with dpi:“libutils.so” and without dpi:”libCutils.so”*** 
 
 NOTE: use the USER_OPT to add compiler options. (Example all debug options: make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG') 
 
-# Compile and run all SV/C examples
+### Compile and run all SV/C examples
 - cd to *$SHUNT_HOME/examples/makedir*
 - run *./run_examples* or *./run_examples_debug* 
 
-# Compile and run C examples
+### Compile and run C examples
 - cd  to example makedir root directory. *(Example: $SHUNT_HOME/examples/c/primitives/makedir)*
 - To compile the library and launch test run “make all”
 
-# Compile and run SV examples
+### Compile and run SV examples
 The Shunt includes a complete Makefile structure for the C portion of the library, but ONLY Makefile target place holders for SV domain.
 
  - Edit “Makefile” initiator/target “compile_sv” under initiator/target
@@ -50,7 +57,7 @@ The Shunt includes a complete Makefile structure for the C portion of the librar
    source. cd to example makedir root directory, run “make all” and ./run
 (Example:  $SHUNT_HOME/examples/sv/sv2c/makedir)
 
-# TLM-2.0 over TCP/IP "loosely timed model"  SystemC-to-SystemC and SystemC-to-SV examples 
+### TLM-2.0 over TCP/IP "loosely timed model"  SystemC-to-SystemC and SystemC-to-SV examples 
 
 SystemC to SystemC  b_transport over TCP/IP :  
  - cd to $SHUNT_HOME/examples/sc/LT_simple_cs/makedir 
@@ -60,9 +67,11 @@ SystemC to SV  b_transport over TCP/IP :
  - cd to $SHUNT_HOME/examples/sc/LT_simple_sv/makedir
  - run  "make all"
  
-Release History:
+# Release History:
 -----------------------
-2.1.2 - (Current Version) Cumulative release: cleanup & SystemC related fixes
+v2.2.0 - (Current Version) The ARM AXI (Advanced eXtensible Interface) bus support & cumulative bug fixes, cleanups, and updates. 
+ 
+2.1.2 -  Cumulative release: cleanup & SystemC related fixes
 
 2.1.1 - SystemC compile/link cleanup: tab & trailing whitespaces, c++ compile/link -Wall -Werror -Wpedantic -Wextra -Wno-odr
 
@@ -90,10 +99,6 @@ Release History:
 1.0.0 - initial release
 
 -------------------------
-
-If you have any questions please contact us at icshunt.help@gmail.com
-
-Report bugs to [Issues](https://github.com/xver/Shunt/issues).
 
 !["Copyright (c) 2021 IC Verimeter"](https://github.com/xver/Shunt/blob/master/doc/IcVerimeter_logo.png)
 
