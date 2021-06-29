@@ -1,4 +1,4 @@
-# Welcome to the **SystemVerilog/SytemC "TCP/IP Shunt"**!
+# Welcome to the **SystemVerilog/SystemC "TCP/IP Shunt"**!
 
 ![](https://github.com/xver/Shunt/blob/master/doc/shut_log_min.png)
 
