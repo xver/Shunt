@@ -131,7 +131,7 @@ namespace shunt_tlm
       default : print_string="TLM_UNKNOWN_SYNC"; break;
       }
     cout<<" tlm_sync("<<hex <<print_string<<")"
-        << "  tlm_extension_id("<<(unsigned)csgp.tlm_extension_id<<")"
+        << "  tlm_extension_id("<<hex<<(shunt_long_t)csgp.tlm_extension_id<<")"
         <<"]"<<endl;
     }
 
