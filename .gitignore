@@ -18,3 +18,4 @@
 *.vcd
 */makedir/r
 *.log
+examples/sc/LT_simple_cs/makedir/r
