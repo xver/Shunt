@@ -21,17 +21,16 @@
 namespace shunt_tlm
 {
 
-  extern "C" {
+ 
+using namespace sc_core;
+using namespace sc_dt;
+using namespace std;
+using namespace tlm;
+  
 #include "shunt_primitives.c"
 #include "shunt_client_server.c"
 #include "shunt_user_api.c"
-  }
-  
-  using namespace sc_core;
-  using namespace sc_dt;
-  using namespace std;
-  using namespace tlm;
-  
+
   /*
     TLM Enumerations:
       enum  tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED }
