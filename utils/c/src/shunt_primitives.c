@@ -13,8 +13,8 @@
 
 #ifndef  SHUNT_PRIMITIVES_C
 #define  SHUNT_PRIMITIVES_C
-
 #include "shunt_primitives.h"
+
 #define on_error(...) { fprintf(stderr, __VA_ARGS__); fflush(stderr); exit(1); }
 
 //Common Functions
@@ -29,7 +29,9 @@ INLINE shunt_long_t shunt_prim_hash(const char *str) {
 }
 
 INLINE void shunt_prim_error(const char *msg) {
+  #ifndef __cplusplus
   extern int errno;
+  #endif
   if(errno==0) {
     printf(" ERROR: shunt_cs:: %s\n", msg);
   }
