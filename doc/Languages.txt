@@ -1,4 +1,4 @@
-﻿Format: 2.2 (Development Release 2)
+﻿Format: 2.2 (Development Release 3)
 
 # This is the Natural Docs languages file for this project.  If you change
 # anything here, it will apply to THIS PROJECT ONLY.  You can edit the version
@@ -17,6 +17,7 @@
 
 # Languages
 # ------------------------------------------------------------------------
+# The syntax reference is after the definitions.
 
 Language: SystemVerilog
 
