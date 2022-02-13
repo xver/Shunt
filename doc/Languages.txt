@@ -1,4 +1,4 @@
-﻿Format: 2.2 (Development Release 3)
+﻿Format: 2.2 (Release Candidate 1)
 
 # This is the Natural Docs languages file for this project.  If you change
 # anything here, it will apply to THIS PROJECT ONLY.  You can edit the version
@@ -34,7 +34,7 @@ Language: SystemVerilog
    Macro Prototype Ender: \n
    Class Prototype Ender: ;
    Function Prototype Ender: ;
-   Variable Prototype Ender: ;
+   Variable Prototype Enders: ; =
 
 
 # These settings define the languages Natural Docs knows how to parse.  You
@@ -73,8 +73,8 @@ Language: SystemVerilog
 #
 # Aliases: [alias] [alias] ...
 # [Add/Replace] Aliases: [alias] [alias] ...
-#    Defines alternate names for the language that can be used to start a code
-#    block.
+#    Defines alternative names for the language that can be used to start a
+#    code block.
 #
 #
 # Properties for Basic Language Support Only
