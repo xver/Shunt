@@ -49,7 +49,7 @@ ${SHUNT_HOME}/bin/libCutils.so: $(C_OBJS) $(USER_OBJS)
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(LIBRARIES) ${SHUNT_HOME}/bin/libutils.so  ${SHUNT_HOME}/bin/libCutils.so
+	-$(RM) $(OBJS)	$(C_DEPS)	$(LIBRARIES)	${SHUNT_HOME}/bin/libutils.so	${SHUNT_HOME}/bin/libCutils.so
 	-@echo ' '
 
 .PHONY: all clean dependents

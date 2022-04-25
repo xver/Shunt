@@ -56,20 +56,28 @@ INLINE unsigned int  shunt_prim_init_initiator(const unsigned int portno) {
 
 INLINE unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno) {
   int parentfd; /* parent socket */
+    
+  char host[256];
+  char *hostIP;
+  struct hostent *host_entry;/*host info */
+  
+  struct sockaddr_in sin;
+  socklen_t len;
+
   struct sockaddr_in initiatoraddr; /* initiator's addr */
   int optval; /* flag value for setsockopt */
 
 
   //portno = MY_PORT;
   parentfd = -1;
-
+ 
   /*
    * socket: create the parent socket
    */
-
+  
    //
   parentfd = socket(AF_INET, SOCK_STREAM, 0);
-
+  
   if(parentfd < 0) {
       shunt_prim_error("shunt_prim_tcp_parent_init_initiator opening socket<0");
       return parentfd ;
@@ -97,14 +105,29 @@ INLINE unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int port
   /*
    * bind: associate the parent socket with a port
    */
+  
   if(bind(parentfd, (struct sockaddr *) &initiatoraddr, sizeof(initiatoraddr)) < 0) shunt_prim_error("shunt_prim_tcp_parent_init_initiator on binding");
   //int getsockname(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 
+  
   /*
    * listen: make this socket ready to accept connection requests
    */
   if(listen(parentfd, 5) < 0) /* allow 5 requests to queue up */ {
     shunt_prim_error("shunt_prim_tcp_parent_init_initiator on listen");
+  }
+  
+  len = sizeof(sin); 
+  
+  if (getsockname(parentfd, (struct sockaddr *)&sin, &len) == -1)
+    perror("getsockname");
+  else {
+    gethostname(host, sizeof(host)); //find the host name
+    host_entry = gethostbyname(host); //find host information
+    hostIP = inet_ntoa(*((struct in_addr*) host_entry->h_addr_list[0]));
+    printf("Current Host Name: %s\n", host);
+    printf("Host IP: %s\n", hostIP);
+    printf("parentfd=%d port number %d\n",parentfd ,ntohs(sin.sin_port));
   }
   return parentfd ;
 }

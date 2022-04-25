@@ -15,24 +15,33 @@ module automatic Target(input reg clk_i);
 
    import shunt_dpi_pkg::*;
 
-   int clk_cnt=0;
+   int clk_cnt;
    /* verilator lint_off UNUSED */
    /* verilator lint_off UNDRIVEN */
    //MEM
    //logic [31:0] mem [0:255]=0;
-   logic [31:0] mem_data=0;
-   logic [31:0] mem_byte_enable=0;
-   logic [31:0] mem_addr=0;
-   logic        mem_we=0;
+   logic [31:0] mem_data;
+   
+   logic [31:0] mem_byte_enable;
+   
+   logic [31:0] mem_addr;
+   
+   logic        mem_we;
+   
    //logic      mem_oe;
-   logic [31:0] mem_q=0;
+   logic [31:0] mem_q;
+   
 
-   bit          end_sim =0 ;
-   bit          start_sim=0;
-   bit          trnx_in_progress=0;
+   bit          end_sim ;
+   
+   bit          start_sim;
+   
+   bit          trnx_in_progress;
+   
    int          clk_next;
 
-   int          sockid =0;
+   int          sockid ;
+   
    
    cs_tlm_generic_payload_header_t h;
    cs_tlm_axi3_extension_payload_header_t h_ext;
@@ -48,6 +57,19 @@ module automatic Target(input reg clk_i);
    /* verilator lint_on UNUSED */
 
    initial   begin
+       clk_cnt=0;
+
+      mem_data=0;
+      mem_byte_enable=0;
+      mem_addr=0;
+      mem_we=0;
+      
+      mem_q=0;
+      
+      end_sim =0;
+      start_sim=0;
+      trnx_in_progress=0;
+      sockid =0;
       
       $display("TARGET: shunt_dpi_tlm_header_id()=%h",shunt_dpi_tlm_header_id());
       $display("TARGET: shunt_dpi_tlm_data_id()=%h", shunt_dpi_tlm_data_id());

@@ -35,7 +35,7 @@ ${SHUNT_HOME}/bin/csC_Target: $(OBJS) $(USER_OBJS)
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) ${SHUNT_HOME}/bin/csC_Target
+	-$(RM) $(OBJS)	$(C_DEPS)	$(EXECUTABLES)	${SHUNT_HOME}/bin/csC_Target
 	-@echo ' '
 
 .PHONY: all clean dependents

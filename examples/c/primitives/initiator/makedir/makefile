@@ -35,7 +35,7 @@ ${SHUNT_HOME}/bin/primC_Initiator: $(OBJS) $(USER_OBJS)
 
 # Other Targets
 clean:
-	-$(RM) $(OBJS)$(C_DEPS)$(EXECUTABLES) ${SHUNT_HOME}/bin/primC_Initiator
+	-$(RM) $(OBJS)	$(C_DEPS)	$(EXECUTABLES)	${SHUNT_HOME}/bin/primC_Initiator
 	-@echo ' '
 
 .PHONY: all clean dependents
