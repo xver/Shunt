@@ -17,8 +17,133 @@
 #include "shunt_client_server.h"
 
 
-//Data exchange utilities (header)
+INLINE unsigned int shunt_cs_init_target(const unsigned int portno_in ,const char *hostname) {
+  int socket;
+  int socket_0;
+  
+  int port;
+  int success=1;
+ 
+  char const *msg = "shunt_cs_init_target()";
+  
+  cs_header h_trnx;
+  shunt_dynamic_port dynamic_port;
 
+  port =  portno_in;
+  if(portno_in == 0) port = SHUNT_DEFAULT_TCP_PORT;
+  socket= shunt_prim_init_target(port,hostname);
+  
+  //dynamic_port init
+  dynamic_port.port_number = -1;
+  
+  if(portno_in == 0) {
+    // Headers  Tests
+    
+    // trnx_header test
+    
+    
+    //recv
+    if (shunt_cs_recv_header(socket,&h_trnx)<= 0) success = 0;
+    if (success == 0 )  printf("\nERROR: %s trnx_header fail to recv TCP PORT NUMBER ",msg);
+    if (success == 1 ) dynamic_port.port_number = h_trnx.trnx_id;
+
+    //
+    if(shunt_cs_recv_byteV(socket,&h_trnx,dynamic_port.host_ip)<=0) success = 0;
+    if (success == 0 )  printf("\nERROR: %s String data fail to recv HOST_IP",msg);
+    //
+    if (shunt_cs_recv_header(socket,&h_trnx)<= 0) success = 0;
+    if(shunt_cs_recv_byteV(socket,&h_trnx,dynamic_port.host_name)<=0) success = 0;
+    if (success == 0 )  printf("\nERROR: %s String data fail to recv HOST_NAME",msg);
+    
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG 
+    SHUNT_INSTR_HASH_INDEX_DEFINE;
+    shunt_cs_print_header (&h_trnx,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
+    printf("\nDEBUG: %s  dynamic_port.port_number=%llx\n",msg,dynamic_port.port_number);
+    printf("\nDEBUG: %s dynamic_port.host_ip(%s)\n",msg,dynamic_port.host_ip);
+    printf("\nDEBUG: %s dynamic_port.host_name(%s)\n",msg,dynamic_port.host_name);
+#endif
+    socket_0= shunt_prim_init_target(dynamic_port.port_number,dynamic_port.host_name);
+    return socket_0;
+  }
+  else return socket;
+}
+
+INLINE   unsigned int shunt_cs_init_initiator(const unsigned int portno_in) {
+  
+  int  socket;
+  int  port;
+  int success = 1;
+  
+  unsigned int parentfd_0 = -1;
+  unsigned int childfd_0  = -1;
+  uint16_t     port_0     = -1;
+  char host[SHUNT_HOST_NAME_LEN];
+  char *host_ptr;
+  char *hostIP_ptr;
+  struct hostent *host_entry;/*host info */
+  shunt_dynamic_port dynamic_port;
+  struct sockaddr_in sin;
+  socklen_t len;
+  //
+  cs_header      h_trnx_exp;
+ 
+  char const *msg = "shunt_cs_init_initiator() ";
+
+  port =  portno_in;
+  if(portno_in == 0) port = SHUNT_DEFAULT_TCP_PORT;
+  socket= shunt_prim_init_initiator(port);
+  
+  if(portno_in == 0) {
+    parentfd_0 = shunt_prim_tcp_parent_init_initiator(portno_in);
+     
+    len = sizeof(sin);
+    //write to dynamic port structure TODO  function
+    if (getsockname(parentfd_0, (struct sockaddr *)&sin, &len) == -1)
+      perror("getsockname");
+    else {
+      gethostname(host, sizeof(host)); //find the host name
+      host_entry = gethostbyname(host); //find host information
+      hostIP_ptr = inet_ntoa(*((struct in_addr*) host_entry->h_addr_list[0]));
+      port_0 = ntohs(sin.sin_port);
+      //
+      host_ptr = &host[0];
+      dynamic_port.port_number =  port_0;
+      strcpy(dynamic_port.host_name,host_ptr);
+      strcpy(dynamic_port.host_ip,hostIP_ptr);
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG 
+      printf("\nDEBUG: %s portno_in(%d) parentfd_0(%x) host(%s) hostIP_ptr(%s) port_0(%d) ",msg,portno_in,parentfd_0,host,hostIP_ptr,port_0); 
+      printf("\nDEBUG: %s dynamic_port.host_name (%s),dynamic_port.host_ip(%s) dynamic_port.port_number(%llx) ",msg,dynamic_port.host_name,dynamic_port.host_ip,dynamic_port.port_number);  
+      printf("\nDEBUG: %s socket=%d",msg, socket);
+#endif
+    } //else
+    
+    SHUNT_INSTR_HASH_INDEX_DEFINE;
+    
+    h_trnx_exp.trnx_type =  shunt_prim_hash("shunt_dynamic_port_leader");
+    h_trnx_exp.trnx_id   =  dynamic_port.port_number;
+    h_trnx_exp.data_type =  shunt_cs_data_type_hash(SHUNT_BYTE,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY);
+    
+    //SEND HOST IP
+    h_trnx_exp.n_payloads =SHUNT_HOST_IP_LEN; 
+    if (shunt_cs_send_header(socket,&h_trnx_exp)<= 0) success = 0;
+    if (shunt_cs_send_byteV  (socket,&h_trnx_exp,dynamic_port.host_ip)<= 0) success = 0;
+    if (success == 0 )  printf("\nERROR: %s fail send HOST IP",msg);
+    
+    //SEND HOST NAMe
+    h_trnx_exp.n_payloads =SHUNT_HOST_NAME_LEN;
+    if (shunt_cs_send_header(socket,&h_trnx_exp)<= 0) success = 0;
+    if (shunt_cs_send_byteV  (socket,&h_trnx_exp,dynamic_port.host_name)<= 0) success = 0;
+    if (success == 0 )  printf("\nERROR: %s fail send HOST NAME",msg); 
+    
+    childfd_0  = shunt_prim_tcp_child_init_initiator(parentfd_0); 
+    
+    return childfd_0;
+  }//if(portno_in == 0)
+  else  return socket;
+  
+}
+
+//Data exchange utilities (header)
 INLINE shunt_long_t shunt_cs_data_type_hash(shunt_long_t data_type,const char* data_type_names[],int last_enum) {
   shunt_long_t result_ = -1;
 
@@ -40,7 +165,7 @@ INLINE int shunt_cs_data_type(shunt_long_t hash,const char* trnx_type_names[],in
   return result_;
 }
 
-INLINE void shunt_cs_print_header(cs_header* h,const char* data_type_names[],int last_enum,char* msg) {
+INLINE void shunt_cs_print_header(cs_header* h,const char* data_type_names[],int last_enum,char const *msg) {
 
   printf("\n%s h_trnx->trnx_type\t(%lx)",msg,(long)h->trnx_type);
   printf("\n%s h_trnx->trnx_id\t(%lx)",msg,(long)h->trnx_id);
@@ -74,12 +199,12 @@ INLINE void shunt_cs_print_data_header(cs_header* h,cs_data_header* h_data,const
 INLINE int shunt_cs_send_header(int sockid,cs_header* h) {
   int Result_=0;
   shunt_long_t send_arr[(sizeof(*h) + sizeof(shunt_long_t))/sizeof(shunt_long_t)];
-  int numbytes;
-
+  int numbytes=0;
+  
   send_arr[0] = shunt_prim_hash("shunt_cs_header_leader");
   memcpy(&send_arr[1], h,sizeof(*h));
   numbytes = send(sockid,send_arr,sizeof(*h) + sizeof(shunt_long_t), 0);
-  if(numbytes <= 0)  shunt_prim_error("\nERROR: in  shunt_cs_send_header : numbytes < 0 ");
+  if(numbytes <= 0)  printf("\nERROR: in  shunt_cs_send_header : numbytes < 0 (%d) size=%ld sockid(%d)",numbytes,(sizeof(*h) + sizeof(shunt_long_t)),sockid);
   else  Result_=1;
 
   return Result_;

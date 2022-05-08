@@ -136,6 +136,7 @@ INLINE unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int paren
   int childfd; /* child socket */
   int targetlen; /* byte size of target's address */
   struct sockaddr_in targetaddr; /* target addr */
+  struct sockaddr_in sin; /* target addr */
   struct hostent *hostp; /* target host info */
   char *hostaddrp; /* dotted decimal host addr string */
   const char *hostname = "N/A";  /* host name */
@@ -166,8 +167,10 @@ INLINE unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int paren
     return -1;
   }
   else {
-    printf("initiator established connection with Hostname(%s) IP(%s)\n",
-       hostname, hostaddrp); }
+    socklen_t len = sizeof(sin);   
+    getsockname(parentfd, (struct sockaddr *)&sin, &len);
+    printf("\ninitiator established connection with Hostname(%s) IP(%s) Port(%d)\n",
+           hostname, hostaddrp, ntohs(sin.sin_port)); }
   return childfd;
 }
 

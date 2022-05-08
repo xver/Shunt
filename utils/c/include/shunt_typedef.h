@@ -104,6 +104,49 @@ typedef long long shunt_long_t;
 #endif
 
 /*
+  Variable: SHUNT_DEFAULT_TCP_PORT  
+  - default port is used for dynamic allocation of the client-server TCP port.
+*/
+#define SHUNT_DEFAULT_TCP_PORT 4350;
+
+/*
+  Variable: shunt_dynamic_port 
+  is used for dynamic allocation of the client-server TCP port.
+
+  -  host_name   TCP/IP host_name
+  -  host_ip     Host IP 
+  -  port_number TCP/IP host_name
+  
+  --- Code
+  //Big-endian view: 
+  typedef struct shunt_dynamic_port_t {
+    shunt_long_t port_number;       // port_number
+    char         host_ip[16];       // host IP
+    char         host_name[256];    // name of host
+  } shunt_dynamic_port;
+  ---
+*/ 
+#define SHUNT_HOST_IP_LEN 16
+#define SHUNT_HOST_NAME_LEN 256
+
+#if __BYTE_ORDER__== __ORDER_BIG_ENDIAN__
+typedef struct shunt_dynamic_port_t {
+  unsigned shunt_long_t port_number;       // port_number
+  char         host_ip[SHUNT_HOST_IP_LEN];       // host IP
+  char         host_name[SHUNT_HOST_NAME_LEN];    // name of host
+} shunt_dynamic_port;
+#endif
+
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+typedef struct shunt_dynamic_port_t {
+  char         host_name[SHUNT_HOST_NAME_LEN];    // name of host
+  char         host_ip[SHUNT_HOST_IP_LEN];        // host IP
+  shunt_long_t port_number;       // port_number
+} shunt_dynamic_port;
+
+#endif
+
+/*
 Variable: SHUNT_INSTR_ENUM
 
  *Integer 2 states:*
@@ -146,11 +189,22 @@ Variable: SHUNT_INSTR_ENUM_NAMES
   - trnx_id        user defined unique transaction number
   - data_type      <SHUNT_INSTR_ENUM>
   - n_payloads     number of data payloads (for Array number of vectors)
+ 
+  --- Code
+  //Big-endian view: 
+  typedef struct cs_header_t {
+    shunt_long_t   trnx_type;
+    shunt_long_t   trnx_id;
+    shunt_long_t   data_type;
+    shunt_long_t   n_payloads;
+   }cs_header;
+---
 
 */
 #define IS_BIG_ENDIAN (*(uint16_t *)"\0\xff" < 0x100)
 
 #if __BYTE_ORDER__== __ORDER_BIG_ENDIAN__
+
 typedef struct cs_header_t {
   shunt_long_t   trnx_type;
   shunt_long_t   trnx_id;
@@ -405,7 +459,7 @@ typedef struct cs_tlm_axi3_extension_payload_header_t {
   shunt_long_t  AxID;
   shunt_long_t  AxCACHE;
   shunt_long_t  AxBURST;
-} cs_tlm_axi3_extension_payload_header; 
+} cs_tlm_axi3_extension_payload_header;
 #endif
 #endif //#ifndef SHUNT_TYPEDEF_H
 

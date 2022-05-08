@@ -523,7 +523,7 @@ See Also:
   <cs_header_t>
 
 */
-INLINE void shunt_cs_print_header    (cs_header* h,const char* data_type_names[],int last_enum,char* msg);
+INLINE void shunt_cs_print_header    (cs_header* h,const char* data_type_names[],int last_enum,char const *msg);
 
 /*
   Function: shunt_cs_print_data_header
