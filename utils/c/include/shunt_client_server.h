@@ -69,6 +69,44 @@
 //prototypes
 //-------------
 
+//Section: TCP/IP Functions
+
+/*
+ Function: shunt_cs_init_initiator
+ TCP/IP initiator (server) initialization
+
+ Parameters:
+
+ portno_in - socket port .If portno_in = 0 - allocating a free client-server TCP port.
+ 
+ NOTE: <SHUNT_DEFAULT_TCP_PORT> is reserved for the dynamic allocation of the client-server TCP port.
+
+ Returns:
+
+ socket id
+
+*/
+INLINE unsigned int shunt_cs_init_initiator(const unsigned int portno_in);
+
+
+/*
+ Function: shunt_cs_init_target
+ TCP/IP target (client) initialization
+ 
+ Parameters:
+
+ hostname  - initiator (host) name
+ portno_in - TCP port. If portno_in = 0 - allocating a free client-server TCP port.
+ 
+ NOTE: <SHUNT_DEFAULT_TCP_PORT> is dedicated to dynamic client-server TCP port assignment.
+ 
+ Returns:
+
+ socket id
+
+*/
+INLINE unsigned int shunt_cs_init_target(const unsigned int portno_in ,const char *hostname);
+
 //Section: Data exchange structures and utilities
 
 /*

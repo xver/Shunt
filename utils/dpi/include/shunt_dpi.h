@@ -26,6 +26,7 @@
 
 // Section: TCP/IP socket Target , Initiator initialization
 
+
 /*
   Function: shunt_dpi_target_init
   TCP/IP target initialization
@@ -34,13 +35,18 @@
 
   portno   - socket port
   hostname - initiator name
-
+  
   Returns:
   socket id
 
   See Also:
-  - <shunt_prim_init_target>
+  - <shunt_prim_init_target>  <shunt_cs_init_target>
+  
+  NOTE:
+  If portno_in = 0 -- assign a free client-server TCP port.
+  <SHUNT_DEFAULT_TCP_PORT> is reserved for the dynamic allocation of the client-server TCP port.
 
+  
 */
 unsigned int shunt_dpi_target_init(const unsigned int portno,const char *hostname);
 
@@ -51,15 +57,18 @@ unsigned int shunt_dpi_target_init(const unsigned int portno,const char *hostnam
 
   Parameters:
 
-  portno - socket port
+  portno - socket port 
 
   Returns:
 
   socket id
 
   See Also:
-  - <shunt_prim_init_initiator>
-
+  - <shunt_prim_init_initiator> <shunt_cs_init_initiator>
+ 
+  NOTE:
+  If portno_in = 0 -- assign a free client-server TCP port.
+  <SHUNT_DEFAULT_TCP_PORT> is reserved for the dynamic allocation of the client-server TCP port.
 */
 unsigned int shunt_dpi_initiator_init(const unsigned int portno);
 

@@ -21,7 +21,7 @@ int main(void) {
   const int col_n = 3;
   const int row_n = 5;
 
-  port =       MY_PORT;
+  port =       0;//MY_PORT;
   char* msg = "";
   //
   cs_header      h_trnx_exp;
@@ -29,7 +29,7 @@ int main(void) {
   cs_data_header h_data_exp;
   cs_data_header h_data_act;
   //
-  socket= shunt_prim_init_initiator(port);
+  socket= shunt_cs_init_initiator(port);
   if (socket<0) {
     printf("csC_Initiator::FATAL ERROR");
     success = 0;

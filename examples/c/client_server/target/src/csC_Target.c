@@ -23,10 +23,10 @@ int main(void) {
 
   //SVCV_INSTR_HASH_INDEX_DEFINE;
 
-  port = MY_PORT;
+  port = 0;//MY_PORT;
   hostname =   MY_HOST;
   //
-  socket= shunt_prim_init_target(port,hostname);
+  socket= shunt_cs_init_target(port,hostname);
 
   if (socket<0) {
     printf("\ncsC_Target::FATAL ERROR");

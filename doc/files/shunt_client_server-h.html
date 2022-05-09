@@ -21,11 +21,31 @@
  <div class="CBody"><div class="CHeading">Integer 2 states</div><pre class="CCode">  SHUNT ENUM       |  SV type    | <span class="SHKeyword">function</span><br />------------------------------------------------------------------------<br />SHUNT_INT          | <span class="SHKeyword">int</span>         | shunt_cs_xxxx_intV<br />SHUNT_SHORTINT     | shortint    | shunt_cs_xxxx_shortV<br />SHUNT_LONGINT      | longint     | shunt_cs_xxxx_longV<br />SHUNT_BYTE         | <span class="SHKeyword">byte</span>        | shunt_cs_xxxx_byteV<br />SHUNT_BIT          | bit         | shunt_cs_xxxx_bitN.</pre><div class="CHeading">Integer 4 states</div><pre class="CCode">  SHUNT ENUM       |  SV type     |  <span class="SHKeyword">function</span><br />------------------------------------------------------------------------<br />  SHUNT_INTEGER    | <span class="SHKeyword">integer</span>,time |  shunt_cs_xxxx_integerV<br />  SHUNT_REG        | reg,logic    |  shunt_cs_xxxx_regN</pre><div class="CHeading">Non integer types IEEE 754</div><pre class="CCode">  SHUNT ENUM       |  SV type     |  <span class="SHKeyword">function</span><br />------------------------------------------------------------------------<br /> SHUNT_REAL        | <span class="SHKeyword">real</span>,realtime| shunt_cs_xxxx_doubleV<br /> SHUNT_SHORTREAL   | shortreal    | shunt_cs_xxxx_floatV<br /> SHUNT_STRING      | <span class="SHKeyword">string</span>       | shunt_cs_xxxx_byteV</pre><div class="CHeading">Special Shunt types</div><pre class="CCode">SHUNT_A_STRUCTURE | complex data types/user defined data types : arrays/<span class="SHKeyword">struct</span>,<span class="SHKeyword">union</span>,enums (N/A)</pre></div>
 </div>
 
+<a name="TCP/IP_Functions"></a><a name="Topic369"></a><div class="CTopic TSection LC">
+ <div class="CTitle">TCP/IP Functions</div>
+</div>
+
+<a name="Functions"></a><a name="Topic322"></a><div class="CTopic TGroup LC">
+ <div class="CTitle">Functions</div>
+</div>
+
+<a name="shunt_cs_init_initiator"></a><a name="Topic161"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">shunt_cs_init_initiator</div>
+ <div id="NDPrototype161" class="NDPrototype WideForm"><div class="PSection PParameterSection CStyle"><table><tr><td class="PBeforeParameters">INLINE <span class="SHKeyword">unsigned</span> <span class="SHKeyword">int</span> shunt_cs_init_initiator(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const unsigned</span>&nbsp;</td><td class="PType"><span class="SHKeyword">int</span>&nbsp;</td><td class="PName last">portno_in</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div></div>
+ <div class="CBody"><p>TCP/IP initiator (server) initialization</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">portno_in<div class="CDLParameterType"><span class="SHKeyword">const unsigned</span> <span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>socket port .If portno_in = 0 - allocating a free client-server TCP port.</p></td></tr></table><p>NOTE: <a href="../index.html#File:shunt_typedef.h:SHUNT_DEFAULT_TCP_PORT" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,273);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >SHUNT_DEFAULT_TCP_PORT</a> is reserved for the dynamic allocation of the client-server TCP port.</p><div class="CHeading">Returns</div><p>socket id</p></div>
+</div>
+
+<a name="shunt_cs_init_target"></a><a name="Topic371"></a><div class="CTopic TFunction LC">
+ <div class="CTitle">shunt_cs_init_target</div>
+ <div id="NDPrototype371" class="NDPrototype WideForm"><div class="PSection PParameterSection CStyle"><table><tr><td class="PBeforeParameters">INLINE <span class="SHKeyword">unsigned</span> <span class="SHKeyword">int</span> shunt_cs_init_target(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PModifierQualifier first"><span class="SHKeyword">const unsigned</span>&nbsp;</td><td class="PType"><span class="SHKeyword">int</span>&nbsp;</td><td></td><td class="PName last">portno_in ,</td></tr><tr><td class="PModifierQualifier first"><span class="SHKeyword">const</span>&nbsp;</td><td class="PType"><span class="SHKeyword">char</span>&nbsp;</td><td class="PSymbols">*</td><td class="PName last">hostname</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div></div>
+ <div class="CBody"><p>TCP/IP target (client) initialization</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">hostname<div class="CDLParameterType"><span class="SHKeyword">const</span> <span class="SHKeyword">char</span>*</div></td><td class="CDLDefinition"><p>initiator (host) name</p></td></tr><tr><td class="CDLEntry">portno_in<div class="CDLParameterType"><span class="SHKeyword">const unsigned</span> <span class="SHKeyword">int</span></div></td><td class="CDLDefinition"><p>TCP port. If portno_in = 0 - allocating a free client-server TCP port.</p></td></tr></table><p>NOTE: <a href="../index.html#File:shunt_typedef.h:SHUNT_DEFAULT_TCP_PORT" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,273);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >SHUNT_DEFAULT_TCP_PORT</a> is dedicated to dynamic client-server TCP port assignment.</p><div class="CHeading">Returns</div><p>socket id</p></div>
+</div>
+
 <a name="Data_exchange_structures_and_utilities"></a><a name="Topic321"></a><div class="CTopic TSection LC">
  <div class="CTitle">Data exchange structures and utilities</div>
 </div>
 
-<a name="Functions"></a><a name="Topic322"></a><div class="CTopic TGroup LC">
+<a name="Functions(2)"></a><a name="Topic330"></a><div class="CTopic TGroup LC">
  <div class="CTitle">Functions</div>
 </div>
 
@@ -69,7 +89,7 @@
  <div class="CTitle">Data exchange utilities</div>
 </div>
 
-<a name="Functions(2)"></a><a name="Topic330"></a><div class="CTopic TGroup LC">
+<a name="Functions(3)"></a><a name="Topic350"></a><div class="CTopic TGroup LC">
  <div class="CTitle">Functions</div>
 </div>
 
@@ -185,7 +205,7 @@
  <div class="CTitle">Auxiliary tasks</div>
 </div>
 
-<a name="Functions(3)"></a><a name="Topic350"></a><div class="CTopic TGroup LC">
+<a name="Functions(4)"></a><a name="Topic359"></a><div class="CTopic TGroup LC">
  <div class="CTitle">Functions</div>
 </div>
 
@@ -235,7 +255,7 @@
  <div class="CTitle">TLM2.0 utils</div>
 </div>
 
-<a name="Functions(4)"></a><a name="Topic359"></a><div class="CTopic TGroup LC">
+<a name="Functions(5)"></a><a name="Topic368"></a><div class="CTopic TGroup LC">
  <div class="CTitle">Functions</div>
 </div>
 
