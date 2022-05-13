@@ -23,7 +23,7 @@ INLINE unsigned int shunt_cs_init_target(const unsigned int portno_in ,const cha
   
   int port;
   int success=1;
- 
+  
   char const *msg = "shunt_cs_init_target()";
   
   cs_header h_trnx;
@@ -69,80 +69,111 @@ INLINE unsigned int shunt_cs_init_target(const unsigned int portno_in ,const cha
   else return socketfd;
 }
 
-INLINE   unsigned int shunt_cs_init_initiator(const unsigned int portno_in) {
+INLINE unsigned int  shunt_cs_init_initiator(const unsigned int portno) {
   
-  unsigned int  childfd;
-  unsigned int  port;
-  int  success = 1;
+  unsigned int parentfd  = -1;
+  unsigned int childfd  = -1;
+  //
+  if (portno!= 0) shunt_prim_init_initiator(portno);
+  else {
+    parentfd  = shunt_cs_tcp_parent_init_initiator_dpa(); 
+    childfd   = shunt_prim_tcp_child_init_initiator(parentfd);
+  }
   
-  unsigned int parentfd_0 = -1;
-  unsigned int childfd_0  = -1;
-  uint16_t     port_0     = -1;
-  char host[SHUNT_HOST_NAME_LEN];
-  char *host_ptr;
-  char *hostIP_ptr;
+  return  childfd;
+}
+
+INLINE  shunt_dynamic_port shunt_cs_update_dynamic_port(unsigned int parentfd_0) {
+  
   struct hostent *host_entry;/*host info */
   shunt_dynamic_port dynamic_port;
   struct sockaddr_in sin;
   socklen_t len;
+  uint16_t     port_0     = -1;
+  char host[SHUNT_HOST_NAME_LEN];
+  char *host_ptr;
+  char *hostIP_ptr;
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG 
+  char const *msg = "shunt_cs_update_dynamic_port() ";
+#endif
+  len = sizeof(sin);
+
+  //write to dynamic port structure TODO  function
+  if (getsockname(parentfd_0, (struct sockaddr *)&sin, &len) == -1)
+    perror("getsockname");
+  else {
+    gethostname(host, sizeof(host)); //find the host name
+    host_entry = gethostbyname(host); //find host information
+    hostIP_ptr = inet_ntoa(*((struct in_addr*) host_entry->h_addr_list[0]));
+    port_0 = ntohs(sin.sin_port);
+    //
+    host_ptr = &host[0];
+    dynamic_port.port_number =  port_0;
+    strcpy(dynamic_port.host_name,host_ptr);
+    strcpy(dynamic_port.host_ip,hostIP_ptr);
+    
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG 
+    printf("\nDEBUG: %s parentfd_0(%x) host(%s) hostIP_ptr(%s) port_0(%d) ",msg,parentfd_0,host,hostIP_ptr,port_0); 
+    printf("\nDEBUG: %s dynamic_port.host_name (%s),dynamic_port.host_ip(%s) dynamic_port.port_number(%llx) ",msg,dynamic_port.host_name,dynamic_port.host_ip,dynamic_port.port_number);  
+#endif
+    
+  }
+  return dynamic_port; 
+}
+
+INLINE   unsigned int shunt_cs_tcp_parent_init_initiator_dpa() {
+  
+  unsigned int parentfd = -1;
+  unsigned int  childfd;
+  unsigned int  port;
+  int  success = 1; 
+  int portno_in=0;
+
+  unsigned int parentfd_0 = -1;
+  // unsigned int childfd_0  = -1;
+  shunt_dynamic_port dynamic_port;
   //
   cs_header      h_trnx_exp;
- 
+  
   char const *msg = "shunt_cs_init_initiator() ";
-
-  port =  portno_in;
-  if(portno_in == 0) port = SHUNT_DEFAULT_TCP_PORT;
-  childfd= shunt_prim_init_initiator(port);
   
-  if(portno_in == 0) {
-    parentfd_0 = shunt_prim_tcp_parent_init_initiator(portno_in);
-     
-    len = sizeof(sin);
-    //write to dynamic port structure TODO  function
-    if (getsockname(parentfd_0, (struct sockaddr *)&sin, &len) == -1)
-      perror("getsockname");
-    else {
-      gethostname(host, sizeof(host)); //find the host name
-      host_entry = gethostbyname(host); //find host information
-      hostIP_ptr = inet_ntoa(*((struct in_addr*) host_entry->h_addr_list[0]));
-      port_0 = ntohs(sin.sin_port);
-      //
-      host_ptr = &host[0];
-      dynamic_port.port_number =  port_0;
-      strcpy(dynamic_port.host_name,host_ptr);
-      strcpy(dynamic_port.host_ip,hostIP_ptr);
+  port = SHUNT_DEFAULT_TCP_PORT;
+  //
+  parentfd = shunt_prim_tcp_parent_init_initiator(port);
+  childfd  = shunt_prim_tcp_child_init_initiator(parentfd);
+  //
+  parentfd_0 = shunt_prim_tcp_parent_init_initiator(portno_in);
+  dynamic_port = shunt_cs_update_dynamic_port(parentfd_0);
+  
+  
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG 
-      printf("\nDEBUG: %s portno_in(%d) parentfd_0(%x) host(%s) hostIP_ptr(%s) port_0(%d) ",msg,portno_in,parentfd_0,host,hostIP_ptr,port_0); 
-      printf("\nDEBUG: %s dynamic_port.host_name (%s),dynamic_port.host_ip(%s) dynamic_port.port_number(%llx) ",msg,dynamic_port.host_name,dynamic_port.host_ip,dynamic_port.port_number);  
-      printf("\nDEBUG: %s childfd=%d",msg, childfd);
+  printf("\nDEBUG: %s portno_in(%d) parentfd_0(%x)",msg,portno_in,parentfd_0); 
+  printf("\nDEBUG: %s dynamic_port.host_name (%s),dynamic_port.host_ip(%s) dynamic_port.port_number(%llx) ",msg,dynamic_port.host_name,dynamic_port.host_ip,dynamic_port.port_number);  
+  printf("\nDEBUG: %s childfd=%d",msg, childfd);
 #endif
-    } //else
-    
-    SHUNT_INSTR_HASH_INDEX_DEFINE;
-    
-    h_trnx_exp.trnx_type =  shunt_prim_hash("shunt_dynamic_port_leader");
-    h_trnx_exp.trnx_id   =  dynamic_port.port_number;
-    h_trnx_exp.data_type =  shunt_cs_data_type_hash(SHUNT_BYTE,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY);
-    
-    //SEND HOST IP
-    h_trnx_exp.n_payloads =SHUNT_HOST_IP_LEN; 
-    if (shunt_cs_send_header(childfd,&h_trnx_exp)<= 0) success = 0;
-    if (shunt_cs_send_byteV  (childfd,&h_trnx_exp,dynamic_port.host_ip)<= 0) success = 0;
-    if (success == 0 )  printf("\nERROR: %s fail send HOST IP",msg);
-    
-    //SEND HOST NAMe
-    h_trnx_exp.n_payloads =SHUNT_HOST_NAME_LEN;
-    if (shunt_cs_send_header(childfd,&h_trnx_exp)<= 0) success = 0;
-    if (shunt_cs_send_byteV  (childfd,&h_trnx_exp,dynamic_port.host_name)<= 0) success = 0;
-    if (success == 0 )  printf("\nERROR: %s fail send HOST NAME",msg); 
-    
-    childfd_0  = shunt_prim_tcp_child_init_initiator(parentfd_0); 
-    shunt_prim_close_socket(childfd); 
-    return childfd_0;
-  }//if(portno_in == 0)
-  else  return childfd;
   
-}
+  SHUNT_INSTR_HASH_INDEX_DEFINE;
+  
+  h_trnx_exp.trnx_type =  shunt_prim_hash("shunt_dynamic_port_leader");
+  h_trnx_exp.trnx_id   =  dynamic_port.port_number;
+  h_trnx_exp.data_type =  shunt_cs_data_type_hash(SHUNT_BYTE,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY);
+  
+  //SEND HOST IP
+  h_trnx_exp.n_payloads =SHUNT_HOST_IP_LEN; 
+  if (shunt_cs_send_header(childfd,&h_trnx_exp)<= 0) success = 0;
+  if (shunt_cs_send_byteV  (childfd,&h_trnx_exp,dynamic_port.host_ip)<= 0) success = 0;
+  if (success == 0 )  printf("\nERROR: %s fail send HOST IP",msg);
+  
+  //SEND HOST NAMe
+  h_trnx_exp.n_payloads =SHUNT_HOST_NAME_LEN;
+  if (shunt_cs_send_header(childfd,&h_trnx_exp)<= 0) success = 0;
+  if (shunt_cs_send_byteV  (childfd,&h_trnx_exp,dynamic_port.host_name)<= 0) success = 0;
+  if (success == 0 )  printf("\nERROR: %s fail send HOST NAME",msg); 
+  
+  shunt_prim_close_socket(parentfd); 
+  
+  return parentfd_0;
+  }
 
 //Data exchange utilities (header)
 INLINE shunt_long_t shunt_cs_data_type_hash(shunt_long_t data_type,const char* data_type_names[],int last_enum) {
