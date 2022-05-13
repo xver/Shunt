@@ -136,7 +136,7 @@ INLINE   unsigned int shunt_cs_init_initiator(const unsigned int portno_in) {
     if (shunt_cs_send_byteV  (childfd,&h_trnx_exp,dynamic_port.host_name)<= 0) success = 0;
     if (success == 0 )  printf("\nERROR: %s fail send HOST NAME",msg); 
     
-    childfd_0  = shunt_prim_tcp_child_init_initiator(childfd_0); 
+    childfd_0  = shunt_prim_tcp_child_init_initiator(parentfd_0); 
     shunt_prim_close_socket(childfd); 
     return childfd_0;
   }//if(portno_in == 0)

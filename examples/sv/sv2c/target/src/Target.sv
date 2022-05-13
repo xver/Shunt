@@ -43,7 +43,7 @@ module automatic Target;
         //
     //String.toupper();
     $display("Target: START");
-    Socket = init_target(`MY_PORT, `MY_HOST);
+    Socket = init_target(0, `MY_HOST);
     $display("Target: socket=%0d",Socket);
 
     header_loopback_test(Socket);
