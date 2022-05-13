@@ -77,37 +77,36 @@
 
  Parameters:
 
- portno_in - socket port .If portno_in = 0 - allocating a free client-server TCP port.
+ portno_in --socket port .If portno_in = 0 -- allocating a free client-server TCP port.
  
  NOTE: <SHUNT_DEFAULT_TCP_PORT> is reserved for the dynamic allocation of the client-server TCP port.
 
  Returns:
 
- socket id
+ socket id -- child socket id
 
 */
 INLINE unsigned int shunt_cs_init_initiator(const unsigned int portno_in);
 
 /*
- Function:  shunt_cs_tcp_parent_init_initiator_dpa()
- TCP/IP initiator (server) initialization with TCP Dynamic Port Allocation (dpa) 
- ready for Multi-Slave TCP IP 
+ Function:  shunt_cs_tcp_parent_init_initiator_dpa
+ - TCP/IP initiator (server) initialization 
+ - TCP Dynamic Port Allocation (dpa) 
+ - ready for Multi-Slave TCP IP
  
- Parameters:  N/A
-
- portno_in - socket port .If portno_in = 0 - allocating a free client-server TCP port.
+ Parameters: 
  
+ N/A
 
  Returns: 
 
- socket id - parent socket id
+ socket id -- DPA parent socket id
 
  NOTE: <SHUNT_DEFAULT_TCP_PORT> is reserved for the dynamic allocation of the client-server TCP port.
 
  see  <shunt_prim_tcp_parent_init_initiator>
 
 */
-
 INLINE unsigned int shunt_cs_tcp_parent_init_initiator_dpa();
 
 /*
@@ -116,8 +115,8 @@ INLINE unsigned int shunt_cs_tcp_parent_init_initiator_dpa();
  
  Parameters:
 
- hostname  - initiator (host) name
- portno_in - TCP port. If portno_in = 0 - allocating a free client-server TCP port.
+ hostname  -- initiator (host) name
+ portno_in -- TCP port. If portno_in = 0 -- allocating a free client-server TCP port.
  
  NOTE: <SHUNT_DEFAULT_TCP_PORT> is dedicated to dynamic client-server TCP port assignment.
  
@@ -142,6 +141,7 @@ INLINE unsigned int shunt_cs_init_target(const unsigned int portno_in ,const cha
   last_enum           - number of data_type_names[] elements
 
   Returns:
+  
   hash index
 
   See Also:
