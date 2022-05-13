@@ -98,7 +98,6 @@ INLINE  shunt_dynamic_port shunt_cs_update_dynamic_port(unsigned int parentfd_0)
 #endif
   len = sizeof(sin);
 
-  //write to dynamic port structure TODO  function
   if (getsockname(parentfd_0, (struct sockaddr *)&sin, &len) == -1)
     perror("getsockname");
   else {

@@ -127,6 +127,21 @@ INLINE unsigned int shunt_cs_tcp_parent_init_initiator_dpa();
 */
 INLINE unsigned int shunt_cs_init_target(const unsigned int portno_in ,const char *hostname);
 
+/*
+ Function: shunt_cs_update_dynamic_port
+ Update the shunt_dynamic_por structure by the TCP socket.
+ 
+ Parameters:
+
+ socket -- parent socket id 
+  
+ Returns:
+
+ shunt_dynamic_port structure see <shunt_dynamic_port>
+ 
+
+*/
+INLINE  shunt_dynamic_port shunt_cs_update_dynamic_port(unsigned int parentfd_0);
 
 //Section: Data exchange structures and utilities
 
