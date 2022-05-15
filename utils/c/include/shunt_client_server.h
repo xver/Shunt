@@ -128,6 +128,28 @@ INLINE unsigned int shunt_cs_tcp_parent_init_initiator_dpa();
 INLINE unsigned int shunt_cs_init_target(const unsigned int portno_in ,const char *hostname);
 
 /*
+ Function: shunt_cs_tcp_parent_init_target_dpa 
+ - TCP/IP target (client) initialization 
+ - TCP Dynamic Port Allocation (dpa) 
+ - ready for Multi-Slave TCP IP
+ 
+ Parameters: 
+ 
+ hostname  -- initiator (host) name
+ 
+ Returns: 
+ <shunt_dynamic_port> - shunt dynamic port allocation struct 
+ 
+
+ NOTE: <SHUNT_DEFAULT_TCP_PORT> is reserved for the dynamic allocation of the client-server TCP port.
+
+ see  <shunt_prim_tcp_parent_init_initiator>
+
+*/
+INLINE shunt_dynamic_port  shunt_cs_tcp_parent_init_target_dpa(const char *hostname);
+
+
+/*
  Function: shunt_cs_update_dynamic_port
  Update the shunt_dynamic_por structure by the TCP socket.
  

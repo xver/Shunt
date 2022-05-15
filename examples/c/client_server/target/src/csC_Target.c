@@ -20,14 +20,16 @@ int main(void) {
   char *hostname;
   int port;
   int success=1;
-
+  
   //SVCV_INSTR_HASH_INDEX_DEFINE;
 
   port = 0;//MY_PORT;
   hostname =   MY_HOST;
   //
   socket= shunt_cs_init_target(port,hostname);
-
+ 
+  
+  
   if (socket<0) {
     printf("\ncsC_Target::FATAL ERROR");
     success=0;
@@ -122,7 +124,6 @@ int main(void) {
     //data
     if (shunt_cs_send_byteV(socket,&h_trnx,String)<=0) success = 0;
     if (success == 0 )  printf("\n target String data fail to send");
-
     //puts("\ncsC_Target end");
   }
 
