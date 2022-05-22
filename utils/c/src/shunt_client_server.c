@@ -85,9 +85,9 @@ INLINE shunt_dynamic_port  shunt_cs_tcp_parent_init_target_dpa(const char *hostn
 INLINE unsigned int  shunt_cs_init_initiator(const unsigned int portno) {
   
   unsigned int parentfd  = -1;
-  unsigned int childfd  = -1;
+  unsigned int childfd   = -1;
   //
-  if (portno!= 0) shunt_prim_init_initiator(portno);
+  if (portno != 0) childfd = shunt_prim_init_initiator(portno);
   else {
     parentfd  = shunt_cs_tcp_parent_init_initiator_dpa(); 
     childfd   = shunt_prim_tcp_child_init_initiator(parentfd);

@@ -46,6 +46,7 @@ module automatic Initiator;
     Test_name = "\tinit_initiator";
 
     Socket = init_initiator(0);
+    //Socket = init_initiator(`MY_PORT);
     /* verilator lint_off WIDTH */
     if (!Socket) Pass=0;
     /* verilator lint_on WIDTH */

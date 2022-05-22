@@ -22,16 +22,14 @@
 
 unsigned int shunt_dpi_target_init(const unsigned int portno, const char *hostname) {
   int Result_ =0;
-  if   (portno == 0)Result_ = shunt_cs_init_target(portno,hostname);
-  else Result_ = shunt_prim_init_target(portno,hostname);
+  Result_ = shunt_cs_init_target(portno,hostname);
   return Result_;
 }
 
 
 unsigned int shunt_dpi_initiator_init(const unsigned int portno) {
-  unsigned int  Result_;
-  if  (portno == 0) Result_ = shunt_cs_init_initiator(portno);
-  else Result_ =  shunt_prim_init_initiator(portno);
+  unsigned int  Result_ =0;
+  Result_ = shunt_cs_init_initiator(portno);
   return Result_;
 }
 
