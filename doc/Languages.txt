@@ -1,4 +1,4 @@
-﻿Format: 2.2 (Release Candidate 1)
+﻿Format: 2.3 (Development Release 1)
 
 # This is the Natural Docs languages file for this project.  If you change
 # anything here, it will apply to THIS PROJECT ONLY.  You can edit the version
@@ -17,25 +17,6 @@
 
 # Languages
 # ------------------------------------------------------------------------
-# The syntax reference is after the definitions.
-
-Language: SystemVerilog
-
-   Extensions: sv svh
-
-   Line Comment: //
-   Block Comment: /* */
-   Member Operator: ::
-   Line Extender: \
-   Enum Values: Global
-
-   Property Prototype Enders: ; =
-   Type Prototype Ender: ;
-   Macro Prototype Ender: \n
-   Class Prototype Ender: ;
-   Function Prototype Ender: ;
-   Variable Prototype Enders: ; =
-
 
 # These settings define the languages Natural Docs knows how to parse.  You
 # can define your own here or override the settings of the existing ones.
