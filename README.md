@@ -71,7 +71,9 @@ SystemC to SV  b_transport over TCP/IP :
  
 # Release History:
 -----------------------
-v2.2.1 - (Current Version) cumulative updates: c++ namespaces no extern "C" & minor cosmetic updates
+v2.3.0 - (Current Version) Regression mode support: Simultaneous allocation of TCP/IP ports.
+
+v2.2.1 - cumulative updates: c++ namespaces no extern "C" & minor cosmetic updates
 
 v2.2.0 - The ARM AXI (Advanced eXtensible Interface) bus support & cumulative bug fixes, cleanups, and updates. 
  
