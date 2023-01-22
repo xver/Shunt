@@ -8,7 +8,7 @@
 
 Title: SystemVerilog TCP/IP "IC Shunt"
 
-Copyright: Copyright © 2016-2022 IC Verimeter
+Copyright: Copyright © 2016-2023 IC Verimeter
 
 
 # This is where you put general information about your project.  None of these
@@ -37,9 +37,9 @@ Copyright: Copyright © 2016-2022 IC Verimeter
 #    d     - Single digit day, when possible.  1 is "1".
 #    dd    - Always double digit day.  1 is "01".
 #    day   - Day with text extension.  1 is "1st".
-#    yy    - Double digit year.  2022 is "22".
-#    yyyy  - Four digit year.  2022 is "2022".
-#    year  - Four digit year.  2022 is "2022".
+#    yy    - Double digit year.  2023 is "22".
+#    yyyy  - Four digit year.  2023 is "2023".
+#    year  - Four digit year.  2023 is "2023".
 #
 # Style: [style]
 #    A custom style to apply to the generated documentation.  See

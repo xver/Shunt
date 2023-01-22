@@ -1,7 +1,7 @@
 /*
 =========================================================
  File        : shunt_dpi.h
- Copyright (c) 2016-2022 IC Verimeter. All rights reserved.
+ Copyright (c) 2016-2023 IC Verimeter. All rights reserved.
                Licensed under the MIT License.
                See LICENSE file in the project root for full license information.
  Description : shunt dpi bridge
