@@ -14,24 +14,46 @@
  <div class="CTitle">Common defines</div>
 </div>
 
-<a name="Data_exchange_defines"></a><a name="Topic270"></a><div class="CTopic TSection LC">
- <div class="CTitle">Data exchange defines</div>
-</div>
-
 <a name="Variables"></a><a name="Topic271"></a><div class="CTopic TGroup LC">
  <div class="CTitle">Variables</div>
 </div>
 
-<a name="shunt_long_t"></a><a name="Topic272"></a><div class="CTopic TVariable LC">
+<a name="shunt_long_t"></a><a name="Topic373"></a><div class="CTopic TVariable LC">
  <div class="CTitle">shunt_long_t</div>
- <div id="NDPrototype272" class="NDPrototype"><div class="PSection PPlainSection">#ifndef shunt_long_t <span class="SHKeyword">typedef long</span> <span class="SHKeyword">long</span> shunt_long_t</div></div>
- <div class="CBody"><ul><li><p>typedef 64 bit variable , default value is &quot;long long&quot;</p></li></ul></div>
+ <div id="NDPrototype373" class="NDPrototype"><div class="PSection PPlainSection">#ifndef shunt_long_t <span class="SHKeyword">typedef long</span> <span class="SHKeyword">long</span> shunt_long_t</div></div>
+ <div class="CBody"><p>typedef 64 bit variable , default value is &quot;long long&quot;</p></div>
 </div>
 
-<a name="SHUNT_DEFAULT_TCP_PORT"></a><a name="Topic273"></a><div class="CTopic TVariable LC">
+<a name="Macros"></a><a name="Topic377"></a><div class="CTopic TGroup LC">
+ <div class="CTitle">Macros</div>
+</div>
+
+<a name="SHUNT_DEFAULT_TCP_PORT"></a><a name="Topic376"></a><div class="CTopic TMacro LC">
  <div class="CTitle">SHUNT_DEFAULT_TCP_PORT</div>
- <div id="NDPrototype273" class="NDPrototype"><div class="PSection PPlainSection">#define SHUNT_DEFAULT_TCP_PORT <span class="SHNumber">4350</span></div></div>
- <div class="CBody"><ul><li><p>default port is used for dynamic allocation of the client-server TCP port.</p></li></ul></div>
+ <div class="CBody"><p>default port is used for dynamic allocation of the client-server TCP port.</p><pre class="CCode">#define SHUNT_DEFAULT_TCP_PORT <span class="SHNumber">4350</span></pre></div>
+</div>
+
+<a name="SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT"></a><a name="Topic375"></a><div class="CTopic TMacro LC">
+ <div class="CTitle">SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT</div>
+ <div class="CBody"><p>specifies the MAXIMUM number of attempts to bind SHUNT_DEFAULT_TCP_PORT</p><pre class="CCode">SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT <span class="SHNumber">20</span></pre></div>
+</div>
+
+<a name="SHUNT_DEFAULT_COLLISION_LOW"></a><a name="Topic379"></a><div class="CTopic TMacro LC">
+ <div class="CTitle">SHUNT_DEFAULT_COLLISION_LOW</div>
+ <div class="CBody"><p>specifies in msec the MINIMUM random interval delay boundary for the collision resolution of the occupied TCP/IP port</p><pre class="CCode">#define SHUNT_DEFAULT_COLLISION_LOW <span class="SHNumber">500</span></pre></div>
+</div>
+
+<a name="SHUNT_DEFAULT_COLLISION_UP"></a><a name="Topic380"></a><div class="CTopic TMacro LC">
+ <div class="CTitle">SHUNT_DEFAULT_COLLISION_UP</div>
+ <div class="CBody"><p>specifies in msec the MAXIMUM random interval delay boundary for the collision resolution of the occupied TCP/IP port</p><pre class="CCode">#define SHUNT_DEFAULT_COLLISION_UP <span class="SHNumber">1500</span></pre></div>
+</div>
+
+<a name="Data_exchange_defines"></a><a name="Topic270"></a><div class="CTopic TSection LC">
+ <div class="CTitle">Data exchange defines</div>
+</div>
+
+<a name="Variables(2)"></a><a name="Topic280"></a><div class="CTopic TGroup LC">
+ <div class="CTitle">Variables</div>
 </div>
 
 <a name="shunt_dynamic_port"></a><a name="Topic274"></a><div class="CTopic TVariable LC">
@@ -43,12 +65,6 @@
  <div class="CTitle">SHUNT_INSTR_ENUM</div>
  <div id="NDPrototype275" class="NDPrototype WideForm"><div class="PSection PParameterSection CStyle"><table><tr><td class="PBeforeParameters"><span class="SHKeyword">typedef</span> <span class="SHKeyword">enum</span> {</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PName first last">SHUNT_INT,</td></tr><tr><td class="PName first last">SHUNT_REAL,</td></tr><tr><td class="PName first last">SHUNT_SHORTREAL,</td></tr><tr><td class="PName first last">SHUNT_STRING,</td></tr><tr><td class="PName first last">SHUNT_A_STRUCTURE,</td></tr><tr><td class="PName first last">SHUNT_INTEGER,</td></tr><tr><td class="PName first last">SHUNT_BYTE,</td></tr><tr><td class="PName first last">SHUNT_REG,</td></tr><tr><td class="PName first last">SHUNT_BIT,</td></tr><tr><td class="PName first last">SHUNT_SHORTINT,</td></tr><tr><td class="PName first last">SHUNT_LONGINT,</td></tr><tr><td class="PName first last">SHUNT_HEADER_ONLY</td></tr></table></td><td class="PAfterParameters">} SHUNT_INSTR_ENUM</td></tr></table></div></div>
  <div class="CBody"><p><b>Integer 2 states:</b></p><table class="CDefinitionList"><tr><td class="CDLEntry">SHUNT_INT</td><td class="CDLDefinition"><p>int</p></td></tr><tr><td class="CDLEntry">SHUNT_SHORTINT</td><td class="CDLDefinition"><p>shortint</p></td></tr><tr><td class="CDLEntry">SHUNT_LONGINT</td><td class="CDLDefinition"><p>longint</p></td></tr><tr><td class="CDLEntry">SHUNT_BYTE</td><td class="CDLDefinition"><p>byte</p></td></tr><tr><td class="CDLEntry">SHUNT_BIT</td><td class="CDLDefinition"><p>bit</p></td></tr></table><p><b>Integer 4 states:</b></p><table class="CDefinitionList"><tr><td class="CDLEntry">SHUNT_INTEGER</td><td class="CDLDefinition"><p>integer,time</p></td></tr><tr><td class="CDLEntry">SHUNT_REG</td><td class="CDLDefinition"><p>reg,logic</p></td></tr></table><p><b>Non integer types IEEE 754:</b></p><table class="CDefinitionList"><tr><td class="CDLEntry">SHUNT_REAL</td><td class="CDLDefinition"><p>real,realtime</p></td></tr><tr><td class="CDLEntry">SHUNT_SHORTREAL</td><td class="CDLDefinition"><p>shortreal</p></td></tr><tr><td class="CDLEntry">SHUNT_STRING</td><td class="CDLDefinition"><p>string</p></td></tr><tr><td class="CDLEntry">SHUNT_A_STRUCTURE</td><td class="CDLDefinition"><p>complex data types/user defined data types : arrays/struct,union,enums</p></td></tr><tr><td class="CDLEntry">SHUNT_HEADER_ONLY</td><td class="CDLDefinition"><p>cs_header_t header only.</p></td></tr></table><pre class="CCode"><span class="SHKeyword">typedef enum</span> {SHUNT_INT,SHUNT_REAL,SHUNT_SHORTREAL,SHUNT_STRING,SHUNT_A_STRUCTURE,SHUNT_INTEGER,SHUNT_BYTE,SHUNT_REG,SHUNT_BIT,SHUNT_SHORTINT,SHUNT_LONGINT,SHUNT_HEADER_ONLY} SHUNT_INSTR_ENUM;</pre></div>
-</div>
-
-<a name="SHUNT_INSTR_ENUM_NAMES"></a><a name="Topic276"></a><div class="CTopic TVariable LC">
- <div class="CTitle">SHUNT_INSTR_ENUM_NAMES</div>
- <div id="NDPrototype276" class="NDPrototype"><div class="PSection PPlainSection">#define SHUNT_INSTR_HASH_INDEX_DEFINE <span class="SHKeyword">const</span> <span class="SHKeyword">char</span>* SHUNT_INSTR_ENUM_NAMES[]</div></div>
- <div class="CBody"><pre class="CCode">#define SHUNT_INSTR_HASH_INDEX_DEFINE <span class="SHKeyword">const char</span>* SHUNT_INSTR_ENUM_NAMES[] = {<span class="SHString">&quot;SHUNT_INT&quot;</span>,<span class="SHString">&quot;SHUNT_REAL&quot;</span>,<span class="SHString">&quot;SHUNT_SHORTREAL&quot;</span>,<span class="SHString">&quot;SHUNT_STRING&quot;</span>,<span class="SHString">&quot;SHUNT_A_STRUCTURE&quot;</span>,<span class="SHString">&quot;SHUNT_INTEGER&quot;</span>,<span class="SHString">&quot;SHUNT_BYTE&quot;</span>,<span class="SHString">&quot;SHUNT_REG&quot;</span>,<span class="SHString">&quot;SHUNT_BIT&quot;</span>,<span class="SHString">&quot;SHUNT_SHORTINT&quot;</span>,<span class="SHString">&quot;SHUNT_LONGINT&quot;</span>,<span class="SHString">&quot;SHUNT_HEADER_ONLY&quot;</span>}</pre></div>
 </div>
 
 <a name="cs_header_t"></a><a name="Topic277"></a><div class="CTopic TVariable LC">
@@ -66,7 +82,7 @@
  <div class="CTitle">TLM2.0 defines</div>
 </div>
 
-<a name="Variables(2)"></a><a name="Topic280"></a><div class="CTopic TGroup LC">
+<a name="Variables(3)"></a><a name="Topic374"></a><div class="CTopic TGroup LC">
  <div class="CTitle">Variables</div>
 </div>
 

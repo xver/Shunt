@@ -92,11 +92,9 @@ struct hostent {
 }
 #endif
 
-//Section: Data exchange defines
-
 /*
-  Variable: shunt_long_t
-  - typedef 64 bit variable , default value is "long long"
+Variable: shunt_long_t
+typedef 64 bit variable , default value is "long long"
 */
 
 #ifndef  shunt_long_t
@@ -104,13 +102,47 @@ typedef long long shunt_long_t;
 #endif
 
 /*
-  Variable: SHUNT_DEFAULT_TCP_PORT  
-  - default port is used for dynamic allocation of the client-server TCP port.
+  Define: SHUNT_DEFAULT_TCP_PORT 
+  default port is used for dynamic allocation of the client-server TCP port.
+--- Code
+#define SHUNT_DEFAULT_TCP_PORT 4350
+---
 */
-#define SHUNT_DEFAULT_TCP_PORT 4350;
+#define SHUNT_DEFAULT_TCP_PORT 4350
+
+/*
+  Define: SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT
+  
+  specifies the MAXIMUM number of attempts to bind SHUNT_DEFAULT_TCP_PORT
+  --- Code
+  SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT 20
+  ---
+*/
+#define SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT 20
+
+/*
+  Define: SHUNT_DEFAULT_COLLISION_LOW 
+  specifies in msec the MINIMUM random interval delay boundary for the collision resolution of the occupied TCP/IP port
+   --- Code
+   #define SHUNT_DEFAULT_COLLISION_LOW 500
+   ---
+  */
+#define SHUNT_DEFAULT_COLLISION_LOW 500
+
+/*
+  Define: SHUNT_DEFAULT_COLLISION_UP  
+  specifies in msec the MAXIMUM random interval delay boundary for the collision resolution of the occupied TCP/IP port
+--- Code
+#define SHUNT_DEFAULT_COLLISION_UP 1500
+---
+*/
+#define SHUNT_DEFAULT_COLLISION_UP 1500
+
+//Section: Data exchange defines
 
 /*
   Variable: shunt_dynamic_port 
+
   is used for dynamic allocation of the client-server TCP port.
 
   -  host_name   TCP/IP host_name
@@ -179,7 +211,7 @@ Variable: SHUNT_INSTR_ENUM
 typedef enum {SHUNT_INT,SHUNT_REAL,SHUNT_SHORTREAL,SHUNT_STRING,SHUNT_A_STRUCTURE,SHUNT_INTEGER,SHUNT_BYTE,SHUNT_REG,SHUNT_BIT,SHUNT_SHORTINT,SHUNT_LONGINT,SHUNT_HEADER_ONLY} SHUNT_INSTR_ENUM;
 
 /*
-Variable: SHUNT_INSTR_ENUM_NAMES
+Degfine: SHUNT_INSTR_ENUM_NAMES
  
 --- Code
 #define SHUNT_INSTR_HASH_INDEX_DEFINE const char* SHUNT_INSTR_ENUM_NAMES[] = {"SHUNT_INT","SHUNT_REAL","SHUNT_SHORTREAL","SHUNT_STRING","SHUNT_A_STRUCTURE","SHUNT_INTEGER","SHUNT_BYTE","SHUNT_REG","SHUNT_BIT","SHUNT_SHORTINT","SHUNT_LONGINT","SHUNT_HEADER_ONLY"}
@@ -230,6 +262,7 @@ typedef struct cs_header_t {
 
 /*
   Variable: cs_data_header_t
+
   - data_type           <SHUNT_INSTR_ENUM>
   - trnx_payload_sizes   array of payload sizes, number of array elements are equal to n_payloads
 */

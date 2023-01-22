@@ -97,6 +97,18 @@ INLINE shunt_long_t shunt_prim_hash(const char *str);
  */
 INLINE void shunt_prim_error(const char *msg);
 
+/*
+  Function: shunt_prim_rand_delay
+  implementes in millisecond random interval delay between the lower and upper limit.
+  Parameters:
+   low - low limit in msec
+   up - up limit in msec
+  Returns:
+  delay in msec
+ */
+INLINE int shunt_prim_rand_delay (int up, int low);
+
+
 //Section: TCP/IP Functions
 /*
  Function: shunt_prim_init_initiator

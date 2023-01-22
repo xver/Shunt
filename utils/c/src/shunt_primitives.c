@@ -39,6 +39,16 @@ INLINE void shunt_prim_error(const char *msg) {
   exit(1);
 }
 
+INLINE int  shunt_prim_rand_delay (int up, int low) {
+  int delay = rand() % (up + low);
+  struct timespec sleep_time;
+  sleep_time.tv_sec = delay / 1000;
+  sleep_time.tv_nsec = (delay % 1000) * 1000000;
+  nanosleep(&sleep_time, NULL);
+    // code to be executed after delay
+    //none
+    return(delay);
+}
 //TCP/IP Functions
 
 INLINE unsigned int  shunt_prim_init_initiator(const unsigned int portno) {
@@ -56,7 +66,7 @@ INLINE unsigned int  shunt_prim_init_initiator(const unsigned int portno) {
 
 INLINE unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int portno) {
   int parentfd; /* parent socket */
-    
+  int success;   
   char host[256];
   char *hostIP;
   struct hostent *host_entry;/*host info */
@@ -105,11 +115,22 @@ INLINE unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int port
   /*
    * bind: associate the parent socket with a port
    */
-  
-  if(bind(parentfd, (struct sockaddr *) &initiatoraddr, sizeof(initiatoraddr)) < 0) shunt_prim_error("shunt_prim_tcp_parent_init_initiator on binding");
+  success=0;
+  int count =0;
+  srand(time(NULL));
+  while (success==0 && count >=0 ) {
+  if(bind(parentfd, (struct sockaddr *) &initiatoraddr, sizeof(initiatoraddr)) < 0)  {
+    int delay;
+    //shunt_prim_error("shunt_prim_tcp_parent_init_initiator on binding");
+    delay=shunt_prim_rand_delay (SHUNT_DEFAULT_COLLISION_UP, SHUNT_DEFAULT_COLLISION_LOW);
+    count++;
+    printf("\nWarning: Collision resolution of the occupied TCP/IP port(%0d) on bind attempt(%0d) delay %0d msec",portno,count,delay);
+    if(count>SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT) count = -1;
+    }
+  else success=1;
   //int getsockname(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
-
-  
+  }
+  if(success==0) shunt_prim_error("shunt_prim_tcp_parent_init_initiator on binding");
   /*
    * listen: make this socket ready to accept connection requests
    */
@@ -125,7 +146,7 @@ INLINE unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int port
     gethostname(host, sizeof(host)); //find the host name
     host_entry = gethostbyname(host); //find host information
     hostIP = inet_ntoa(*((struct in_addr*) host_entry->h_addr_list[0]));
-    printf("Current Host Name: %s\n", host);
+    printf("\nCurrent Host Name: %s\n", host);
     printf("Host IP: %s\n", hostIP);
     printf("parentfd=%d port number %d\n",parentfd ,ntohs(sin.sin_port));
   }
