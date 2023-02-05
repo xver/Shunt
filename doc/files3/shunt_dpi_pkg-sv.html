@@ -83,6 +83,18 @@
  <div class="CBody"><p>Multi-Slave TCP IP initialisation, establish TCP/IP&nbsp; initiator-target connection</p><div class="CHeading">Parameters</div><table class="CDefinitionList"><tr><td class="CDLEntry">socket id</td><td class="CDLDefinition"><p>parent socket id</p></td></tr></table><div class="CHeading">Returns</div><table class="CDefinitionList"><tr><td class="CDLEntry">socket id</td><td class="CDLDefinition"><p>child socket id</p></td></tr></table><p>Disable function `define: NO_SHUNT_DPI_TCP_CONNECT</p></div>
 </div>
 
+<a name="shunt_dpi_tcp_get_port"></a><a name="Topic272"></a><div class="CTopic TFunction LSystemVerilog">
+ <div class="CTitle">shunt_dpi_tcp_get_port</div>
+ <div id="NDPrototype272" class="NDPrototype WideForm"><div class="PSection PParameterSection CStyle"><table><tr><td class="PBeforeParameters">`ifndef NO_SHUNT_DPI_TCP_GET_PORT <span class="SHKeyword">import</span> <span class="SHString">&quot;DPI-C&quot;</span> <span class="SHKeyword">function</span> <span class="SHKeyword">int</span> shunt_dpi_tcp_get_port(</td><td class="PParametersParentCell"><table class="PParameters"><tr><td class="PType first"><span class="SHKeyword">int</span>&nbsp;</td><td class="PName last">socket</td></tr></table></td><td class="PAfterParameters">)</td></tr></table></div></div>
+ <div class="CBody"><p>Finds TCP/IP port&nbsp; with the specified socket id</p><div class="CHeading">Parameters</div><p>socket&nbsp; -- socket id</p><div class="CHeading">Returns</div><p>a corresponding TCP/IP port</p><p>Disable function `define: NO_SHUNT_DPI_TCP_GET_PORT</p><p>Also see <a href="../index.html#File:shunt_client_server.h:shunt_cs_update_dynamic_port" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,327);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >shunt_cs_update_dynamic_port</a></p></div>
+</div>
+
+<a name="shunt_dpi_tcp_parent_init_initiator_dpa"></a><a name="Topic276"></a><div class="CTopic TFunction LSystemVerilog">
+ <div class="CTitle">shunt_dpi_tcp_parent_init_initiator_dpa</div>
+ <div id="NDPrototype276" class="NDPrototype"><div class="PSection PPlainSection">`ifndef NO_SHUNT_DPI_TCP_PARENT_INIT_INITIATOR_DPA <span class="SHKeyword">import</span> <span class="SHString">&quot;DPI-C&quot;</span> <span class="SHKeyword">function</span> <span class="SHKeyword">int</span> shunt_dpi_tcp_parent_init_initiator_dpa()</div></div>
+ <div class="CBody"><p>is DPI equivalent of the <a href="../index.html#File:shunt_client_server.h:shunt_cs_tcp_parent_init_initiator_dpa" target="_top" onmouseover="NDContentPage.OnLinkMouseOver(event,324);" onmouseout="NDContentPage.OnLinkMouseOut(event);" >shunt_cs_tcp_parent_init_initiator_dpa</a></p><div class="CHeading">Parameters</div><p>N/A</p><div class="CHeading">Returns</div><p>socket id -- DPA parent socket id Disable function `define: NO_SHUNT_DPI_TCP_GET_PORT</p></div>
+</div>
+
 <a name="Integer_types"></a><a name="Topic57"></a><div class="CTopic TSection LSystemVerilog">
  <div class="CTitle">Integer types</div>
 </div>

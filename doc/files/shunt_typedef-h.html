@@ -28,14 +28,14 @@
  <div class="CTitle">Macros</div>
 </div>
 
-<a name="SHUNT_DEFAULT_TCP_PORT"></a><a name="Topic376"></a><div class="CTopic TMacro LC">
+<a name="SHUNT_DEFAULT_TCP_PORT"></a><a name="Topic382"></a><div class="CTopic TMacro LC">
  <div class="CTitle">SHUNT_DEFAULT_TCP_PORT</div>
- <div class="CBody"><p>default port is used for dynamic allocation of the client-server TCP port.</p><pre class="CCode">#define SHUNT_DEFAULT_TCP_PORT <span class="SHNumber">4350</span></pre></div>
+ <div class="CBody"><p>default port is used for dynamic allocation of the client-server TCP port.&nbsp; use &quot;-DSHUNT_DEFAULT_TCP_PORT=&lt;new port&gt;&quot; gcc option to change it</p><pre class="CCode">#define SHUNT_DEFAULT_TCP_PORT <span class="SHNumber">4350</span></pre></div>
 </div>
 
-<a name="SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT"></a><a name="Topic375"></a><div class="CTopic TMacro LC">
+<a name="SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT"></a><a name="Topic383"></a><div class="CTopic TMacro LC">
  <div class="CTitle">SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT</div>
- <div class="CBody"><p>specifies the MAXIMUM number of attempts to bind SHUNT_DEFAULT_TCP_PORT</p><pre class="CCode">SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT <span class="SHNumber">20</span></pre></div>
+ <div class="CBody"><p>specifies the MAXIMUM number of attempts to bind SHUNT_DEFAULT_TCP_PORT</p><pre class="CCode">SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT <span class="SHNumber">1000</span></pre></div>
 </div>
 
 <a name="SHUNT_DEFAULT_COLLISION_LOW"></a><a name="Topic379"></a><div class="CTopic TMacro LC">
