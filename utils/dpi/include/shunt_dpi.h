@@ -174,6 +174,40 @@ unsigned int shunt_dpi_listener_init(const unsigned int portno);
  */
 unsigned int shunt_dpi_tcp_connect(const unsigned int parentfd);
 
+/*
+ Function: shunt_dpi_tcp_get_port
+ Finds TCP/IP port  with the specified socket id
+ 
+ Parameters:
+
+ socket  -- socket id 
+  
+ Returns:
+
+ a corresponding TCP/IP port
+
+ Also see <shunt_cs_update_dynamic_port>
+
+*/
+INLINE  unsigned int shunt_dpi_tcp_get_port(unsigned int socket);
+
+/*
+ Function:  shunt_dpi_tcp_parent_init_initiator_dpa
+ is DPI equivalent of the <shunt_cs_tcp_parent_init_initiator_dp>
+ 
+Parameters: 
+ 
+ N/A
+
+ Returns: 
+
+ socket id -- DPA parent socket id
+
+*/
+INLINE   unsigned int shunt_dpi_tcp_parent_init_initiator_dpa(); 
+
+
+
 // Section: Data exchange (prim)
 
 /*

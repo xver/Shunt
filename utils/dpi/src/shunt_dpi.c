@@ -65,6 +65,21 @@ unsigned int shunt_dpi_tcp_connect(const unsigned int parentfd) {
   Result_ = shunt_prim_tcp_child_init_initiator(parentfd);
   return Result_;
 }
+
+unsigned int shunt_dpi_tcp_get_port(unsigned int socket) {
+  shunt_dynamic_port dynamic_port;
+  unsigned int  Result_;
+  dynamic_port = shunt_cs_update_dynamic_port(socket);
+  Result_ = dynamic_port.port_number;
+  return Result_;
+}
+
+unsigned int shunt_dpi_tcp_parent_init_initiator_dpa() {
+  unsigned int  Result_;
+  Result_ = shunt_cs_tcp_parent_init_initiator_dpa(); 
+  return Result_;
+}
+
 //--------------------
 // Direct send/recv
 //--------------------

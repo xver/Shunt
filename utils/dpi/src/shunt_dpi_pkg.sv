@@ -231,6 +231,44 @@ package shunt_dpi_pkg;
    import "DPI-C" function int shunt_dpi_tcp_connect(int parentfd);
  `endif
 
+   /*
+    Function: shunt_dpi_tcp_get_port
+    Finds TCP/IP port  with the specified socket id
+    
+    Parameters:
+    
+    socket  -- socket id 
+    
+    Returns:
+    a corresponding TCP/IP port
+    
+    Disable function `define: NO_SHUNT_DPI_TCP_GET_PORT
+    
+    Also see <shunt_cs_update_dynamic_port>
+
+*/
+ `ifndef NO_SHUNT_DPI_TCP_GET_PORT
+   import "DPI-C" function int shunt_dpi_tcp_get_port(int socket);
+ `endif   
+   
+
+ /*
+ Function:  shunt_dpi_tcp_parent_init_initiator_dpa
+ is DPI equivalent of the <shunt_cs_tcp_parent_init_initiator_dpa>
+ 
+Parameters: 
+ 
+ N/A
+
+ Returns: 
+
+ socket id -- DPA parent socket id
+  Disable function `define: NO_SHUNT_DPI_TCP_GET_PORT
+*/
+ `ifndef NO_SHUNT_DPI_TCP_PARENT_INIT_INITIATOR_DPA
+   import "DPI-C" function int shunt_dpi_tcp_parent_init_initiator_dpa();
+ `endif
+   
    //Section: Integer types
 
    /*

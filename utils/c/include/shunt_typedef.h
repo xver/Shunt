@@ -104,11 +104,14 @@ typedef long long shunt_long_t;
 /*
   Define: SHUNT_DEFAULT_TCP_PORT 
   default port is used for dynamic allocation of the client-server TCP port.
+  use "-DSHUNT_DEFAULT_TCP_PORT=<new port>" gcc option to change it
 --- Code
-#define SHUNT_DEFAULT_TCP_PORT 4350
+#define SHUNT_DEFAULT_TCP_PORT 4350 
 ---
 */
-#define SHUNT_DEFAULT_TCP_PORT 4350
+#ifndef SHUNT_DEFAULT_TCP_PORT
+  #define SHUNT_DEFAULT_TCP_PORT 4350
+#endif
 
 /*
   Define: SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT
