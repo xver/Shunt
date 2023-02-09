@@ -110,7 +110,7 @@ typedef long long shunt_long_t;
 ---
 */
 #ifndef SHUNT_DEFAULT_TCP_PORT
-  #define SHUNT_DEFAULT_TCP_PORT 4350
+#define SHUNT_DEFAULT_TCP_PORT 4350
 #endif
 
 /*
@@ -121,7 +121,9 @@ typedef long long shunt_long_t;
   SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT 1000
   ---
 */
-#define SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT 1000
+#ifndef SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT
+#define SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT 180
+#endif
 
 /*
   Define: SHUNT_DEFAULT_COLLISION_LOW 
@@ -130,8 +132,9 @@ typedef long long shunt_long_t;
    #define SHUNT_DEFAULT_COLLISION_LOW 500
    ---
   */
+#ifndef SHUNT_DEFAULT_COLLISION_LOW
 #define SHUNT_DEFAULT_COLLISION_LOW 500
-
+#endif
 /*
   Define: SHUNT_DEFAULT_COLLISION_UP  
   specifies in msec the MAXIMUM random interval delay boundary for the collision resolution of the occupied TCP/IP port
@@ -139,8 +142,9 @@ typedef long long shunt_long_t;
 #define SHUNT_DEFAULT_COLLISION_UP 1500
 ---
 */
+#ifndef SHUNT_DEFAULT_COLLISION_UP
 #define SHUNT_DEFAULT_COLLISION_UP 1500
-
+#endif
 //Section: Data exchange defines
 
 /*

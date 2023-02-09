@@ -118,19 +118,27 @@ INLINE unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int port
   success=0;
   int count =0;
   srand(time(NULL));
+  int delay_sum=0;
   while (success==0 && count >=0 ) {
-  if(bind(parentfd, (struct sockaddr *) &initiatoraddr, sizeof(initiatoraddr)) < 0)  {
-    int delay;
-    //shunt_prim_error("shunt_prim_tcp_parent_init_initiator on binding");
-    delay=shunt_prim_rand_delay (SHUNT_DEFAULT_COLLISION_UP, SHUNT_DEFAULT_COLLISION_LOW);
-    count++;
-    printf("\nWarning: Collision resolution of the occupied TCP/IP port(%0d) on bind attempt(%0d) delay %0d msec",portno,count,delay);
-    if(count>SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT) count = -1;
+    if(bind(parentfd, (struct sockaddr *) &initiatoraddr, sizeof(initiatoraddr)) < 0)  {
+      int delay;
+      //shunt_prim_error("shunt_prim_tcp_parent_init_initiator on binding");
+      delay=shunt_prim_rand_delay (SHUNT_DEFAULT_COLLISION_UP, SHUNT_DEFAULT_COLLISION_LOW);
+      delay_sum =  delay_sum +delay; 
+      count++;
+      printf("\nWarning: Collision resolution of the occupied server TCP/IP port(%0d) on bind attempt(%0d) delay %0d msec",portno,count,delay);
+      if(count>SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT) count = -1;
     }
-  else success=1;
-  //int getsockname(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
+    else { 
+      printf("\nSuccess: Collision resolution server connect TCP/IP port(%0d) attempt(%0d) total delay %0d msec",initiatoraddr.sin_port,count,delay_sum);
+      success=1;
+    }
   }
-  if(success==0) shunt_prim_error("shunt_prim_tcp_parent_init_initiator on binding");
+  if(success==0) { 
+    shunt_prim_error("shunt_prim_tcp_parent_init_initiator on binding");
+    parentfd = -1;
+  }
+ 
   /*
    * listen: make this socket ready to accept connection requests
    */
@@ -199,7 +207,7 @@ INLINE unsigned int shunt_prim_init_target(const unsigned int portno,const char 
   int sockfd;
   struct sockaddr_in initiatoraddr;
   struct hostent *initiator;
-
+  int success;
 
   /* socket: create the socket */
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -219,13 +227,31 @@ INLINE unsigned int shunt_prim_init_target(const unsigned int portno,const char 
   initiatoraddr.sin_family = AF_INET;
   bcopy((char *)initiator->h_addr,(char *)&initiatoraddr.sin_addr.s_addr, initiator->h_length);
   initiatoraddr.sin_port = htons(portno);
-
-  /* connect: create a connection with the initiator */
-  if(connect(sockfd, (struct sockaddr *)&initiatoraddr, sizeof(initiatoraddr)) < 0) {
+  success=0;
+  int count =0;
+  int delay=0;
+  int delay_sum=0;
+  srand(time(NULL));
+  while (success==0 && count >=0 ) 
+    {
+      /* connect: create a connection with the initiator */
+      if(connect(sockfd, (struct sockaddr *)&initiatoraddr, sizeof(initiatoraddr)) < 0) {
+        delay=shunt_prim_rand_delay (SHUNT_DEFAULT_COLLISION_UP, SHUNT_DEFAULT_COLLISION_LOW);
+        delay_sum =  delay_sum +delay; 
+        count++;
+        printf("\nWarning:  Collision resolution client connect TCP/IP port(%0d) on client connect  attempt(%0d) delay %0d msec",initiatoraddr.sin_port,count,delay);
+        if(count>SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT) count = -1;
+      }
+      else {
+        printf("\nSuccess: Collision resolution client connect TCP/IP port(%0d) attempt(%0d) total delay %0d msec",initiatoraddr.sin_port,count,delay_sum);
+        success=1;
+      }
+    }
+  
+  if(success==0) { 
     shunt_prim_error("shunt_prim_init_target connecting");
-    return -1;
+    sockfd = -1;
   }
-
   return sockfd;
 }
 
