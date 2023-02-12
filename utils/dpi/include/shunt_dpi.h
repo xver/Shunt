@@ -189,7 +189,8 @@ unsigned int shunt_dpi_tcp_connect(const unsigned int parentfd);
  Also see <shunt_cs_update_dynamic_port>
 
 */
-INLINE  unsigned int shunt_dpi_tcp_get_port(unsigned int socket);
+unsigned int shunt_dpi_tcp_get_port(unsigned int socket);
+
 
 /*
  Function:  shunt_dpi_tcp_parent_init_initiator_dpa
@@ -204,7 +205,7 @@ Parameters:
  socket id -- DPA parent socket id
 
 */
-INLINE   unsigned int shunt_dpi_tcp_parent_init_initiator_dpa(); 
+unsigned int shunt_dpi_tcp_parent_init_initiator_dpa(); 
 
 
 

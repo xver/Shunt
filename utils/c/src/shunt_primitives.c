@@ -126,7 +126,7 @@ INLINE unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int port
       delay=shunt_prim_rand_delay (SHUNT_DEFAULT_COLLISION_UP, SHUNT_DEFAULT_COLLISION_LOW);
       delay_sum =  delay_sum +delay; 
       count++;
-      printf("\nWarning: Collision resolution of the occupied server TCP/IP port(%0d) on bind attempt(%0d) delay %0d msec",portno,count,delay);
+      printf("\nCollision resolution of the occupied server TCP/IP port(%0d) on bind attempt(%0d) delay %0d msec",portno,count,delay);
       if(count>SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT) count = -1;
     }
     else { 
@@ -239,7 +239,7 @@ INLINE unsigned int shunt_prim_init_target(const unsigned int portno,const char 
         delay=shunt_prim_rand_delay (SHUNT_DEFAULT_COLLISION_UP, SHUNT_DEFAULT_COLLISION_LOW);
         delay_sum =  delay_sum +delay; 
         count++;
-        printf("\nWarning:  Collision resolution client connect TCP/IP port(%0d) on client connect  attempt(%0d) delay %0d msec",initiatoraddr.sin_port,count,delay);
+        printf("\nCollision resolution client connect TCP/IP port(%0d) on client connect  attempt(%0d) delay %0d msec",initiatoraddr.sin_port,count,delay);
         if(count>SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT) count = -1;
       }
       else {

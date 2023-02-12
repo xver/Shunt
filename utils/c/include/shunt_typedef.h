@@ -118,7 +118,7 @@ typedef long long shunt_long_t;
   
   specifies the MAXIMUM number of attempts to bind SHUNT_DEFAULT_TCP_PORT
   --- Code
-  SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT 1000
+  SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT 180
   ---
 */
 #ifndef SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT
