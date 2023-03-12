@@ -2000,7 +2000,7 @@ typedef struct packed{
    
    //axulary function
 
-   function void shunt_dpi_tlm_gp_header_print (cs_tlm_generic_payload_header_t csgp,string prefix="");
+   function automatic void shunt_dpi_tlm_gp_header_print (cs_tlm_generic_payload_header_t csgp,string prefix="");
       /* verilator lint_off UNUSED */
       shunt_tlm_sync_e            tlm_sync_;
       shunt_tlm_command_e         command_;
@@ -2029,7 +2029,7 @@ typedef struct packed{
       /* verilator lint_on UNUSED */
    endfunction : shunt_dpi_tlm_gp_header_print
 
-   function void shunt_dpi_tlm_axi3_header_print (cs_tlm_axi3_extension_payload_header_t h_axi3,string prefix="");
+   function automatic void shunt_dpi_tlm_axi3_header_print (cs_tlm_axi3_extension_payload_header_t h_axi3,string prefix="");
       /* verilator lint_off UNUSED */
       $write("\n%0s h_axi3.AxBURST(%0b)",prefix,h_axi3.AxBURST);
       $write(",h_axi3.AxCACHE(%0b)",h_axi3.AxCACHE);
