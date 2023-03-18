@@ -2,6 +2,7 @@
 
 ![](https://github.com/xver/Shunt/blob/master/doc/shut_log_min.png)
 
+[![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/xver)
 
 
 The **Shunt** is Open Source Client/Server TCP/IP socket based communication library for **SystemVerilog** and **SystemC** simulations.
