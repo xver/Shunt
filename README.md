@@ -24,6 +24,8 @@ https://www.researchgate.net/publication/359009820_Enhanced_Dynamic_Hybrid_Simul
 Starting from the version 2.2.0, **"IC VERIMETER"** is pleased to announce the availability of commercial support. 
 Whether you need assistance with the **Shunt** integration into your project or customization, please contact us at icshunt.help@gmail.com
 
+You can support us through this link:  [:heart: Sponsor](https://github.com/sponsors/xver)
+
 #### Please, report bugs to [Issues](https://github.com/xver/Shunt/issues).
 
 
