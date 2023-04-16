@@ -170,7 +170,7 @@ typedef long long shunt_long_t;
 
 #if __BYTE_ORDER__== __ORDER_BIG_ENDIAN__
 typedef struct shunt_dynamic_port_t {
-  unsigned shunt_long_t port_number;       // port_number
+  shunt_long_t port_number;       // port_number
   char         host_ip[SHUNT_HOST_IP_LEN];       // host IP
   char         host_name[SHUNT_HOST_NAME_LEN];    // name of host
 } shunt_dynamic_port;

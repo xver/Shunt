@@ -24,7 +24,7 @@ https://www.researchgate.net/publication/359009820_Enhanced_Dynamic_Hybrid_Simul
 Starting from the version 2.2.0, **"IC VERIMETER"** is pleased to announce the availability of commercial support. 
 Whether you need assistance with the **Shunt** integration into your project or customization, please contact us at icshunt.help@gmail.com
 
-We have received numerous requests for new features and extensions beyond its initial product scope. To continue to keep "TCP/IP Shunt" as an open tool and address all extension requests, we are seeking funding to support the project's growth and development.
+We have received numerous requests for new features and extensions beyond the initial scope of the product. To continue to keep "TCP/IP Shunt" as an open tool and address all extension requests, we are seeking funding to support the project's growth and development.
 You can support us through this link:  [:heart: Sponsor](https://github.com/sponsors/xver)
 
 #### Please, report bugs to [Issues](https://github.com/xver/Shunt/issues).

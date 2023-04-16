@@ -263,7 +263,7 @@ using namespace tlm;
 
     */
     int  shunt_tlm_init_server(int port=0) {
-      return shunt_prim_init_initiator(port);
+      return  shunt_cs_init_initiator(port);
     };
 
     /*
