@@ -41,19 +41,34 @@ Setup following variables:
  - **“SHUNT_SVDPI”** to the location of svdpi.h file
 
 ### Library compilation
- - cd to “$SHUNT_HOME/utils/makedir/“
- - run “make clean;make all”
+ - cd to ``` $SHUNT_HOME/utils/makedir/ ```
+ - run  ``` make clean;make all ```
 Compile result will be placed under ***${SHUNT_HOME}/bin with dpi:“libutils.so” and without dpi:”libCutils.so”*** 
 
 NOTE: use the USER_OPT to add compiler options. (Example all debug options: make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG') 
 
+### Python swig wraper
+ - cd to ```$SHUNT_HOME/utils/makedir/ ```
+ - run ``` “make clean;make swig_py” ```
+Python wraper and libs will be placed under ***${SHUNT_HOME}/bin***
+ - Import **Python Shut module** :
+
+```
+import os
+import sys
+shunthome =  os.environ['SHUNT_HOME'] + "/bin" 
+sys.path.insert(0,shunthome)
+from shunt import *
+```
+
+
 ### Compile and run all SV/C examples
-- cd to *$SHUNT_HOME/examples/makedir*
-- run *./run_examples* or *./run_examples_debug* 
+- cd to ```$SHUNT_HOME/examples/makedir```
+- run ```./run_examples ``` or ```./run_examples_debug ``` 
 
 ### Compile and run C examples
-- cd  to example makedir root directory. *(Example: $SHUNT_HOME/examples/c/primitives/makedir)*
-- To compile the library and launch test run “make all”
+- cd  to example makedir root directory. (Example: ``` $SHUNT_HOME/examples/c/primitives/makedir ```)
+- To compile the library and launch test run ``` make all ```
 
 ### Compile and run SV examples
 The Shunt includes a complete Makefile structure for the C portion of the library, but ONLY Makefile target place holders for SV domain.
@@ -67,12 +82,12 @@ The Shunt includes a complete Makefile structure for the C portion of the librar
 ### TLM-2.0 over TCP/IP "loosely timed model"  SystemC-to-SystemC and SystemC-to-SV examples 
 
 SystemC to SystemC  b_transport over TCP/IP :  
- - cd to $SHUNT_HOME/examples/sc/LT_simple_cs/makedir 
- - run  "make all"
+ - cd to ```$SHUNT_HOME/examples/sc/LT_simple_cs/makedir``` 
+ - run  ```make all```
 
 SystemC to SV  b_transport over TCP/IP :
- - cd to $SHUNT_HOME/examples/sc/LT_simple_sv/makedir
- - run  "make all"
+ - cd to ```$SHUNT_HOME/examples/sc/LT_simple_sv/makedir ```
+ - run  ```make all```
  
 # Release History: [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/xver)
 -----------------------
