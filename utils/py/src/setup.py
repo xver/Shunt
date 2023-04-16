@@ -1,3 +1,12 @@
+#/*
+#============================================================================
+# File        : setup.py
+# Copyright (c) 2016-2023 IC Verimeter. All rights reserved.
+#               Licensed under the MIT License.
+#               See LICENSE file in the project root for full license information.
+#Description : TCP/IP Python SHUNT swig setup 
+# ============================================================================
+#*/
 from distutils.core import setup, Extension
 import os
 import sys
