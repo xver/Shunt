@@ -3,7 +3,7 @@
 ![](https://github.com/xver/Shunt/blob/master/doc/shut_log_min.png)
 
 
-The **Shunt** is Open Source Client/Server TCP/IP socket based communication library for **SystemVerilog**, **SystemC** , and **Python** simulations.
+The **Shunt** is Open Source Client/Server TCP/IP socket based communication library for **SystemVerilog**, **SystemC** , and **Python (initial release)** simulations.
 
 * It aims to enable quick and easy development of communication between stand-alone SystemVerilog/SystemC simulations and/or external applications
 
