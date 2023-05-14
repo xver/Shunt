@@ -40,7 +40,7 @@ Description : TCP/IP Python SHUNT swig interface
 
 typedef long long shunt_long_t;
 
-%include "/home/v/workspace/Shunt/utils/c/include/shunt_typedef.h"
-%include "/home/v/workspace/Shunt/utils/c/include/shunt_primitives.h"
-%include "/home/v/workspace/Shunt/utils/c/include/shunt_client_server.h"
-%include "/home/v/workspace/Shunt/utils/c/include/shunt_user_api.h"
+%include "../utils/c/include/shunt_typedef.h"
+%include "../utils/c/include/shunt_primitives.h"
+%include "../utils/c/include/shunt_client_server.h"
+%include "../utils/c/include/shunt_user_api.h"

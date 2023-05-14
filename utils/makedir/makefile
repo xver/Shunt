@@ -53,7 +53,7 @@ clean:
 	-@echo ' '
 swig_py:
 	cd ${SHUNT_HOME}/bin && python3 ${SHUNT_HOME}/utils/py/src/setup.py build_ext && mv ${SHUNT_HOME}/utils/py/src/shunt.py ${SHUNT_HOME}/bin && mv ${SHUNT_HOME}/utils/py/src/shunt_wrap.c ${SHUNT_HOME}/bin
-	cd ${SHUNT_HOME}/bin && python3  ${SHUNT_HOME}/utils/py/src/setup.py install --install-platlib=.
+	cd ${SHUNT_HOME}/bin && python3  ${SHUNT_HOME}/utils/py/src/setup.py install --install-platlib=${SHUNT_HOME}/bin
 
 
 .PHONY: all clean dependents swig_py
