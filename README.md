@@ -35,7 +35,7 @@ You can support us through this link:  [:heart: Sponsor](https://github.com/spon
 
 - Verilator up to 5.011 : https://www.veripool.org/verilator/
 - SystemC up to 2.3.3-Accellera : https://systemc.org/resources/standards/
-- Swig SWIG Version 4.0.2 : https://www.swig.org/
+- Swig SWIG Version 4.1.1 : https://www.swig.org/
 
 ### Library Installation
 
