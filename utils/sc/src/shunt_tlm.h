@@ -51,18 +51,6 @@ using namespace tlm;
       }
   */
 
-  /* Enum: shunt_tlm_command
-
-  SHUNT_TLM_END_SIM - end of Client simulation, send by Server
-  SHUNT_TLM_START_SIM - start of simulation,send by Target
-  --- Code
-  enum shunt_tlm_command {SHUNT_TLM_END_SIM = tlm_command::TLM_IGNORE_COMMAND+1,SHUNT_TLM_START_SIM};
-  ---
-  */
-  enum shunt_tlm_command {
-    SHUNT_TLM_END_SIM =tlm_command::TLM_IGNORE_COMMAND+1,
-    SHUNT_TLM_START_SIM
-  };
     //Section: Auxiliary
     /*
       Function: shunt_tlm_print_csgp

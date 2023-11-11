@@ -386,6 +386,100 @@ typedef struct cs_tlm_generic_payload_header_t {
 } cs_tlm_generic_payload_header;
 #endif
 
+//---------------------------------------------------------------------------
+// group: TLM enumeration types (extension of systemc tlm.h )
+//---------------------------------------------------------------------------
+/* Enum: shunt_tlm_command
+   Ref to SystemC tlm_gp.h tlm_command enum for TLM_READ_COMMAND , TLM_WRITE_COMMAND, and TLM_IGNORE_COMMAND 
+  --- Code
+typedef enum shunt_tlm_command {
+    TLM_READ_COMMAND, // 
+    TLM_WRITE_COMMAND,
+    TLM_IGNORE_COMMAND,
+    SHUNT_TLM_END_SIM,  // end of Client simulation, send by Server
+    SHUNT_TLM_START_SIM // start of simulation,send by Target
+} shunt_dpi_tlm_command_e;
+  ---
+  */
+typedef enum shunt_tlm_command {
+    TLM_READ_COMMAND,
+    TLM_WRITE_COMMAND,
+    TLM_IGNORE_COMMAND,
+    SHUNT_TLM_END_SIM,
+    SHUNT_TLM_START_SIM 
+} shunt_dpi_tlm_command_e;
+
+/* Enum: tlm_response_status
+   cloned from SystemC tlm_gp.h tlm_response_status
+  --- Code
+  enum tlm_response_status {
+    TLM_OK_RESPONSE = 1,
+    TLM_INCOMPLETE_RESPONSE = 0,
+    TLM_GENERIC_ERROR_RESPONSE = -1,
+    TLM_ADDRESS_ERROR_RESPONSE = -2,
+    TLM_COMMAND_ERROR_RESPONSE = -3,
+    TLM_BURST_ERROR_RESPONSE = -4, 
+  ---
+  */
+enum tlm_response_status {
+    TLM_OK_RESPONSE = 1,
+    TLM_INCOMPLETE_RESPONSE = 0,
+    TLM_GENERIC_ERROR_RESPONSE = -1,
+    TLM_ADDRESS_ERROR_RESPONSE = -2,
+    TLM_COMMAND_ERROR_RESPONSE = -3,
+    TLM_BURST_ERROR_RESPONSE = -4,
+    TLM_BYTE_ENABLE_ERROR_RESPONSE = -5
+};
+
+/* Enum: tlm_gp_option
+   cloned from SystemC tlm_gp.h 
+  --- Code
+  enum tlm_gp_option {
+    TLM_MIN_PAYLOAD,
+    TLM_FULL_PAYLOAD,
+    TLM_FULL_PAYLOAD_ACCEPTED
+};
+  ---
+  */
+enum tlm_gp_option {
+    TLM_MIN_PAYLOAD,
+    TLM_FULL_PAYLOAD,
+    TLM_FULL_PAYLOAD_ACCEPTED
+};
+
+/* Enum: tlm_phase_enum
+   cloned from SystemC tlm_phase.h
+  --- Code
+  enum tlm_phase_enum
+    {
+    UNINITIALIZED_PHASE=0,
+    BEGIN_REQ=1,
+    END_REQ,
+    BEGIN_RESP,
+    END_RESP
+  };
+  ---
+  */
+enum tlm_phase_enum
+{
+  UNINITIALIZED_PHASE=0,
+  BEGIN_REQ=1,
+  END_REQ,
+  BEGIN_RESP,
+  END_RESP
+};
+
+/* Enum: tlm_sync_enum
+   cloned from SystemC tlm_phase.h
+  --- Code
+ enum tlm_sync_enum { 
+    TLM_ACCEPTED, 
+    TLM_UPDATED, 
+    TLM_COMPLETED };
+  ---
+  */
+enum tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED };
+
 /*
   Variable:   cs_tlm_axi3_extension_payload_header
 

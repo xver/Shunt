@@ -1,16 +1,16 @@
 ./full_cleanup
 rm -f  shunt.log
 #C
-pushd .;cd ../c/primitives/makedir;echo $PWD |& tee $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG' |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd
-pushd .;cd ../c/client_server/makedir;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG' |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd
-pushd .;cd ../c/user_api/makedir/;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG' |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd
+pushd .;cd ../c/primitives/makedir;echo $PWD |& tee $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG -DSHUNT_PRIMITIVES_C_DEBUG' |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd
+pushd .;cd ../c/client_server/makedir;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG -DSHUNT_PRIMITIVES_C_DEBUG' |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd
+pushd .;cd ../c/user_api/makedir/;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG -DSHUNT_PRIMITIVES_C_DEBUG' |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd
 #SV
 command -v verilator >/dev/null 2>&1 || { echo >&2 "Shunt SV tests are required verilator but it's not installed.";}
 pushd .;cd ../sv/sv2c/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;./verilator_run  |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd      
 #SC
-pushd .; cd ../sc/LT_simple_cs/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log r;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG' all |& tee -a   $SHUNT_HOME/examples/makedir/shunt.log;popd
-pushd .; cd ../sc/LT_simple_trns/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG' all  |& tee -a  $SHUNT_HOME/examples/makedir/shunt.log;popd
-pushd .; cd ../sc/LT_simple_sv/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG' all |& tee -a $SHUNT_HOME/examples/makedir/shunt.log;popd
+pushd .; cd ../sc/LT_simple_cs/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log r;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG -DSHUNT_PRIMITIVES_C_DEBUG' all |& tee -a   $SHUNT_HOME/examples/makedir/shunt.log;popd
+pushd .; cd ../sc/LT_simple_trns/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG -DSHUNT_PRIMITIVES_C_DEBUG' all  |& tee -a  $SHUNT_HOME/examples/makedir/shunt.log;popd
+pushd .; cd ../sc/LT_simple_sv/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG -DSHUNT_PRIMITIVES_C_DEBUG' all |& tee -a $SHUNT_HOME/examples/makedir/shunt.log;popd
 # 
 egrep -a '(loopback|TEST\ PASS|test\ is\ finished)' shunt.log
 egrep -ai '(error|warning)' shunt.log | grep -v Werror

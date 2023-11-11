@@ -23,8 +23,8 @@ INLINE shunt_long_t shunt_prim_hash(const char *str) {
   shunt_long_t hash = 5381;
   int c;
 
-  while (( c = *str++) )
-      hash = (  (hash << 5) + hash) + c; /* hash * 33 + c */
+  while((c = *str++) )
+      hash =((hash << 5) + hash) + c; /* hash * 33 + c */
   return hash;
 }
 
@@ -33,18 +33,18 @@ INLINE void shunt_prim_error(const char *msg) {
   extern int errno;
   #endif
   if(errno==0) {
-    printf(" ERROR: shunt_cs:: %s\n", msg);
+    printf(" ERROR: shunt_cs:: %s\n",msg);
   }
   else perror(msg);
   exit(1);
 }
 
-INLINE int  shunt_prim_rand_delay (int up, int low) {
-  int delay = rand() % (up + low);
+INLINE int  shunt_prim_rand_delay(int up,int low) {
+  int delay = rand() %(up + low);
   struct timespec sleep_time;
   sleep_time.tv_sec = delay / 1000;
-  sleep_time.tv_nsec = (delay % 1000) * 1000000;
-  nanosleep(&sleep_time, NULL);
+  sleep_time.tv_nsec =(delay % 1000) * 1000000;
+  nanosleep(&sleep_time,NULL);
     // code to be executed after delay
     //none
     return(delay);
@@ -86,7 +86,7 @@ INLINE unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int port
    */
   
    //
-  parentfd = socket(AF_INET, SOCK_STREAM, 0);
+  parentfd = socket(AF_INET,SOCK_STREAM,0);
   
   if(parentfd < 0) {
       shunt_prim_error("shunt_prim_tcp_parent_init_initiator opening socket<0");
@@ -96,12 +96,12 @@ INLINE unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int port
   /* Eliminates "ERROR on binding: Address already in use" error.
    */
   optval = 1;
-  setsockopt(parentfd, SOL_SOCKET, SO_REUSEADDR,(const void *)&optval , sizeof(int));
+  setsockopt(parentfd,SOL_SOCKET,SO_REUSEADDR,(const void *)&optval,sizeof(int));
 
   /*
    * build the initiator's Internet address
    */
-  bzero((char *) &initiatoraddr, sizeof(initiatoraddr));
+  bzero((char *) &initiatoraddr,sizeof(initiatoraddr));
 
   /* this is an Internet address */
   initiatoraddr.sin_family = AF_INET;
@@ -119,11 +119,11 @@ INLINE unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int port
   int count =0;
   srand(time(NULL));
   int delay_sum=0;
-  while (success==0 && count >=0 ) {
-    if(bind(parentfd, (struct sockaddr *) &initiatoraddr, sizeof(initiatoraddr)) < 0)  {
+  while(success==0 && count >=0 ) {
+    if(bind(parentfd,(struct sockaddr *) &initiatoraddr,sizeof(initiatoraddr)) < 0)  {
       int delay;
       //shunt_prim_error("shunt_prim_tcp_parent_init_initiator on binding");
-      delay=shunt_prim_rand_delay (SHUNT_DEFAULT_COLLISION_UP, SHUNT_DEFAULT_COLLISION_LOW);
+      delay=shunt_prim_rand_delay(SHUNT_DEFAULT_COLLISION_UP,SHUNT_DEFAULT_COLLISION_LOW);
       delay_sum =  delay_sum +delay; 
       count++;
       printf("\nCollision resolution of the occupied server TCP/IP port(%0d) on bind attempt(%0d) delay %0d msec",portno,count,delay);
@@ -142,21 +142,21 @@ INLINE unsigned int shunt_prim_tcp_parent_init_initiator(const unsigned int port
   /*
    * listen: make this socket ready to accept connection requests
    */
-  if(listen(parentfd, 5) < 0) /* allow 5 requests to queue up */ {
+  if(listen(parentfd,5) < 0) /* allow 5 requests to queue up */ {
     shunt_prim_error("shunt_prim_tcp_parent_init_initiator on listen");
   }
   
   len = sizeof(sin); 
   
-  if (getsockname(parentfd, (struct sockaddr *)&sin, &len) == -1)
+  if(getsockname(parentfd,(struct sockaddr *)&sin,&len) == -1)
     perror("getsockname");
   else {
-    gethostname(host, sizeof(host)); //find the host name
+    gethostname(host,sizeof(host)); //find the host name
     host_entry = gethostbyname(host); //find host information
     hostIP = inet_ntoa(*((struct in_addr*) host_entry->h_addr_list[0]));
-    printf("\nCurrent Host Name: %s\n", host);
-    printf("Host IP: %s\n", hostIP);
-    printf("parentfd=%d port number %d\n",parentfd ,ntohs(sin.sin_port));
+    printf("\nCurrent Host Name: %s\n",host);
+    printf("Host IP: %s\n",hostIP);
+    printf("parentfd=%d port number %d\n",parentfd,ntohs(sin.sin_port));
   }
   return parentfd ;
 }
@@ -176,7 +176,7 @@ INLINE unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int paren
 
   childfd = -1;
 
-  childfd = accept(parentfd, (struct sockaddr *) &targetaddr, (socklen_t *)&targetlen);
+  childfd = accept(parentfd,(struct sockaddr *) &targetaddr,(socklen_t *)&targetlen);
   if(childfd < 0) {
     shunt_prim_error("shunt_prim_tcp_child_init_initiator on accept");
   }
@@ -185,7 +185,7 @@ INLINE unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int paren
    * gethostbyaddr: determine who sent the message
    */
   hostp = gethostbyaddr((const char *)&targetaddr.sin_addr.s_addr,
-                        sizeof(targetaddr.sin_addr.s_addr), AF_INET);
+                        sizeof(targetaddr.sin_addr.s_addr),AF_INET);
   if(hostp != NULL) {
     hostname = hostp->h_name;
   }
@@ -197,9 +197,9 @@ INLINE unsigned int shunt_prim_tcp_child_init_initiator(const unsigned int paren
   }
   else {
     socklen_t len = sizeof(sin);   
-    getsockname(parentfd, (struct sockaddr *)&sin, &len);
+    getsockname(parentfd,(struct sockaddr *)&sin,&len);
     printf("\ninitiator established connection with Hostname(%s) IP(%s) Port(%d)\n",
-           hostname, hostaddrp, ntohs(sin.sin_port)); }
+           hostname,hostaddrp,ntohs(sin.sin_port)); }
   return childfd;
 }
 
@@ -210,7 +210,7 @@ INLINE unsigned int shunt_prim_init_target(const unsigned int portno,const char 
   int success;
 
   /* socket: create the socket */
-  sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  sockfd = socket(AF_INET,SOCK_STREAM,0);
   if(sockfd < 0) {
     shunt_prim_error("shunt_prim_init_target opening socket<0");
     return -1;
@@ -218,25 +218,25 @@ INLINE unsigned int shunt_prim_init_target(const unsigned int portno,const char 
   /* gethostbyname: get the initiator's DNS entry */
   initiator = gethostbyname(hostname);
   if(initiator == NULL) {
-    fprintf(stderr,"shunt_prim_init_target no such host as %s\n", hostname);
+    fprintf(stderr,"shunt_prim_init_target no such host as %s\n",hostname);
     return -1;
   }
 
   /* build the initiator's Internet address */
-  bzero((char *) &initiatoraddr, sizeof(initiatoraddr));
+  bzero((char *) &initiatoraddr,sizeof(initiatoraddr));
   initiatoraddr.sin_family = AF_INET;
-  bcopy((char *)initiator->h_addr,(char *)&initiatoraddr.sin_addr.s_addr, initiator->h_length);
+  bcopy((char *)initiator->h_addr,(char *)&initiatoraddr.sin_addr.s_addr,initiator->h_length);
   initiatoraddr.sin_port = htons(portno);
   success=0;
   int count =0;
   int delay=0;
   int delay_sum=0;
   srand(time(NULL));
-  while (success==0 && count >=0 ) 
+  while(success==0 && count >=0 ) 
     {
       /* connect: create a connection with the initiator */
-      if(connect(sockfd, (struct sockaddr *)&initiatoraddr, sizeof(initiatoraddr)) < 0) {
-        delay=shunt_prim_rand_delay (SHUNT_DEFAULT_COLLISION_UP, SHUNT_DEFAULT_COLLISION_LOW);
+      if(connect(sockfd,(struct sockaddr *)&initiatoraddr,sizeof(initiatoraddr)) < 0) {
+        delay=shunt_prim_rand_delay(SHUNT_DEFAULT_COLLISION_UP,SHUNT_DEFAULT_COLLISION_LOW);
         delay_sum =  delay_sum +delay; 
         count++;
         printf("\nCollision resolution client connect TCP/IP port(%0d) on client connect  attempt(%0d) delay %0d msec",initiatoraddr.sin_port,count,delay);
@@ -277,22 +277,22 @@ INLINE int shunt_prim_get_status_socket(int fd,int event) {
   return Result_;
 }
 
-INLINE void shunt_prim_unblock_socket(int flag, int sockfd) {
+INLINE void shunt_prim_unblock_socket(int flag,int sockfd) {
   int flags_in;
   int flags_out;
 
-  flags_in = fcntl(sockfd, F_GETFL, 0);
-  if(flags_in < 0) on_error("shunt_prim_unblock_socket() Could not get server socket flags: %s\n", strerror(errno))
+  flags_in = fcntl(sockfd,F_GETFL,0);
+  if(flags_in < 0) on_error("shunt_prim_unblock_socket() Could not get server socket flags: %s\n",strerror(errno))
   if(flag >  0)  flags_out =  flags_in |  O_NONBLOCK;
   if(flag == 0)  flags_out =  flags_in | ~O_NONBLOCK;
-  if(fcntl(sockfd, F_SETFL, flags_out)<0)  on_error("shunt_prim_unblock_socket() Could set server socket: %s\n", strerror(errno));
+  if(fcntl(sockfd,F_SETFL,flags_out)<0)  on_error("shunt_prim_unblock_socket() Could set server socket: %s\n",strerror(errno));
 
   return;
 }
 
 
-INLINE void shunt_prim_tcp_nodelay_socket(int flag, int sockfd) {
-  int err= setsockopt(sockfd, IPPROTO_TCP, TCP_NODELAY, (const char *)&flag, sizeof(int));
+INLINE void shunt_prim_tcp_nodelay_socket(int flag,int sockfd) {
+  int err= setsockopt(sockfd,IPPROTO_TCP,TCP_NODELAY,(const char *)&flag,sizeof(int));
     if(err == -1){
        perror("setsockopt");
        exit(1);
@@ -305,7 +305,7 @@ INLINE void shunt_prim_tcp_nodelay_socket(int flag, int sockfd) {
 INLINE int shunt_prim_get_socket_error(int fd) {
    int err = 1;
    socklen_t len = sizeof err;
-   if(-1 == getsockopt(fd, SOL_SOCKET, SO_ERROR, (char *)&err, &len))
+   if(-1 == getsockopt(fd,SOL_SOCKET,SO_ERROR,(char *)&err,&len))
       shunt_prim_error("shunt_prim_get_socket_error");
    if(err)
       errno = err;              // set errno to the socket SO_ERROR
@@ -314,8 +314,8 @@ INLINE int shunt_prim_get_socket_error(int fd) {
 
 INLINE void shunt_prim_close_socket(int fd) {
    if(fd >= 0) {
-      shunt_prim_get_socket_error(fd); // first clear any errors, which can cause close to fail
-      if(shutdown(fd, SHUT_RDWR) < 0) // secondly, terminate the 'reliable' delivery
+      shunt_prim_get_socket_error(fd); // first clear any errors,which can cause close to fail
+      if(shutdown(fd,SHUT_RDWR) < 0) // secondly,terminate the 'reliable' delivery
          if(errno != ENOTCONN && errno != EINVAL) // SGI causes EINVAL
            shunt_prim_error("shutdown");
       if(close(fd) < 0) // finally call close()
@@ -328,83 +328,130 @@ INLINE void shunt_prim_close_socket(int fd) {
 
 INLINE int shunt_prim_send_short(const int sockfd,const short int* Short) {
   int numbytes;
-
-  numbytes = send(sockfd,Short, sizeof(short int), 0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  char const *msg = "shunt_prim_send_short()";
+#endif 
+  numbytes = send(sockfd,Short,sizeof(short int),0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  printf("\nDEBUG: %s numbytes=%0d, Short=%hx ",msg,numbytes, *Short);
+#endif
   if(numbytes < 0)  shunt_prim_error("\nERROR in shunt_prim_send_short : numbytes < 0 ");
   return numbytes;
 }
 
-INLINE int shunt_prim_recv_short    (const int sockfd, short int* Short) {
-
+INLINE int shunt_prim_recv_short(const int sockfd,short int* Short) {
   int numbytes;
-
-  numbytes = recv(sockfd, Short,sizeof(short int) , 0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  char const *msg = "shunt_prim_recv_short()";
+#endif 
+  numbytes = recv(sockfd,Short,sizeof(short int),0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  printf("\nDEBUG: %s numbytes=%0d, Short=%hx ",msg,numbytes, *Short);
+#endif
   if(numbytes < 0) shunt_prim_error("\nERROR in shunt_prim_recv_short : numbytes < 0 ");
   return numbytes;
-  }
+}
 
 INLINE int shunt_prim_send_int(const int sockfd,const int* Int) {
   int numbytes;
-
-  numbytes = send(sockfd,Int, sizeof(int), 0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  char const *msg = "shunt_prim_send_int()";
+#endif
+  numbytes = send(sockfd,Int,sizeof(int),0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  printf("\nDEBUG: %s numbytes=%0d, Int=%x ",msg,numbytes, *Int);
+#endif
   if(numbytes < 0)  shunt_prim_error("\nERROR in shunt_prim_send_int : numbytes < 0 ");
   return numbytes;
 }
 
-INLINE int shunt_prim_recv_int    (const int sockfd, int* Int) {
-
+INLINE int shunt_prim_recv_int(const int sockfd,int* Int) {
   int numbytes;
-
-  numbytes = recv(sockfd, Int,sizeof(int) , 0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  char const *msg = "shunt_prim_recv_int()";
+#endif 
+  numbytes = recv(sockfd,Int,sizeof(int),0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  printf("\nDEBUG: %s numbytes=%0d,Int=%x ",msg,numbytes,*Int);
+#endif 
   if(numbytes < 0) shunt_prim_error("\nERROR in shunt_prim_recv_int : numbytes < 0 ");
   return numbytes;
 }
 
 INLINE int shunt_prim_send_long(const int sockfd,const shunt_long_t* Long) {
   int numbytes;
-
-  numbytes = send(sockfd,Long, sizeof(shunt_long_t), 0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  char const *msg = "shunt_prim_send_long()";
+#endif
+  numbytes = send(sockfd,Long,sizeof(shunt_long_t),0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  printf("\nDEBUG: %s numbytes=%0d, Long=%llx ",msg,numbytes, *Long);
+#endif
   if(numbytes < 0)  shunt_prim_error("\nERROR in shunt_prim_send_long : numbytes < 0 ");
   return numbytes;
 }
 
-INLINE int shunt_prim_recv_long    (const int sockfd, shunt_long_t* Long) {
-
+INLINE int shunt_prim_recv_long(const int sockfd,shunt_long_t* Long) {
   int numbytes;
-
-  numbytes = recv(sockfd, Long,sizeof(shunt_long_t) , 0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  char const *msg = "shunt_prim_recv_long()";
+#endif
+  numbytes = recv(sockfd,Long,sizeof(shunt_long_t),0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  printf("\nDEBUG: %s numbytes=%0d, Long=%llx ",msg,numbytes, *Long);
+#endif
   if(numbytes < 0) shunt_prim_error("\nERROR in shunt_prim_recv_long : numbytes < 0 ");
   return numbytes;
 }
 
-INLINE int shunt_prim_send_double    (const int sockfd,const double* Double) {
-
+INLINE int shunt_prim_send_double(const int sockfd,const double* Double) {
   int numbytes;
-  numbytes = send(sockfd, Double, sizeof(double), 0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  char const *msg = "shunt_prim_send_double()";
+#endif
+  numbytes = send(sockfd,Double,sizeof(double),0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  printf("\nDEBUG: %s numbytes=%0d, Double=%a ",msg,numbytes, *Double);
+#endif
   if(numbytes < 0) shunt_prim_error("ERROR shunt_cs_send_double: numbytes < 0 ");
   return numbytes;
 }
 
-INLINE int shunt_prim_send_float    (const int sockfd,const float* Float) {
-
+INLINE int shunt_prim_send_float(const int sockfd,const float* Float) {
   int numbytes;
-  numbytes = send(sockfd, Float, sizeof(float), 0);
-  if(numbytes < 0) shunt_prim_error("ERROR shunt_cs_send_float: numbytes < 0 ");
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  char const *msg = "shunt_prim_send_float()";
+#endif
+  numbytes = send(sockfd,Float,sizeof(float),0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+   printf("\nDEBUG: %s numbytes=%0d, Float=%fx ",msg,numbytes, *Float);
+#endif
+   if(numbytes < 0) shunt_prim_error("ERROR shunt_cs_send_float: numbytes < 0 ");
+   return numbytes;
+}
+
+INLINE int shunt_prim_recv_double(const int sockfd,double* Double) {
+  int numbytes;
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  char const *msg = "shunt_prim_recv_double()";
+#endif
+  numbytes = recv(sockfd,Double,sizeof(double),0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  printf("\nDEBUG: %s numbytes=%0d, Double=%a",msg,numbytes, *Double);
+#endif
+  if(numbytes < 0) shunt_prim_error("ERROR in shunt_prim_recv_double : numbytes < 0 ");
   return numbytes;
 }
 
-INLINE int shunt_prim_recv_double    (const int sockfd,double* Double) {
- int numbytes;
-
- numbytes = recv(sockfd, Double,sizeof(double) , 0);
- if(numbytes < 0) shunt_prim_error("ERROR in shunt_prim_recv_double : numbytes < 0 ");
- return numbytes;
-}
-
-INLINE int shunt_prim_recv_float    (const int sockfd,float* Float) {
+INLINE int shunt_prim_recv_float(const int sockfd,float* Float) {
   int numbytes;
-
-  numbytes = recv(sockfd, Float,sizeof(float) , 0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  char const *msg = "shunt_prim_recv_float()";
+#endif
+  numbytes = recv(sockfd,Float,sizeof(float),0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  printf("\nDEBUG: %s numbytes=%0d, Float=%fx ",msg,numbytes, *Float);
+#endif
   if(numbytes < 0) shunt_prim_error("ERROR in shunt_prim_recv_float : numbytes < 0 ");
   return numbytes;
 }
@@ -412,45 +459,55 @@ INLINE int shunt_prim_recv_float    (const int sockfd,float* Float) {
 
 INLINE int shunt_prim_send_byte(const int sockfd,const char* Byte) {
   int numbytes;
-
-  numbytes = send(sockfd,Byte, sizeof(char), 0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  char const *msg = "shunt_prim_send_byte()";
+#endif
+  numbytes = send(sockfd,Byte,sizeof(char),0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  printf("\nDEBUG: %s numbytes=%0d, Byte=%x ",msg,numbytes, *Byte);
+#endif
   if(numbytes < 0)  shunt_prim_error("\nERROR in shunt_prim_send_byte : numbytes < 0 ");
   return numbytes;
 }
 
-INLINE int shunt_prim_recv_byte    (const int sockfd, char* Byte) {
-
+INLINE int shunt_prim_recv_byte(const int sockfd,char* Byte) {
   int numbytes=0;
-
-  numbytes = recv(sockfd, Byte,sizeof(char) , 0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  char const *msg = "shunt_prim_recv_byte()";
+#endif
+  numbytes = recv(sockfd,Byte,sizeof(char),0);
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  printf("\nDEBUG: %s numbytes=%0d, Byte=%x ",msg,numbytes, *Byte);
+#endif
   if(numbytes < 0) {
     shunt_prim_error("\nERROR in shunt_prim_recv_byte : numbytes < 0 ");
   }
-
   return numbytes;
-  }
-
-INLINE int shunt_prim_send_integer (const unsigned int sockfd,const svLogicVecVal* Int) {
- int Result_;
-
- Result_ = 1;
- if(shunt_prim_send_int (sockfd,(int *)(&Int->aval))<=0) Result_=0 ;
- if(shunt_prim_send_int (sockfd,(int *)(&Int->bval))<=0) Result_=0 ;
-
- return Result_;
 }
 
-INLINE int shunt_prim_recv_integer (const unsigned int sockfd,svLogicVecVal* Int) {
+INLINE int shunt_prim_send_integer(const unsigned int sockfd,const svLogicVecVal* Int) {
+  int Result_;
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  //char const *msg = "shunt_prim_send_integer()"; TODO print out integer
+#endif
+  Result_ = 1;
+  if(shunt_prim_send_int(sockfd,(int *)(&Int->aval))<=0) Result_=0 ;
+  if(shunt_prim_send_int(sockfd,(int *)(&Int->bval))<=0) Result_=0 ;
+  return Result_;
+}
+
+INLINE int shunt_prim_recv_integer(const unsigned int sockfd,svLogicVecVal* Int) {
   int Result_;
   Result_ = 1;
-
-  if(shunt_prim_recv_int (sockfd,(int *)(&Int->aval))<=0) Result_=0 ;
-  if(shunt_prim_recv_int (sockfd,(int *)(&Int->bval))<=0) Result_=0 ;
-
- return Result_;
-}
-
+#ifdef SHUNT_PRIMITIVES_C_DEBUG 
+  //char const *msg = "shunt_prim_recv_integer()"; TODO print out integer
 #endif
+  if(shunt_prim_recv_int(sockfd,(int *)(&Int->aval))<=0) Result_=0 ;
+  if(shunt_prim_recv_int(sockfd,(int *)(&Int->bval))<=0) Result_=0 ;
+  return Result_;
+}
+#endif
+
 
 
 
