@@ -3,7 +3,7 @@
 ![](https://github.com/xver/Shunt/blob/master/doc/shut_log_min.png)
 
 
-The **Shunt** is Open Source Client/Server TCP/IP socket based communication library for **SystemVerilog**, **SystemC** , and **Python (initial release)** simulations.
+The **Shunt** is Open Source Client/Server TCP/IP socket-based communication library for **SystemVerilog**, **SystemC**, and **Python (initial release)** simulations.
 
 * It aims to enable quick and easy development of communication between stand-alone SystemVerilog/SystemC simulations and/or external applications
 
@@ -21,7 +21,7 @@ https://www.researchgate.net/publication/359009820_Enhanced_Dynamic_Hybrid_Simul
 *  API specification  -- https://raw.githack.com/xver/Shunt/master/doc/index.html
 
 ### Commercial support
-Starting from the version 2.2.0, **"IC VERIMETER"** is pleased to announce the availability of commercial support. 
+Starting from version 2.2.0, **"IC VERIMETER"** is pleased to announce the availability of commercial support. 
 Whether you need assistance with the **Shunt** integration into your project or customization, please contact us at icshunt.help@gmail.com
 
 We have received numerous requests for new features and extensions beyond the initial scope of the product. To continue to keep "TCP/IP Shunt" as an open tool and address all extension requests, we are seeking funding to support the project's growth and development.
@@ -50,7 +50,7 @@ Setup following variables:
  - run  ``` make clean;make all ```
 Compile result will be placed under ***${SHUNT_HOME}/bin with dpi:“libutils.so” and without dpi:”libCutils.so”*** 
 
-NOTE: use the USER_OPT to add compiler options. (Example all debug options: make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG') 
+NOTE: use the USER_OPT to add compiler options. (Example **all debug options:**  ```make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG -DSHUNT_PRIMITIVES_C_DEBUG')  ```
 
 ### Python swig wraper
  - cd to ```$SHUNT_HOME/utils/makedir/ ```
