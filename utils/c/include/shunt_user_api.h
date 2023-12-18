@@ -21,7 +21,7 @@
 //prototypes
 //-------------
 
-//Title: Utilites: USER API
+//Title: Utilities: USER API
 
 //Section: Data exchange utilities (API)
 /*

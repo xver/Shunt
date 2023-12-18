@@ -5,7 +5,7 @@
  Copyright (c) 2016-2023 IC Verimeter. All rights reserved.
                Licensed under the MIT License.
                See LICENSE file in the project root for full license information.
- Description : target-initiator Primitives is a minimum set of the data exchage over TCP/IP base methods
+ Description : target-initiator Primitives is a minimum set of the data exchange over TCP/IP base methods
 
                System Verilog target initiator handshake (TCP/IP SystemVerilog SHUNT)
  ============================================================================
@@ -330,6 +330,7 @@ INLINE int shunt_prim_send_short(const int sockfd,const short int* Short) {
   int numbytes;
 #ifdef SHUNT_PRIMITIVES_C_DEBUG 
   char const *msg = "shunt_prim_send_short()";
+  printf("\nDEBUG: %s Short=%hx ",msg, *Short);
 #endif 
   numbytes = send(sockfd,Short,sizeof(short int),0);
 #ifdef SHUNT_PRIMITIVES_C_DEBUG 
@@ -464,7 +465,7 @@ INLINE int shunt_prim_send_byte(const int sockfd,const char* Byte) {
 #endif
   numbytes = send(sockfd,Byte,sizeof(char),0);
 #ifdef SHUNT_PRIMITIVES_C_DEBUG 
-  printf("\nDEBUG: %s numbytes=%0d, Byte=%x ",msg,numbytes, *Byte);
+  printf("\nDEBUG: %s numbytes=%0d, Byte=%x(%c) ",msg,numbytes,*Byte,*Byte);
 #endif
   if(numbytes < 0)  shunt_prim_error("\nERROR in shunt_prim_send_byte : numbytes < 0 ");
   return numbytes;
@@ -477,7 +478,7 @@ INLINE int shunt_prim_recv_byte(const int sockfd,char* Byte) {
 #endif
   numbytes = recv(sockfd,Byte,sizeof(char),0);
 #ifdef SHUNT_PRIMITIVES_C_DEBUG 
-  printf("\nDEBUG: %s numbytes=%0d, Byte=%x ",msg,numbytes, *Byte);
+  printf("\nDEBUG: %s numbytes=%0d, Byte=%x(%c) ",msg,numbytes,*Byte,*Byte);
 #endif
   if(numbytes < 0) {
     shunt_prim_error("\nERROR in shunt_prim_recv_byte : numbytes < 0 ");

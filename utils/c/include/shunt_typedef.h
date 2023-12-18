@@ -5,7 +5,7 @@
  Copyright (c) 2016-2023 IC Verimeter. All rights reserved.
                Licensed under the MIT License.
                See LICENSE file in the project root for full license information.
- Description : common includes typedef, #definines Shunt settings
+ Description : common includes typedef, #defines Shunt settings
   ============================================================================
  */
 #ifndef SHUNT_TYPEDEF_H
@@ -218,7 +218,7 @@ Variable: SHUNT_INSTR_ENUM
 typedef enum {SHUNT_INT,SHUNT_REAL,SHUNT_SHORTREAL,SHUNT_STRING,SHUNT_A_STRUCTURE,SHUNT_INTEGER,SHUNT_BYTE,SHUNT_REG,SHUNT_BIT,SHUNT_SHORTINT,SHUNT_LONGINT,SHUNT_HEADER_ONLY} SHUNT_INSTR_ENUM;
 
 /*
-Degfine: SHUNT_INSTR_ENUM_NAMES
+Define: SHUNT_INSTR_ENUM_NAMES
  
 --- Code
 #define SHUNT_INSTR_HASH_INDEX_DEFINE const char* SHUNT_INSTR_ENUM_NAMES[] = {"SHUNT_INT","SHUNT_REAL","SHUNT_SHORTREAL","SHUNT_STRING","SHUNT_A_STRUCTURE","SHUNT_INTEGER","SHUNT_BYTE","SHUNT_REG","SHUNT_BIT","SHUNT_SHORTINT","SHUNT_LONGINT","SHUNT_HEADER_ONLY"}
@@ -322,7 +322,7 @@ typedef struct cs_data_header_t {
 
    - *streaming_width*     Number of bytes transferred on each data-beat.
 
-   - *dmi_allowed*        DMI allowed/not allowed (bool atribute)
+   - *dmi_allowed*        DMI allowed/not allowed (bool attribute)
 
    - *response_status*    Transaction status:
 
@@ -332,9 +332,9 @@ typedef struct cs_data_header_t {
    TLM_COMMAND_ERROR_RESPONSE = -3, TLM_BURST_ERROR_RESPONSE = -4, TLM_BYTE_ENABLE_ERROR_RESPONSE = -5
    }
    ---
-   - *delay*              Shunt tlm header extension equal to b_transport/nb_trasport delay atribute
+   - *delay*              Shunt tlm header extension equal to b_transport/nb_trasport delay attribute
 
-   - *tlm_phase*          Shunt tlm header nb_trasport atribute:
+   - *tlm_phase*          Shunt tlm header nb_trasport attribute:
 
    --- Code
    enum  tlm_phase_enum {
@@ -342,7 +342,7 @@ typedef struct cs_data_header_t {
    }
    ---
 
-   - *tlm_sync*         shunt tlm header nb_trasport atribute:
+   - *tlm_sync*         shunt tlm header nb_trasport attribute:
 
    --- Code
    enum  tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED }

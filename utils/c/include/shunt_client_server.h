@@ -14,7 +14,7 @@
 
 #include "shunt_primitives.h"
 
-//Title: Utilites: Client-Initiator cs_header
+//Title: Utilities: Client-Initiator cs_header
 
 /*
  * About: Verilog Data Types elements:
@@ -742,7 +742,7 @@ INLINE void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header
 
 /*
   Function: shunt_cs_tlm_recv_gp_header
-  recieve tlm generic payload  header ( cs_tlm_generic_payload_header only)
+  receive tlm generic payload  header ( cs_tlm_generic_payload_header only)
 
   Parameters:
 
@@ -768,7 +768,7 @@ INLINE void shunt_cs_tlm_send_gp_header (int sockid, cs_tlm_generic_payload_head
 
 /*
   Function: shunt_cs_tlm_recv_axi3_header
-  recieve tlm generic payload  header ( cs_tlm_generic_payload_header only)
+  receive tlm generic payload  header ( cs_tlm_generic_payload_header only)
 
   Parameters:
 
@@ -795,7 +795,7 @@ INLINE void shunt_cs_tlm_send_axi3_header (int sockid, cs_tlm_axi3_extension_pay
 
 /*
   Function: shunt_cs_tlm_recv_gp_data
-  recieve tlm generic payload  packet (byte data vector + byte_enable vector )
+  receive tlm generic payload  packet (byte data vector + byte_enable vector )
 
   Parameters:
 

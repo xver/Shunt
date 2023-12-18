@@ -53,7 +53,7 @@ unsigned int shunt_dpi_target_init(const unsigned int portno,const char *hostnam
 
 /*
   Function: shunt_dpi_initiator_init
-  TCP/IP  "one server" - "one target" poit-to-point initiator  initialization
+  TCP/IP  "one server" - "one target" point-to-point initiator  initialization
 
   Parameters:
 
@@ -92,7 +92,7 @@ void shunt_dpi_close_socket(int fd);
  sets TCP socket unblocked mode
 
  Parameters:
-  flag -  1/0- unblocked(deafult)/blocked
+  flag -  1/0- unblocked(default)/blocked
   fd - socket id
 
  Returns:
@@ -993,7 +993,7 @@ void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header*
 
 /*
   Function: shunt_dpi_tlm_recv_gp_header
-  recieve tlm generic payload  header ( cs_tlm_generic_payload_header only)
+  receive tlm generic payload  header ( cs_tlm_generic_payload_header only)
 
   Parameters:
 
@@ -1019,7 +1019,7 @@ void shunt_dpi_tlm_send_gp_header (int sockid, cs_tlm_generic_payload_header* h)
 
 /*
   Function: shunt_dpi_tlm_recv_axi3_header
-  recieve tlm generic payload  header ( cs_tlm_generic_payload_header only)
+  receive tlm generic payload  header ( cs_tlm_generic_payload_header only)
 
   Parameters:
 
@@ -1045,7 +1045,7 @@ void shunt_dpi_tlm_send_axi3_header (int sockid, cs_tlm_axi3_extension_payload_h
 
 /*
   Function: shunt_dpi_tlm_recv_gp_data
-  recieve tlm generic payload  packet (byte data vector + byte_enable vector )
+  receive tlm generic payload  packet (byte data vector + byte_enable vector )
 
   Parameters:
 
@@ -1262,7 +1262,7 @@ int shunt_dpi_hs_send_logicN (const unsigned int sockfd,cs_header* h_trnx,const 
   Reg  - data
 
   Returns:
-  number of 4 state variable byte size have been recie   : success > 0
+  number of 4 state variable byte size have been received   : success > 0
 
 
   See Also:
@@ -1346,7 +1346,7 @@ int shunt_dpi_recv_longV(int sockid,int size,svOpenArrayHandle Int);
 
 /*
   Function: shunt_dpi_send_pkt_longV
-   map unpacked "longint" paket (cs_header structure + one-dimensional data payload array)
+   map unpacked "longint" packet (cs_header structure + one-dimensional data payload array)
 
   Parameters:
 

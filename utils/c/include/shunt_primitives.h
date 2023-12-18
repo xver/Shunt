@@ -99,7 +99,7 @@ INLINE void shunt_prim_error(const char *msg);
 
 /*
   Function: shunt_prim_rand_delay
-  implementes in millisecond random interval delay between the lower and upper limit.
+  implements in millisecond random interval delay between the lower and upper limit.
   Parameters:
    low - low limit in msec
    up - up limit in msec
@@ -209,7 +209,7 @@ INLINE void shunt_prim_close_socket(int fd);
  sets TCP socket unblocked mode
 
  Parameters:
- flag -  1/0- unblocked(deafult)/blocked
+ flag -  1/0- unblocked(default)/blocked
  fd - socket
 
  Returns:
@@ -240,7 +240,7 @@ INLINE void shunt_prim_tcp_nodelay_socket(int flag, int sockfd);
 
 /*
   Function: shunt_prim_get_status_socket
-  returns status for TCP socket <event> on a fd <soket>
+  returns status for TCP socket <event> on a fd <socket>
    Parameters:
   sockfd - socket
   short event-  the <event> mask is specifying following

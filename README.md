@@ -52,12 +52,6 @@ Compile result will be placed under ***${SHUNT_HOME}/bin with dpi:“libutils.so
 
 NOTE: use the USER_OPT to add compiler options. (Example **all debug options:**  ```make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG -DSHUNT_PRIMITIVES_C_DEBUG')  ```
 
-### Python swig wraper
- - cd to ```$SHUNT_HOME/utils/makedir/ ```
- - run ``` “make clean;make swig_py” ```
-Python wraper and libs will be placed under ***${SHUNT_HOME}/bin***
- - Import **Python Shut module** :
-
 ```
 import os
 import sys

@@ -43,7 +43,7 @@ INLINE unsigned int shunt_cs_init_target(const unsigned int portno_in ,const cha
 
 INLINE shunt_dynamic_port  shunt_cs_tcp_parent_init_target_dpa(const char *hostname) {
   unsigned int socketfd;
-   
+
   int port;
   int success=1;
   

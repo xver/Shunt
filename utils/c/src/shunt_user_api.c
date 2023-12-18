@@ -214,7 +214,7 @@ INLINE int shunt_pkt_recv_longV  (int sockid, cs_header* header,shunt_long_t* Lo
   int  offset       = 0;
   int  header_size_ = sizeof(*header)/sizeof(shunt_long_t);
   int numbytes_     = -1;
-  //recive array init
+  //receive array init
   shunt_long_t leader_        = shunt_prim_hash("shunt_cs_header_leader");
   shunt_long_t* recv_arr_ = (shunt_long_t*)malloc(size_); // array to hold the result
   memset(recv_arr_,0,size_);
@@ -234,8 +234,3 @@ INLINE int shunt_pkt_recv_longV  (int sockid, cs_header* header,shunt_long_t* Lo
   return  numbytes_;
 }
 #endif
-
-
-
-
-
