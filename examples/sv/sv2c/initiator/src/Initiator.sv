@@ -895,14 +895,19 @@ module automatic Initiator;
       string  s_me = "compare_shunt_header(lhs,rls)";
       bit     success =1;
 
-      if( lhs.trnx_type  != lhs.trnx_type)  success = 0;
-      if( lhs.trnx_id    != lhs.trnx_id)    success = 0;
-      if( lhs.data_type  != lhs.data_type)  success = 0;
-      if( lhs.n_payloads != lhs.n_payloads) success = 0;
+      if( lhs.trnx_type  != rls.trnx_type)  success = 0;
+      if( lhs.trnx_id    != rls.trnx_id)    success = 0;
+      if( lhs.data_type  != rls.data_type)  success = 0;
+      if( lhs.n_payloads != rls.n_payloads) success = 0;
       if (success == 0) begin
-     $display("\ninitiator: %s fail",s_me);
-     print_shunt_header(lhs,"lhs",s_me);
-     print_shunt_header(lhs,"rhs",s_me);
+         $display("\ninitiator: %s fail",s_me);
+         print_shunt_header(lhs,"lhs",s_me);
+         print_shunt_header(rls,"rhs",s_me);
+      end
+      if (success == 1) begin
+         $display("\ninitiator: %s pass", s_me);
+         print_shunt_header(lhs, "lhs", s_me);
+         print_shunt_header(rls, "rhs", s_me);
       end
       return success;
    endfunction : compare_shunt_header

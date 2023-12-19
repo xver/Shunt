@@ -1,0 +1,4 @@
+make SIM=verilator build_sv
+make SIM=verilator run_target&
+make SIM=verilator run_initiator
+

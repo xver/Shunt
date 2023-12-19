@@ -1,0 +1,3 @@
+make build_sv SIM=verilator
+make run_initiator SIM=verilator&
+python3 ../target/src/Target.py 

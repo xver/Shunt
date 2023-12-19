@@ -3,7 +3,7 @@
 ![](https://github.com/xver/Shunt/blob/master/doc/shut_log_min.png)
 
 
-The **Shunt** is Open Source Client/Server TCP/IP socket-based communication library for **SystemVerilog**, **SystemC**, and **Python (initial release)** simulations.
+The **Shunt** is an Open Source Client/Server TCP/IP socket-based communication library designed for integrating **SystemVerilog** simulations with external applications in **C**, **SystemC**, and **Python**.
 
 * It aims to enable quick and easy development of communication between stand-alone SystemVerilog/SystemC simulations and/or external applications
 
@@ -33,9 +33,9 @@ You can support us through this link:  [:heart: Sponsor](https://github.com/spon
 # Getting Started [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/xver)
 ### Install the following  prerequisites:
 
-- Verilator up to 5.011 : https://www.veripool.org/verilator/
-- SystemC up to 2.3.3-Accellera : https://systemc.org/resources/standards/
-- Swig SWIG Version up to 4.1.1 : https://www.swig.org/
+- Verilator up to 5.019 : https://www.veripool.org/verilator/
+- SystemC up to 2.3.3  -Accellera : https://systemc.org/resources/standards/
+- Python3 up to Python 3.10.12
 
 ### Library Installation
 
@@ -52,33 +52,22 @@ Compile result will be placed under ***${SHUNT_HOME}/bin with dpi:“libutils.so
 
 NOTE: use the USER_OPT to add compiler options. (Example **all debug options:**  ```make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG -DSHUNT_PRIMITIVES_C_DEBUG')  ```
 
-```
-import os
-import sys
-shunthome =  os.environ['SHUNT_HOME'] + "/bin" 
-sys.path.insert(0,shunthome)
-from shunt import *
-```
-
-**TODO:** Python TLM & Phyton to SystemVerilog example
-
-### Compile and run all SV/C examples
+### Compile and run all examples (SV/C/SC/PY)
 - cd to ```$SHUNT_HOME/examples/makedir```
 - run ```./run_examples ``` or ```./run_examples_debug ``` 
+
+### Compile and run Python examples
+- cd  to example makedir root directory. (Example: ``` $SHUNT_HOME/examples/py/sv2py/makedir ```)
+- To compile the library and launch test run ```./run ``
 
 ### Compile and run C examples
 - cd  to example makedir root directory. (Example: ``` $SHUNT_HOME/examples/c/primitives/makedir ```)
 - To compile the library and launch test run ``` make all ```
 
 ### Compile and run SV examples
-The Shunt includes a complete Makefile structure for the C portion of the library, but ONLY Makefile target place holders for SV domain.
-
- - Edit “Makefile” initiator/target “compile_sv” under initiator/target
-   local makedir(Example: $SHUNT_HOME/examples/sv/sv2c/initiator/makedir)
- - Edit “run” file placeholder. Setup run command for appropriate
-   source. cd to example makedir root directory, run “make all” and ./run
-(Example:  $SHUNT_HOME/examples/sv/sv2c/makedir)
-
+ - cd  to example makedir root directory. (Example: ``` $SHUNT_HOME/examples/sv/sv2c/makedir/```)
+-  To compile the library and launch test run ```./run```
+ 
 ### TLM-2.0 over TCP/IP "loosely timed model"  SystemC-to-SystemC and SystemC-to-SV examples 
 
 SystemC to SystemC  b_transport over TCP/IP :  

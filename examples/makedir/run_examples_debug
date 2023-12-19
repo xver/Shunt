@@ -11,6 +11,8 @@ pushd .;cd ../sv/sv2c/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/s
 pushd .; cd ../sc/LT_simple_cs/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log r;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG -DSHUNT_PRIMITIVES_C_DEBUG' all |& tee -a   $SHUNT_HOME/examples/makedir/shunt.log;popd
 pushd .; cd ../sc/LT_simple_trns/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG -DSHUNT_PRIMITIVES_C_DEBUG' all  |& tee -a  $SHUNT_HOME/examples/makedir/shunt.log;popd
 pushd .; cd ../sc/LT_simple_sv/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;make USER_OPT='-g3 -DSHUNT_CLIENT_SERVER_C_DEBUG -DSHUNT_TLM_DEBUG -DSHUNT_DPI_C_DEBUG -DSHUNT_PRIMITIVES_C_DEBUG' all |& tee -a $SHUNT_HOME/examples/makedir/shunt.log;popd
-# 
+#PY
+pushd .;cd ../py/sv2py/makedir;echo $PWD |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;./run_debug  |& tee -a $SHUNT_HOME/examples/makedir/shunt.log ;popd   
+#
 egrep -a '(loopback|TEST\ PASS|test\ is\ finished)' shunt.log
-egrep -ai '(error|warning)' shunt.log | grep -v Werror
+egrep -ai '(error|warning|fail)' shunt.log | grep -v Werror

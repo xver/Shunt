@@ -52,6 +52,7 @@ rm -rf ../../examples/sc/LT_simple_trns/target/bin/testbench.d
 rm -rf ../../examples/sc/LT_simple_trns/target/bin/testbench.o
 rm -rf ../../examples/sv/sv2c/initiator/bin/obj_dir/
 rm -rf ../../examples/sv/sv2c/target/bin/obj_dir/
+rm -rf ../../examples/py/sv2py/initiator/bin/obj_dir/
 rm -rf ../../utils/makedir/c/src/shunt_client_server.d
 rm -rf ../../utils/makedir/c/src/shunt_client_server.o
 rm -rf ../../utils/makedir/c/src/shunt_primitives.d
@@ -59,3 +60,4 @@ rm -rf ../../utils/makedir/c/src/shunt_primitives.o
 rm -rf ../../utils/makedir/c/src/shunt_user_api.o
 rm -rf ../../utils/makedir/dpi/src/shunt_dpi.d
 rm -rf ../../utils/makedir/dpi/src/shunt_dpi.o
+rm -rf ../../utils/py/shunt_py/__pycache__
