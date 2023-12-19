@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("PythonClass:cs_data_header","cs_data_header");NDSummary.OnSummaryLoaded("PythonClass:cs_data_header",[["Python","Python"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"]],[[30,0,0,"cs_data_header"],[31,0,2,"Functions","Functions"],[32,0,1,"print_structure","print_structure"]]);

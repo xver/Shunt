@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("PythonClass:SVpiVecVal","SVpiVecVal");NDSummary.OnSummaryLoaded("PythonClass:SVpiVecVal",[["Python","Python"]],[["Classes","Class"]],[[36,0,0,"SVpiVecVal"]]);
