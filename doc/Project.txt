@@ -1,4 +1,4 @@
-﻿Format: 2.3 (Development Release 1)
+﻿Format: 2.3
 
 # This is the main file you use to configure Natural Docs for your project.
 
@@ -81,6 +81,9 @@ Source Folder 3: ../utils/dpi/src
 
 Source Folder 4: ../utils/sc/src
    Name: 4. TLM 2.0 SC utils
+
+Source Folder 5: ../utils/py/shunt_py
+   Name: 5. Python utils
 
 
 # This is where you tell Natural Docs which folders it should scan for source
