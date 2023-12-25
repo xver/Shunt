@@ -847,7 +847,7 @@ module automatic Initiator;
       return  success;
      /* verilator lint_on WIDTH */
    endfunction : pkt_longV_loopback_test
-   
+
 
    function int header_loopback_test(int socket_id,int n_payloads=1);
       string      s_me = "header_loopback_test()";

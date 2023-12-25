@@ -35,18 +35,18 @@
 
   portno   - socket port
   hostname - initiator name
-  
+
   Returns:
   socket id
 
   See Also:
   - <shunt_prim_init_target>  <shunt_cs_init_target>
-  
+
   NOTE:
   If portno_in = 0 -- assign a free client-server TCP port.
   <SHUNT_DEFAULT_TCP_PORT> is reserved for the dynamic allocation of the client-server TCP port.
 
-  
+
 */
 unsigned int shunt_dpi_target_init(const unsigned int portno,const char *hostname);
 
@@ -57,7 +57,7 @@ unsigned int shunt_dpi_target_init(const unsigned int portno,const char *hostnam
 
   Parameters:
 
-  portno - socket port 
+  portno - socket port
 
   Returns:
 
@@ -65,7 +65,7 @@ unsigned int shunt_dpi_target_init(const unsigned int portno,const char *hostnam
 
   See Also:
   - <shunt_prim_init_initiator> <shunt_cs_init_initiator>
- 
+
   NOTE:
   If portno_in = 0 -- assign a free client-server TCP port.
   <SHUNT_DEFAULT_TCP_PORT> is reserved for the dynamic allocation of the client-server TCP port.
@@ -177,11 +177,11 @@ unsigned int shunt_dpi_tcp_connect(const unsigned int parentfd);
 /*
  Function: shunt_dpi_tcp_get_port
  Finds TCP/IP port  with the specified socket id
- 
+
  Parameters:
 
- socket  -- socket id 
-  
+ socket  -- socket id
+
  Returns:
 
  a corresponding TCP/IP port
@@ -195,17 +195,17 @@ unsigned int shunt_dpi_tcp_get_port(unsigned int socket);
 /*
  Function:  shunt_dpi_tcp_parent_init_initiator_dpa
  is DPI equivalent of the <shunt_cs_tcp_parent_init_initiator_dp>
- 
-Parameters: 
- 
+
+Parameters:
+
  N/A
 
- Returns: 
+ Returns:
 
  socket id -- DPA parent socket id
 
 */
-unsigned int shunt_dpi_tcp_parent_init_initiator_dpa(); 
+unsigned int shunt_dpi_tcp_parent_init_initiator_dpa();
 
 
 
@@ -868,12 +868,12 @@ int shunt_dpi_send_string   (int sockid,int size,char* string);
 int shunt_dpi_recv_string   (int sockid,int size,char** string);
 
 /*
-  Function: shunt_dpi_get_cs_header_id 
-  predefined hash functions for obtain the specific hash value.  
+  Function: shunt_dpi_get_cs_header_id
+  predefined hash functions for obtain the specific hash value.
 
   Parameters:
   N/A
-  
+
   Returns:
   long - hash value;
 
@@ -886,11 +886,11 @@ shunt_long_t shunt_dpi_get_cs_header_id();
 // Section: Data exchange (cs) TLM
 /*
   Function: shunt_dpi_tlm_header_id
-  predefined hash functions for obtain the specific hash value.  
+  predefined hash functions for obtain the specific hash value.
 
   Parameters:
   N/A
-  
+
   Returns:
   long - hash value;
 
@@ -902,11 +902,11 @@ shunt_long_t shunt_dpi_tlm_header_id();
 
 /*
   Function: shunt_dpi_tlm_data_id
-  predefined hash functions for obtain the specific hash value.  
+  predefined hash functions for obtain the specific hash value.
 
   Parameters:
   N/A
-  
+
   Returns:
   long - hash value;
 
@@ -918,11 +918,11 @@ shunt_long_t  shunt_dpi_tlm_data_id();
 
 /*
   Function: shunt_dpi_tlm_axi3_ext_id
-  predefined hash functions for obtain the specific hash value.  
+  predefined hash functions for obtain the specific hash value.
 
   Parameters:
   N/A
-  
+
   Returns:
   long - hash value;
 
@@ -934,11 +934,11 @@ shunt_long_t shunt_dpi_tlm_axi3_ext_id();
 
 /*
   Function: shunt_dpi_tlm_signal_id
-  predefined hash functions for obtain the specific hash value.  
+  predefined hash functions for obtain the specific hash value.
 
   Parameters:
   N/A
-  
+
   Returns:
   long - hash value;
 

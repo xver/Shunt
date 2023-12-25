@@ -260,7 +260,7 @@ int main(void) {
       msg = "initiator: data_act";
       printf("\n%s String_act=%s",msg,String_act);
     }
-    
+
     puts("\n\ncsC_Initiator end");
   }
 

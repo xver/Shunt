@@ -114,7 +114,7 @@ int main(void) {
     //send loopback
     success=shunt_pkt_send_longV (socket, &h_trnx, LongV);
     if (success == 0 )  printf("\n target String data fail to send");
-    
+
     puts("\napiC_Target end");
   }
 

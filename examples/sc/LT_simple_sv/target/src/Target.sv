@@ -21,28 +21,16 @@ module automatic Target(input reg clk_i);
    //MEM
    //logic [31:0] mem [0:255]=0;
    logic [31:0] mem_data;
-   
    logic [31:0] mem_byte_enable;
-   
    logic [31:0] mem_addr;
-   
    logic        mem_we;
-   
-   //logic      mem_oe;
    logic [31:0] mem_q;
-   
-
    bit          end_sim ;
-   
    bit          start_sim;
-   
    bit          trnx_in_progress;
-   
    int          clk_next;
-
    int          sockid ;
-   
-   
+
    cs_tlm_generic_payload_header_t h;
    cs_tlm_axi3_extension_payload_header_t h_ext;
    cs_tlm_axi3_extension_payload_header_t h_ext_out;
@@ -63,19 +51,19 @@ module automatic Target(input reg clk_i);
       mem_byte_enable=0;
       mem_addr=0;
       mem_we=0;
-      
+
       mem_q=0;
-      
+
       end_sim =0;
       start_sim=0;
       trnx_in_progress=0;
       sockid =0;
-      
+
       $display("TARGET: shunt_dpi_tlm_header_id()=%h",shunt_dpi_tlm_header_id());
       $display("TARGET: shunt_dpi_tlm_data_id()=%h", shunt_dpi_tlm_data_id());
       $display("TARGET: shunt_dpi_tlm_axi3_ext_id()=%h",shunt_dpi_tlm_axi3_ext_id());
       $display("TARGET: shunt_dpi_tlm_signal_id()=%h",shunt_dpi_tlm_signal_id());
-          
+
       sockid = shunt_dpi_target_init(`MY_PORT,`MY_HOST);
       shunt_dpi_tlm_send_command(sockid,SHUNT_TLM_START_SIM);
       start_sim =1;
@@ -116,7 +104,7 @@ module automatic Target(input reg clk_i);
             if(h.command != SHUNT_TLM_END_SIM) begin
                shunt_dpi_tlm_recv_axi3_header(sockid,h_ext);
                shunt_dpi_tlm_axi3_header_print (h_ext,"TRAGET: ");
-               shunt_dpi_tlm_send_axi3_header (sockid,h_ext_out);   
+               shunt_dpi_tlm_send_axi3_header (sockid,h_ext_out);
             end
             /* verilator lint_off BLKSEQ */
             h.response_status = SHUNT_TLM_OK_RESPONSE;

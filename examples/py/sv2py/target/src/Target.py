@@ -22,7 +22,7 @@ sys.path.insert(0,shuntpyhome)
 from shunt import *
 
 class Target:
-    
+
     def __init__(self):
         self.lib= Shunt()
         self.String = ""
@@ -34,36 +34,36 @@ class Target:
         socket_id = 0
         socket_id = self.lib.shunt_py_target_init(portno, hostname)
         return socket_id
-    
+
     def header_loopback_test(self,socket_id):
-        
+
         h_trnx = cs_header()
         # Receive
         Test_name = "\n SV2PY header_loopback_test recv"
         result,h_trnx = self.lib.shunt_py_recv_header(socket_id)
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
-            
+
         ## Send
         Test_name = "\n SV2PY header_loopback_test send"
         result = self.lib.shunt_py_send_header(socket_id, h_trnx)
-        if result <= 0:    
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
-        
+
     def short_loopback_test(self, socket_id):
         Short = 0xDEAD
         Test_name = "\n  SV2PY short_loopback_test recv"
 
         # recv
         result,Short = self.lib.shunt_py_recv_short(socket_id)
-        if result<=0 : 
+        if result<=0 :
             print(f"{Test_name} TARGET: TEST FAIL")
         print(f"{Test_name} Short={hex(Short)}")
 
         # send
         Test_name = "\n  SV2PY short_loopback_test send"
         result= self.lib.shunt_py_send_short(socket_id, Short)
-        if result<=0 :    
+        if result<=0 :
             print(f"{Test_name} TARGET: TEST FAIL")
 
     def int_loopback_test(self, socket_id):
@@ -95,7 +95,7 @@ class Target:
         # send
         Test_name = "\n  SV2PY long_loopback_test send"
         result = self.lib.shunt_py_send_long(socket_id, Long)
-        if result <= 0:            
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
     def byte_loopback_test(self, socket_id):
@@ -111,7 +111,7 @@ class Target:
         # send
         Test_name = "\n  SV2PY byte_loopback_test send"
         result = self.lib.shunt_py_send_byte(socket_id, Byte)
-        if result <= 0:            
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
     def integer_loopback_test(self, socket_id):
@@ -127,7 +127,7 @@ class Target:
         # send
         Test_name = "\n  SV2PY integer_loopback_test send"
         result = self.lib.shunt_py_send_integer(socket_id, Integer)
-        if result <= 0:            
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
     def time_loopback_test(self, socket_id):
@@ -143,7 +143,7 @@ class Target:
         # send
         Test_name = "\n  SV2PY time_loopback_test send"
         result = self.lib.shunt_py_send_time(socket_id, Time)
-        if result <= 0:            
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
     def bit_loopback_test(self, socket_id):
@@ -159,7 +159,7 @@ class Target:
         # send
         Test_name = "\n  SV2PY bit_loopback_test send"
         result = self.lib.shunt_py_send_bit(socket_id, Bit)
-        if result <= 0:            
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
     def reg_loopback_test(self, socket_id):
@@ -175,7 +175,7 @@ class Target:
         # send
         Test_name = "\n  SV2PY reg_loopback_test send"
         result = self.lib.shunt_py_send_reg(socket_id, Reg)
-        if result <= 0:            
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
     def logic_loopback_test(self, socket_id):
@@ -191,7 +191,7 @@ class Target:
         # send
         Test_name = "\n  SV2PY logic_loopback_test send"
         result = self.lib.shunt_py_send_logic(socket_id, Logic)
-        if result <= 0:            
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
     def real_loopback_test(self, socket_id):
@@ -210,9 +210,9 @@ class Target:
         result = self.lib.shunt_py_send_real(socket_id, Real)
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
-        
+
     def string_loopback_test(self, socket_id):
-    
+
         Test_name = "\n  SV2PY string_loopback_test recv"
         String = "0000000000000000000000000000000000000000000000000000000"
         result, received_string = self.lib.shunt_py_recv_string(socket_id,len(String))
@@ -226,7 +226,7 @@ class Target:
         result = self.lib.shunt_py_send_string(socket_id, received_string)
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
-        
+
     def bitN_loopback_test(self, socket_id):
         BitN = [0] * 1025
         Test_name = "\n  SV2PY bitN_loopback_test recv"
@@ -234,20 +234,20 @@ class Target:
         # recv
         h_trnx = cs_header()
         result,h_trnx = self.lib.shunt_py_recv_header(socket_id)
-        if result <= 0:   
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
         result,BitN = self.lib.shunt_py_recv_bitN(socket_id,h_trnx.n_payloads)
-        if result <= 0:    
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
         print(f"\n{Test_name} BitN={BitN}")
 
         # send
         Test_name = "\n  SV2PY bitN_loopback_test send"
         result = self.lib.shunt_py_send_header(socket_id, h_trnx)
-        if result <= 0:   
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
         result = self.lib.shunt_py_send_bitN(socket_id, h_trnx, BitN)
-        if result <= 0:    
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
     def regN_loopback_test(self, socket_id):
@@ -315,7 +315,7 @@ class Target:
         # send
         Test_name = "\n SV2PY data_header_loopback_test send"
         result = self.lib.shunt_py_send_data_header(socket_id, self.h_data)
-        if result <= 0:            
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
     def data_loopback_test(self, socket_id):
@@ -331,7 +331,7 @@ class Target:
         # send
         Test_name = "\n  SV2PY data_loopback_test send"
         result = self.lib.shunt_py_hs_send_data(socket_id, Data)
-        if result <= 0:            
+        if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
     def header_data_loopback_test(self, socket_id):

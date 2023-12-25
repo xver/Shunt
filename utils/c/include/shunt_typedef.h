@@ -16,7 +16,7 @@
 #ifdef __cplusplus
 #define INLINE inline
 #else
-#define INLINE 
+#define INLINE
 #endif
 
 #include <stdio.h>
@@ -102,11 +102,11 @@ typedef long long shunt_long_t;
 #endif
 
 /*
-  Define: SHUNT_DEFAULT_TCP_PORT 
+  Define: SHUNT_DEFAULT_TCP_PORT
   default port is used for dynamic allocation of the client-server TCP port.
   use "-DSHUNT_DEFAULT_TCP_PORT=<new port>" gcc option to change it
 --- Code
-#define SHUNT_DEFAULT_TCP_PORT 4350 
+#define SHUNT_DEFAULT_TCP_PORT 4350
 ---
 */
 #ifndef SHUNT_DEFAULT_TCP_PORT
@@ -115,7 +115,7 @@ typedef long long shunt_long_t;
 
 /*
   Define: SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT
-  
+
   specifies the MAXIMUM number of attempts to bind SHUNT_DEFAULT_TCP_PORT
   --- Code
   SHUNT_DEFAULT_COLLISION_ATTEMPT_LIMIT 180
@@ -126,7 +126,7 @@ typedef long long shunt_long_t;
 #endif
 
 /*
-  Define: SHUNT_DEFAULT_COLLISION_LOW 
+  Define: SHUNT_DEFAULT_COLLISION_LOW
   specifies in msec the MINIMUM random interval delay boundary for the collision resolution of the occupied TCP/IP port
    --- Code
    #define SHUNT_DEFAULT_COLLISION_LOW 500
@@ -136,7 +136,7 @@ typedef long long shunt_long_t;
 #define SHUNT_DEFAULT_COLLISION_LOW 500
 #endif
 /*
-  Define: SHUNT_DEFAULT_COLLISION_UP  
+  Define: SHUNT_DEFAULT_COLLISION_UP
   specifies in msec the MAXIMUM random interval delay boundary for the collision resolution of the occupied TCP/IP port
 --- Code
 #define SHUNT_DEFAULT_COLLISION_UP 1500
@@ -148,23 +148,23 @@ typedef long long shunt_long_t;
 //Section: Data exchange defines
 
 /*
-  Variable: shunt_dynamic_port 
+  Variable: shunt_dynamic_port
 
   is used for dynamic allocation of the client-server TCP port.
 
   -  host_name   TCP/IP host_name
-  -  host_ip     Host IP 
+  -  host_ip     Host IP
   -  port_number TCP/IP host_name
-  
+
   --- Code
-  //Big-endian view: 
+  //Big-endian view:
   typedef struct shunt_dynamic_port_t {
     shunt_long_t port_number;       // port_number
     char         host_ip[16];       // host IP
     char         host_name[256];    // name of host
   } shunt_dynamic_port;
   ---
-*/ 
+*/
 #define SHUNT_HOST_IP_LEN 16
 #define SHUNT_HOST_NAME_LEN 256
 
@@ -209,17 +209,17 @@ Variable: SHUNT_INSTR_ENUM
 
   SHUNT_A_STRUCTURE - complex data types/user defined data types : arrays/struct,union,enums
   SHUNT_HEADER_ONLY - cs_header_t header only.
-   
+
   --- Code
   typedef enum {SHUNT_INT,SHUNT_REAL,SHUNT_SHORTREAL,SHUNT_STRING,SHUNT_A_STRUCTURE,SHUNT_INTEGER,SHUNT_BYTE,SHUNT_REG,SHUNT_BIT,SHUNT_SHORTINT,SHUNT_LONGINT,SHUNT_HEADER_ONLY} SHUNT_INSTR_ENUM;
   ---
-  
+
 */
 typedef enum {SHUNT_INT,SHUNT_REAL,SHUNT_SHORTREAL,SHUNT_STRING,SHUNT_A_STRUCTURE,SHUNT_INTEGER,SHUNT_BYTE,SHUNT_REG,SHUNT_BIT,SHUNT_SHORTINT,SHUNT_LONGINT,SHUNT_HEADER_ONLY} SHUNT_INSTR_ENUM;
 
 /*
 Define: SHUNT_INSTR_ENUM_NAMES
- 
+
 --- Code
 #define SHUNT_INSTR_HASH_INDEX_DEFINE const char* SHUNT_INSTR_ENUM_NAMES[] = {"SHUNT_INT","SHUNT_REAL","SHUNT_SHORTREAL","SHUNT_STRING","SHUNT_A_STRUCTURE","SHUNT_INTEGER","SHUNT_BYTE","SHUNT_REG","SHUNT_BIT","SHUNT_SHORTINT","SHUNT_LONGINT","SHUNT_HEADER_ONLY"}
 ---
@@ -234,9 +234,9 @@ Define: SHUNT_INSTR_ENUM_NAMES
   - trnx_id        user defined unique transaction number
   - data_type      <SHUNT_INSTR_ENUM>
   - n_payloads     number of data payloads (for Array number of vectors)
- 
+
   --- Code
-  //Big-endian view: 
+  //Big-endian view:
   typedef struct cs_header_t {
     shunt_long_t   trnx_type;
     shunt_long_t   trnx_id;
@@ -283,9 +283,9 @@ typedef struct cs_data_header_t {
    Variable:  cs_tlm_generic_payload_header
 
    *TLM 2.0 Generic Payload structure* (Ref. to TLM 2.0 Generic Payload attributes)
-   
+
    --- Code
-   //Big-endian view: 
+   //Big-endian view:
    typedef struct cs_tlm_generic_payload_header_t {
      shunt_long_t option;
      shunt_long_t address;
@@ -301,7 +301,7 @@ typedef struct cs_data_header_t {
      shunt_long_t tlm_extension_id;
    } cs_tlm_generic_payload_header;
    ---
-   
+
    - *option*           Generic payload option :
 
    --- Code
@@ -347,8 +347,8 @@ typedef struct cs_data_header_t {
    --- Code
    enum  tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED }
    ---
-   
-   - *tlm_extension_id*   tlm_extension id. if "0" extension is not available 
+
+   - *tlm_extension_id*   tlm_extension id. if "0" extension is not available
 
 */
 
@@ -390,10 +390,10 @@ typedef struct cs_tlm_generic_payload_header_t {
 // group: TLM enumeration types (extension of systemc tlm.h )
 //---------------------------------------------------------------------------
 /* Enum: shunt_tlm_command
-   Ref to SystemC tlm_gp.h tlm_command enum for TLM_READ_COMMAND , TLM_WRITE_COMMAND, and TLM_IGNORE_COMMAND 
+   Ref to SystemC tlm_gp.h tlm_command enum for TLM_READ_COMMAND , TLM_WRITE_COMMAND, and TLM_IGNORE_COMMAND
   --- Code
 typedef enum shunt_tlm_command {
-    TLM_READ_COMMAND, // 
+    TLM_READ_COMMAND, //
     TLM_WRITE_COMMAND,
     TLM_IGNORE_COMMAND,
     SHUNT_TLM_END_SIM,  // end of Client simulation, send by Server
@@ -406,7 +406,7 @@ typedef enum shunt_tlm_command {
     TLM_WRITE_COMMAND,
     TLM_IGNORE_COMMAND,
     SHUNT_TLM_END_SIM,
-    SHUNT_TLM_START_SIM 
+    SHUNT_TLM_START_SIM
 } shunt_dpi_tlm_command_e;
 
 /* Enum: tlm_response_status
@@ -418,7 +418,7 @@ typedef enum shunt_tlm_command {
     TLM_GENERIC_ERROR_RESPONSE = -1,
     TLM_ADDRESS_ERROR_RESPONSE = -2,
     TLM_COMMAND_ERROR_RESPONSE = -3,
-    TLM_BURST_ERROR_RESPONSE = -4, 
+    TLM_BURST_ERROR_RESPONSE = -4,
   ---
   */
 enum tlm_response_status {
@@ -432,7 +432,7 @@ enum tlm_response_status {
 };
 
 /* Enum: tlm_gp_option
-   cloned from SystemC tlm_gp.h 
+   cloned from SystemC tlm_gp.h
   --- Code
   enum tlm_gp_option {
     TLM_MIN_PAYLOAD,
@@ -472,9 +472,9 @@ enum tlm_phase_enum
 /* Enum: tlm_sync_enum
    cloned from SystemC tlm_phase.h
   --- Code
- enum tlm_sync_enum { 
-    TLM_ACCEPTED, 
-    TLM_UPDATED, 
+ enum tlm_sync_enum {
+    TLM_ACCEPTED,
+    TLM_UPDATED,
     TLM_COMPLETED };
   ---
   */
@@ -484,9 +484,9 @@ enum tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED };
   Variable:   cs_tlm_axi3_extension_payload_header
 
   *TLM 2.0  ARM AXI3 signals extension structure*  REF to Copyright 2003, 2004, 2010, 2011 ARM. All rights reserved.ARM IHI 0022D (ID102711)
-   
+
   --- Code
-  //Big-endian view: 
+  //Big-endian view:
   typedef struct cs_tlm_axi3_extension_payload_header_t {
     shunt_long_t  AxBURST;
     shunt_long_t  AxCACHE;
@@ -497,7 +497,7 @@ enum tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED };
     shunt_long_t  AxSIZE;
     shunt_long_t  xRESP;
     shunt_long_t  xSTRB;
-  } cs_tlm_axi3_extension_payload_header; 
+  } cs_tlm_axi3_extension_payload_header;
   ---
 
    - *AxBURST* - determines how the address for each transfer within the burst is calculated
@@ -510,9 +510,9 @@ enum tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED };
    0b10         |  WRAP
    0b11         |  Reserved
    ---
- 
+
    *AxCACHE* - Memory type indicates how transactions are required to progress through a system
-  
+
    --- Code
    AxCACHE | Value | Transaction attribute
     ======================================
@@ -525,13 +525,13 @@ enum tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED };
     [3]    |   0   |    No Write-allocate
            |   1   |    Write-allocate
    ---
-   
+
    *AxID*  - is identification tag for the transaction address group.
-   
-   *AxLEN* - gives the exact number of transfers in a burst. 
-   
+
+   *AxLEN* - gives the exact number of transfers in a burst.
+
    *AxLOCK*  - provides additional information about the transaction atomic characteristics
-    
+
    --- Code
    AxLOCK[1:0] | Access type
    =============================
@@ -540,9 +540,9 @@ enum tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED };
    0b10        | Locked access
    0b11        | Reserved
    ---
- 
+
    *AxPROT* - indicates the privilege and transaction security level.
-    
+
    --- Code
     AxPROT | Value |     Function
     =====================================
@@ -553,11 +553,11 @@ enum tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED };
     [2]    |   0   |  Data access
            |   1   |  Instruction access
     ---
-   
+
     *AxSIZE* - indicates the size of each transfer in the burst.
- 
+
     *xRESP*  - indicates the status of the read transfer.
- 
+
     --- Code
     RRESP[1:0] |
     BRESP[1:0] | Response
@@ -567,7 +567,7 @@ enum tlm_sync_enum { TLM_ACCEPTED, TLM_UPDATED, TLM_COMPLETED };
     0b10       | SLVERR
     0b11       | DECERR
     ---
-    
+
     *xSTRB* -  indicates which byte lanes hold valid data.
 */
 
@@ -585,7 +585,7 @@ typedef struct cs_tlm_axi3_extension_payload_header_t {
   shunt_long_t  AxSIZE;
   shunt_long_t  xRESP;
   shunt_long_t  xSTRB;
-} cs_tlm_axi3_extension_payload_header; 
+} cs_tlm_axi3_extension_payload_header;
 #endif
 
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__

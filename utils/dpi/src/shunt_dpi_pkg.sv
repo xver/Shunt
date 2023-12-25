@@ -60,7 +60,7 @@ package shunt_dpi_pkg;
 
     Returns:
     socket id
-    
+
     See Also:
     <shunt_prim_init_initiator>
 
@@ -91,7 +91,7 @@ package shunt_dpi_pkg;
 
     Returns:
     socket id
-    
+
     See Also:
     <shunt_prim_init_target>
 
@@ -234,33 +234,33 @@ package shunt_dpi_pkg;
    /*
     Function: shunt_dpi_tcp_get_port
     Finds TCP/IP port  with the specified socket id
-    
+
     Parameters:
-    
-    socket  -- socket id 
-    
+
+    socket  -- socket id
+
     Returns:
     a corresponding TCP/IP port
-    
+
     Disable function `define: NO_SHUNT_DPI_TCP_GET_PORT
-    
+
     Also see <shunt_cs_update_dynamic_port>
 
 */
  `ifndef NO_SHUNT_DPI_TCP_GET_PORT
    import "DPI-C" function int shunt_dpi_tcp_get_port(int socket);
- `endif   
-   
+ `endif
+
 
  /*
  Function:  shunt_dpi_tcp_parent_init_initiator_dpa
  is DPI equivalent of the <shunt_cs_tcp_parent_init_initiator_dpa>
- 
-Parameters: 
- 
+
+Parameters:
+
  N/A
 
- Returns: 
+ Returns:
 
  socket id -- DPA parent socket id
   Disable function `define: NO_SHUNT_DPI_TCP_GET_PORT
@@ -268,7 +268,7 @@ Parameters:
  `ifndef NO_SHUNT_DPI_TCP_PARENT_INIT_INITIATOR_DPA
    import "DPI-C" function int shunt_dpi_tcp_parent_init_initiator_dpa();
  `endif
-   
+
    //Section: Integer types
 
    /*
@@ -1633,7 +1633,7 @@ Parameters:
     Variable:  cs_tlm_generic_payload_header_t
 
     *TLM 2.0 Generic Payload structure* (Ref. to TLM 2.0 Generic Payload attributes)
-     
+
     - *option*       Generic payload option :
 
     --- Code
@@ -1676,12 +1676,12 @@ Parameters:
     ---
 
     - *tlm_sync*     shunt tlm header nb_trasport atribute:
-   
+
     --- Code
     enum  tlm_sync_enum { SHUNT_TLM_ACCEPTED, SHUNT_TLM_UPDATED, SHUNT_TLM_COMPLETED }
     ---
-    
-    - *tlm_extension_id*  (long) tlm_extension id. if "0" - extension is not available 
+
+    - *tlm_extension_id*  (long) tlm_extension id. if "0" - extension is not available
     */
    typedef struct packed {
       longint       option;
@@ -1712,9 +1712,9 @@ Parameters:
    0b10         |  WRAP
    0b11         |  Reserved
    ---
- 
+
    *AxCACHE* - Memory type indicates how transactions are required to progress through a system
-  
+
    --- Code
    AxCACHE | Value | Transaction attribute
     ======================================
@@ -1727,13 +1727,13 @@ Parameters:
     [3]    |   0   |    No Write-allocate
            |   1   |    Write-allocate
    ---
-   
+
    *AxID*  - is identification tag for the transaction address group.
-   
-   *AxLEN* - gives the exact number of transfers in a burst. 
-   
+
+   *AxLEN* - gives the exact number of transfers in a burst.
+
    *AxLOCK*  - provides additional information about the transaction atomic characteristics
-    
+
    --- Code
    AxLOCK[1:0] | Access type
    =============================
@@ -1742,9 +1742,9 @@ Parameters:
    0b10        | Locked access
    0b11        | Reserved
    ---
- 
+
    *AxPROT* - indicates the privilege and transaction security level.
-    
+
    --- Code
     AxPROT | Value |     Function
     =====================================
@@ -1755,11 +1755,11 @@ Parameters:
     [2]    |   0   |  Data access
            |   1   |  Instruction access
     ---
-   
+
     *AxSIZE* - indicates the size of each transfer in the burst.
- 
+
     *xRESP*  - indicates the status of the read transfer.
- 
+
     --- Code
     RRESP[1:0] |
     BRESP[1:0] | Response
@@ -1769,7 +1769,7 @@ Parameters:
     0b10       | SLVERR
     0b11       | DECERR
     ---
-    
+
     *xSTRB* -  indicates which byte lanes hold valid data.
 */
 
@@ -1783,9 +1783,9 @@ typedef struct packed{
   longint  AxSIZE;
   longint  xRESP;
   longint  xSTRB;
-} cs_tlm_axi3_extension_payload_header_t; 
+} cs_tlm_axi3_extension_payload_header_t;
 
-   
+
  typedef enum {SHUNT_TLM_ACCEPTED,SHUNT_TLM_UPDATED,SHUNT_TLM_COMPLETED} shunt_tlm_sync_e;
 
  typedef enum {SHUNT_TLM_READ_COMMAND,SHUNT_TLM_WRITE_COMMAND,SHUNT_TLM_IGNORE_COMMAND,SHUNT_TLM_END_SIM,SHUNT_TLM_START_SIM} shunt_tlm_command_e;
@@ -1800,8 +1800,7 @@ typedef struct packed{
 
  typedef enum {SHUNT_TLM_UNINITIALIZED_PHASE=0,SHUNT_TLM_BEGIN_REQ=1,SHUNT_TLM_END_REQ,SHUNT_TLM_BEGIN_RESP,
            SHUNT_TLM_END_RESP} shunt_tlm_phase_e;
-   
-   
+
    /*
     Function: shunt_tlm_send_command
     send hunt_tlm_command
@@ -1816,74 +1815,74 @@ typedef struct packed{
 
    /*
     Function: shunt_dpi_tlm_header_id
-    predefined hash functions for obtain the specific hash value.  
-    
+    predefined hash functions for obtain the specific hash value.
+
     Parameters:
     N/A
-    
+
     Returns:
     long - hash value;
-    
+
     See Also:
     <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
-    
+
     */
 `ifndef NO_SHUNT_DPI_TLM_HEADER_ID
    import "DPI-C" function longint shunt_dpi_tlm_header_id();
 `endif
-   
+
    /*
     Function: shunt_dpi_tlm_data_id
-    predefined hash functions for obtain the specific hash value.  
-    
+    predefined hash functions for obtain the specific hash value.
+
     Parameters:
     N/A
-    
+
     Returns:
     long - hash value;
-    
+
     See Also:
     <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
-    
+
     */
 
 `ifndef  NO_SHUNT_DPI_TLM_DATA_LEADER
    import "DPI-C" function longint  shunt_dpi_tlm_data_id();
 `endif
-   
+
    /*
     Function: shunt_dpi_tlm_axi3_ext_id
-    predefined hash functions for obtain the specific hash value.  
-    
+    predefined hash functions for obtain the specific hash value.
+
     Parameters:
     N/A
-    
+
     Returns:
     long - hash value;
-    
+
     See Also:
     <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
-    
+
     */
 `ifndef NO_SHUNT_DPI_TLM_AXI3_EXT_ID
    import "DPI-C" function longint shunt_dpi_tlm_axi3_ext_id();
 `endif
-   
+
    /*
     Function: shunt_dpi_tlm_signal_id
-    predefined hash functions for obtain the specific hash value.  
-    
+    predefined hash functions for obtain the specific hash value.
+
     Parameters:
     N/A
-    
+
     Returns:
     long - hash value;
-    
+
     See Also:
     <shunt_cs_get_cs_header_leader> <shunt_cs_get_tlm_header_leader> <shunt_cs_get_tlm_data_leader> <shunt_cs_get_tlm_axi3_ext_leader> <shunt_cs_get_tlm_axi3_signal_leader>
-    
+
     */
-   
+
 `ifndef  NO_SHUNT_DPI_TLM_SIGNAL_ID
    import "DPI-C" function longint  shunt_dpi_tlm_signal_id();
 `endif
@@ -1891,14 +1890,14 @@ typedef struct packed{
    /*
     Function: shunt_dpi_tlm_send_gp_transport
     send tlm generic payload  packet ( cs_tlm_generic_payload_header_t  + byte data vector + byte_enable vector )
-    
+
     Parameters:
-    
+
     sockid - socket id from init sever/client
     h - cs_tlm_generic_payload_header_t
     data - data payload array
     byte_enable - byte_enable array
-    
+
     See Also:
     <shunt_cs_tlm_send_gp>
     */
@@ -1980,7 +1979,7 @@ typedef struct packed{
 
 */
 `ifndef NO_SHUNT_DPI_TLM_SEND_AXI3_HEADER
-   import "DPI-C" function void shunt_dpi_tlm_send_axi3_header (input int sockid, inout cs_tlm_axi3_extension_payload_header_t h);   
+   import "DPI-C" function void shunt_dpi_tlm_send_axi3_header (input int sockid, inout cs_tlm_axi3_extension_payload_header_t h);
 `endif
 
 /*
@@ -1996,8 +1995,8 @@ typedef struct packed{
 */
 `ifndef NO_SHUNT_DPI_TLM_RECV_GP_DATA
    import "DPI-C" function void shunt_dpi_tlm_recv_gp_data (input int sockid, input cs_tlm_generic_payload_header_t h,inout byte unsigned data[],inout byte unsigned   byte_enable[]);
-`endif 
-   
+`endif
+
    //axulary function
 
    function automatic void shunt_dpi_tlm_gp_header_print (cs_tlm_generic_payload_header_t csgp,string prefix="");
@@ -2042,6 +2041,5 @@ typedef struct packed{
       $write(",h_axi3.xSTRB(%0h)",h_axi3.xSTRB);
       /* verilator lint_on UNUSED */
    endfunction : shunt_dpi_tlm_axi3_header_print
-   
-   
+
 endpackage : shunt_dpi_pkg

@@ -37,7 +37,7 @@ struct Initiator: sc_module
     // TLM-2 generic payload transaction, reused across calls to b_transport
     m_socket = shunt_tlm_init_server(MY_PORT);
     tlm::tlm_generic_payload* trans = new tlm::tlm_generic_payload;
-    
+
     cout<<"\nSERVER: shunt_cs_get_cs_header_leader()="<<hex <<shunt_cs_get_cs_header_leader()
         <<" \nshunt_cs_get_tlm_data_leader()="<<hex <<shunt_cs_get_tlm_data_leader()
         <<" \nshunt_cs_get_tlm_axi3_ext_leader()="<<hex<<shunt_cs_get_tlm_axi3_ext_leader()
@@ -55,7 +55,7 @@ struct Initiator: sc_module
     // Generate a random sequence of reads and writes
     for (int i = 32; i < 96; i += 4)
     {
-     
+
 
       tlm::tlm_command cmd = static_cast<tlm::tlm_command>(rand() % 2);
       if (cmd == tlm::TLM_WRITE_COMMAND) data = 0xFF000000 | i;
@@ -83,12 +83,12 @@ struct Initiator: sc_module
       //
       //socket->b_transport( *trans, delay );  // Blocking transport call
       shunt_send_b_transport(m_socket,*trans,tlm_extension_id, delay );
-      
+
       shunt_cs_tlm_send_axi3_header(m_socket,&gp_ext);
       shunt_cs_tlm_recv_axi3_header(m_socket,&gp_ext);
-      
+
       shunt_tlm_print_axi3_header(gp_ext,"SERVER: ");
-      
+
       shunt_recv_b_transport(m_socket,*trans, tlm_extension_id,delay );
       cout << "SERVER trans recv = { " << (cmd ? 'W' : 'R') << ", " << hex << i
        << " } , data = " << hex << data << " at time " << sc_time_stamp()

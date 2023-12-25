@@ -76,7 +76,7 @@ unsigned int shunt_dpi_tcp_get_port(unsigned int socket) {
 
 unsigned int shunt_dpi_tcp_parent_init_initiator_dpa() {
   unsigned int  Result_;
-  Result_ = shunt_cs_tcp_parent_init_initiator_dpa(); 
+  Result_ = shunt_cs_tcp_parent_init_initiator_dpa();
   return Result_;
 }
 
@@ -699,7 +699,7 @@ void shunt_dpi_tlm_recv_gp_transport (int sockid, cs_tlm_generic_payload_header*
   shunt_long_t* byte_enable_tcp;
   unsigned char* data_        = (unsigned char *) svGetArrayPtr(data);
   unsigned char* byte_enable_ = (unsigned char *) svGetArrayPtr(byte_enable);
-  
+
   while(shunt_prim_get_status_socket(sockid,0) !=1 );
   shunt_cs_tlm_recv_gp_header(sockid,h);
   if(h->length > 0) {
@@ -751,7 +751,7 @@ void shunt_dpi_tlm_send_axi3_header (int sockid, cs_tlm_axi3_extension_payload_h
 
 
 void  shunt_dpi_tlm_recv_gp_data (int sockid, cs_tlm_generic_payload_header* h,svOpenArrayHandle data,svOpenArrayHandle byte_enable){
-  
+
   shunt_long_t* data_tcp;
   shunt_long_t* byte_enable_tcp;
   unsigned char* data_        = (unsigned char *) svGetArrayPtr(data);
@@ -764,18 +764,18 @@ void  shunt_dpi_tlm_recv_gp_data (int sockid, cs_tlm_generic_payload_header* h,s
     int size_data_payload        = shunt_cs_tlm_data_payload_size(h->length);
     printf("(\nDEBUG:  shunt_dpi_tlm_recv_gp_data h->length >0 (%0lld) h->byte_enable_length (%0lld)",h->length,h->byte_enable_length);
 #endif
-    
+
     data_tcp        = (shunt_long_t*)malloc(h->length);
     memset(data_tcp,0,h->length);
     byte_enable_tcp = (shunt_long_t*)malloc(size_byte_enable_payload*sizeof(shunt_long_t));
-    
+
     shunt_cs_tlm_recv_gp_data (sockid,h, data_tcp, byte_enable_tcp);
-    
+
 #ifdef SHUNT_DPI_C_DEBUG
     for (int i=0;i<size_data_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_data() data_tcp[%0d]=(%lld)%llx",i,data_tcp[i],data_tcp[i]);
     for (int i=0;i<size_byte_enable_payload;i++) printf("\nDEBUG: shunt_dpi_tlm_recv_gp_data() byte_enable_tcp[%0d]=(%lld)%llx",i,byte_enable_tcp[i],byte_enable_tcp[i]);
 #endif
-    
+
     memcpy(data_,data_tcp,h->length);
 
     if (h->byte_enable_length>0) memcpy(byte_enable_,byte_enable_tcp,h->byte_enable_length);

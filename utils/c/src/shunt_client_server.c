@@ -19,16 +19,13 @@
 INLINE unsigned int shunt_cs_init_target(const unsigned int portno_in ,const char *hostname) {
   unsigned int socketfd;
   shunt_dynamic_port dynamic_port;
-
-#ifdef SHUNT_CLIENT_SERVER_C_DEBUG 
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   char const *msg = "shunt_cs_init_target()";
-#endif  
-
+#endif
   if(portno_in == 0) {
     dynamic_port.port_number = 0;
     dynamic_port = shunt_cs_tcp_parent_init_target_dpa(hostname);
-    
-#ifdef SHUNT_CLIENT_SERVER_C_DEBUG 
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG
     printf("\nDEBUG: %s dynamic_port.port_number=%lld(hex %llx)",msg,dynamic_port.port_number,dynamic_port.port_number);
     printf("\nDEBUG: %s dynamic_port.host_ip(%s)",msg,dynamic_port.host_ip);
     printf("\nDEBUG: %s dynamic_port.host_name(%s)\n",msg,dynamic_port.host_name);
@@ -36,7 +33,7 @@ INLINE unsigned int shunt_cs_init_target(const unsigned int portno_in ,const cha
     socketfd= shunt_prim_init_target(dynamic_port.port_number,dynamic_port.host_name);
   }
   else  socketfd = shunt_prim_init_target(portno_in,hostname);
-  
+
   return socketfd;
 }
 
@@ -46,18 +43,15 @@ INLINE shunt_dynamic_port  shunt_cs_tcp_parent_init_target_dpa(const char *hostn
 
   int port;
   int success=1;
-  
   char const *msg = "shunt_cs_tcp_parent_init_target_dpa()";
-  
   cs_header h_trnx;
   shunt_dynamic_port dynamic_port;
 
   port = SHUNT_DEFAULT_TCP_PORT;
   socketfd= shunt_prim_init_target(port,hostname);
-  
   //dynamic_port init
   dynamic_port.port_number = -1;
-  
+
   //recv
   if (shunt_cs_recv_header(socketfd,&h_trnx)<= 0) success = 0;
   if (success == 0 )  printf("\nERROR: %s trnx_header fail to recv TCP PORT NUMBER ",msg);
@@ -69,35 +63,34 @@ INLINE shunt_dynamic_port  shunt_cs_tcp_parent_init_target_dpa(const char *hostn
   if (shunt_cs_recv_header(socketfd,&h_trnx)<= 0) success = 0;
   if(shunt_cs_recv_byteV(socketfd,&h_trnx,dynamic_port.host_name)<=0) success = 0;
   if (success == 0 )  printf("\nERROR: %s String data fail to recv HOST_NAME",msg);
-  
-#ifdef SHUNT_CLIENT_SERVER_C_DEBUG 
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   SHUNT_INSTR_HASH_INDEX_DEFINE;
   shunt_cs_print_header (&h_trnx,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY,msg);
   printf("\nDEBUG: %s  dynamic_port.port_number=%lld(hex %llx)",msg,dynamic_port.port_number,dynamic_port.port_number);
   printf("\nDEBUG: %s dynamic_port.host_ip(%s)",msg,dynamic_port.host_ip);
   printf("\nDEBUG: %s dynamic_port.host_name(%s)\n",msg,dynamic_port.host_name);
 #endif
-  shunt_prim_close_socket(socketfd); 
-  
+  shunt_prim_close_socket(socketfd);
+
   return dynamic_port;
 }
 
 INLINE unsigned int  shunt_cs_init_initiator(const unsigned int portno) {
-  
+
   unsigned int parentfd  = -1;
   unsigned int childfd   = -1;
   //
   if (portno != 0) childfd = shunt_prim_init_initiator(portno);
   else {
-    parentfd  = shunt_cs_tcp_parent_init_initiator_dpa(); 
+    parentfd  = shunt_cs_tcp_parent_init_initiator_dpa();
     childfd   = shunt_prim_tcp_child_init_initiator(parentfd);
   }
-  
+
   return  childfd;
 }
 
 INLINE  shunt_dynamic_port shunt_cs_update_dynamic_port(unsigned int parentfd_0) {
-  
+
   struct hostent *host_entry;/*host info */
   shunt_dynamic_port dynamic_port;
   struct sockaddr_in sin;
@@ -106,7 +99,7 @@ INLINE  shunt_dynamic_port shunt_cs_update_dynamic_port(unsigned int parentfd_0)
   char host[SHUNT_HOST_NAME_LEN];
   char *host_ptr;
   char *hostIP_ptr;
-  #ifdef SHUNT_CLIENT_SERVER_C_DEBUG 
+  #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   char const *msg = "shunt_cs_update_dynamic_port() ";
   #endif
   len = sizeof(sin);
@@ -123,32 +116,25 @@ INLINE  shunt_dynamic_port shunt_cs_update_dynamic_port(unsigned int parentfd_0)
     dynamic_port.port_number =  port_0;
     strcpy(dynamic_port.host_name,host_ptr);
     strcpy(dynamic_port.host_ip,hostIP_ptr);
-    
-    #ifdef SHUNT_CLIENT_SERVER_C_DEBUG 
-    printf("\nDEBUG: %s parentfd_0(%x) host(%s) hostIP_ptr(%s) port_0(%d) ",msg,parentfd_0,host,hostIP_ptr,port_0); 
-    printf("\nDEBUG: %s dynamic_port.host_name (%s),dynamic_port.host_ip(%s) dynamic_port.port_number(%lld)\n ",msg,dynamic_port.host_name,dynamic_port.host_ip,dynamic_port.port_number);  
+    #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
+    printf("\nDEBUG: %s parentfd_0(%x) host(%s) hostIP_ptr(%s) port_0(%d) ",msg,parentfd_0,host,hostIP_ptr,port_0);
+    printf("\nDEBUG: %s dynamic_port.host_name (%s),dynamic_port.host_ip(%s) dynamic_port.port_number(%lld)\n ",msg,dynamic_port.host_name,dynamic_port.host_ip,dynamic_port.port_number);
     #endif
-    
   }
-  return dynamic_port; 
+  return dynamic_port;
 }
 
 INLINE   unsigned int shunt_cs_tcp_parent_init_initiator_dpa() {
-  
+
   unsigned int parentfd = -1;
   unsigned int  childfd;
   unsigned int  port;
-  int  success = 1; 
+  int  success = 1;
   int portno_in=0;
-
   unsigned int parentfd_0 = -1;
-  // unsigned int childfd_0  = -1;
   shunt_dynamic_port dynamic_port;
-  //
   cs_header      h_trnx_exp;
-  
   char const *msg = "shunt_cs_init_initiator() ";
-  
   port = SHUNT_DEFAULT_TCP_PORT;
   //
   parentfd = shunt_prim_tcp_parent_init_initiator(port);
@@ -156,34 +142,31 @@ INLINE   unsigned int shunt_cs_tcp_parent_init_initiator_dpa() {
   //
   parentfd_0 = shunt_prim_tcp_parent_init_initiator(portno_in);
   dynamic_port = shunt_cs_update_dynamic_port(parentfd_0);
-  
-  
-#ifdef SHUNT_CLIENT_SERVER_C_DEBUG 
-  printf("\nDEBUG: %s portno_in(%d) parentfd_0(%x)",msg,portno_in,parentfd_0); 
-  printf("\nDEBUG: %s dynamic_port.host_name (%s),dynamic_port.host_ip(%s) dynamic_port.port_number(%llx) ",msg,dynamic_port.host_name,dynamic_port.host_ip,dynamic_port.port_number);  
+#ifdef SHUNT_CLIENT_SERVER_C_DEBUG
+  printf("\nDEBUG: %s portno_in(%d) parentfd_0(%x)",msg,portno_in,parentfd_0);
+  printf("\nDEBUG: %s dynamic_port.host_name (%s),dynamic_port.host_ip(%s) dynamic_port.port_number(%llx) ",msg,dynamic_port.host_name,dynamic_port.host_ip,dynamic_port.port_number);
   printf("\nDEBUG: %s childfd=%d",msg, childfd);
 #endif
-  
   SHUNT_INSTR_HASH_INDEX_DEFINE;
-  
+
   h_trnx_exp.trnx_type =  shunt_prim_hash("shunt_dynamic_port_leader");
   h_trnx_exp.trnx_id   =  dynamic_port.port_number;
   h_trnx_exp.data_type =  shunt_cs_data_type_hash(SHUNT_BYTE,SHUNT_INSTR_ENUM_NAMES,SHUNT_HEADER_ONLY);
-  
+
   //SEND HOST IP
-  h_trnx_exp.n_payloads =SHUNT_HOST_IP_LEN; 
+  h_trnx_exp.n_payloads =SHUNT_HOST_IP_LEN;
   if (shunt_cs_send_header(childfd,&h_trnx_exp)<= 0) success = 0;
   if (shunt_cs_send_byteV  (childfd,&h_trnx_exp,dynamic_port.host_ip)<= 0) success = 0;
   if (success == 0 )  printf("\nERROR: %s fail send HOST IP",msg);
-  
+
   //SEND HOST NAMe
   h_trnx_exp.n_payloads =SHUNT_HOST_NAME_LEN;
   if (shunt_cs_send_header(childfd,&h_trnx_exp)<= 0) success = 0;
   if (shunt_cs_send_byteV  (childfd,&h_trnx_exp,dynamic_port.host_name)<= 0) success = 0;
-  if (success == 0 )  printf("\nERROR: %s fail send HOST NAME",msg); 
-  
-  shunt_prim_close_socket(parentfd); 
-  
+  if (success == 0 )  printf("\nERROR: %s fail send HOST NAME",msg);
+
+  shunt_prim_close_socket(parentfd);
+
   return parentfd_0;
   }
 
@@ -244,7 +227,6 @@ INLINE int shunt_cs_send_header(int sockid,cs_header* h) {
   int Result_=0;
   shunt_long_t send_arr[(sizeof(*h) + sizeof(shunt_long_t))/sizeof(shunt_long_t)];
   int numbytes=0;
-  
   send_arr[0] = shunt_prim_hash("shunt_cs_header_leader");
   memcpy(&send_arr[1], h,sizeof(*h));
   numbytes = send(sockid,send_arr,sizeof(*h) + sizeof(shunt_long_t), 0);
@@ -565,13 +547,11 @@ INLINE void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   printf("\nDEBUG: shunt_cs_tlm_send_gp() tlm_header leader offset=%0d",offset);
 #endif
-  
   ++offset;
   memcpy(&send_arr_[offset], h,sizeof(*h));
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   printf("\nDEBUG: shunt_cs_tlm_send_gp() header offset=%0d",offset);
 #endif
-  
   if(data_size_ != 0) {
     offset = offset + sizeof(*h)/sizeof(shunt_long_t);
     send_arr_[offset] = shunt_cs_get_tlm_data_leader();
@@ -591,14 +571,13 @@ INLINE void shunt_cs_tlm_send_gp(int sockid, const cs_tlm_generic_payload_header
     printf("\nDEBUG: shunt_cs_tlm_send_gp() tlm_byte_enable array offset=%0d",offset);
 #endif
   }
-  
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
   unsigned int max_loop =  offset;
   if(offset>0) max_loop++;
   for(unsigned int loop = 0; loop < max_loop ; loop++) {
     printf("\nDEBUG: shunt_cs_tlm_send_gp() send_arr_[%0d]=%lx",loop,(long)send_arr_[loop]);
   }
-  printf("\n"); 
+  printf("\n");
 #endif
   int numbytes_ = send(sockid,send_arr_,size_, 0);
   if(numbytes_ <= 0)  shunt_prim_error("\nERROR: in shunt_cs_tlm_send_gp()  : numbytes < 0 ");
@@ -704,7 +683,7 @@ INLINE void shunt_cs_tlm_send_axi3_header(int sockid, cs_tlm_axi3_extension_payl
   if(offset>0) max_loop++;
   for(unsigned int loop = 0; loop < max_loop ; loop++) {
     printf("\nDEBUG: shunt_cs_tlm_send_axi3_header send_arr_[%0d]=%lx",loop,(long)send_arr_[loop]);
-  } 
+  }
   printf("\n");
 #endif
   int numbytes_ = send(sockid,send_arr_,size_, 0);
@@ -784,7 +763,7 @@ INLINE void  shunt_cs_tlm_recv_gp_data(int sockid, const cs_tlm_generic_payload_
       for(unsigned int i=0;i<size_/sizeof(shunt_long_t);i++) printf("\nERROR: shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx",i,(long)recv_arr_[i],(long)recv_arr_[i]);
     }
 #ifdef SHUNT_CLIENT_SERVER_C_DEBUG
-    for(unsigned int i=0;i<size_/sizeof(shunt_long_t);i++) printf("\nDEBUG: shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx",i,(long)recv_arr_[i],(long)recv_arr_[i]); 
+    for(unsigned int i=0;i<size_/sizeof(shunt_long_t);i++) printf("\nDEBUG: shunt_cs_tlm_recv_gp_data() recv_arr_[%0d]=(%ld)%lx",i,(long)recv_arr_[i],(long)recv_arr_[i]);
     printf("\n");
     for(int i=0;i<data_size_;i++) printf("\nDEBUG: shunt_cs_tlm_recv_gp_data() data[%0d]=(%ld)%lx",i,(long)data[i],(long)data[i]);
     printf("\n");

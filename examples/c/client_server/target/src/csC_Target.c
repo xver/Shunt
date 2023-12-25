@@ -20,16 +20,14 @@ int main(void) {
   char *hostname;
   int port;
   int success=1;
-  
+
   //SVCV_INSTR_HASH_INDEX_DEFINE;
 
   port = 0;//MY_PORT;
   hostname =   MY_HOST;
   //
   socket= shunt_cs_init_target(port,hostname);
- 
-  
-  
+
   if (socket<0) {
     printf("\ncsC_Target::FATAL ERROR");
     success=0;
