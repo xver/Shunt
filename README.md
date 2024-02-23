@@ -80,7 +80,9 @@ SystemC to SV  b_transport over TCP/IP :
  
 # Release History: [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/xver)
 -----------------------
-v2.3.0 - (Current Version) Regression mode support: Simultaneous allocation of TCP/IP ports.
+v3.0.0 (Current Version) System Verilog - Python integration
+
+v2.3.0 - Regression mode support: Simultaneous allocation of TCP/IP ports.
 
 v2.2.1 - cumulative updates: c++ namespaces no extern "C" & minor cosmetic updates
 
