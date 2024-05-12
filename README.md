@@ -12,9 +12,11 @@ The **Shunt** is an Open Source Client/Server TCP/IP socket-based communication 
 The **Shunt** is available under a "MIT" License. It can be used without restriction in an open-source or commercial application.
 
 ### Articles/Conference papers
-*  Shunt Introduction (TCP/IP Socket Based Communication for SystemVerilog Simulation SNUG, Boston 2018 ): 
+*  Shunt Introduction (Victor Besyakov "TCP/IP Socket Based Communication for SystemVerilog Simulation" SNUG, Boston 2018 ): 
 https://www.researchgate.net/publication/325206338_TCPIP_Socket_Based_Communication_for_SystemVerilog_Simulation
-*  Shunt Application (Enhanced Dynamic Hybrid Simulation Framework for Hardware-Software Verification DVCon U.S. 2023):
+*  Shunt Application (Rob Grant, Victor Besyakov, Adrian Amanci, Jingting Liu "A HYBRID CO-SIMULATION FRAMEWORK FOR SUBSYSTEM FIRMWARE DEVELOPMENT" SNUG, US 2024  )
+https://www.researchgate.net/publication/379329186_A_HYBRID_CO-SIMULATION_FRAMEWORK_FOR_SUBSYSTEM_FIRMWARE_DEVELOPMENT
+*  Shunt Application (Victor Besyakov "Enhanced Dynamic Hybrid Simulation Framework for Hardware-Software Verification" DVCon, US 2023):
 https://www.researchgate.net/publication/359009820_Enhanced_Dynamic_Hybrid_Simulation_Framework_for_Hardware-Software_Verification
 
 ### Shunt documentation
