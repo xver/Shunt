@@ -1,9 +1,12 @@
 #============================================================================
-#   File        : shunt.py
-#   Version     : 0.0.1
-#   Copyright (c) 2016-2023 IC Verimeter. All rights reserved.
+#  Title: shunt.py
+#
+#   Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
+#
 #   Licensed under the MIT License.
+#
 #   See LICENSE file in the project root for full license information.
+#
 #  Description :  TCP/IP Python  SHUNT module
 #============================================================================
 
@@ -221,11 +224,29 @@ class SVpiVecVal(ctypes.Structure):
 Class: Shunt
 Python to System Verilog bridge
 
-TODO:   shunt_py_tlm_send_command shunt_py_tlm_send_gp_transport shunt_py_tlm_recv_gp_transport shunt_py_tlm_recv_gp_header shunt_py_tlm_send_gp_header shunt_py_tlm_recv_axi3_header shunt_py_tlm_send_axi3_header shunt_py_tlm_recv_gp_data
+TODO:   
+    - shunt_py_tlm_send_command 
+    - shunt_py_tlm_send_gp_transport 
+    - shunt_py_tlm_recv_gp_transport 
+    - shunt_py_tlm_recv_gp_header 
+    - shunt_py_tlm_send_gp_header 
+    - shunt_py_tlm_recv_axi3_header 
+    - shunt_py_tlm_send_axi3_header 
+    - shunt_py_tlm_recv_gp_data
 
-TODO:  shunt_py_send_bitN shunt_py_recv_bitN  shunt_py_send_longV shunt_py_recv_longV shunt_py_send_data_header  shunt_py_recv_data_header
+TODO:   
+    - shunt_py_send_bitN 
+    - shunt_py_recv_bitN 
+    - shunt_py_send_longV 
+    - shunt_py_recv_longV 
+    - shunt_py_send_data_header
+    - shunt_py_recv_data_header
 
-Not Implemented Features: shunt_py_send_realtime shunt_py_recv_realtime shunt_py_send_shortreal shunt_py_recv_shortreal
+Not Implemented Features: 
+    - shunt_py_send_realtime 
+    - shunt_py_recv_realtime 
+    - shunt_py_send_shortreal 
+    - shunt_py_recv_shortreal
 
 """
 class Shunt:
@@ -966,8 +987,8 @@ class Shunt:
         h_ = cs_header()
         Result_ = 0
 
-        h_.trnx_type = random.randint(0,1000000)
-        h_.trnx_id = random.randint(0,1000000)
+        h_.trnx_type = random.randint(0,00)
+        h_.trnx_id = random.randint(0,00)
         h_.data_type = self.shunt_py_hash("SHUNT_BYTE")
         h_.n_payloads = ctypes.c_longlong(len(String))
 

@@ -1,11 +1,14 @@
 /*
  =========================================================
- File        : shunt_verilator_dpi.h
- Version     : 1.0.1
- Copyright (c) 2016-2023 IC Verimeter. All rights reserved.
- Licensed under the MIT License.
- See LICENSE file in the project root for full license information.
- Description : shunt verilator integration
+Title: shunt_verilator_dpi.h
+1.0.1
+ Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
+
+               Licensed under the MIT License.
+
+               See LICENSE file in the project root for full license information.
+
+Description : shunt verilator integration
 
  Not supported DPI functions defines:
  Version 1.0.1 : Verilator 3.916 2017-11-25 rev verilator_3_916

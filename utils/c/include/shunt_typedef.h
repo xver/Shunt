@@ -1,11 +1,14 @@
 /*
  ============================================================================
- File        : shunt_typedef.h
- Version     : 1.0.0
- Copyright (c) 2016-2023 IC Verimeter. All rights reserved.
+Title: shunt_typedef.h
+
+ Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
+
                Licensed under the MIT License.
+
                See LICENSE file in the project root for full license information.
- Description : common includes typedef, #defines Shunt settings
+
+Description : common includes typedef, #defines Shunt settings
   ============================================================================
  */
 #ifndef SHUNT_TYPEDEF_H

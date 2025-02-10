@@ -1,11 +1,14 @@
 /*
    ============================================================================
-   File        : shunt_client_server.h
-   Version     : 1.0.0
-   Copyright (c) 2016-2023 IC Verimeter. All rights reserved.
-   Licensed under the MIT License.
-   See LICENSE file in the project root for full license information.
-   Description : Target-Initiator (Client-Server aka cs) handshake utils
+  Title: shunt_client_server.h
+  
+   Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
+
+               Licensed under the MIT License.
+
+               See LICENSE file in the project root for full license information.
+
+Description : Target-Initiator (Client-Server aka cs) handshake utils
                  System Verilog target initiator handshake (TCP/IP SystemVerilog SHUNT)
 */
 

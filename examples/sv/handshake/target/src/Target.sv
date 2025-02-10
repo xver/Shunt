@@ -1,12 +1,15 @@
 /*
 ============================================================================
- File        : Target.sv
+Title: Target.sv
  Author      : Victor Besyakov
- Version     : 0.0.0
- Copyright (c) 2016 IC Verimeter. All rights reserved.
+0.0.0
+ Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
+
                Licensed under the MIT License.
+
                See LICENSE file in the project root for full license information.
- Description :  hs function svcs dpi bridge test
+
+Description :  hs function svcs dpi bridge test
 
                System Verilog target server handshake (SVCS) library
  ============================================================================

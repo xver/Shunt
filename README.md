@@ -118,10 +118,10 @@ v2.2.0 - The ARM AXI (Advanced eXtensible Interface) bus support & cumulative bu
 1.0.1  - shunt-verilator integration 
                           Verilator 3.916 2017-11-25 rev verilator_3_916
         
-1.0.0 - initial release
+ - initial release
 
 -------------------------
 !["Copyright (c) 2023 IC Verimeter"](https://github.com/xver/Shunt/blob/master/doc/IcVerimeter_logo.png)
-Copyright (c) 2016-2023 IC Verimeter
+Copyright (c) 2016-2025 IC Verimeter
  
  [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/xver)

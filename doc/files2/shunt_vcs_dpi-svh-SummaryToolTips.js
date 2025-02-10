@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File2:shunt_vcs_dpi.svh",{210:"<div class=\"NDToolTip TSection LSystemVerilog\"><div class=\"TTSummary\">Copyright (c) 2016-2025 IC Verimeter. All rights reserved.</div></div>"});

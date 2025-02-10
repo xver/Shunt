@@ -1,14 +1,17 @@
 /*
 ============================================================================
- File        : Target.sv
- Version     : 1.0.1
- Copyright (c) 2016-2023 IC Verimeter. All rights reserved.
+Title: Target.sv
+1.0.1
+ Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
+
                Licensed under the MIT License.
+
                See LICENSE file in the project root for full license information.
- Description : TCP/IP SystemVerilog SHUNT
+
+Description : TCP/IP SystemVerilog SHUNT
                All Types SystemVerilog examle  -Target(client)
  History:
- 1.0.0 - initial release
+  - initial release
  1.0.1 - shunt-verilator integration
          Version 1.0.1 : Verilator 3.916 2017-11-25 rev verilator_3_916
  ============================================================================

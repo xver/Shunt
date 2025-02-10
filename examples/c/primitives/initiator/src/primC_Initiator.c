@@ -1,12 +1,15 @@
 
 /*
 ============================================================================
-   File        : primC_Initiator.c
-   Version     : 1.0.0
-   Copyright (c) 2016-2023 IC Verimeter. All rights reserved.
-   Licensed under the MIT License.
-   See LICENSE file in the project root for full license information.
-   Description :  TCP/IP SystemVerilog SHUNT
+  Title: primC_Initiator.c
+  
+   Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
+
+               Licensed under the MIT License.
+
+               See LICENSE file in the project root for full license information.
+
+Description :  TCP/IP SystemVerilog SHUNT
                   An example of primitive functions -Initiator(server)
 */
 #include "shunt_primitives.h"

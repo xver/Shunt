@@ -1,11 +1,14 @@
 /*
  ============================================================================
- File        : shunt_primitives.c
- Version     : 1.0.0
- Copyright (c) 2016-2023 IC Verimeter. All rights reserved.
+Title: shunt_primitives.c
+
+ Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
+
                Licensed under the MIT License.
+
                See LICENSE file in the project root for full license information.
- Description : target-initiator Primitives is a minimum set of the data exchange over TCP/IP base methods
+
+Description : target-initiator Primitives is a minimum set of the data exchange over TCP/IP base methods
 
                System Verilog target initiator handshake (TCP/IP SystemVerilog SHUNT)
  ============================================================================
@@ -43,7 +46,7 @@ INLINE int  shunt_prim_rand_delay(int up,int low) {
   int delay = rand() %(up + low);
   struct timespec sleep_time;
   sleep_time.tv_sec = delay / 1000;
-  sleep_time.tv_nsec =(delay % 1000) * 1000000;
+  sleep_time.tv_nsec =(delay % 1000) * 00;
   nanosleep(&sleep_time,NULL);
     // code to be executed after delay
     //none

@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File2:shunt_vcs_dpi.svh","shunt_vcs_dpi.svh");NDSummary.OnSummaryLoaded("File2:shunt_vcs_dpi.svh",[["SystemVerilog","SystemVerilog"]],[["Sections","Section"]],[[210,0,0,"shunt_vcs_dpi.h","shunt_vcs_dpi.h"]]);

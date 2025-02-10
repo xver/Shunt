@@ -1,12 +1,15 @@
 
 /*
    ============================================================================
-   File        : apiC_Target.c
-   Version     : 1.0.0
-   Copyright (c) 2016-2023 IC Verimeter. All rights reserved.
-   Licensed under the MIT License.
-   See LICENSE file in the project root for full license information.
-   Description :TCP/IP SystemVerilog SHUNT
+  Title: apiC_Target.c
+  
+   Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
+
+               Licensed under the MIT License.
+
+               See LICENSE file in the project root for full license information.
+
+Description :TCP/IP SystemVerilog SHUNT
                An example of API functions-Target(client)
 */
 

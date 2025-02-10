@@ -1,27 +1,37 @@
-Generated on 12/19/2023 11:52:52
+Generated on 02/09/2025 18:57:46
 
 Crash Message:
 
-   Could not step query.  Unexpected SQLite result: Corrupt
+   Could not step query.  Unexpected SQLite result: Corrupt (Parser Thread 1)
    (CodeClear.NaturalDocs.Engine.SQLite.Exceptions.UnexpectedResult)
+
+Task:
+
+   Parsing file /media/sf_workspace/Shunt/utils/py/shunt_py/shunt.py
 
 Stack Trace:
 
-  at CodeClear.NaturalDocs.Engine.SQLite.Query.Step () [0x0002c] in <6c4aae649fee44548beb007d054c6a0e>:0 
-  at CodeClear.NaturalDocs.Engine.SQLite.Connection.Execute (System.String statement, System.Object[] values) [0x0000f] in <6c4aae649fee44548beb007d054c6a0e>:0 
-  at CodeClear.NaturalDocs.Engine.CodeDB.Manager.CreateDatabase () [0x000f6] in <6c4aae649fee44548beb007d054c6a0e>:0 
-  at CodeClear.NaturalDocs.Engine.CodeDB.Manager.Start (CodeClear.NaturalDocs.Engine.Errors.ErrorList errors) [0x000d7] in <6c4aae649fee44548beb007d054c6a0e>:0 
-  at CodeClear.NaturalDocs.Engine.Instance.Start (CodeClear.NaturalDocs.Engine.Errors.ErrorList errors, CodeClear.NaturalDocs.Engine.Config.ProjectConfig commandLineConfig) [0x000f8] in <6c4aae649fee44548beb007d054c6a0e>:0 
-  at CodeClear.NaturalDocs.CLI.Application.BuildDocumentation (CodeClear.NaturalDocs.Engine.Errors.ErrorList errorList) [0x0002d] in <95ee6211a68e43a5bffc51f192461eb2>:0 
-  at CodeClear.NaturalDocs.CLI.Application.Main (System.String[] commandLine) [0x00141] in <95ee6211a68e43a5bffc51f192461eb2>:0 
+   ----- Parser Thread 1 -----
+  at CodeClear.NaturalDocs.Engine.SQLite.Query.Step () [0x0002c] in <2e0f04c6748f44ccba959c49d1d05def>:0 
+  at CodeClear.NaturalDocs.Engine.CodeDB.Accessor.GetTopics (System.String whereClause, System.String orderByClause, System.Object[] clauseParameters, CodeClear.NaturalDocs.Engine.CancelDelegate cancelled, CodeClear.NaturalDocs.Engine.CodeDB.Accessor+GetTopicFlags getTopicFlags) [0x0038c] in <2e0f04c6748f44ccba959c49d1d05def>:0 
+  at CodeClear.NaturalDocs.Engine.CodeDB.Accessor.GetTopicsInFile (System.Int32 fileID, CodeClear.NaturalDocs.Engine.CancelDelegate cancelled, CodeClear.NaturalDocs.Engine.CodeDB.Accessor+GetTopicFlags getTopicFlags) [0x00017] in <2e0f04c6748f44ccba959c49d1d05def>:0 
+  at CodeClear.NaturalDocs.Engine.CodeDB.Accessor.UpdateTopicsInFile (System.Int32 fileID, System.Collections.Generic.IList`1[T] newTopics, CodeClear.NaturalDocs.Engine.CancelDelegate cancelled) [0x00082] in <2e0f04c6748f44ccba959c49d1d05def>:0 
+  at CodeClear.NaturalDocs.Engine.Files.ChangeProcessor.ProcessNewOrChangedSourceFile (CodeClear.NaturalDocs.Engine.Files.File file, CodeClear.NaturalDocs.Engine.CodeDB.Accessor codeDBAccessor, CodeClear.NaturalDocs.Engine.CancelDelegate cancelDelegate) [0x00186] in <2e0f04c6748f44ccba959c49d1d05def>:0 
+  at CodeClear.NaturalDocs.Engine.Files.ChangeProcessor.ProcessNewOrChangedFile (CodeClear.NaturalDocs.Engine.Files.File file, CodeClear.NaturalDocs.Engine.CodeDB.Accessor codeDBAccessor, CodeClear.NaturalDocs.Engine.CancelDelegate cancelDelegate) [0x00009] in <2e0f04c6748f44ccba959c49d1d05def>:0 
+  at CodeClear.NaturalDocs.Engine.Files.ChangeProcessor.WorkOnProcessingChanges (CodeClear.NaturalDocs.Engine.CancelDelegate cancelDelegate) [0x0004f] in <2e0f04c6748f44ccba959c49d1d05def>:0 
+  at CodeClear.NaturalDocs.Engine.Thread.InternalStart () [0x0000f] in <2e0f04c6748f44ccba959c49d1d05def>:0 
+   ----- Parent Thread -----
+  at CodeClear.NaturalDocs.CLI.Application.Multithread (System.String threadName, CodeClear.NaturalDocs.Engine.CancellableTask task) [0x000b6] in <67d52bc3e2d24de0b9dcf433b5652d98>:0 
+  at CodeClear.NaturalDocs.CLI.Application.BuildDocumentation (CodeClear.NaturalDocs.Engine.Errors.ErrorList errorList) [0x00153] in <67d52bc3e2d24de0b9dcf433b5652d98>:0 
+  at CodeClear.NaturalDocs.CLI.Application.Main (System.String[] commandLine) [0x00141] in <67d52bc3e2d24de0b9dcf433b5652d98>:0 
 
 Command Line:
 
-   /home/v/tools/ND/NaturalDocs.exe .
+   /home/v/tools/Natural_Docs/NaturalDocs.exe .
 
 Versions:
 
-   Natural Docs 2.3
-   Unix 6.2.0.39
+   Natural Docs 2.3.1
+   Unix 6.8.0.52
    Mono 6.8.0.105
-   SQLite 3.41.2
+   SQLite 3.43.2
