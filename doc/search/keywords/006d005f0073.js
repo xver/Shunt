@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("m_s",["Variable"],[["m_socket",,[["Initiator",,,,0,"File6:sc/LT_simple_cs/initiator/src/initiator.h:Initiator.m_socket","CClass:Initiator:m_socket"]]]]);

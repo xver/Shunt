@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("CClass:Top","Top");NDSummary.OnSummaryLoaded("CClass:Top",[["C/C++","C"]],[["Classes","Class"],["Functions","Function"],["Groups","Group"],["Variables","Variable"]],[[937,0,0,"Top"],[938,0,2,"Variables","Variables"],[939,0,3,"initiator","initiator"],[940,0,3,"memory","memory"],[941,0,2,"Functions","Functions"],[942,0,1,"Top","Top"]]);

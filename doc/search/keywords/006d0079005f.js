@@ -1,1 +1,1 @@
-﻿NDSearch.OnPrefixDataLoaded("my_",["Constant"],[["MY_HOST",,[[,,,,0,"File6:sv/sv2sv/includes/cs_common.svh:MY_HOST"]]],["MY_PORT",,[[,,,,0,"File6:sv/sv2sv/includes/cs_common.svh:MY_PORT"]]]]);
+﻿NDSearch.OnPrefixDataLoaded("my_",["Constant"],[["MY_HOST",,[[,,"C/C++",,0,"File6:sc/LT_simple_cs/initiator/src/shunt_define.h:MY_HOST"],[,,"SystemVerilog",,0,"File6:sv/sv2sv/includes/cs_common.svh:MY_HOST"]]],["MY_PORT",,[[,,"C/C++",,0,"File6:sc/LT_simple_cs/initiator/src/shunt_define.h:MY_PORT"],[,,"SystemVerilog",,0,"File6:sv/sv2sv/includes/cs_common.svh:MY_PORT"]]]]);

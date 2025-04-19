@@ -1,3 +1,14 @@
+/**
+ * File: initiator.h
+ * 
+ * Module: Initiator
+ * 
+ * Description: A SystemC initiator component for TLM-2 socket communication.
+ *              This module acts as a client in a client-server model, generating 
+ *              TLM transactions and sending them through the socket.
+ * 
+ * Project: LT_simple_cs - Loosely Timed simple client-server example
+ */
 #ifndef INITIATOR_H
 #define INITIATOR_H
 
@@ -15,19 +26,50 @@ using namespace shunt_tlm;
 #include "tlm_utils/simple_initiator_socket.h"
 
 
-// Initiator module generating generic payload transactions
-
+/**
+ * Class: Initiator
+ * 
+ * Purpose: Initiator module generating generic payload transactions.
+ *          Acts as a TLM-2 transaction initiator that communicates 
+ *          with a target/memory component over a socket connection.
+ */
 struct Initiator: sc_module
 {
-  // TLM-2 socket, defaults to 32-bits wide, base protocol
+  /**
+   * Variable: socket
+   * 
+   * TLM-2 socket, defaults to 32-bits wide, base protocol.
+   * Used to send transactions to the target/memory component.
+   */
   tlm_utils::simple_initiator_socket<Initiator> socket;
+  
+  /**
+   * Variable: m_socket
+   * 
+   * Socket file descriptor for network communication.
+   * Initialized during the thread process.
+   */
   int m_socket=0;
+  
+  /**
+   * Function: Initiator
+   * 
+   * Creates an initiator module with a named socket and
+   * registers the thread_process function as a SystemC thread.
+   */
   SC_CTOR(Initiator)
   : socket("socket")  // Construct and name socket
   {
     SC_THREAD(thread_process);
   }
 
+  /**
+   * Function: thread_process
+   * 
+   * Main execution thread of the initiator module.
+   * Establishes connection with the server, creates transactions,
+   * and handles the communication flow until simulation ends.
+   */
   void thread_process()
   {
     // TLM-2 generic payload transaction, reused across calls to b_transport
@@ -78,7 +120,12 @@ struct Initiator: sc_module
     shunt_prim_close_socket(m_socket);
   }
 
-  // Internal data buffer used by initiator with generic payload
+  /**
+   * Variable: data
+   * 
+   * Internal data buffer used by initiator with generic payload.
+   * Stores the data that is sent or received during transactions.
+   */
   int data;
 };
 

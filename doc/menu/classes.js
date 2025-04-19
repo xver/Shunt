@@ -1,1 +1,1 @@
-﻿NDMenu.OnSectionLoaded("classes.js",[[1,"cs_data_header"],[1,"cs_header"],[1,"Shunt"],[1,"SVpiVecVal"],[1,"Target"]]);
+﻿NDMenu.OnSectionLoaded("classes.js",[[2,"C/C++","CClass:",[[1,"Initiator"],[1,"Memory"],[1,"Top"]]],[2,"Python","PythonClass:",[[1,"cs_data_header"],[1,"cs_header"],[1,"Shunt"],[1,"SVpiVecVal"],[1,"Target"]]]]);
