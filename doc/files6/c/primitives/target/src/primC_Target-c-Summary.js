@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File6:c/primitives/target/src/primC_Target.c","primC_Target.c");NDSummary.OnSummaryLoaded("File6:c/primitives/target/src/primC_Target.c",[["C/C++","C"]],[["Sections","Section"]],[[455,0,0,"prim_CTarget.c","prim_CTarget.c"]]);

@@ -127,6 +127,9 @@ Source Folder 6: ../examples
 # Source Filtering
 # ------------------------------------------------------------------------
 
+Ignore Source Folder: ../examples/c
+
+
 # If there are any subfolders in the source code that you would like Natural
 # Docs to ignore they can be added here.  If you use any of these options on
 # the command line this section is ignored.
