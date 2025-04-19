@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("__i",["Function"],[["__init__",,[["Target",,,,0,"File6:py/sv2py/target/src/Target.py:Target.__init__","PythonClass:Target:__init__"]]]]);

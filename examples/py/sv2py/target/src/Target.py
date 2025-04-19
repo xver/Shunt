@@ -1,7 +1,7 @@
 """
 ============================================================================
 Title: Target.py
-0.1
+
  Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
 
                Licensed under the MIT License.
@@ -24,8 +24,15 @@ sys.path.insert(0,shuntpyhome)
 
 from shunt import *
 
+# Class: Target
+#
+# TCP/IP SystemVerilog SHUNT Target (client) implementation.
+# Handles communication with Initiator and implements various data type loopback tests.
 class Target:
 
+    # Function: __init__
+    #
+    # Initialize Target class with default values.
     def __init__(self):
         self.lib= Shunt()
         self.String = ""
@@ -33,13 +40,26 @@ class Target:
         self.h_trnx = None  # Assuming cs_header_t is defined somewhere
         self.h_data = None  # Assuming cs_data_header_t is defined somewhere
 
+    # Function: init_target
+    #
+    # Initialize the TCP/IP socket for the Target (client).
+    #
+    # Parameter: portno   - Port number for the TCP/IP socket
+    # Parameter: hostname - Host name or IP address to connect to
+    #        
+    # Returns: Socket identifier for established connection
     def init_target(self, portno, hostname):
         socket_id = 0
         socket_id = self.lib.shunt_py_target_init(portno, hostname)
         return socket_id
 
+    # Function: header_loopback_test
+    #
+    # Perform loopback test for transaction header.
+    # Receives a header from Initiator and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def header_loopback_test(self,socket_id):
-
         h_trnx = cs_header()
         # Receive
         Test_name = "\n SV2PY header_loopback_test recv"
@@ -53,6 +73,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: short_loopback_test
+    #
+    # Perform loopback test for short data type.
+    # Receives a short integer from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def short_loopback_test(self, socket_id):
         Short = 0xDEAD
         Test_name = "\n  SV2PY short_loopback_test recv"
@@ -69,6 +95,12 @@ class Target:
         if result<=0 :
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: int_loopback_test
+    #
+    # Perform loopback test for int data type.
+    # Receives an integer from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def int_loopback_test(self, socket_id):
         Int = 0xDEAD
         Test_name = "\n  SV2PY int_loopback_test recv"
@@ -85,6 +117,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: long_loopback_test
+    #
+    # Perform loopback test for long data type.
+    # Receives a long integer from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def long_loopback_test(self, socket_id):
         Long = 0xDEAD
         Test_name = "\n  SV2PY long_loopback_test recv"
@@ -101,6 +139,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: byte_loopback_test
+    #
+    # Perform loopback test for byte data type.
+    # Receives a byte from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def byte_loopback_test(self, socket_id):
         Byte = 0xDE
         Test_name = "\n  SV2PY byte_loopback_test recv"
@@ -117,6 +161,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: integer_loopback_test
+    #
+    # Perform loopback test for SystemVerilog integer data type.
+    # Receives an SVpiVecVal integer from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def integer_loopback_test(self, socket_id):
         Integer = 0xDEAD
         Test_name = "\n  SV2PY integer_loopback_test recv"
@@ -133,6 +183,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: time_loopback_test
+    #
+    # Perform loopback test for SystemVerilog time data type.
+    # Receives a time value from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def time_loopback_test(self, socket_id):
         Time = 0xDEAD
         Test_name = "\n  SV2PY time_loopback_test recv"
@@ -149,6 +205,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: bit_loopback_test
+    #
+    # Perform loopback test for SystemVerilog bit data type.
+    # Receives a bit value from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def bit_loopback_test(self, socket_id):
         Bit = 0
         Test_name = "\n  SV2PY bit_loopback_test recv"
@@ -165,6 +227,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: reg_loopback_test
+    #
+    # Perform loopback test for SystemVerilog reg data type.
+    # Receives a reg value from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def reg_loopback_test(self, socket_id):
         Reg = 0
         Test_name = "\n  SV2PY reg_loopback_test recv"
@@ -181,6 +249,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: logic_loopback_test
+    #
+    # Perform loopback test for SystemVerilog logic data type.
+    # Receives a logic value from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def logic_loopback_test(self, socket_id):
         Logic = 0
         Test_name = "\n  SV2PY logic_loopback_test recv"
@@ -197,6 +271,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: real_loopback_test
+    #
+    # Perform loopback test for floating-point real data type.
+    # Receives a real value from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def real_loopback_test(self, socket_id):
         Real = 0.0  # Assuming Real is a floating point number
         Test_name = "\n  SV2PY real_loopback_test recv"
@@ -214,8 +294,13 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: string_loopback_test
+    #
+    # Perform loopback test for string data type.
+    # Receives a string from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def string_loopback_test(self, socket_id):
-
         Test_name = "\n  SV2PY string_loopback_test recv"
         String = "0000000000000000000000000000000000000000000000000000000"
         result, received_string = self.lib.shunt_py_recv_string(socket_id,len(String))
@@ -230,6 +315,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: bitN_loopback_test
+    #
+    # Perform loopback test for array of SystemVerilog bit data type.
+    # Receives an array of bits from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def bitN_loopback_test(self, socket_id):
         BitN = [0] * 1025
         Test_name = "\n  SV2PY bitN_loopback_test recv"
@@ -253,6 +344,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: regN_loopback_test
+    #
+    # Perform loopback test for array of SystemVerilog reg data type.
+    # Receives an array of reg values from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def regN_loopback_test(self, socket_id):
         RegN = [0] * 1025
         Test_name = "\n  SV2PY regN_loopback_test recv"
@@ -271,6 +368,12 @@ class Target:
         if self.lib.shunt_py_hs_send_regN(socket_id, self.h_trnx, RegN) <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: logicN_loopback_test
+    #
+    # Perform loopback test for array of SystemVerilog logic data type.
+    # Receives an array of logic values from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def logicN_loopback_test(self, socket_id):
         LogicN = [0] * 1025
         Test_name = "\n  SV2PY logicN_loopback_test recv"
@@ -289,6 +392,12 @@ class Target:
         if self.lib.shunt_py_hs_send_logicN(socket_id, self.h_trnx, LogicN) <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: timeN_loopback_test
+    #
+    # Perform loopback test for array of SystemVerilog time data type.
+    # Receives an array of time values from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def timeN_loopback_test(self, socket_id):
         TimeN = [0] * 1025
         Test_name = "\n  SV2PY timeN_loopback_test recv"
@@ -307,6 +416,12 @@ class Target:
         if self.lib.shunt_py_hs_send_timeN(socket_id, self.h_trnx, TimeN) <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: data_header_loopback_test
+    #
+    # Perform loopback test for data header.
+    # Receives a data header from Initiator and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def data_header_loopback_test(self, socket_id):
         Test_name = "\n SV2PY data_header_loopback_test recv"
 
@@ -321,6 +436,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: data_loopback_test
+    #
+    # Perform loopback test for generic data array.
+    # Receives data from Initiator, displays it, and sends it back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def data_loopback_test(self, socket_id):
         Data = [0] * 1025
         Test_name = "\n  SV2PY data_loopback_test recv"
@@ -337,6 +458,12 @@ class Target:
         if result <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: header_data_loopback_test
+    #
+    # Perform loopback test for combined header and data.
+    # Receives a header and data from Initiator and sends them back.
+    #
+    # Parameter: socket_id - Socket identifier for the connection
     def header_data_loopback_test(self, socket_id):
         Test_name = "\n SV2PY header_data_loopback_test recv"
 
@@ -353,12 +480,26 @@ class Target:
         if self.lib.shunt_py_hs_send_data(socket_id, self.h_data) <= 0:
             print(f"{Test_name} TARGET: TEST FAIL")
 
+    # Function: print_shunt_header
+    #
+    # Print the contents of a SHUNT header.
+    #
+    # Parameter: h_      - Header structure to print
+    # Parameter: name_in - Name identifier for the header
+    # Parameter: i_am    - Identifier for the caller
     def print_shunt_header(self, h_, name_in="", i_am=""):
         print(f"\n{i_am} {name_in}.trnx_type  = {h_.trnx_type}")
         print(f"\n{i_am} {name_in}.trnx_id    = {h_.trnx_id}")
         print(f"\n{i_am} {name_in}.data_type  = {h_.data_type}")
         print(f"\n{i_am} {name_in}.n_payloads = {h_.n_payloads}")
 
+    # Function: print_shunt_data_header
+    #
+    # Print the contents of a SHUNT data header.
+    #
+    # Parameter: dh_     - Data header structure to print
+    # Parameter: name_in - Name identifier for the data header
+    # Parameter: i_am    - Identifier for the caller
     def print_shunt_data_header(self, dh_, name_in="", i_am=""):
         print(f"\n{i_am} {name_in}.data_type  = {dh_.data_type}")
         print(f"\n{i_am} {name_in}.n_payloads = {dh_.n_payloads}")
