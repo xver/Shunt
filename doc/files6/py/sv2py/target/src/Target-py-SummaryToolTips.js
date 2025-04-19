@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File6:py/sv2py/target/src/Target.py",{467:"<div class=\"NDToolTip TSection LPython\"><div class=\"TTSummary\">0.1 Copyright (c) 2016-2025 IC Verimeter. All rights reserved.</div></div>"});

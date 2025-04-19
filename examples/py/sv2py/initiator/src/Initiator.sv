@@ -1,7 +1,7 @@
 /*
  ============================================================================
 Title: Initiator.sv
-1.0.1
+
  Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
 
                Licensed under the MIT License.
@@ -9,35 +9,97 @@ Title: Initiator.sv
                See LICENSE file in the project root for full license information.
 
 Description : TCP/IP SystemVerilog SHUNT
- All Types SystemVerilog examle  -Initiator(server)
- History:
-  - initial release
- 1.0.1 - shunt-verilator integration
- Version 1.0.1 : Verilator 3.916 2017-11-25 rev verilator_3_916
+ All Types SystemVerilog example  -Initiator(server)
+
  ============================================================================
  */
 
 /* verilator lint_off UNUSED */
 /* verilator lint_off UNDRIVEN */
 /* verilator lint_off VARHIDDEN */
+
+/**
+ * Package: cs_common
+ * 
+ * Common macro and parameter definitions for the client-server implementation
+ */
 `include "../../includes/cs_common.svh"
 
+/**
+ * Module: Initiator
+ * 
+ * TCP/IP SystemVerilog SHUNT Initiator module for SystemVerilog-to-Python communication
+ * 
+ * This module serves as the server in a client-server communication model
+ * between SystemVerilog and Python domains. It demonstrates a comprehensive testing
+ * of all supported data types over TCP/IP.
+ * 
+ * The module initializes a socket connection and performs loopback tests
+ * for a wide range of data types to verify bidirectional communication.
+ */
 module automatic Initiator;
 
   import shunt_dpi_pkg::*;
 
+  /**
+   * Variable: Socket
+   * Socket descriptor for TCP/IP communication
+   */
   int         Socket;
+  
+  /**
+   * Variable: Pass
+   * Test pass/fail status flag
+   */
   int         Pass;
 
+  /**
+   * Variable: h_trnx_exp
+   * Expected transaction header for data validation
+   */
   cs_header_t h_trnx_exp;
+  
+  /**
+   * Variable: h_trnx_act
+   * Actual transaction header received from the target
+   */
   cs_header_t h_trnx_act;
+
 `ifndef NO_CS_DATA_HEADER_T
+  /**
+   * Variable: h_data_exp
+   * Expected data header for data validation
+   * 
+   * Only defined when NO_CS_DATA_HEADER_T is not defined
+   */
   cs_data_header_t h_data_exp;
+  
+  /**
+   * Variable: h_data_act
+   * Actual data header received from the target
+   * 
+   * Only defined when NO_CS_DATA_HEADER_T is not defined
+   */
   cs_data_header_t h_data_act;
 `endif
 
+  /**
+   * Initial block: Main Execution Flow
+   *
+   * Establishes socket connection and runs a series of loopback tests
+   * for different SystemVerilog data types supported by Python interface
+   */
   initial begin
+    /**
+     * Variable: Status
+     * Test status message
+     */
     string Status;
+    
+    /**
+     * Variable: Test_name
+     * Current test name for reporting
+     */
     string Test_name;
 
     Pass   = 1;
@@ -295,6 +357,17 @@ module automatic Initiator;
 
   //Functions:
 
+  /**
+   * Function: init_initiator
+   * 
+   * Initializes the initiator (server) socket for TCP/IP communication
+   * 
+   * Parameters:
+   *   portno - Port number to listen on. If 0, uses the default port.
+   * 
+   * Returns:
+   *   socket_id - Socket descriptor for established connection
+   */
   function int init_initiator(int portno);
     begin
       int socket_id;
@@ -305,12 +378,39 @@ module automatic Initiator;
   endfunction : init_initiator
 
 
+  /**
+   * Function: short_loopback_test
+   * 
+   * Tests the loopback functionality for short (16-bit) integer data type
+   * 
+   * Sends a random short value to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int short_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_SHORT
 `ifndef NO_SHUNT_DPI_RECV_SHORT
+    /**
+     * Variable: Short_exp
+     * Expected short integer value for loopback test
+     */
     shortint Short_exp;
+    
+    /**
+     * Variable: Short_act
+     * Actual short integer value received from target
+     */
     shortint Short_act;
+    
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string   Test_name = "initiator short_loopback_test";
 
     success   = 1;
@@ -332,12 +432,39 @@ module automatic Initiator;
 
   endfunction : short_loopback_test
 
+  /**
+   * Function: int_loopback_test
+   * 
+   * Tests the loopback functionality for int (32-bit) integer data type
+   * 
+   * Sends a random int value to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int int_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_INT
 `ifndef NO_SHUNT_DPI_RECV_INT
+    /**
+     * Variable: Int_exp
+     * Expected int value for loopback test
+     */
     int    Int_exp;
+    
+    /**
+     * Variable: Int_act
+     * Actual int value received from target
+     */
     int    Int_act;
+    
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string Test_name = "initiator int_loopback_test";
 
     success = 1;
@@ -356,12 +483,39 @@ module automatic Initiator;
     return success;
   endfunction : int_loopback_test
 
+  /**
+   * Function: long_loopback_test
+   * 
+   * Tests the loopback functionality for long (64-bit) integer data type
+   * 
+   * Sends a random long value to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int long_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_LONG
 `ifndef NO_SHUNT_DPI_RECV_LONG
+    /**
+     * Variable: Long_exp
+     * Expected longint value for loopback test
+     */
     longint Long_exp;
+    
+    /**
+     * Variable: Long_act
+     * Actual longint value received from target
+     */
     longint Long_act;
+    
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string  Test_name = "initiator long_loopback_test";
 
     success  = 1;
@@ -381,13 +535,39 @@ module automatic Initiator;
     return success;
   endfunction : long_loopback_test
 
+  /**
+   * Function: byte_loopback_test
+   * 
+   * Tests the loopback functionality for byte (8-bit) data type
+   * 
+   * Sends a random byte value to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int byte_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_BYTE
 `ifndef NO_SHUNT_DPI_RECV_BYTE
-
+    /**
+     * Variable: Byte_exp
+     * Expected byte value for loopback test
+     */
     byte   Byte_exp;
+    
+    /**
+     * Variable: Byte_act
+     * Actual byte value received from target
+     */
     byte   Byte_act;
+    
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string Test_name = "initiator byte_loopback_test";
 
     success  = 1;
@@ -408,14 +588,39 @@ module automatic Initiator;
 
   endfunction : byte_loopback_test
 
+  /**
+   * Function: integer_loopback_test
+   * 
+   * Tests the loopback functionality for integer (32-bit) data type with 4-state values
+   * 
+   * Sends an integer value with X and Z states to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int integer_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_INTEGER
 `ifndef NO_SHUNT_DPI_RECV_INTEGER
-
+    /**
+     * Variable: Integer_exp
+     * Expected integer value for loopback test (with X/Z values)
+     */
     integer Integer_exp;
+    
+    /**
+     * Variable: Integer_act
+     * Actual integer value received from target
+     */
     integer Integer_act;
 
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string  Test_name = "initiator integer_loopback_test";
     success = 1;
 
@@ -436,14 +641,39 @@ module automatic Initiator;
 
   endfunction : integer_loopback_test
 
+  /**
+   * Function: time_loopback_test
+   * 
+   * Tests the loopback functionality for time (64-bit) data type
+   * 
+   * Sends a time value with X and Z states to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int time_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_TIME
 `ifndef NO_SHUNT_DPI_RECV_TIME
-
+    /**
+     * Variable: Time_exp
+     * Expected time value for loopback test (with X/Z values)
+     */
     time   Time_exp;
+    
+    /**
+     * Variable: Time_act
+     * Actual time value received from target
+     */
     time   Time_act;
 
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string Test_name = "initiator time_loopback_test";
     $display("\n Start %s", Test_name);
     success  = 1;
@@ -468,14 +698,40 @@ module automatic Initiator;
 
   endfunction : time_loopback_test
 
+  /**
+   * Function: bit_loopback_test
+   * 
+   * Tests the loopback functionality for bit (1-bit) data type
+   * 
+   * Sends a bit value to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int bit_loopback_test(int socket_id);
     int success;
 
 `ifndef NO_SHUNT_DPI_SEND_BIT
 `ifndef NO_SHUNT_DPI_RECV_BIT
+    /**
+     * Variable: Bit_exp
+     * Expected bit value for loopback test
+     */
     bit    Bit_exp;
+    
+    /**
+     * Variable: Bit_act
+     * Actual bit value received from target
+     */
     bit    Bit_act;
 
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string Test_name = "initiator bit_loopback_test";
     success = 1;
 
@@ -498,14 +754,39 @@ module automatic Initiator;
 
   endfunction : bit_loopback_test
 
+  /**
+   * Function: reg_loopback_test
+   * 
+   * Tests the loopback functionality for reg (1-bit) data type with 4-state values
+   * 
+   * Sends a reg value with high-impedance (Z) state to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int reg_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_REG
 `ifndef NO_SHUNT_DPI_RECV_REG
-
+    /**
+     * Variable: Reg_exp
+     * Expected reg value (Z) for loopback test
+     */
     reg    Reg_exp;
+    
+    /**
+     * Variable: Reg_act
+     * Actual reg value received from target
+     */
     reg    Reg_act;
 
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string Test_name = "initiator reg_loopback_test";
     success = 1;
 
@@ -528,14 +809,39 @@ module automatic Initiator;
 
   endfunction : reg_loopback_test
 
+  /**
+   * Function: logic_loopback_test
+   * 
+   * Tests the loopback functionality for logic (1-bit) data type with 4-state values
+   * 
+   * Sends a logic value with unknown (X) state to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int logic_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_LOGIC
 `ifndef NO_SHUNT_DPI_RECV_LOGIC
-
+    /**
+     * Variable: Logic_exp
+     * Expected logic value (X) for loopback test
+     */
     logic  Logic_exp;
+    
+    /**
+     * Variable: Logic_act
+     * Actual logic value received from target
+     */
     logic  Logic_act;
 
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string Test_name = "initiator logic_loopback_test";
     success   = 1;
 
@@ -558,15 +864,53 @@ module automatic Initiator;
 
   endfunction : logic_loopback_test
 
+  /**
+   * Function: bitN_loopback_test
+   * 
+   * Tests the loopback functionality for multi-bit (bit vector) data type
+   * 
+   * Sends a bit vector of specified size to the target and validates the received response
+   * Also tests transaction header communication
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   *   n_payloads - Number of payloads (default: 1)
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int bitN_loopback_test(int socket_id, int n_payloads = 1);
     int success;
 `ifndef NO_SHUNT_DPI_HS_SEND_BITN
 `ifndef NO_SHUNT_DPI_HS_RECV_BITN
+    /**
+     * Parameter: N 
+     * Size of bit vector for testing (133 bits)
+     */
     localparam N = 133;  //N 4*32 bit max
 
+    /**
+     * Variable: i
+     * Loop index
+     */
     int            i;
+    
+    /**
+     * Variable: BitN_exp
+     * Expected bit vector value for loopback test
+     */
     bit    [N-1:0] BitN_exp;
+    
+    /**
+     * Variable: BitN_act
+     * Actual bit vector value received from target
+     */
     bit    [N-1:0] BitN_act;
+    
+    /**
+     * Variable: s_me
+     * Function name for debug messages
+     */
     string         s_me = "bitN_loopback_test";
     success = 1;
 
@@ -593,15 +937,59 @@ module automatic Initiator;
   endfunction : bitN_loopback_test
 
 
+  /**
+   * Function: regN_loopback_test
+   * 
+   * Tests the loopback functionality for multi-bit reg vector with 4-state values
+   * 
+   * Sends a reg vector with X and mixed states to the target and validates the received response
+   * Also tests transaction header communication
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   *   n_payloads - Number of payloads (default: 1)
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int regN_loopback_test(int socket_id, int n_payloads = 1);
     int success;
 `ifndef NO_SHUNT_DPI_HS_SEND_REGN
 `ifndef NO_SHUNT_DPI_HS_RECV_REGN
+    /**
+     * Parameter: N 
+     * Size of reg vector for testing (133 bits)
+     */
     localparam N = 133;  //N 4*32 bit max
+    
+    /**
+     * Variable: i
+     * Loop index
+     */
     int            i;
+    
+    /**
+     * Variable: XRegNV_exp
+     * X-state mask for reg vector
+     */
     reg    [N-1:0] XRegNV_exp;
+    
+    /**
+     * Variable: RegNV_exp
+     * Expected reg vector value for loopback test
+     */
     reg    [N-1:0] RegNV_exp;
+    
+    /**
+     * Variable: RegNV_act
+     * Actual reg vector value received from target
+     */
     reg    [N-1:0] RegNV_act;
+    
+    /**
+     * Variable: s_me
+     * Function name for debug messages
+     */
     string         s_me = "regN_loopback_test";
     success = 1;
     //data set
@@ -626,15 +1014,59 @@ module automatic Initiator;
     return success;
   endfunction : regN_loopback_test
 
+  /**
+   * Function: logicN_loopback_test
+   * 
+   * Tests the loopback functionality for multi-bit logic vector with 4-state values
+   * 
+   * Sends a logic vector with X and mixed states to the target and validates the received response
+   * Also tests transaction header communication
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   *   n_payloads - Number of payloads (default: 1)
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int logicN_loopback_test(int socket_id, int n_payloads = 1);
     int success;
 `ifndef NO_SHUNT_DPI_HS_SEND_LOGICN
 `ifndef NO_SHUNT_DPI_HS_RECV_LOGICN
+    /**
+     * Parameter: N 
+     * Size of logic vector for testing (133 bits)
+     */
     localparam N = 133;  //N 4*32 bit max
+    
+    /**
+     * Variable: i
+     * Loop index
+     */
     int            i;
+    
+    /**
+     * Variable: XLogicN_exp
+     * X-state mask for logic vector
+     */
     logic  [N-1:0] XLogicN_exp;
+    
+    /**
+     * Variable: LogicN_exp
+     * Expected logic vector value for loopback test
+     */
     logic  [N-1:0] LogicN_exp;
+    
+    /**
+     * Variable: LogicN_act
+     * Actual logic vector value received from target
+     */
     logic  [N-1:0] LogicN_act;
+    
+    /**
+     * Variable: s_me
+     * Function name for debug messages
+     */
     string         s_me = "logicN_loopback_test";
     success = 1;
     //data set
@@ -660,13 +1092,45 @@ module automatic Initiator;
     return success;
   endfunction : logicN_loopback_test
 
+  /**
+   * Function: real_loopback_test
+   * 
+   * Tests the loopback functionality for real (double precision) data type
+   * 
+   * Sends a random real value to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int real_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_REAL
 `ifndef NO_SHUNT_DPI_RECV_REAL
+    /**
+     * Variable: Real_exp
+     * Expected real value for loopback test
+     */
     real   Real_exp;
+    
+    /**
+     * Variable: Real_act
+     * Actual real value received from target
+     */
     real   Real_act;
+    
+    /**
+     * Variable: Result
+     * Difference between expected and actual values (cast to int)
+     */
     int    Result;
+    
+    /**
+     * Variable: s_me
+     * Function name for debug messages
+     */
     string s_me = "real_loopback_test";
     success  = 1;
     Real_exp = $random() / 7.5;
@@ -681,12 +1145,39 @@ module automatic Initiator;
     return success;
   endfunction : real_loopback_test
 
+  /**
+   * Function: shortreal_loopback_test
+   * 
+   * Tests the loopback functionality for shortreal (single precision) data type
+   * 
+   * Sends a shortreal value to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int shortreal_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_SHORTREAL
 `ifndef NO_SHUNT_DPI_RECV_SHORTREAL
+    /**
+     * Variable: Shortreal_exp
+     * Expected shortreal value for loopback test
+     */
     shortreal Shortreal_exp;
+    
+    /**
+     * Variable: Shortreal_act
+     * Actual shortreal value received from target
+     */
     shortreal Shortreal_act;
+    
+    /**
+     * Variable: s_me
+     * Function name for debug messages
+     */
     string    s_me = "shortreal_loopback_test";
     success = 1;
     Shortreal_exp = 123;
@@ -698,14 +1189,51 @@ module automatic Initiator;
     return success;
   endfunction : shortreal_loopback_test
 
+  /**
+   * Function: string_loopback_test
+   * 
+   * Tests the loopback functionality for string data type
+   * 
+   * Sends a predefined string to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int string_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_STRING
 `ifndef NO_SHUNT_DPI_RECV_STRING
+    /**
+     * Variable: i
+     * Loop index
+     */
     int    i;
+    
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string Test_name;
+    
+    /**
+     * Variable: String_exp
+     * Expected string value for loopback test
+     */
     string String_exp;
+    
+    /**
+     * Variable: String_act
+     * Actual string value received from target
+     */
     string String_act;
+    
+    /**
+     * Variable: s_me
+     * Function name for debug messages
+     */
     string s_me = "string_loopback_test";
     String_exp = `STRING_MESSAGE;
     String_act = `STRING_MESSAGE1;
@@ -724,13 +1252,45 @@ module automatic Initiator;
     return success;
   endfunction : string_loopback_test
 
+  /**
+   * Function: shortV_loopback_test
+   * 
+   * Tests the loopback functionality for shortint vector (array) data type
+   * 
+   * Sends an array of shortint values to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int shortV_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_SHORTV
 `ifndef NO_SHUNT_DPI_RECV_SHORTV
+    /**
+     * Variable: shortV_i
+     * Loop index for the shortint array
+     */
     int      shortV_i;
+    
+    /**
+     * Variable: ShortV_exp
+     * Expected shortint array for loopback test
+     */
     shortint ShortV_exp                    [`V_SIZE];
+    
+    /**
+     * Variable: ShortV_act
+     * Actual shortint array received from target
+     */
     shortint ShortV_act                    [`V_SIZE];
+    
+    /**
+     * Variable: s_me
+     * Function name for debug messages
+     */
     string   s_me = "shortV_loopback_test";
     success = 1;
     /* verilator lint_off WIDTH */
@@ -745,13 +1305,45 @@ module automatic Initiator;
     return success;
   endfunction : shortV_loopback_test
 
+  /**
+   * Function: intv_loopback_test
+   * 
+   * Tests the loopback functionality for int vector (array) data type
+   * 
+   * Sends an array of int values to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int intv_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_INTV
 `ifndef NO_SHUNT_DPI_RECV_INTV
+    /**
+     * Variable: intv_i
+     * Loop index for the int array
+     */
     int    intv_i;
+    
+    /**
+     * Variable: Intv_exp
+     * Expected int array for loopback test
+     */
     int    Intv_exp                    [`V_SIZE];
+    
+    /**
+     * Variable: Intv_act
+     * Actual int array received from target
+     */
     int    Intv_act                    [`V_SIZE];
+    
+    /**
+     * Variable: s_me
+     * Function name for debug messages
+     */
     string s_me = "intv_loopback_test";
     success = 1;
     foreach (Intv_exp[intv_i]) Intv_exp[intv_i] = 200 + intv_i;
@@ -767,14 +1359,46 @@ module automatic Initiator;
 
 
 
+  /**
+   * Function: longV_loopback_test
+   * 
+   * Tests the loopback functionality for longint vector (array) data type
+   * 
+   * Sends an array of longint values to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int longV_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_LONGV
 `ifndef NO_SHUNT_DPI_RECV_LONGV
     /* verilator lint_off WIDTH */
+    /**
+     * Variable: i_
+     * Loop index for the longint array
+     */
     int     i_;
+    
+    /**
+     * Variable: LongV_exp
+     * Expected longint array for loopback test
+     */
     longint LongV_exp                    [`V_SIZE];
+    
+    /**
+     * Variable: LongV_act
+     * Actual longint array received from target
+     */
     longint LongV_act                    [`V_SIZE];
+    
+    /**
+     * Variable: s_me
+     * Function name for debug messages
+     */
     string  s_me = "longV_loopback_test";
     success = 1;
     foreach (LongV_exp[i_]) LongV_exp[i_] = 100 + longint'(i_ + 1);
@@ -791,13 +1415,46 @@ module automatic Initiator;
     /* verilator lint_on WIDTH */
   endfunction : longV_loopback_test
 
+  /**
+   * Function: realV_loopback_test
+   * 
+   * Tests the loopback functionality for real vector (array) data type
+   * 
+   * Sends an array of real values to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   *   n_payloads - Number of payloads (default: 1, not used)
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int realV_loopback_test(int socket_id, int n_payloads = 1);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_REALV
 `ifndef NO_SHUNT_DPI_RECV_REALV
+    /**
+     * Variable: i
+     * Loop index for the real array
+     */
     int    i;
+    
+    /**
+     * Variable: RealV_exp
+     * Expected real array for loopback test
+     */
     real   RealV_exp                                   [`V_SIZE];
+    
+    /**
+     * Variable: RealV_act
+     * Actual real array received from target
+     */
     real   RealV_act                                   [`V_SIZE];
+    
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string Test_name = "initiator realV_loopback_test";
     success = 1;
     for (int i = 0; i < `V_SIZE; i++) RealV_exp[i] = 300.123 + i;
@@ -812,13 +1469,47 @@ module automatic Initiator;
   endfunction : realV_loopback_test
 
 
+  /**
+   * Function: shortrealV_loopback_test
+   * 
+   * Tests the loopback functionality for shortreal vector (array) data type
+   * 
+   * Sends an array of shortreal values to the target and validates the received response
+   * Using tolerance check for floating-point comparison
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   *   n_payloads - Number of payloads (default: 1, not used)
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int shortrealV_loopback_test(int socket_id, int n_payloads = 1);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_SHORTREALV
 `ifndef NO_SHUNT_DPI_RECV_SHORTREALV
+    /**
+     * Variable: i
+     * Loop index for the shortreal array
+     */
     int       i;
+    
+    /**
+     * Variable: ShortrealV_exp
+     * Expected shortreal array for loopback test
+     */
     shortreal ShortrealV_exp                                   [`V_SIZE];
+    
+    /**
+     * Variable: ShortrealV_act
+     * Actual shortreal array received from target
+     */
     shortreal ShortrealV_act                                   [`V_SIZE];
+    
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string    Test_name = "initiator shortrealV_loopback_test";
     success = 1;
     for (int i = 0; i < `V_SIZE; i++) ShortrealV_exp[i] = 540.123 + i;
@@ -838,13 +1529,46 @@ module automatic Initiator;
     return success;
   endfunction : shortrealV_loopback_test
 
+  /**
+   * Function: integerV_loopback_test
+   * 
+   * Tests the loopback functionality for integer vector (array) data type
+   * 
+   * Sends an array of integer values to the target and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   *   n_payloads - Number of payloads (default: 1, not used)
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int integerV_loopback_test(int socket_id, int n_payloads = 1);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_INTEGERV
 `ifndef NO_SHUNT_DPI_RECV_INTEGERV
+    /**
+     * Variable: i_
+     * Loop index for the integer array
+     */
     int     i_;
+    
+    /**
+     * Variable: IntegerV_exp
+     * Expected integer array for loopback test
+     */
     integer IntegerV_exp                                   [`V_SIZE];
+    
+    /**
+     * Variable: IntegerV_act
+     * Actual integer array received from target
+     */
     integer IntegerV_act                                   [`V_SIZE];
+    
+    /**
+     * Variable: Test_name
+     * Test name for reporting purposes
+     */
     string  Test_name = "initiator integerV_loopback_test";
     success = 1;
     for (int i_ = 0; i_ < `V_SIZE; i_++) IntegerV_exp[i_] = 540 + i_;
@@ -861,14 +1585,47 @@ module automatic Initiator;
     return success;
   endfunction : integerV_loopback_test
 
+  /**
+   * Function: pkt_longV_loopback_test
+   * 
+   * Tests the loopback functionality for packet-based longint vector transfer
+   * 
+   * Sends a transaction header followed by an array of longint values, then validates the response
+   * Tests both data and transaction headers
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int pkt_longV_loopback_test(int socket_id);
     int success;
 `ifndef NO_SHUNT_DPI_SEND_PKT_LONGV
 `ifndef NO_SHUNT_DPI_RECV_PKT_LONGV
     /* verilator lint_off WIDTH */
+    /**
+     * Variable: i_
+     * Loop index for the longint array
+     */
     int     i_;
+    
+    /**
+     * Variable: Pkt_longv_exp
+     * Expected longint array for loopback test
+     */
     longint Pkt_longv_exp                              [`V_SIZE];
+    
+    /**
+     * Variable: Pkt_longv_act
+     * Actual longint array received from target
+     */
     longint Pkt_longv_act                              [`V_SIZE];
+    
+    /**
+     * Variable: s_me
+     * Function name for debug messages
+     */
     string  s_me = "initiator pkt_longV_loopback_test";
     success = 1;
     h_trnx_exp.trnx_type = 'h01;
@@ -898,8 +1655,31 @@ module automatic Initiator;
   endfunction : pkt_longV_loopback_test
 
 
+  /**
+   * Function: header_loopback_test
+   * 
+   * Tests the loopback functionality for transaction headers
+   * 
+   * Sends a transaction header with random fields and validates the received response
+   * 
+   * Parameters:
+   *   socket_id - Socket descriptor for the established connection
+   *   n_payloads - Number of payloads (default: 1, not used)
+   * 
+   * Returns:
+   *   success - 1 if test passes, 0 if fails
+   */
   function int header_loopback_test(int socket_id, int n_payloads = 1);
+    /**
+     * Variable: s_me
+     * Function name for debug messages
+     */
     string s_me = "header_loopback_test()";
+    
+    /**
+     * Variable: success
+     * Test result flag (1 = pass, 0 = fail)
+     */
     int    success = 1;
 
     //set up header
@@ -921,7 +1701,20 @@ module automatic Initiator;
     return success;
   endfunction : header_loopback_test
 
+  /**
+   * Function: print_status
+   * 
+   * Prints the status of a test (PASS or FAIL) to the simulation log
+   * 
+   * Parameters:
+   *   Test_name - Name of the test being reported
+   *   Status_int - Status flag (1 = pass, 0 = fail)
+   */
   function void print_status(string Test_name, int Status_int);
+    /**
+     * Variable: Status
+     * String representation of test status ("PASS" or "FAIL")
+     */
     string Status;
     /* verilator lint_off WIDTH */
     if (!Status_int) Status = "FAIL";
@@ -932,6 +1725,16 @@ module automatic Initiator;
   endfunction : print_status
 
 
+  /**
+   * Function: print_shunt_header
+   * 
+   * Prints all fields of a cs_header_t structure to the simulation log
+   * 
+   * Parameters:
+   *   h_ - Header structure to print
+   *   name_in - Optional name to display with the header (default: "")
+   *   i_am - Module/function identifier string for debug messages
+   */
   function automatic void print_shunt_header(cs_header_t h_, string name_in = "", string i_am);
     //   typedef struct{
     // longint     trnx_type;
@@ -945,8 +1748,31 @@ module automatic Initiator;
     $display("\n%s  %s.n_payloads = %0d", i_am, name_in, h_.n_payloads);
   endfunction : print_shunt_header
 
+  /**
+   * Function: compare_shunt_header
+   * 
+   * Compares two transaction headers for equality
+   * 
+   * Compares all fields of the transaction headers and prints debug information
+   * 
+   * Parameters:
+   *   lhs - Left-hand side header to compare
+   *   rls - Right-hand side header to compare
+   * 
+   * Returns:
+   *   success - 1 if headers match, 0 if different
+   */
   function automatic bit compare_shunt_header(cs_header_t lhs, cs_header_t rls);
+    /**
+     * Variable: s_me
+     * Function name for debug messages
+     */
     string s_me = "compare_shunt_header(lhs,rls)";
+    
+    /**
+     * Variable: success
+     * Comparison result flag (1 = match, 0 = different)
+     */
     bit    success = 1;
 
     if (lhs.trnx_type != rls.trnx_type) success = 0;

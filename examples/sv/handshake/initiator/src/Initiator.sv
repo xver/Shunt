@@ -13,25 +13,83 @@ Description : TCP/IP SystemVerilog SHUNT
  ============================================================================
  */
 
+/**
+ * Package: cs_common
+ * 
+ * Common macro and parameter definitions for the client-server implementation
+ */
 `include "../../includes/cs_common.svh"
 
+/**
+ * Module: Initiator
+ * 
+ * TCP/IP SystemVerilog SHUNT Initiator module implementation
+ * 
+ * This module serves as the server in a client-server communication model.
+ * It demonstrates the handshake protocol between SystemVerilog components.
+ * 
+ * The module initializes a socket connection and performs various data type
+ * loopback tests to verify the communication channel.
+ */
 module automatic Initiator;
 
    import shunt_dpi_pkg::*;
    import shunt_hs_pkg::*;
 
+   /**
+    * Variable: Socket
+    * Socket descriptor for TCP/IP communication
+    */
    int Socket;
+   
+   /**
+    * Variable: h_trnx_exp
+    * Expected transaction header for data validation
+    */
    cs_header_t      h_trnx_exp;
+   
+   /**
+    * Variable: h_data_exp
+    * Expected data header for data validation
+    */
    cs_data_header_t h_data_exp;
+   
+   /**
+    * Variable: h_trnx_act
+    * Actual transaction header received from the target
+    */
    cs_header_t      h_trnx_act;
+   
+   /**
+    * Variable: h_data_act
+    * Actual data header received from the target
+    */
    cs_data_header_t h_data_act;
 
-
-
+   /**
+    * Initial block: Main Execution Flow
+    *
+    * Establishes socket connection and runs a series of loopback tests
+    * for different data types (both scalar and vector variants)
+    */
    initial
      begin
+    /**
+     * Variable: Pass
+     * Test pass/fail status flag
+     */
     int Pass;
+    
+    /**
+     * Variable: Status
+     * Test status message
+     */
     string Status;
+    
+    /**
+     * Variable: Test_name
+     * Current test name for reporting
+     */
     string Test_name;
 
     Pass   = 1;
@@ -116,6 +174,17 @@ module automatic Initiator;
      end
 
 
+   /**
+    * Function: init_initiator
+    *
+    * Initializes the initiator (server) side of the socket connection
+    *
+    * Parameters:
+    *   portno - Port number for the socket connection
+    *
+    * Returns:
+    *   socket_id - Socket identifier for the established connection
+    */
    function int init_initiator(int portno);
       begin
      int socket_id;
@@ -125,6 +194,18 @@ module automatic Initiator;
       end
    endfunction : init_initiator
 
+   /**
+    * Function: byte_loopback_test
+    *
+    * Performs a loopback test for byte data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Number of byte elements to test (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    */
    function int byte_loopback_test(int socket_id,int n_payloads=1);
       begin
      int success;
@@ -160,6 +241,18 @@ module automatic Initiator;
    endfunction : byte_loopback_test
 
 
+   /**
+    * Function: int_loopback_test
+    *
+    * Performs a loopback test for integer data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Number of integer elements to test (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    */
    function int int_loopback_test(int socket_id,int n_payloads=1);
       begin
      int success;
@@ -195,6 +288,18 @@ module automatic Initiator;
       end
    endfunction : int_loopback_test
 
+   /**
+    * Function: short_loopback_test
+    *
+    * Performs a loopback test for short integer data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Number of short elements to test (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    */
    function int short_loopback_test(int socket_id,int n_payloads=1);
       begin
      int success;
@@ -230,6 +335,21 @@ module automatic Initiator;
       end
    endfunction : short_loopback_test
 
+   /**
+    * Function: string_loopback_test
+    *
+    * Performs a loopback test for string data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Sends a predefined string to the target and verifies the returned string
+    *   Uses the STRING_MESSAGE constant defined in the common include file
+    */
    function int string_loopback_test(int socket_id);
       begin
      int success;
@@ -262,6 +382,22 @@ module automatic Initiator;
       end
    endfunction : string_loopback_test
 
+   /**
+    * Function: long_loopback_test
+    *
+    * Performs a loopback test for longint data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Number of longint elements to test (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Sends an array of longint values to the target and verifies the returned values
+    *   Tests data integrity for 64-bit integer values
+    */
    function int long_loopback_test(int socket_id,int n_payloads=1);
       begin
      int success;
@@ -296,6 +432,22 @@ module automatic Initiator;
       end
    endfunction : long_loopback_test
 
+   /**
+    * Function: real_loopback_test
+    *
+    * Performs a loopback test for real data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Number of real elements to test (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Sends an array of real values to the target and verifies the returned values
+    *   Tests data integrity for double-precision floating point values
+    */
    function int real_loopback_test(int socket_id,int n_payloads=1);
       begin
      int success;
@@ -329,6 +481,23 @@ module automatic Initiator;
       end
    endfunction : real_loopback_test
 
+   /**
+    * Function: shortreal_loopback_test
+    *
+    * Performs a loopback test for shortreal data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Number of shortreal elements to test (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Sends an array of shortreal values to the target and verifies the returned values
+    *   Tests data integrity for single-precision floating point values
+    *   Uses a small epsilon value (0.0001) for floating-point comparisons
+    */
    function int shortreal_loopback_test(int socket_id,int n_payloads=1);
       begin
      int success;
@@ -368,6 +537,21 @@ module automatic Initiator;
       end
    endfunction : shortreal_loopback_test
 
+   /**
+    * Function: intV_loopback_test
+    *
+    * Performs a loopback test for fixed-size int array data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Tests sending and receiving fixed-size int arrays (size defined by V_SIZE macro)
+    *   Uses direct shunt_dpi_send_intV and shunt_dpi_recv_intV functions instead of handshake protocol
+    */
    function int intV_loopback_test(int socket_id);
       begin
      int success;
@@ -386,6 +570,21 @@ module automatic Initiator;
       end
    endfunction: intV_loopback_test
 
+   /**
+    * Function: realV_loopback_test
+    *
+    * Performs a loopback test for fixed-size real array data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Tests sending and receiving fixed-size real arrays (size defined by V_SIZE macro)
+    *   Uses direct shunt_dpi_send_realV and shunt_dpi_recv_realV functions instead of handshake protocol
+    */
    function int realV_loopback_test(int socket_id);
       begin
      int success;
@@ -407,6 +606,22 @@ module automatic Initiator;
 
 
 
+   /**
+    * Function: byteA_loopback_test
+    *
+    * Performs a loopback test for 2-dimensional byte array data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Number of payloads to test (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Tests sending and receiving 2D byte arrays with transaction and data headers
+    *   Demonstrates handling of complex data structures over TCP/IP
+    */
    function int   byteA_loopback_test(int socket_id,int n_payloads=1);
       int   success;
       byte  Byte_exp[][];
@@ -460,6 +675,22 @@ module automatic Initiator;
 
    endfunction :byteA_loopback_test
 
+   /**
+    * Function: intA_loopback_test
+    *
+    * Performs a loopback test for 2-dimensional integer array data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Number of payloads to test (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Tests sending and receiving 2D integer arrays with transaction and data headers
+    *   Verifies integrity of multi-dimensional integer data structures over TCP/IP
+    */
    function int   intA_loopback_test(int socket_id,int n_payloads=1);
       int   success;
       int   Int_exp[][];
@@ -513,6 +744,22 @@ module automatic Initiator;
 
    endfunction :intA_loopback_test
 
+   /**
+    * Function: realA_loopback_test
+    *
+    * Performs a loopback test for 2-dimensional real array data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Number of payloads to test (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Tests sending and receiving 2D real number arrays with transaction and data headers
+    *   Validates floating-point data exchange in multi-dimensional structures over TCP/IP
+    */
    function int   realA_loopback_test(int socket_id,int n_payloads=1);
       int   success;
       real  Real_exp[][];
@@ -568,6 +815,22 @@ module automatic Initiator;
    //
 
 
+   /**
+    * Function: reg_loopback_test
+    *
+    * Performs a loopback test for reg data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Width parameter, not used in traditional sense (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Tests sending and receiving large register values (133 bits)
+    *   Uses random values mixed with X states to verify 4-state logic handling
+    */
    function int reg_loopback_test(int socket_id,int n_payloads=1);
       begin
      localparam N = 133;//N 4*32 bit max
@@ -604,6 +867,22 @@ module automatic Initiator;
       end
    endfunction : reg_loopback_test
 
+   /**
+    * Function: logic_loopback_test
+    *
+    * Performs a loopback test for logic data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Width parameter, not used in traditional sense (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Tests sending and receiving large logic values (76 bits)
+    *   Uses random values mixed with X states to verify 4-state logic handling
+    */
    function int logic_loopback_test(int socket_id,int n_payloads=1);
       begin
      localparam N = 76;//N 4*32 bit max
@@ -640,6 +919,22 @@ module automatic Initiator;
       end
    endfunction : logic_loopback_test
    //
+   /**
+    * Function: bit_loopback_test
+    *
+    * Performs a loopback test for bit data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Width parameter, not used in traditional sense (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Tests sending and receiving large bit vectors (133 bits)
+    *   Uses only 2-state logic (0 and 1) without X or Z states
+    */
    function int bit_loopback_test(int socket_id,int n_payloads=1);
       begin
      localparam N = 133;//N 4*32 bit max
@@ -673,7 +968,23 @@ module automatic Initiator;
       end
    endfunction : bit_loopback_test
 
- function int integer_loopback_test(int socket_id,int n_payloads=1);
+   /**
+    * Function: integer_loopback_test
+    *
+    * Performs a loopback test for integer data type
+    *
+    * Parameters:
+    *   socket_id  - Socket identifier for the connection
+    *   n_payloads - Number of integer elements to test (default: 1)
+    *
+    * Returns:
+    *   success - 1 if test passed, 0 if failed
+    *
+    * Notes:
+    *   Tests sending and receiving integer arrays with random values including X states
+    *   Uses strict 4-state equality comparison (!==) to verify exact matches
+    */
+   function int integer_loopback_test(int socket_id,int n_payloads=1);
       begin
      int success;
          integer Integer_exp[];
@@ -710,9 +1021,23 @@ module automatic Initiator;
      for(int i=0;i<n_payloads;i++)  if (Integer_exp[i] !== Integer_act[i])success=0;
          return  success;
       end
- endfunction : integer_loopback_test
+   endfunction : integer_loopback_test
 
-//
+   /**
+    * Function: print_status
+    *
+    * Utility function to display test results
+    *
+    * Parameters:
+    *   Test_name  - Name of the test being reported
+    *   Status_int - Status flag (1 for PASS, 0 for FAIL)
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Converts numeric status to human-readable PASS/FAIL string and displays it
+    */
    function void print_status(string Test_name,int Status_int);
       begin
      string Status;

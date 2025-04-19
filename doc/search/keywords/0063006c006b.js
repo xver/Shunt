@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("clk",["Variable"],[["clk_cnt",,[["Target",,,,0,"File6:sc/LT_simple_sv/target/src/Target.sv:Target.clk_cnt","SystemVerilogModule:Target:clk_cnt"]]],["clk_next",,[["Target",,,,0,"File6:sc/LT_simple_sv/target/src/Target.sv:Target.clk_next","SystemVerilogModule:Target:clk_next"]]]]);

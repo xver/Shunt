@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("SystemVerilogModule:memory","memory");NDSummary.OnSummaryLoaded("SystemVerilogModule:memory",[["SystemVerilog","SystemVerilog"]],[["Groups","Group"],["Modules","Module"],["Variables","Variable"]],[[664,0,1,"memory"],[665,0,0,"Variables","Variables"],[666,0,2,"ram","ram"],[667,0,2,"addr_reg","addr_reg"]]);

@@ -1,8 +1,7 @@
 /*
 ============================================================================
 Title: Target.sv
- Author      : Victor Besyakov
-0.0.0
+ 
  Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
 
                Licensed under the MIT License.
@@ -14,8 +13,25 @@ Description :  hs function svcs dpi bridge test
                System Verilog target server handshake (SVCS) library
  ============================================================================
 */
+
+/**
+ * Package: cs_common
+ * 
+ * Common macro and parameter definitions for the client-server implementation
+ */
 `include "../../includes/cs_common.svh"
 
+/**
+ * Module: Target
+ * 
+ * TCP/IP SystemVerilog SHUNT Target module implementation
+ * 
+ * This module serves as the client in a client-server communication model.
+ * It connects to the Initiator and processes handshake protocol transactions
+ * by receiving data, then sending it back (loopback).
+ * 
+ * Supports various data types and demonstrates a complete handshake communication flow.
+ */
 module automatic Target;
 
    import shunt_dpi_pkg::*;
@@ -26,6 +42,13 @@ module automatic Target;
    cs_header_t      h_trnx;
    cs_data_header_t h_data;
 
+   /**
+    * Initial block: Main Execution Flow
+    *
+    * Establishes socket connection and runs a series of loopback tests
+    * for different data types by receiving data from the Initiator
+    * and sending it back.
+    */
    initial
      begin
 
@@ -48,7 +71,7 @@ module automatic Target;
     short_loopback_test(Socket);
     short_loopback_test(Socket);
 
-        long_loopback_test(Socket);
+    long_loopback_test(Socket);
     long_loopback_test(Socket);
 
     byte_loopback_test(Socket);
@@ -76,6 +99,18 @@ module automatic Target;
 
 
 
+   /**
+    * Function: init_target
+    *
+    * Initializes the target (client) side of the socket connection
+    *
+    * Parameters:
+    *   portno    - Port number for the socket connection
+    *   hostname  - Host name or IP address to connect to
+    *
+    * Returns:
+    *   socket_id - Socket identifier for the established connection
+    */
    function int init_target(int portno,string hostname);
       int   socket_id;
       socket_id=0;
@@ -83,6 +118,20 @@ module automatic Target;
       return socket_id;
    endfunction : init_target
 
+   /**
+    * Function: string_loopback_test
+    *
+    * Performs a loopback test for string data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives a string from the initiator and sends it back
+    */
    function void string_loopback_test(int socket_id);
       begin
      int success;
@@ -102,6 +151,20 @@ module automatic Target;
       end
    endfunction : string_loopback_test
 
+   /**
+    * Function: byte_loopback_test
+    *
+    * Performs a loopback test for byte data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives a byte array from the initiator and sends it back
+    */
    function void byte_loopback_test(int socket_id);
       byte  Byte[];
       string    Test_name;
@@ -117,6 +180,20 @@ module automatic Target;
       if (shunt_dpi_hs_send_byte(socket_id,h_trnx,Byte)<= 0) $display("%s TEST FAIL",Test_name);
    endfunction : byte_loopback_test
 
+   /**
+    * Function: integer_loopback_test
+    *
+    * Performs a loopback test for integer data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives an integer array from the initiator and sends it back
+    */
    function void integer_loopback_test(int socket_id);
       integer   Integer[];
       string    Test_name;
@@ -132,6 +209,20 @@ module automatic Target;
       if (shunt_dpi_hs_send_integer(socket_id,h_trnx,Integer)<= 0) $display("%s TEST FAIL",Test_name);
    endfunction : integer_loopback_test
 
+   /**
+    * Function: int_loopback_test
+    *
+    * Performs a loopback test for int data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives an int array from the initiator and sends it back
+    */
    function void int_loopback_test(int socket_id);
       int   Int[];
       string    Test_name;
@@ -146,6 +237,20 @@ module automatic Target;
       if (shunt_dpi_hs_send_int(socket_id,h_trnx,Int)<= 0) $display("%s TEST FAIL",Test_name);
    endfunction : int_loopback_test
 
+   /**
+    * Function: short_loopback_test
+    *
+    * Performs a loopback test for shortint data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives a shortint array from the initiator and sends it back
+    */
    function void short_loopback_test(int socket_id);
       shortint  Int[];
       string    Test_name;
@@ -160,6 +265,20 @@ module automatic Target;
       if (shunt_dpi_hs_send_short(socket_id,h_trnx,Int)<= 0) $display("%s TEST FAIL",Test_name);
    endfunction : short_loopback_test
 
+   /**
+    * Function: long_loopback_test
+    *
+    * Performs a loopback test for longint data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives a longint array from the initiator and sends it back
+    */
    function void long_loopback_test(int socket_id);
       longint   Int[];
       string    Test_name;
@@ -174,6 +293,20 @@ module automatic Target;
       if (shunt_dpi_hs_send_long(socket_id,h_trnx,Int)<= 0) $display("%s TEST FAIL",Test_name);
    endfunction : long_loopback_test
 
+   /**
+    * Function: real_loopback_test
+    *
+    * Performs a loopback test for real data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives a real array from the initiator and sends it back
+    */
    function void real_loopback_test(int socket_id);
       real  Real[];
       string    Test_name;
@@ -192,6 +325,20 @@ module automatic Target;
 
 
 
+   /**
+    * Function: shortreal_loopback_test
+    *
+    * Performs a loopback test for shortreal data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives a shortreal array from the initiator and sends it back
+    */
    function void shortreal_loopback_test(int socket_id);
       shortreal Shortreal[];
       string    Test_name;
@@ -209,6 +356,21 @@ module automatic Target;
 
 
 
+   /**
+    * Function: byteA_loopback_test
+    *
+    * Performs a loopback test for 2-dimensional byte array data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives a 2D byte array from the initiator and sends it back
+    *   Demonstrates handling of multi-dimensional arrays with data headers
+    */
    function void   byteA_loopback_test(int socket_id);
       byte  Byte[][];
       string    Test_name;
@@ -239,6 +401,21 @@ module automatic Target;
 
    endfunction :byteA_loopback_test
 
+   /**
+    * Function: intA_loopback_test
+    *
+    * Performs a loopback test for 2-dimensional integer array data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives a 2D integer array from the initiator and sends it back
+    *   Handles complex data structures with corresponding headers
+    */
    function void   intA_loopback_test(int socket_id);
       int   Int[][];
       string    Test_name;
@@ -270,6 +447,21 @@ module automatic Target;
    endfunction :intA_loopback_test
 
 
+   /**
+    * Function: realA_loopback_test
+    *
+    * Performs a loopback test for 2-dimensional real array data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives a 2D real number array from the initiator and sends it back
+    *   Demonstrates handling of floating-point data in multi-dimensional arrays
+    */
    function void   realA_loopback_test(int socket_id);
       real  Real[][];
       string    Test_name;
@@ -301,6 +493,21 @@ module automatic Target;
 
    endfunction :realA_loopback_test
 
+   /**
+    * Function: reg_loopback_test
+    *
+    * Performs a loopback test for reg data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives a reg vector from the initiator and sends it back
+    *   Handles multi-bit register values with high-Z state initialization
+    */
    function void reg_loopback_test(int socket_id);
       reg [1024:0] Reg;
       string       Test_name;
@@ -316,6 +523,21 @@ module automatic Target;
       if (shunt_dpi_hs_send_regN(socket_id,h_trnx,Reg)<= 0)   $display("%s TEST FAIL",Test_name);
    endfunction : reg_loopback_test
 
+   /**
+    * Function: logic_loopback_test
+    *
+    * Performs a loopback test for logic data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives a logic vector from the initiator and sends it back
+    *   Tests 4-state logic values with high-Z state initialization
+    */
    function void logic_loopback_test(int socket_id);
       logic [1024:0] Logic;
       string         Test_name;
@@ -331,6 +553,22 @@ module automatic Target;
       if (shunt_dpi_hs_send_logicN(socket_id,h_trnx,Logic)<= 0)   $display("%s TEST FAIL",Test_name);
    endfunction : logic_loopback_test
 
+   /**
+    * Function: bit_loopback_test
+    *
+    * Performs a loopback test for bit data type
+    *
+    * Parameters:
+    *   socket_id - Socket identifier for the connection
+    *
+    * Returns:
+    *   void
+    *
+    * Notes:
+    *   Receives a bit vector from the initiator and sends it back
+    *   Tests 2-state logic values with high-Z state initialization
+    *   (Note: bit type will convert high-Z to 0)
+    */
    function void bit_loopback_test(int socket_id);
       bit [1024:0]   Bit;
       string         Test_name;

@@ -14,39 +14,142 @@ Description : TCP/IP SystemVerilog SHUNT
 `ifndef TARGET_SV
  `define TARGET_SV
 
+/**
+ * Module: Target
+ *
+ * TLM-2.0 target implementation for SystemC-to-SystemVerilog communication
+ *
+ * This module implements the target side of TLM-2.0 transport protocol over TCP/IP.
+ * It communicates with a SystemC initiator and demonstrates memory read/write operations.
+ *
+ * Parameters:
+ *   clk_i - Input clock signal
+ */
 module automatic Target(input reg clk_i);
 
    import shunt_dpi_pkg::*;
 
+   /**
+    * Variable: clk_cnt
+    * Clock cycle counter
+    */
    int clk_cnt;
+   
    /* verilator lint_off UNUSED */
    /* verilator lint_off UNDRIVEN */
-   //MEM
-   //logic [31:0] mem [0:255]=0;
+   
+   /**
+    * Variable: mem_data
+    * Memory data input
+    */
    logic [31:0] mem_data;
+   
+   /**
+    * Variable: mem_byte_enable
+    * Memory byte enable signals
+    */
    logic [31:0] mem_byte_enable;
+   
+   /**
+    * Variable: mem_addr
+    * Memory address for read/write operations
+    */
    logic [31:0] mem_addr;
+   
+   /**
+    * Variable: mem_we
+    * Memory write enable signal
+    */
    logic        mem_we;
+   
+   /**
+    * Variable: mem_q
+    * Memory data output
+    */
    logic [31:0] mem_q;
-   bit          end_sim ;
+   
+   /**
+    * Variable: end_sim
+    * Flag to indicate end of simulation
+    */
+   bit          end_sim;
+   
+   /**
+    * Variable: start_sim
+    * Flag to indicate start of simulation
+    */
    bit          start_sim;
+   
+   /**
+    * Variable: trnx_in_progress
+    * Flag to indicate a transaction is in progress
+    */
    bit          trnx_in_progress;
+   
+   /**
+    * Variable: clk_next
+    * Clock cycle for next operation
+    */
    int          clk_next;
-   int          sockid ;
+   
+   /**
+    * Variable: sockid
+    * TCP/IP socket identifier
+    */
+   int          sockid;
 
+   /**
+    * Variable: h
+    * TLM generic payload header
+    */
    cs_tlm_generic_payload_header_t h;
+   
+   /**
+    * Variable: h_ext
+    * TLM AXI3 extension payload header for incoming data
+    */
    cs_tlm_axi3_extension_payload_header_t h_ext;
+   
+   /**
+    * Variable: h_ext_out
+    * TLM AXI3 extension payload header for outgoing data
+    */
    cs_tlm_axi3_extension_payload_header_t h_ext_out;
+   
+   /**
+    * Variable: data_in
+    * Input data bytes
+    */
    byte         data_in[4];
+   
+   /**
+    * Variable: byte_enable_in
+    * Input byte enable signals
+    */
    byte         byte_enable_in[4];
 
+   /**
+    * Variable: data_out
+    * Output data bytes
+    */
    byte         data_out[4];
+   
+   /**
+    * Variable: byte_enable_out
+    * Output byte enable signals
+    */
    byte         byte_enable_out[4];
 
 
    /* verilator lint_on UNDRIVEN */
    /* verilator lint_on UNUSED */
 
+   /**
+    * Initial block: Initialization and Socket Setup
+    *
+    * Initializes all variables, establishes socket connection to the SystemC initiator,
+    * and prepares the AXI3 extension response header
+    */
    initial   begin
        clk_cnt=0;
 
@@ -81,14 +184,32 @@ module automatic Target(input reg clk_i);
       h_ext_out.xSTRB   = 0;
    end
 
+   /**
+    * Instance: mem
+    * Memory module instance for read/write operations
+    */
    memory  mem(.data(mem_data),.addr(mem_addr), .we(mem_we), .clk(clk_i), .q(mem_q));
 
    /* verilator lint_off WIDTH */
+   /**
+    * Assign statement: Memory data concatenation
+    * Converts individual bytes to 32-bit memory data word
+    */
    assign mem_data = {data_in[3],data_in[2],data_in[1],data_in[0]};
+   
+   /**
+    * Assign statement: Memory output deconstruction
+    * Breaks 32-bit memory output into individual bytes
+    */
    assign {data_out[3],data_out[2],data_out[1],data_out[0]} = mem_q;
    //assign mem_addr = h.address;
    //assign mem_data =  {>>{data_in}};
 
+   /**
+    * Always block: End of Simulation Detection
+    *
+    * Monitors the end_sim flag and terminates simulation when set
+    */
    always @(posedge clk_i) begin
       //if(trnx_in_progress) $display("\nTARGET : mem.ram[%0d]=%h mem_data=%h @%0d\n",h.address,mem.ram[h.address],mem_data,clk_cnt);
       if (end_sim)  begin
@@ -98,6 +219,15 @@ module automatic Target(input reg clk_i);
    end
 
 
+   /**
+    * Always block: Transaction Processing
+    *
+    * Main transaction handling for TLM operations
+    * - Receives and processes incoming TLM commands
+    * - Performs memory read/write operations
+    * - Sends response data back to initiator
+    * - Handles end of simulation command
+    */
    always @(posedge clk_i) begin
 
       if(start_sim) begin
@@ -147,6 +277,18 @@ module automatic Target(input reg clk_i);
 endmodule : Target
 
 /* verilator lint_off DECLFILENAME */
+/**
+ * Module: memory
+ *
+ * Simple memory model with synchronous write and read operations
+ *
+ * Parameters:
+ *   data - Input data for write operations
+ *   addr - Memory address for read/write operations
+ *   we   - Write enable signal
+ *   clk  - Clock signal
+ *   q    - Output data from read operations
+ */
 module memory
   (
    input [31:0] data,
@@ -155,12 +297,25 @@ module memory
    output [31:0] q
    );
 
+   /**
+    * Variable: ram
+    * Memory storage array
+    */
    reg [31:0]      ram[255:0];
 
    /* verilator lint_off UNUSED */
+   /**
+    * Variable: addr_reg
+    * Registered address for read operations
+    */
    reg [31:0]      addr_reg;
    /* verilator lint_on UNUSED */
 
+   /**
+    * Initial block: Memory Initialization
+    *
+    * Initializes memory array with random data
+    */
    initial begin
       for (int i = 0; i < 256; i++) begin
          ram[i] = 32'hAA000000 | ($random % 256);
@@ -169,6 +324,11 @@ module memory
       end
    end
 
+   /**
+    * Always block: Memory Access
+    *
+    * Handles write operations and address registration for read operations
+    */
    always @ (posedge clk)
      begin
         // Write
@@ -176,6 +336,10 @@ module memory
         addr_reg <= addr;
      end
 
+   /**
+    * Assign statement: Memory Read Output
+    * Provides read data from the registered address
+    */
    assign q = ram[addr_reg];
 
 endmodule : memory

@@ -1,4 +1,4 @@
-﻿Format: 2.3
+﻿Format: 2.3.1
 
 # This is the main file you use to configure Natural Docs for your project.
 
@@ -84,6 +84,9 @@ Source Folder 4: ../utils/sc/src
 
 Source Folder 5: ../utils/py/shunt_py
    Name: 5. Python utils
+
+Source Folder 6: ../examples
+   Name: 6. Examples
 
 
 # This is where you tell Natural Docs which folders it should scan for source

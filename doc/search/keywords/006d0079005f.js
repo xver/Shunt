@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("my_",["Constant"],[["MY_HOST",,[[,,,,0,"File6:sv/sv2sv/includes/cs_common.svh:MY_HOST"]]],["MY_PORT",,[[,,,,0,"File6:sv/sv2sv/includes/cs_common.svh:MY_PORT"]]]]);

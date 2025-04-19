@@ -1,16 +1,20 @@
-
 /*
-============================================================================
-Title: csC_Initiator.c
+   ============================================================================
+   Title: csC_Initiator.c
 
- Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
+   Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
 
                Licensed under the MIT License.
 
                See LICENSE file in the project root for full license information.
 
-Description :  TCP/IP SystemVerilog SHUNT
-               An example of client-server functions-Initiator(server)
+   Description: TCP/IP SystemVerilog SHUNT
+                An example of client-server functions-Initiator(server)
+                
+                This example implements a server that accepts client connections and
+                demonstrates comprehensive transaction handling including headers,
+                data headers, and various data types such as integer vectors, double
+                vectors, and string data in a loopback testing environment.
 */
 
 #include "shunt_client_server.h"

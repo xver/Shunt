@@ -1,5 +1,5 @@
 /*
-============================================================================
+   ============================================================================
    Title: prim_CTarget.c
    
    Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
@@ -8,9 +8,14 @@
 
                See LICENSE file in the project root for full license information.
 
-Description :  TCP/IP SystemVerilog SHUNT
-                  An example of primitive functions -Target(Client)
-   */
+   Description: TCP/IP SystemVerilog SHUNT
+                An example of primitive functions -Target(Client)
+                
+                This example demonstrates the low-level primitive functions for
+                establishing socket connections and transferring basic data types
+                between SystemVerilog environments. It implements the client (target)
+                side of a loopback test for integers, doubles, and byte data.
+*/
 
 #include <shunt_primitives.h>
 #include "../../includes/cs_common.h"

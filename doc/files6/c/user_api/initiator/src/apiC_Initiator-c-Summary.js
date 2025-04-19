@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File6:c/user_api/initiator/src/apiC_Initiator.c","apiC_Initiator.c");NDSummary.OnSummaryLoaded("File6:c/user_api/initiator/src/apiC_Initiator.c",[["C/C++","C"]],[["Sections","Section"]],[[465,0,0,"apiC_Initiator.c","apiC_Initiator.c"]]);

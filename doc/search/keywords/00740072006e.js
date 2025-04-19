@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("trn",["Variable"],[["trnx_in_progress",,[["Target",,,,0,"File6:sc/LT_simple_sv/target/src/Target.sv:Target.trnx_in_progress","SystemVerilogModule:Target:trnx_in_progress"]]]]);

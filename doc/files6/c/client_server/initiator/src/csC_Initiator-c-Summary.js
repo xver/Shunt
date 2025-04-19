@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File6:c/client_server/initiator/src/csC_Initiator.c","csC_Initiator.c");NDSummary.OnSummaryLoaded("File6:c/client_server/initiator/src/csC_Initiator.c",[["C/C++","C"]],[["Sections","Section"]],[[167,0,0,"csC_Initiator.c","csC_Initiator.c"]]);

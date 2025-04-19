@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("sta",["Variable"],[["start_sim",,[["Target",,,,0,"File6:sc/LT_simple_sv/target/src/Target.sv:Target.start_sim","SystemVerilogModule:Target:start_sim"]]],["Status",,[["Initiator",,,,0,"File6:py/sv2py/initiator/src/Initiator.sv:Initiator.Status","SystemVerilogModule:Initiator:Status"]]]]);

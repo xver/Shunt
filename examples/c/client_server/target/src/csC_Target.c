@@ -1,7 +1,6 @@
-
 /*
    ============================================================================
-  Title: csC_Target.c
+   Title: csC_Target.c
   
    Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
 
@@ -9,9 +8,12 @@
 
                See LICENSE file in the project root for full license information.
 
-Description :  TCP/IP SystemVerilog SHUNT
-                  An example of client-server functions-Target(Client)
-
+   Description: TCP/IP SystemVerilog SHUNT
+                An example of client-server functions-Target(Client)
+                
+                This example implements a client that connects to a SHUNT server and
+                demonstrates header exchange, data transmission, and various data type
+                handling including integers, doubles, and strings.
 */
 
 #include "shunt_client_server.h"

@@ -252,6 +252,17 @@ module automatic Initiator;
 
    //Functions:
 
+   /**
+    * Function: init_initiator
+    * 
+    * Initializes the TCP/IP server socket for SystemVerilog-to-SystemVerilog communication
+    * 
+    * Parameters:
+    *   portno - Port number to listen on (0 for default port)
+    * 
+    * Returns:
+    *   socket_id - Socket descriptor for the established connection
+    */
    function int init_initiator(int portno);
       begin
      int socket_id;
@@ -262,6 +273,20 @@ module automatic Initiator;
    endfunction : init_initiator
 
 
+   /**
+    * Function: short_loopback_test
+    * 
+    * Tests communication of shortint (16-bit) data type between SystemVerilog instances
+    * 
+    * Sends a random shortint value to the target and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_short and shunt_dpi_recv_short DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int short_loopback_test(int socket_id);
       int    success;
 `ifndef NO_SHUNT_DPI_SEND_SHORT
@@ -289,6 +314,20 @@ module automatic Initiator;
 
    endfunction : short_loopback_test
 
+   /**
+    * Function: int_loopback_test
+    * 
+    * Tests communication of int (32-bit) data type between SystemVerilog instances
+    * 
+    * Sends a random int value to the target and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_int and shunt_dpi_recv_int DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int int_loopback_test(int socket_id);
       int      success;
 `ifndef NO_SHUNT_DPI_SEND_INT
@@ -313,6 +352,20 @@ module automatic Initiator;
       return  success;
    endfunction : int_loopback_test
 
+   /**
+    * Function: long_loopback_test
+    * 
+    * Tests communication of longint (64-bit) data type between SystemVerilog instances
+    * 
+    * Sends a random longint value to the target and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_long and shunt_dpi_recv_long DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int long_loopback_test(int socket_id);
       int      success;
 `ifndef NO_SHUNT_DPI_SEND_LONG
@@ -338,6 +391,20 @@ module automatic Initiator;
       return  success;
    endfunction : long_loopback_test
 
+   /**
+    * Function: byte_loopback_test
+    * 
+    * Tests communication of byte (8-bit) data type between SystemVerilog instances
+    * 
+    * Sends a random byte value to the target and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_byte and shunt_dpi_recv_byte DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int byte_loopback_test(int socket_id);
       int      success;
 `ifndef NO_SHUNT_DPI_SEND_BYTE
@@ -365,6 +432,20 @@ module automatic Initiator;
 
    endfunction : byte_loopback_test
 
+   /**
+    * Function: integer_loopback_test
+    * 
+    * Tests communication of integer (32-bit) data type with 4-state values between SystemVerilog instances
+    * 
+    * Sends an integer value with X and Z states to the target and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_integer and shunt_dpi_recv_integer DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int   integer_loopback_test(int socket_id);
       int      success;
 `ifndef NO_SHUNT_DPI_SEND_INTEGER
@@ -393,6 +474,20 @@ module automatic Initiator;
 
    endfunction :integer_loopback_test
 
+   /**
+    * Function: time_loopback_test
+    * 
+    * Tests communication of time (64-bit) data type with 4-state values between SystemVerilog instances
+    * 
+    * Sends a time value with X and Z states to the target and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_time and shunt_dpi_recv_time DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int   time_loopback_test(int socket_id);
       int      success;
 `ifndef NO_SHUNT_DPI_SEND_TIME
@@ -424,6 +519,20 @@ module automatic Initiator;
 
    endfunction :time_loopback_test
 
+   /**
+    * Function: bit_loopback_test
+    * 
+    * Tests communication of bit (1-bit) data type between SystemVerilog instances
+    * 
+    * Sends a bit value to the target and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_bit and shunt_dpi_recv_bit DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int   bit_loopback_test(int socket_id);
       int      success;
 
@@ -454,6 +563,20 @@ module automatic Initiator;
 
    endfunction :bit_loopback_test
 
+   /**
+    * Function: reg_loopback_test
+    * 
+    * Tests communication of reg (1-bit) data type with 4-state values between SystemVerilog instances
+    * 
+    * Sends a reg value with high-impedance (Z) state to the target and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_reg and shunt_dpi_recv_reg DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int   reg_loopback_test(int socket_id);
       int      success;
 `ifndef NO_SHUNT_DPI_SEND_REG
@@ -484,6 +607,20 @@ module automatic Initiator;
 
    endfunction :reg_loopback_test
 
+   /**
+    * Function: logic_loopback_test
+    * 
+    * Tests communication of logic (1-bit) data type with 4-state values between SystemVerilog instances
+    * 
+    * Sends a logic value with unknown (X) state to the target and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_logic and shunt_dpi_recv_logic DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int   logic_loopback_test(int socket_id);
       int      success;
 `ifndef NO_SHUNT_DPI_SEND_LOGIC
@@ -514,6 +651,23 @@ module automatic Initiator;
 
    endfunction :logic_loopback_test
 
+   /**
+    * Function: bitN_loopback_test
+    * 
+    * Tests communication of a multi-bit bit vector between SystemVerilog instances
+    * 
+    * Creates a random bit vector of specified width (N), sends it to the target,
+    * and validates the received response matches the sent value.
+    * Tests the handshake protocol functionality of shunt_dpi_hs_send_bitN and 
+    * shunt_dpi_hs_recv_bitN DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    *   n_payloads - Number of payloads (default: 1)
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int bitN_loopback_test(int socket_id,int n_payloads=1);
       int      success;
 `ifndef NO_SHUNT_DPI_HS_SEND_BITN
@@ -582,6 +736,22 @@ module automatic Initiator;
       return  success;
    endfunction : regN_loopback_test
 
+   /**
+    * Function: logicN_loopback_test
+    * 
+    * Tests communication of a multi-bit logic vector with 4-state values between SystemVerilog instances
+    * 
+    * Creates a logic vector with X states, sends it to the target, and validates the received response.
+    * Tests the handshake protocol functionality of shunt_dpi_hs_send_logicN and 
+    * shunt_dpi_hs_recv_logicN DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    *   n_payloads - Number of payloads (default: 1)
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int logicN_loopback_test(int socket_id,int n_payloads=1);
       int     success;
 `ifndef NO_SHUNT_DPI_HS_SEND_LOGICN
@@ -616,6 +786,20 @@ module automatic Initiator;
       return  success;
    endfunction : logicN_loopback_test
 
+   /**
+    * Function: real_loopback_test
+    * 
+    * Tests communication of real (double precision) data type between SystemVerilog instances
+    * 
+    * Sends a real value to the target and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_real and shunt_dpi_recv_real DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int real_loopback_test(int socket_id);
       int       success;
 `ifndef NO_SHUNT_DPI_SEND_REAL
@@ -637,6 +821,20 @@ module automatic Initiator;
       return  success;
    endfunction : real_loopback_test
 
+   /**
+    * Function: shortreal_loopback_test
+    * 
+    * Tests communication of shortreal (single precision) data type between SystemVerilog instances
+    * 
+    * Sends a shortreal value to the target and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_shortreal and shunt_dpi_recv_shortreal DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int shortreal_loopback_test(int socket_id);
       int       success;
 `ifndef NO_SHUNT_DPI_SEND_SHORTREAL
@@ -654,6 +852,20 @@ module automatic Initiator;
       return  success;
    endfunction : shortreal_loopback_test
 
+   /**
+    * Function: string_loopback_test
+    * 
+    * Tests communication of string data type between SystemVerilog instances
+    * 
+    * Sends a string value to the target and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_string and shunt_dpi_recv_string DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int string_loopback_test(int socket_id);
       int       success;
 `ifndef NO_SHUNT_DPI_SEND_STRING
@@ -680,6 +892,20 @@ module automatic Initiator;
       return  success;
    endfunction : string_loopback_test
 
+   /**
+    * Function: shortV_loopback_test
+    * 
+    * Tests communication of shortint vector (array) data type between SystemVerilog instances
+    * 
+    * Creates an array of shortint values, sends it to the target, and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_shortV and shunt_dpi_recv_shortV DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int shortV_loopback_test(int socket_id);
       int       success;
 `ifndef NO_SHUNT_DPI_SEND_SHORTV
@@ -701,6 +927,20 @@ module automatic Initiator;
       return  success;
    endfunction : shortV_loopback_test
 
+   /**
+    * Function: intv_loopback_test
+    * 
+    * Tests communication of int vector (array) data type between SystemVerilog instances
+    * 
+    * Creates an array of int values, sends it to the target, and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_intV and shunt_dpi_recv_intV DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
      function int intv_loopback_test(int socket_id);
       int       success;
 `ifndef NO_SHUNT_DPI_SEND_INTV
@@ -743,9 +983,24 @@ module automatic Initiator;
  `endif //  `ifndef NO_SHUNT_DPI_RECV_LONGV
 `endif //  `ifndef NO_SHUNT_DPI_SEND_LONGV
       return  success;
-     /* verilator lint_on WIDTH */
+      /* verilator lint_on WIDTH */
    endfunction : longV_loopback_test
 
+   /**
+    * Function: realV_loopback_test
+    * 
+    * Tests communication of real vector (array) data type between SystemVerilog instances
+    * 
+    * Creates an array of real values, sends it to the target, and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_realV and shunt_dpi_recv_realV DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    *   n_payloads - Number of payloads (default: 1, not used)
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int realV_loopback_test(int socket_id,int n_payloads=1);
       int       success;
 `ifndef NO_SHUNT_DPI_SEND_REALV
@@ -793,6 +1048,21 @@ module automatic Initiator;
       return  success;
    endfunction : shortrealV_loopback_test
 
+   /**
+    * Function: integerV_loopback_test
+    * 
+    * Tests communication of integer vector (array) data type with 4-state values between SystemVerilog instances
+    * 
+    * Creates an array of integer values, sends it to the target, and validates the received response.
+    * Tests the basic functionality of the shunt_dpi_send_integerV and shunt_dpi_recv_integerV DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    *   n_payloads - Number of payloads (default: 1, not used)
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int integerV_loopback_test(int socket_id,int n_payloads=1);
       int     success;
 `ifndef NO_SHUNT_DPI_SEND_INTEGERV
@@ -815,6 +1085,21 @@ module automatic Initiator;
       return  success;
    endfunction : integerV_loopback_test
 
+   /**
+    * Function: pkt_longV_loopback_test
+    * 
+    * Tests communication of packet-based longint vector transfer between SystemVerilog instances
+    * 
+    * Creates an array of longint values with a transaction header, sends it to the target,
+    * and validates both the data and the received transaction header.
+    * Tests the basic functionality of the shunt_dpi_send_pkt_longV and shunt_dpi_recv_pkt_longV DPI functions.
+    * 
+    * Parameters:
+    *   socket_id - Socket descriptor for the established connection
+    * 
+    * Returns:
+    *   success - 1 if test passes, 0 if fails
+    */
    function int pkt_longV_loopback_test(int socket_id);
       int     success;
 `ifndef NO_SHUNT_DPI_SEND_PKT_LONGV
@@ -871,6 +1156,20 @@ module automatic Initiator;
       return  success;
    endfunction : header_loopback_test
 
+   /**
+    * Function: print_status
+    * 
+    * Utility function to print test status
+    * 
+    * Displays the test name along with a PASS or FAIL status message.
+    * 
+    * Parameters:
+    *   Test_name - Name of the test to display
+    *   Status_int - Status value (1 = PASS, 0 = FAIL)
+    * 
+    * Returns:
+    *   void
+    */
    function void print_status(string Test_name,int Status_int);
       string  Status;
       /* verilator lint_off WIDTH */
@@ -894,6 +1193,21 @@ module automatic Initiator;
       $display("\n%s  %s.n_payloads = %0d",i_am,name_in, h_.n_payloads);
    endfunction : print_shunt_header
 
+   /**
+    * Function: compare_shunt_header
+    * 
+    * Utility function to compare two transaction headers
+    * 
+    * Compares all fields between two transaction headers and prints detailed
+    * information when mismatches are found.
+    * 
+    * Parameters:
+    *   lhs - Left-hand side header to compare
+    *   rls - Right-hand side header to compare
+    * 
+    * Returns:
+    *   success - 1 if headers match, 0 if they differ in any field
+    */
    function automatic bit compare_shunt_header(cs_header_t lhs , cs_header_t rls);
       string  s_me = "compare_shunt_header(lhs,rls)";
       bit     success =1;

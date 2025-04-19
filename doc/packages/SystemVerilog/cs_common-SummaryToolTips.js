@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("SystemVerilogPackage:cs_common",{469:"<div class=\"NDToolTip TPackage LSystemVerilog\"><div class=\"TTSummary\">Common macro and parameter definitions for the client-server implementation</div></div>"});

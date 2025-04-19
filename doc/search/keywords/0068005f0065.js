@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("h_e",["Variable"],[["h_ext",,[["Target",,,,0,"File6:sc/LT_simple_sv/target/src/Target.sv:Target.h_ext","SystemVerilogModule:Target:h_ext"]]],["h_ext_out",,[["Target",,,,0,"File6:sc/LT_simple_sv/target/src/Target.sv:Target.h_ext_out","SystemVerilogModule:Target:h_ext_out"]]]]);

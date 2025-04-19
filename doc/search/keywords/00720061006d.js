@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("ram",["Variable"],[["ram",,[["memory",,,,0,"File6:sc/LT_simple_sv/target/src/Target.sv:memory.ram","SystemVerilogModule:memory:ram"]]]]);

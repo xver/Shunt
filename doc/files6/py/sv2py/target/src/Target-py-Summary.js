@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File6:py/sv2py/target/src/Target.py","Target.py");NDSummary.OnSummaryLoaded("File6:py/sv2py/target/src/Target.py",[["Python","Python"]],[["Sections","Section"]],[[467,0,0,"Target.py","Target.py"]]);

@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File6:c/primitives/initiator/src/primC_Initiator.c","primC_Initiator.c");NDSummary.OnSummaryLoaded("File6:c/primitives/initiator/src/primC_Initiator.c",[["C/C++","C"]],[["Sections","Section"]],[[446,0,0,"primC_Initiator.c","primC_Initiator.c"]]);

@@ -1,16 +1,20 @@
-
 /*
-============================================================================
-Title: apiC_Initiator.c
- Author      : Victor Besyakov
- Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
+   ============================================================================
+   Title: apiC_Initiator.c
+ 
+   Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
 
                Licensed under the MIT License.
 
                See LICENSE file in the project root for full license information.
 
-Description :   TCP/IP SystemVerilog SHUNT
-               An example of API functions-Initiator(server)
+   Description: TCP/IP SystemVerilog SHUNT
+                An example of API functions-Initiator(server)
+                
+                This example demonstrates how to use the SHUNT API functions from the
+                server (initiator) side to establish communication channels and
+                perform various data type transfers including vectors of integers,
+                doubles, and strings in a loopback testing environment.
 */
 #include "shunt_user_api.h"
 #include "../../includes/cs_common.h"

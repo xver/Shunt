@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("suc",["Variable"],[["success",,[["Initiator",,,,0,"File6:py/sv2py/initiator/src/Initiator.sv:Initiator.success","SystemVerilogModule:Initiator:success"]]]]);

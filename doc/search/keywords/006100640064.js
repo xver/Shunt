@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("add",["Variable"],[["addr_reg",,[["memory",,,,0,"File6:sc/LT_simple_sv/target/src/Target.sv:memory.addr_reg","SystemVerilogModule:memory:addr_reg"]]]]);

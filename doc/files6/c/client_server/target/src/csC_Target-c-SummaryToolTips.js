@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File6:c/client_server/target/src/csC_Target.c",{445:"<div class=\"NDToolTip TSection LC\"><div class=\"TTSummary\">Copyright (c) 2016-2025 IC Verimeter. All rights reserved.</div></div>"});

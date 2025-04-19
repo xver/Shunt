@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("xre",["Variable"],[["XRegNV_exp",,[["Initiator",,,,0,"File6:py/sv2py/initiator/src/Initiator.sv:Initiator.XRegNV_exp","SystemVerilogModule:Initiator:XRegNV_exp"]]]]);

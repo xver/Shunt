@@ -1,7 +1,6 @@
-
 /*
    ============================================================================
-  Title: apiC_Target.c
+   Title: apiC_Target.c
   
    Copyright (c) 2016-2025 IC Verimeter. All rights reserved.
 
@@ -9,8 +8,12 @@
 
                See LICENSE file in the project root for full license information.
 
-Description :TCP/IP SystemVerilog SHUNT
-               An example of API functions-Target(client)
+   Description: TCP/IP SystemVerilog SHUNT
+                An example of API functions-Target(client)
+                
+                This example demonstrates how to use the SHUNT API functions from the 
+                client (target) side to establish communication with a server and 
+                perform various data type transfers through TCP/IP socket connections.
 */
 
 #include "shunt_user_api.h"

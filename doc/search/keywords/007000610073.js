@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("pas",["Variable"],[["Pass",,[["Initiator",,,,0,"File6:py/sv2py/initiator/src/Initiator.sv:Initiator.Pass","SystemVerilogModule:Initiator:Pass"]]]]);
