@@ -37,10 +37,10 @@ You can support us through this link:  [:heart: Sponsor](https://github.com/spon
 
 # Getting Started [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/xver)
 ### Install the following  prerequisites:
-
-- Verilator up to 5.019 : https://www.veripool.org/verilator/
+  
+- Verilator up to 5.037: https://www.veripool.org/verilator/
 - SystemC up to 2.3.3  -Accellera : https://systemc.org/resources/standards/
-- Python3 up to Python 3.10.12
+- Python3 up to Python 3.12.3
 
 ### Library Installation
 
