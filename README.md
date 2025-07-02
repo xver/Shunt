@@ -83,9 +83,11 @@ SystemC to SV  b_transport over TCP/IP :
  - cd to ```$SHUNT_HOME/examples/sc/LT_simple_sv/makedir ```
  - run  ```make all```
  
-# Release History: [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/xver)
+### Release : [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/xver)
 -----------------------
-v3.0.0 (Current Version) System Verilog - Python integration
+v3.0.1  (Current Version) Minor & cumulative updates  
+
+v3.0.0  System Verilog - Python integration
 
 v2.3.0 - Regression mode support: Simultaneous allocation of TCP/IP ports.
 
