@@ -2,7 +2,7 @@
 
 ![](https://github.com/xver/Shunt/blob/master/doc/shut_log_min.png)
 
-
+## Overview
 The **Shunt** is an Open Source Client/Server TCP/IP socket-based communication library designed for integrating **SystemVerilog** simulations with external applications in **C**, **SystemC**, and **Python**.
 
 * It aims to enable quick and easy development of communication between stand-alone SystemVerilog/SystemC simulations and/or external applications
@@ -10,6 +10,10 @@ The **Shunt** is an Open Source Client/Server TCP/IP socket-based communication 
 * It provides a common SystemVerilog/C API and supports mostly all System Verilog data types and data structures.
 
 The **Shunt** is available under a "MIT" License. It can be used without restriction in an open-source or commercial application.
+
+**Also, check out other open-source projects by IC Verimeter**:
+ - [icecream_sv](https://github.com/xver/icecream_sv): A Simplified Debugging Tool for SystemVerilog.Inspired by [IceCream](https://github.com/gruns/icecream) style debugging tools.
+ - [SVDB Gateway](https://github.com/xver/svdb_gateway): A bridge between SystemVerilog and SQLite databases, allowing SystemVerilog code to interact with SQLite through the Direct Programming Interface (DPI).
 
 ### Articles/Conference papers
 *  Shunt Introduction:
