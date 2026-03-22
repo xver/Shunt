@@ -128,6 +128,6 @@ v2.2.0 - The ARM AXI (Advanced eXtensible Interface) bus support & cumulative bu
 
 -------------------------
 !["Copyright (c) 2023 IC Verimeter"](https://github.com/xver/Shunt/blob/master/doc/IcVerimeter_logo.png)
-Copyright (c) 2016-2025 IC Verimeter
+Copyright (c) 2016-2026 IC Verimeter
  
  [![](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/xver)
