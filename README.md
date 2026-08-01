@@ -14,7 +14,8 @@ The **Shunt** is available under a "MIT" License. It can be used without restric
 **Also, check out other open-source projects by IC Verimeter**:
  - [icecream_sv](https://github.com/xver/icecream_sv): A Simplified Debugging Tool for SystemVerilog.Inspired by [IceCream](https://github.com/gruns/icecream) style debugging tools.
  - [SVDB Gateway](https://github.com/xver/svdb_gateway): A bridge between SystemVerilog and SQLite databases, allowing SystemVerilog code to interact with SQLite through the Direct Programming Interface (DPI).
-
+- [SV ND Scribe](https://github.com/xver/sv-nd-scribe): A SystemVerilog toolkit combining NaturalDocs-based documentation rules, a static linter, and a VS Code extension for real-time in-editor feedback.
+  
 ### Articles/Conference papers
 *  Shunt Introduction:
    - Victor Besyakov "TCP/IP Socket Based Communication for SystemVerilog Simulation" SNUG, Boston 2018 
